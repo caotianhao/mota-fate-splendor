@@ -3,19 +3,12 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 {
 	"events": {
 		"resetGame": function (hero, hard, floorId, maps, values) {
-			// 重置整个游戏；此函数将在游戏开始时，或者每次读档时最先被调用
-			// hero：勇士信息；hard：难度；floorId：当前楼层ID；maps：地图信息；values：全局数值信息
-
-			// 清除游戏数据
-			// 这一步会清空状态栏和全部画布内容，并删除所有动态创建的画布
 			core.clearStatus();
-			// 初始化status
 			core.status = core.clone(core.initStatus, function (name) {
 				return name != 'hero' && name != 'maps';
 			});
 			core.control._bindRoutePush();
 			core.status.played = true;
-			// 初始化人物，图标，统计信息
 			core.status.hero = core.clone(hero);
 			window.hero = core.status.hero;
 			window.flags = core.status.hero.flags;
@@ -24,16 +17,12 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.status.hero.statistics.totalTime = core.animateFrame.totalTime =
 				Math.max(core.status.hero.statistics.totalTime, core.animateFrame.totalTime);
 			core.status.hero.statistics.start = null;
-			// 初始难度
 			core.status.hard = hard || "";
-			// 初始化地图
 			core.status.floorId = floorId;
 			core.status.maps = maps;
 			core.maps._resetFloorImages();
-			// 初始化怪物和道具
 			core.material.enemys = core.enemys.getEnemys();
 			core.material.items = core.items.getItems();
-			// 初始化全局数值和全局开关
 			core.values = core.clone(core.data.values);
 			for (var key in values || {})
 				core.values[key] = values[key];
@@ -42,14 +31,11 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			for (var key in globalFlags)
 				core.flags[key] = globalFlags[key];
 			core._init_sys_flags();
-			// 初始化界面，状态栏等
 			core.resize();
-			// 状态栏是否显示
 			if (core.hasFlag('hideStatusBar'))
 				core.hideStatusBar(core.hasFlag('showToolbox'));
 			else
 				core.showStatusBar();
-			// 隐藏右下角的音乐按钮
 			core.dom.musicBtn.style.display = 'none';
 		},
 		"win": function (reason, norank, noexit) {
@@ -57,20 +43,17 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// 请注意，成绩统计时是按照hp进行上传并排名
 			// 可以先在这里对最终分数进行计算，比如将2倍攻击和5倍黄钥匙数量加到分数上
 			// core.status.hero.hp += 2 * core.getRealStatus('atk') + 5 * core.itemCount('yellowKey');
-
-			// 如果不退出，则临时存储数据
 			if (noexit) {
 				core.status.extraEvent = core.clone(core.status.event);
 			}
 
-			// 游戏获胜事件 
 			core.ui.closePanel();
 			var replaying = core.isReplaying();
 			if (replaying) core.stopReplay();
 			core.waitHeroToStop(function () {
 				if (!noexit) {
-					core.clearMap('all'); // 清空全地图
-					core.deleteAllCanvas(); // 删除所有创建的画布
+					core.clearMap('all');
+					core.deleteAllCanvas();
 					core.dom.gif2.innerHTML = "";
 				}
 				reason = core.replaceText(reason);
@@ -82,7 +65,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			});
 		},
 		"lose": function (reason) {
-			// 游戏失败事件
 			core.ui.closePanel();
 			var replaying = core.isReplaying();
 			core.stopReplay();
@@ -218,19 +200,12 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			return true;
 		},
 		"afterBattle": function (enemyId, x, y) {
-			// 战斗结束后触发的事件
-
 			var enemy = core.material.enemys[enemyId];
 			var special = enemy.special;
 			var animate = 'hand';
-			// 检查当前装备是否存在攻击动画
 			var equipId = core.getEquip(0);
 			if (equipId && (core.material.items[equipId].equip || {}).animate)
 				animate = core.material.items[equipId].equip.animate;
-			// 你也可以在这里根据自己的需要，比如enemyId或special或flag来修改播放的动画效果
-			// if (enemyId == '...') animate = '...';
-
-			// 检查该动画是否存在SE，如果不存在则使用默认音效
 			if (!(core.material.animates[animate] || {}).se)
 				core.playSound('attack.mp3');
 			if (x != null && y != null)
@@ -238,13 +213,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			else
 				core.drawHeroAnimate(animate);
 
-			// 获得战斗伤害信息
 			var damageInfo = core.getDamageInfo(enemyId, null, x, y) || {};
-			// 战斗伤害
 			var damage = damageInfo.damage;
-			// 当前战斗回合数，可用于战后所需的判定
 			var turn = damageInfo.turn;
-			// 判定是否致死
 			if (damage == null || damage >= core.status.hero.hp) {
 				core.status.hero.hp = 0;
 				core.updateStatusBar(false, true);
@@ -483,18 +454,14 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			if (!core.status.checkBlock) core.status.checkBlock = {};
 
 			if (core.status.checkBlock.needCache) {
-				// 从V2.5.4开始，对光环效果增加缓存，以解决多次重复计算的问题，从而大幅提升运行效率。
 				var hp_buff = 0,
 					atk_buff = 0,
 					def_buff = 0;
-				// 已经计算过的光环怪ID列表，用于判定叠加
 				var usedEnemyIds = {};
-				// 检查光环和支援的缓存
 				var index = x != null && y != null ? (x + "," + y) : floorId;
 				if (!core.status.checkBlock.cache) core.status.checkBlock.cache = {};
 				var cache = core.status.checkBlock.cache[index];
 				if (!cache) {
-					// 没有该点的缓存，则遍历每个图块
 					core.extractBlocks(floorId);
 					core.status.maps[floorId].blocks.forEach(function (block) {
 						if (!block.disable) {
@@ -1061,15 +1028,10 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 
 			// 可以在这里添加自己额外的状态栏信息，比如想攻击显示 +0.5 可以这么写：
 			// if (core.hasFlag('halfAtk')) core.setStatusBarInnerHTML('atk', core.statusBar.atk.innerText + "+0.5");
-
-			// 如果是自定义添加的状态栏，也需要在这里进行设置显示的数值
-
-			// 进阶
 			if (core.flags.statusBarItems.indexOf('enableLevelUp') >= 0) {
 				core.setStatusBarInnerHTML('up', core.formatBigNumber(core.getNextLvUpNeed()) || "");
 			} else core.setStatusBarInnerHTML('up', "");
 
-			// 钥匙
 			var keys = ['yellowKey', 'blueKey', 'redKey', 'greenKey'];
 			keys.forEach(function (key) {
 				core.setStatusBarInnerHTML(key, core.setTwoDigits(core.itemCount(key)));
@@ -1081,7 +1043,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.setStatusBarInnerHTML('bomb', "炸" + core.itemCount('bomb'));
 			core.setStatusBarInnerHTML('fly', "飞" + core.itemCount('centerFly'));
 
-			// 难度
 			if (core.statusBar.hard.innerText != core.status.hard) {
 				core.statusBar.hard.innerText = core.status.hard;
 			}
@@ -1410,11 +1371,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// 并行事件处理，可以在这里写任何需要并行处理的脚本或事件
 			// 该函数将被系统反复执行，每次执行间隔视浏览器或设备性能而定，一般约为16.6ms一次
 			// 参数timestamp为“从游戏资源加载完毕到当前函数执行时”的时间差，以毫秒为单位
-
-			// 检查当前是否处于游戏开始状态
 			if (!core.isPlaying()) return;
-
-			// 执行当前楼层的并行事件处理
 			if (core.status.floorId) {
 				try {
 					eval(core.floors[core.status.floorId].parallelDo);
@@ -1430,7 +1387,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// cls为道具类型，只可能是 tools, constants 和 equips
 			// 返回一个数组，代表当前某类型道具的显示内容和顺序
 			// 默认按id升序排列，您可以取消下面的注释改为按名称排列
-
 			return Object.keys(core.status.hero.items[cls] || {})
 				.filter(function (id) { return !core.material.items[id].hideInToolbox; })
 				.sort( /*function (id1, id2) { return core.material.items[id1].name <= core.material.items[id2].name ? -1 : 1 }*/);
@@ -1523,7 +1479,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			];
 		},
 		"drawAbout": function () {
-			// 绘制“关于”界面
 			core.ui.closePanel();
 			core.lockControl();
 			core.status.event.id = 'about';
@@ -1539,15 +1494,12 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.strokeRect('ui', left - 1, top - 1, right + 1, bottom + 1, '#FFFFFF', 2);
 
 			var text_start = left + 24;
-
-			// 名称
 			core.setTextAlign('ui', 'left');
 			var globalAttribute = core.status.globalAttribute || core.initStatus.globalAttribute;
 			core.fillText('ui', "HTML5 魔塔样板", text_start, top + 35, globalAttribute.selectColor, "bold 22px " + globalAttribute.font);
 			core.fillText('ui', "版本： " + main.__VERSION__, text_start, top + 80, "#FFFFFF", "bold 17px " + globalAttribute.font);
 			core.fillText('ui', "作者： 艾之葵", text_start, top + 112);
 			core.fillText('ui', 'HTML5魔塔交流群：539113091', text_start, top + 112 + 32);
-			// TODO: 写自己的“关于”页面，每次增加32像素即可
 			core.playSound('打开界面');
 		}
 	}

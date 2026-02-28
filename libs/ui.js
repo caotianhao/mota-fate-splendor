@@ -2076,7 +2076,6 @@ ui.prototype.drawBook = function (index) {
     var enemys = core.enemys.getCurrentEnemys(floorId);
     core.clearUI();
     core.clearMap('data');
-    // 生成groundPattern
     core.maps.generateGroundPattern(floorId);
     this._drawBook_drawBackground();
     core.setAlpha('ui', 1);
@@ -2104,7 +2103,7 @@ ui.prototype.drawBook = function (index) {
 
 ui.prototype._drawBook_pageinfo = function () {
     var per_page = core._HALF_HEIGHT_;
-    var padding_top = 12; // 距离顶端像素
+    var padding_top = 12;
     var per_height = (core._PY_ - 32 - padding_top) / per_page;
     return { per_page: per_page, padding_top: padding_top, per_height: per_height };
 }
@@ -2140,7 +2139,6 @@ ui.prototype._drawBook_drawOne = function (floorId, index, enemy, pageinfo, sele
 }
 
 ui.prototype._drawBook_is32x32 = function (blockInfo) {
-    // 判定48的怪物上半部分是否是全透明
     var height = blockInfo.height - 32;
     var canvas = document.createElement('canvas');
     canvas.width = 32; canvas.height = height;
@@ -2152,13 +2150,11 @@ ui.prototype._drawBook_is32x32 = function (blockInfo) {
 }
 
 ui.prototype._drawBook_drawBox = function (index, enemy, top, pageinfo) {
-    // 横向：22+42；纵向：10 + 42 + 10（正好居中）；内部图像 32x32
     var border_top = top + (pageinfo.per_height - 42) / 2, border_left = 22;
     var img_top = border_top + 5, img_left = border_left + 5;
     core.strokeRect('ui', 22, border_top, 42, 42, '#DDDDDD', 2);
     var blockInfo = core.getBlockInfo(enemy.id);
 
-    // 检查大怪物
     if (blockInfo.bigImage) {
         core.status.boxAnimateObjs.push({
             bigImage: blockInfo.bigImage, face: blockInfo.face, centerX: border_left + 21, centerY: border_top + 21,
@@ -2167,7 +2163,6 @@ ui.prototype._drawBook_drawBox = function (index, enemy, top, pageinfo) {
     }
     else if (blockInfo.height >= 42) {
         var originEnemy = core.material.enemys[enemy.id] || {};
-        // 检查上半部分是不是纯透明的；取用原始值避免重复计算
         if (originEnemy.is32x32 == null) {
             originEnemy.is32x32 = this._drawBook_is32x32(blockInfo);
         }
@@ -2196,8 +2191,6 @@ ui.prototype._drawBook_drawBox = function (index, enemy, top, pageinfo) {
 }
 
 ui.prototype._drawBook_drawName = function (index, enemy, top, left, width) {
-    // 绘制第零列（名称和特殊属性）
-    // 如果需要添加自己的比如怪物的称号等，也可以在这里绘制
     core.setTextAlign('ui', 'center');
     if (enemy.specialText.length == 0) {
         core.fillText('ui', enemy.name, left + width / 2,
@@ -2213,14 +2206,11 @@ ui.prototype._drawBook_drawName = function (index, enemy, top, left, width) {
                     this._buildFont(15, true), width);
                 break;
             case 2:
-                // Step 1: 计算字体
                 var text = enemy.specialText[0] + "  " + enemy.specialText[1];
                 core.setFontForMaxWidth('ui', text, width, this._buildFont(15, true));
-                // Step 2: 计算总宽度
                 var totalWidth = core.calWidth('ui', text);
                 var leftWidth = core.calWidth('ui', enemy.specialText[0]);
                 var rightWidth = core.calWidth('ui', enemy.specialText[1]);
-                // Step 3: 绘制
                 core.fillText('ui', enemy.specialText[0], left + (width + leftWidth - totalWidth) / 2,
                     top + 50, core.arrayToRGBA((enemy.specialColor || [])[0] || '#FF6A6A'));
                 core.fillText('ui', enemy.specialText[1], left + (width + totalWidth - rightWidth) / 2,
@@ -2234,7 +2224,7 @@ ui.prototype._drawBook_drawName = function (index, enemy, top, left, width) {
 }
 
 ui.prototype._drawBook_drawContent = function (index, enemy, top, left) {
-    var width = core._PX_ - left; // 9 : 8 : 8 划分三列
+    var width = core._PX_ - left;
     this._drawBook_drawRow1(index, enemy, top, left, width, top + 20);
     this._drawBook_drawRow2(index, enemy, top, left, width, top + 38);
     this._drawBook_drawRow3(index, enemy, top, left, width, top + 56);
@@ -2254,37 +2244,31 @@ ui.prototype._drawBook_drawRow1 = function (index, enemy, top, left, width, posi
 }
 
 ui.prototype._drawBook_drawRow2 = function (index, enemy, top, left, width, position) {
-    // 绘制第二行
     core.setTextAlign('ui', 'left');
     var b13 = this._buildFont(13, true), f13 = this._buildFont(13, false);
     var col1 = left, col2 = left + width * 9 / 25, col3 = left + width * 17 / 25;
-    // 获得第二行绘制的内容
     var second_line = [];
     if (core.flags.statusBarItems.indexOf('enableMoney') >= 0) second_line.push([core.getStatusLabel('money'), core.formatBigNumber(enemy.money || 0)]);
     if (core.flags.enableAddPoint) second_line.push([core.getStatusLabel('point'), core.formatBigNumber(enemy.point || 0)]);
     if (core.flags.statusBarItems.indexOf('enableExp') >= 0) second_line.push([core.getStatusLabel('exp'), core.formatBigNumber(enemy.exp || 0)]);
 
     var damage_offset = col1 + (core._PX_ - col1) / 2 - 12;
-    // 第一列
     if (second_line.length > 0) {
         var one = second_line.shift();
         core.fillText('ui', one[0], col1, position, '#DDDDDD', f13);
         core.fillText('ui', one[1], col1 + 30, position, null, b13);
         damage_offset = col2 + (core._PX_ - col2) / 2 - 12;
     }
-    // 第二列
     if (second_line.length > 0) {
         var one = second_line.shift();
         core.fillText('ui', one[0], col2, position, '#DDDDDD', f13);
         core.fillText('ui', one[1], col2 + 30, position, null, b13);
         damage_offset = col3 + (core._PX_ - col3) / 2 - 12;
     }
-    // 忽略第三列，直接绘制伤害
     this._drawBook_drawDamage(index, enemy, damage_offset, position);
 }
 
 ui.prototype._drawBook_drawRow3 = function (index, enemy, top, left, width, position) {
-    // 绘制第三行
     core.setTextAlign('ui', 'left');
     var b13 = this._buildFont(13, true), f13 = this._buildFont(13, false);
     var col1 = left, col2 = left + width * 9 / 25, col3 = left + width * 17 / 25;
@@ -2316,7 +2300,6 @@ ui.prototype._drawBook_drawDamage = function (index, enemy, offset, position) {
     core.fillText('ui', damage, offset, position, color, this._buildFont(13, true));
 }
 
-////// 绘制怪物属性的详细信息 //////
 ui.prototype._drawBookDetail = function (index) {
     var info = this._drawBookDetail_getInfo(index), enemy = info[0];
     if (!enemy) return;
@@ -2341,7 +2324,6 @@ ui.prototype._drawBookDetail = function (index) {
 
 ui.prototype._drawBookDetail_getInfo = function (index) {
     var floorId = core.floorIds[(core.status.event.ui || {}).index] || core.status.floorId;
-    // 清除浏览地图时的光环缓存
     if (floorId != core.status.floorId && core.status.checkBlock) {
         core.status.checkBlock.cache = {};
     }
@@ -2358,20 +2340,14 @@ ui.prototype._drawBookDetail_getInfo = function (index) {
 }
 
 ui.prototype._drawBookDetail_getTexts = function (enemy, floorId, texts) {
-    // --- 原始数值
     this._drawBookDetail_origin(enemy, texts);
-    // --- 模仿临界计算器
     this._drawBookDetail_mofang(enemy, texts);
-    // --- 吸血怪最低生命值
     this._drawBookDetail_vampire(enemy, floorId, texts);
-    // --- 仇恨伤害
     this._drawBookDetail_hatred(enemy, texts);
-    // --- 战斗回合数，临界表
     this._drawBookDetail_turnAndCriticals(enemy, floorId, texts);
 }
 
 ui.prototype._drawBookDetail_origin = function (enemy, texts) {
-    // 怪物数值和原始值不一样时，在详细信息页显示原始数值
     var originEnemy = core.enemys._getCurrentEnemys_getEnemy(enemy.id);
     var content = [];
     if (enemy.locs != null && enemy.locs.length >= 0) {
@@ -2389,7 +2365,6 @@ ui.prototype._drawBookDetail_origin = function (enemy, texts) {
 }
 
 ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
-    // 模仿临界计算器
     if (core.enemys.hasSpecial(enemy.special, 10)) {
         var hp = enemy.hp;
         var delta = core.status.hero.atk - core.status.hero.def;
@@ -2461,7 +2436,6 @@ ui.prototype._drawBookDetail_hatred = function (enemy, texts) {
 ui.prototype._drawBookDetail_turnAndCriticals = function (enemy, floorId, texts) {
     var damageInfo = core.getDamageInfo(enemy.id, null, enemy.x, enemy.y, floorId);
     texts.push("\r[#FF6A6A]\\d战斗回合数：\\d\r[]" + ((damageInfo || {}).turn || 0));
-    // 临界表
     var criticals = core.enemys.nextCriticals(enemy.id, 8, enemy.x, enemy.y, floorId).map(function (v) {
         return core.formatBigNumber(v[0]) + ":" + core.formatBigNumber(v[1]);
     });
@@ -2470,7 +2444,6 @@ ui.prototype._drawBookDetail_turnAndCriticals = function (enemy, floorId, texts)
 }
 
 ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
-    // 名称
     core.setTextAlign('data', 'left');
     core.fillText('data', enemy.name, pos.content_left, pos.top + 30, core.status.globalAttribute.selectColor, this._buildFont(22, true));
     var content_top = pos.top + 44;
@@ -2481,7 +2454,6 @@ ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
     });
 }
 
-////// 绘制楼层传送器 //////
 ui.prototype.drawFly = function (page) {
     core.status.event.data = page;
     var floorId = core.floorIds[page];
@@ -2523,7 +2495,6 @@ ui.prototype.drawFly = function (page) {
     core.drawThumbnail(floorId, null, { ctx: 'ui', x: 16, y: 64, size: size, damage: true, all: true });
 }
 
-////// 绘制中心对称飞行器
 ui.prototype._drawCenterFly = function () {
     core.lockControl();
     core.status.event.id = 'centerFly';
@@ -2542,7 +2513,6 @@ ui.prototype._drawCenterFly = function () {
     return;
 }
 
-////// 绘制浏览地图界面 //////
 ui.prototype._drawViewMaps = function (index, x, y) {
     core.lockControl();
     core.status.event.id = 'viewMaps';
@@ -2576,14 +2546,14 @@ ui.prototype._drawViewMaps_drawHint = function () {
 
     var perpx = core._PX_ / 5, cornerpx = perpx * 3 / 4, perpy = core._PY_ / 5, cornerpy = perpy * 3 / 4;
     stroke(perpx, 0, 3 * perpx, perpy, core.status.globalAttribute.selectColor, 4); // up
-    stroke(0, perpy, perpx, 3 * perpy); // left
-    stroke(perpx, 4 * perpy, 3 * perpx, perpy); // down
-    stroke(4 * perpx, perpy, perpx, 3 * perpy); // right
-    stroke(perpx, perpy, 3 * perpx, perpy); // prev
-    stroke(perpx, 3 * perpy, 3 * perpx, perpy); // next
-    stroke(0, 0, cornerpx, cornerpy); // left top
-    stroke(core._PX_ - cornerpx, 0, cornerpx, cornerpy); // right top
-    stroke(0, core._PY_ - cornerpy, cornerpx, cornerpy); // left bottom;
+    stroke(0, perpy, perpx, 3 * perpy);
+    stroke(perpx, 4 * perpy, 3 * perpx, perpy);
+    stroke(4 * perpx, perpy, perpx, 3 * perpy);
+    stroke(perpx, perpy, 3 * perpx, perpy);
+    stroke(perpx, 3 * perpy, 3 * perpx, perpy);
+    stroke(0, 0, cornerpx, cornerpy);
+    stroke(core._PX_ - cornerpx, 0, cornerpx, cornerpy);
+    stroke(0, core._PY_ - cornerpy, cornerpx, cornerpy);
 
     core.setTextBaseline('ui', 'middle');
     core.fillText('ui', "上移地图 [W]", core._PX_ / 2, perpy / 2, core.status.globalAttribute.selectColor, '20px Arial');
@@ -2630,12 +2600,10 @@ ui.prototype._drawViewMaps_buildData = function (index, x, y) {
     return core.status.event.data;
 }
 
-////// 绘制道具栏 //////
 ui.prototype._drawToolbox = function (index) {
     var info = this._drawToolbox_getInfo(index);
     this._drawToolbox_drawBackground();
 
-    // 绘制线
     core.setAlpha('ui', 1);
     core.setStrokeStyle('ui', '#DDDDDD');
     core.canvas.ui.lineWidth = 2;
@@ -2645,9 +2613,7 @@ ui.prototype._drawToolbox = function (index) {
     this._drawToolbox_drawLine(line1, "消耗道具");
     var line2 = core._PY_ - 146;
     this._drawToolbox_drawLine(line2, "永久道具");
-
     this._drawToolbox_drawDescription(info, line1);
-
     this._drawToolbox_drawContent(info, line1, info.tools, info.toolsPage, true);
     this.drawPagination(info.toolsPage, info.toolsTotalPage, core._HEIGHT_ - 6);
     this._drawToolbox_drawContent(info, line2, info.constants, info.constantsPage);
@@ -2658,7 +2624,6 @@ ui.prototype._drawToolbox = function (index) {
     core.fillText('ui', '返回游戏', core._PX_ - 46, core._PY_ - 13);
 }
 
-////// 获得所有应该在道具栏显示的某个类型道具 //////
 ui.prototype.getToolboxItems = function (cls) {
     if (this.uidata.getToolboxItems) {
         return this.uidata.getToolboxItems(cls);
@@ -2669,23 +2634,18 @@ ui.prototype.getToolboxItems = function (cls) {
 }
 
 ui.prototype._drawToolbox_getInfo = function (index) {
-    // 设定eventdata
     if (!core.status.event.data || core.status.event.data.toolsPage == null)
         core.status.event.data = { "toolsPage": 1, "constantsPage": 1, "selectId": null }
-    // 获取物品列表
     var tools = core.getToolboxItems('tools'),
         constants = core.getToolboxItems('constants');
-    // 处理页数
     var n = core._WIDTH_ - 1;
     var toolsPage = core.status.event.data.toolsPage;
     var constantsPage = core.status.event.data.constantsPage;
     var toolsTotalPage = Math.ceil(tools.length / n);
     var constantsTotalPage = Math.ceil(constants.length / n);
-    // 处理index
     if (index == null)
         index = tools.length == 0 && constants.length > 0 ? n : 0;
     core.status.event.selection = index;
-    // 确认选择对象
     var select, selectId;
     if (index < n) {
         select = index + (toolsPage - 1) * n;
@@ -2706,7 +2666,6 @@ ui.prototype._drawToolbox_getInfo = function (index) {
 }
 
 ui.prototype._drawToolbox_drawBackground = function () {
-    // 绘制
     core.clearMap('ui');
     core.setAlpha('ui', 0.85);
     core.fillRect('ui', 0, 0, core._PX_, core._PY_, '#000000');
@@ -2767,7 +2726,6 @@ ui.prototype._drawToolbox_drawContent = function (info, line, items, page, drawC
     }
 }
 
-////// 绘制装备界面 //////
 ui.prototype._drawEquipbox = function (index) {
     var info = this._drawEquipbox_getInfo(index);
     this._drawToolbox_drawBackground();
@@ -2781,9 +2739,7 @@ ui.prototype._drawEquipbox = function (index) {
     this._drawToolbox_drawLine(line1, "当前装备");
     var line2 = core._PY_ - 146;
     this._drawToolbox_drawLine(line2 + 9, "拥有装备");
-
     this._drawEquipbox_description(info, line1);
-
     this._drawEquipbox_drawEquiped(info, line1);
     this._drawToolbox_drawContent(info, line2, info.ownEquipment, info.page, true);
     this.drawPagination(info.page, info.totalPage);
@@ -2804,7 +2760,6 @@ ui.prototype._drawEquipbox_getInfo = function (index) {
     var ownEquipment = core.getToolboxItems('equips');
     var page = core.status.event.data.page;
     var totalPage = Math.ceil(ownEquipment.length / n);
-    // 处理index
     if (index == null) {
         if (equipLength > 0 && equipEquipment[0]) index = 0;
         else if (ownEquipment.length > 0) index = n;
@@ -2833,7 +2788,6 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
     core.setTextAlign('ui', 'left');
     if (!info.selectId) return;
     var equip = core.material.items[info.selectId];
-    // --- 标题
     if (!equip.equip) equip.equip = { "type": 0 };
     var equipType = equip.equip.type, equipString;
     if (typeof equipType === 'string') {
@@ -2842,10 +2796,9 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
     }
     else equipString = info.allEquips[equipType] || "未知部位";
     core.fillText('ui', equip.name + "（" + equipString + "）", 10, 32, core.status.globalAttribute.selectColor, this._buildFont(20, true))
-    // --- 描述
+
     var text = equip.text || "该装备暂无描述。";
     try { text = core.replaceText(text); } catch (e) { }
-
     var height = null;
     for (var fontSize = 17; fontSize >= 9; fontSize -= 2) {
         var config = { left: 10, top: 46, fontSize: fontSize, maxWidth: core._PX_ - 15, bold: false, color: "white" };
@@ -2861,15 +2814,12 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
 
 ui.prototype._drawEquipbox_getStatusChanged = function (info, equip, equipType, y) {
     if (info.index < core._WIDTH_ - 1) {
-        // 光标在装备栏上：查询卸下装备属性
         return core.compareEquipment(null, info.selectId);
     }
     if (equipType < 0) {
-        // 没有空位
         core.fillText('ui', '<当前没有该装备的空位，请先卸下装备>', 10, y, '#CCCCCC', this._buildFont(14, false));
         return null;
     }
-    // 光标在装备上：查询装上后的属性变化
     return core.compareEquipment(info.selectId, info.equipEquipment[equipType]);
 }
 
@@ -2878,12 +2828,10 @@ ui.prototype._drawEquipbox_drawStatusChanged = function (info, y, equip, equipTy
     if (compare == null) return;
     var obj = { drawOffset: 10, y: y };
 
-    // --- 变化值...
     core.setFont('ui', this._buildFont(14, true));
     for (var name in core.status.hero) {
         if (typeof core.status.hero[name] != 'number') continue;
         var nowValue = core.getRealStatus(name);
-        // 查询新值
         var newValue = Math.floor((core.getStatus(name) + (compare.value[name] || 0))
             * (core.getBuff(name) * 100 + (compare.percentage[name] || 0)) / 100);
         if (nowValue == newValue) continue;
@@ -2927,7 +2875,6 @@ ui.prototype._drawEquipbox_drawEquiped = function (info, line) {
     }
 }
 
-////// 绘制存档/读档界面 //////
 ui.prototype._drawSLPanel = function (index, refresh) {
     core.control._loadFavoriteSaves();
     if (index == null) index = 1;
@@ -2961,9 +2908,7 @@ ui.prototype._drawSLPanel = function (index, refresh) {
 }
 
 ui.prototype._drawSLPanel_draw = function (page, max_page) {
-    // --- 绘制背景
     this._drawSLPanel_drawBackground();
-    // --- 绘制文字
     core.ui.drawPagination(page + 1, max_page);
     core.setTextAlign('ui', 'center');
     var bottom = core._PY_ - 13;
@@ -2980,7 +2925,6 @@ ui.prototype._drawSLPanel_draw = function (page, max_page) {
             core.fillText('ui', '[E]显示全部', 52, bottom);
         }
     }
-    // --- 绘制记录
     this._drawSLPanel_drawRecords();
 }
 
@@ -2996,7 +2940,7 @@ ui.prototype._drawSLPanel_loadSave = function (page, callback) {
     for (var i = 1; i <= 5; ++i) {
         var id = 5 * page + i;
         if (core.status.event.data.mode == 'fav')
-            id = core.saves.favorite[id - 1]; // 因为favorite第一个不是自动存档 所以要偏移1
+            id = core.saves.favorite[id - 1];
         ids.push(id);
     }
     core.getSaves(ids, function (data) {
@@ -3073,9 +3017,9 @@ ui.prototype._drawSLPanel_drawRecords = function (n) {
             var real_id = core.saves.favorite[id - 1];
             title = (core.saves.favoriteName[real_id] || (name + real_id)) + ' ✐';
         }
-        var charSize = 32; // 字体占用像素范围
-        var topSpan = parseInt((core._PY_ - charSize - 2 * (charSize * 2 + size * core._PY_)) / 3); // Margin
-        var yTop1 = topSpan + parseInt(charSize / 2) + 8; // 文字的中心
+        var charSize = 32;
+        var topSpan = parseInt((core._PY_ - charSize - 2 * (charSize * 2 + size * core._PY_)) / 3);
+        var yTop1 = topSpan + parseInt(charSize / 2) + 8;
         var yTop2 = yTop1 + charSize * 2 + size * core._PY_ + topSpan;
         if (i < 3) {
             this._drawSLPanel_drawRecord(i == 0 ? "自动存档" : title, data, (2 * i + 1) * u, yTop1, size, i == offset, highLight);
@@ -3131,12 +3075,10 @@ ui.prototype._drawKeyBoard = function () {
         core.strokeRoundRect('ui', core._PX_ / 2 + 92 + offset, now - 22, 72, 27, 6, core.status.globalAttribute.selectColor, 2);
 }
 
-////// 绘制状态栏 /////
 ui.prototype.drawStatusBar = function () {
     this.uidata.drawStatusBar();
 }
 
-////// 绘制“数据统计”界面 //////
 ui.prototype._drawStatistics = function (floorIds) {
     core.playSound('打开界面');
     var obj = this._drawStatistics_buildObj();
@@ -3309,12 +3251,10 @@ ui.prototype._drawStatistics_generateText = function (obj, type, data) {
     return text;
 }
 
-////// 绘制“关于”界面 //////
 ui.prototype._drawAbout = function () {
     return this.uidata.drawAbout();
 }
 
-////// 绘制帮助页面 //////
 ui.prototype._drawHelp = function () {
     core.playSound('打开界面');
     core.clearUI();
@@ -3353,11 +3293,7 @@ ui.prototype._drawHelp = function () {
     }
 }
 
-////// 动态canvas //////
-
-////// canvas创建 //////
 ui.prototype.createCanvas = function (name, x, y, width, height, z) {
-    // 如果画布已存在则直接调用
     if (core.dymCanvas[name]) {
         this.relocateCanvas(name, x, y);
         this.resizeCanvas(name, width, height);
@@ -3384,12 +3320,10 @@ ui.prototype.createCanvas = function (name, x, y, width, height, z) {
     return core.dymCanvas[name];
 }
 
-////// canvas重定位 //////
 ui.prototype.relocateCanvas = function (name, x, y, useDelta) {
     var ctx = core.getContextByName(name);
     if (!ctx) return null;
     if (x != null) {
-        // 增量模式
         if (useDelta) {
             x += parseFloat(ctx.canvas.getAttribute("_left")) || 0;
         }
@@ -3397,7 +3331,6 @@ ui.prototype.relocateCanvas = function (name, x, y, useDelta) {
         ctx.canvas.setAttribute("_left", x);
     }
     if (y != null) {
-        // 增量模式
         if (useDelta) {
             y += parseFloat(ctx.canvas.getAttribute("_top")) || 0;
         }
@@ -3428,7 +3361,6 @@ ui.prototype.rotateCanvas = function (name, angle, centerX, centerY) {
     canvas.setAttribute('_angle', angle);
 }
 
-////// canvas重置 //////
 ui.prototype.resizeCanvas = function (name, width, height, styleOnly) {
     var ctx = core.getContextByName(name);
     const canvas = ctx.canvas;
@@ -3461,7 +3393,6 @@ ui.prototype.deleteCanvas = function (name) {
     delete core.dymCanvas[name];
 }
 
-////// 删除所有动态canvas //////
 ui.prototype.deleteAllCanvas = function () {
     return this.deleteCanvas(function () { return true; })
 }

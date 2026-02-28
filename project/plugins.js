@@ -202,8 +202,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		this.canUseQuickShop = function (id) {
 			// 如果返回一个字符串，表示不能，字符串为不能使用的提示
 			// 返回null代表可以使用
-
-			// 检查当前楼层的canUseQuickShop选项是否为false
 			if (core.status.thisMap.canUseQuickShop === false)
 				return '当前楼层不能使用快捷商店。';
 			return null;
@@ -261,11 +259,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}, 60);
 	},
 	"removeMap": function () {
-		// 高层塔砍层插件，删除后不会存入存档，不可浏览地图也不可飞到。
-		// 推荐用法：
-		// 对于超高层或分区域塔，当在1区时将2区以后的地图删除；1区结束时恢复2区，进二区时删除1区地图，以此类推
-		// 这样可以大幅减少存档空间，以及加快存读档速度
-
 		// 删除楼层
 		// core.removeMaps("MT1", "MT300") 删除MT1~MT300之间的全部层
 		// core.removeMaps("MT10") 只删除MT10层
@@ -332,7 +325,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 分区砍层
 		this.autoRemoveMaps = function (floorId) {
 			if (main.mode != 'play' || !inAnyPartition(floorId)) return;
-			// 根据分区信息自动砍层与恢复
 			(core.floorPartitions || []).forEach(function (floor) {
 				var fromIndex = core.floorIds.indexOf(floor[0]);
 				var toIndex = core.floorIds.indexOf(floor[1]);
@@ -354,8 +346,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 插件作者：ad
 		var __enable = false;
 		if (!__enable) return;
-
-		// 创建新图层
 		function createCanvas(name, zIndex) {
 			if (!name) return;
 			var canvas = document.createElement('canvas');
@@ -388,7 +378,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			document.getElementById('mapEdit').insertBefore(fg2Canvas, document.getElementById('ebm'));
 			// 原本有三个图层 从4开始添加
 			var num = 4;
-			// 新增图层存入editor.dom中
 			editor.dom.bg2c = core.canvas.bg2.canvas;
 			editor.dom.bg2Ctx = core.canvas.bg2;
 			editor.dom.fg2c = core.canvas.fg2.canvas;
@@ -398,11 +387,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 
 			// 创建编辑器上的按钮
 			var createCanvasBtn = function (name) {
-				// 电脑端创建按钮
 				var input = document.createElement('input');
-				// layerMod4/layerMod5
 				var id = 'layerMod' + num++;
-				// bg2map/fg2map
 				var value = name + 'map';
 				input.type = 'radio';
 				input.name = 'layerMod';
@@ -416,7 +402,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			};
 
 			var createCanvasBtn_mobile = function (name) {
-				// 手机端往选择列表中添加子选项
 				var input = document.createElement('option');
 				var id = 'layerMod' + num++;
 				var value = name + 'map';
@@ -428,16 +413,11 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (!editor.isMobile) {
 				var input = createCanvasBtn('bg2');
 				var input2 = createCanvasBtn('fg2');
-				// 获取事件层及其父节点
 				var child = document.getElementById('layerMod'),
 					parent = child.parentNode;
-				// 背景层2插入事件层前
 				parent.insertBefore(input, child);
-				// 不能直接更改背景层2的innerText 所以创建文本节点
 				var txt = document.createTextNode('bg2');
-				// 插入事件层前(即新插入的背景层2前)
 				parent.insertBefore(txt, child);
-				// 向最后插入前景层2(即插入前景层后)
 				parent.appendChild(input2);
 				var txt2 = document.createTextNode('fg2');
 				parent.appendChild(txt2);
@@ -447,7 +427,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			} else {
 				var input = createCanvasBtn_mobile('bg2');
 				var input2 = createCanvasBtn_mobile('fg2');
-				// 手机端因为是选项 所以可以直接改innerText
 				input.innerText = '背景层2';
 				input2.innerText = '前景层2';
 				var parent = document.getElementById('layerMod');
@@ -460,11 +439,9 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		core.maps._loadFloor_doNotCopy = function () {
 			return ["bg2map", "fg2map"].concat(_loadFloor_doNotCopy());
 		}
-		////// 绘制背景和前景层 //////
 		core.maps._drawBg_draw = function (floorId, toDrawCtx, cacheCtx, config) {
 			config.ctx = cacheCtx;
 			core.maps._drawBg_drawBackground(floorId, config);
-			// ------ 调整这两行的顺序来控制是先绘制贴图还是先绘制背景图块；后绘制的覆盖先绘制的。
 			core.maps._drawFloorImages(floorId, config.ctx, 'bg', null, null, config.onMap);
 			core.maps._drawBgFgMap(floorId, 'bg', config);
 			if (config.onMap) {
@@ -478,7 +455,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 		core.maps._drawFg_draw = function (floorId, toDrawCtx, cacheCtx, config) {
 			config.ctx = cacheCtx;
-			// ------ 调整这两行的顺序来控制是先绘制贴图还是先绘制前景图块；后绘制的覆盖先绘制的。
 			core.maps._drawFloorImages(floorId, config.ctx, 'fg', null, null, config.onMap);
 			core.maps._drawBgFgMap(floorId, 'fg', config);
 			if (config.onMap) {
@@ -490,7 +466,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (config.onMap) core.drawImage('fg2', cacheCtx.canvas, core.bigmap.v2 ? -32 : 0, core.bigmap.v2 ? -32 : 0);
 			config.ctx = toDrawCtx;
 		}
-		////// 移动判定 //////
 		core.maps._generateMovableArray_arrays = function (floorId) {
 			return {
 				bgArray: this.getBgMapArray(floorId),
@@ -505,16 +480,16 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 道具商店相关的插件
 		// 可在全塔属性-全局商店中使用「道具商店」事件块进行编辑（如果找不到可以在入口方块中找）
 
-		var shopId = null; // 当前商店ID
-		var type = 0; // 当前正在选中的类型，0买入1卖出
-		var selectItem = 0; // 当前正在选中的道具
-		var selectCount = 0; // 当前已经选中的数量
+		var shopId = null;
+		var type = 0;
+		var selectItem = 0;
+		var selectCount = 0;
 		var page = 0;
 		var totalPage = 0;
 		var totalMoney = 0;
 		var list = [];
-		var shopInfo = null; // 商店信息
-		var choices = []; // 商店选项
+		var shopInfo = null;
+		var choices = [];
 		var use = 'money';
 		var useText = '金币';
 
@@ -522,9 +497,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			middleFont = core.ui._buildFont(18, false);
 
 		this._drawItemShop = function () {
-			// 绘制道具商店
-
-			// Step 1: 背景和固定的几个文字
 			core.ui._createUIEvent();
 			core.clearMap('uievent');
 			core.ui.clearUIEventSelector();
@@ -553,7 +525,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				core.fillText("uievent", "确定", 364, 380);
 			}
 
-			// Step 2：获得列表并展示
 			list = choices.filter(function (one) {
 				if (one.condition != null && one.condition != '') {
 					try { if (!core.calValue(one.condition)) return false; } catch (e) { }
@@ -564,7 +535,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			totalPage = Math.ceil(list.length / per_page);
 			page = Math.floor((selectItem || 0) / per_page) + 1;
 
-			// 绘制分页
 			if (totalPage > 1) {
 				var half = 156;
 				core.setTextAlign('uievent', 'center');
@@ -574,7 +544,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 			core.setTextAlign('uievent', 'left');
 
-			// 绘制每一项
 			var start = (page - 1) * per_page;
 			for (var i = 0; i < per_page; ++i) {
 				var curr = start + i;
@@ -587,7 +556,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				core.fillText('uievent', (type == 0 ? core.calValue(item.money) : core.calValue(item.sell)) + useText + "/个", 300, 133 + i * 40, null, middleFont);
 				core.setTextAlign("uievent", "left");
 				if (curr == selectItem) {
-					// 绘制描述，文字自动放缩
 					var text = core.material.items[item.id].text || "该道具暂无描述";
 					try { text = core.replaceText(text); } catch (e) { }
 					for (var fontSize = 20; fontSize >= 8; fontSize -= 2) {
@@ -659,27 +627,27 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var item = list[selectItem] || null;
 			// 键盘操作
 			switch (keycode) {
-				case 38: // up
+				case 38:
 					if (selectItem == null) break;
 					if (selectItem == 0) selectItem = null;
 					else selectItem--;
 					selectCount = 0;
 					break;
-				case 37: // left
+				case 37:
 					if (selectItem == null) {
 						if (type > 0) type--;
 						break;
 					}
 					_add(item, -1);
 					break;
-				case 39: // right
+				case 39:
 					if (selectItem == null) {
 						if (type < 2) type++;
 						break;
 					}
 					_add(item, 1);
 					break;
-				case 40: // down
+				case 40:
 					if (selectItem == null) {
 						if (list.length > 0) selectItem = 0;
 						break;
@@ -689,7 +657,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					selectCount = 0;
 					break;
 				case 13:
-				case 32: // Enter/Space
+				case 32:
 					if (selectItem == null) {
 						if (type == 2)
 							core.insertAction({ "type": "break" });
@@ -699,7 +667,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					}
 					_confirm(item);
 					break;
-				case 27: // ESC
+				case 27:
 					if (selectItem == null) {
 						core.insertAction({ "type": "break" });
 						break;
@@ -711,9 +679,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 
 		this._performItemShopClick = function (px, py) {
 			var item = list[selectItem] || null;
-			// 鼠标操作
 			if (px >= 22 && px <= 82 && py >= 71 && py <= 102) {
-				// 买
 				if (type != 0) {
 					type = 0;
 					selectItem = null;
@@ -722,7 +688,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return;
 			}
 			if (px >= 122 && px <= 182 && py >= 71 && py <= 102) {
-				// 卖
 				if (type != 1) {
 					type = 1;
 					selectItem = null;
@@ -730,18 +695,14 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 				return;
 			}
-			if (px >= 222 && px <= 282 && py >= 71 && py <= 102) // 离开
+			if (px >= 222 && px <= 282 && py >= 71 && py <= 102)
 				return core.insertAction({ "type": "break" });
-			// < >
 			if (px >= 318 && px <= 341 && py >= 348 && py <= 376)
 				return _add(item, -1);
 			if (px >= 388 && px <= 416 && py >= 348 && py <= 376)
 				return _add(item, 1);
-			// 确定
 			if (px >= 341 && px <= 387 && py >= 380 && py <= 407)
 				return _confirm(item);
-
-			// 上一页/下一页
 			if (px >= 45 && px <= 105 && py >= 388) {
 				if (page > 1) {
 					selectItem -= 6;
@@ -757,7 +718,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return;
 			}
 
-			// 实际区域
 			if (px >= 9 && px <= 300 && py >= 120 && py < 360) {
 				if (list.length == 0) return;
 				var index = parseInt((py - 120) / 40);
@@ -835,9 +795,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 复写 _drawBook_drawName
 		var originDrawBook = core.ui._drawBook_drawName;
 		core.ui._drawBook_drawName = function (index, enemy, top, left, width) {
-			// 如果没有境界，则直接调用原始代码绘制
 			if (!enemy.level) return originDrawBook.call(core.ui, index, enemy, top, left, width);
-			// 存在境界，则额外进行绘制
 			core.setTextAlign('ui', 'center');
 			if (enemy.specialText.length == 0) {
 				core.fillText('ui', enemy.name, left + width / 2,
@@ -854,14 +812,11 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 							this._buildFont(14, true), width);
 						break;
 					case 2:
-						// Step 1: 计算字体
 						var text = enemy.specialText[0] + "  " + enemy.specialText[1];
 						core.setFontForMaxWidth('ui', text, width, this._buildFont(14, true));
-						// Step 2: 计算总宽度
 						var totalWidth = core.calWidth('ui', text);
 						var leftWidth = core.calWidth('ui', enemy.specialText[0]);
 						var rightWidth = core.calWidth('ui', enemy.specialText[1]);
-						// Step 3: 绘制
 						core.fillText('ui', enemy.specialText[0], left + (width + leftWidth - totalWidth) / 2,
 							top + 38, core.arrayToRGBA((enemy.specialColor || [])[0] || '#FF6A6A'));
 						core.fillText('ui', enemy.specialText[1], left + (width + totalWidth - rightWidth) / 2,
@@ -876,9 +831,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 		}
 
-		// 也可以复写其他的属性颜色如怪物攻防等，具体参见下面的例子的注释部分
 		core.ui._drawBook_drawRow1 = function (index, enemy, top, left, width, position) {
-			// 绘制第一行
 			core.setTextAlign('ui', 'left');
 			var b13 = this._buildFont(13, true),
 				f13 = this._buildFont(13, false);
@@ -933,10 +886,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		var heroCount = 2; // 包含默认角色在内总共多少个角色，该值需手动修改。
 
 		this.initHeros = function () {
-			core.setFlag("hero1", core.clone(hero1)); // 将属性值存到变量中
-			// core.setFlag("hero2", core.clone(hero2)); // 更多的角色也存入变量中；每个定义的角色都需要新增一行
-
-			// 检测是否存在装备
+			core.setFlag("hero1", core.clone(hero1));
 			if (hero1.equipment) {
 				if (!hero1.items || !hero1.items.equips) {
 					alert('多角色插件的equipment和道具中的equips必须拥有相同状态！');
@@ -1011,7 +961,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					core.status.hero[name] = core.clone(data[name]);
 				}
 			});
-			// 最后装上装备
 			if (hero1.equipment) {
 				core.items.quickLoadEquip(100 + toHeroId);
 			}
@@ -1021,7 +970,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			core.status.route = core.status.route.slice(0, routeLength);
 			core.control._bindRoutePush();
 
-			// 插入事件：改变角色行走图并进行楼层切换
 			var toFloorId = data.floorId || core.status.floorId;
 			var toLoc = data.loc || core.status.hero.loc;
 			core.insertAction([
@@ -1047,7 +995,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		if (!__enable) return;
 
 		["up", "down", "left", "right"].forEach(function (one) {
-			// 指定中间帧动画
 			core.material.icons.hero[one].midFoot = 2;
 		});
 
@@ -1064,7 +1011,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		core.events._eventMoveHero_moving = function (step, moveSteps) {
 			var curr = moveSteps[0];
 			var direction = curr[0], x = core.getHeroLoc('x'), y = core.getHeroLoc('y');
-			// ------ 前进/后退
 			var o = direction == 'backward' ? -1 : 1;
 			if (direction == 'forward' || direction == 'backward') direction = core.getHeroLoc('direction');
 			var faceDirection = direction;
@@ -1165,15 +1111,15 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 						case 2: // pop
 							alert("您已移除已录制内容的最后一项：" + core.status.route.pop());
 							break;
-						case 3: // push
+						case 3:
 							core.utils.myprompt("请输入您要追加到已录制内容末尾的项：", "", function (value) {
 								if (value != null) core.status.route.push(value);
 							});
 							break;
-						case 4: // shift
+						case 4:
 							alert("您已移除即将播放内容的第一项：" + core.status.replay.toReplay.shift());
 							break;
-						case 5: // unshift
+						case 5:
 							core.utils.myprompt("请输入您要追加到即将播放内容开头的项：", "", function (value) {
 								if (value != null) core.status.replay.toReplay.unshift(value);
 							});
@@ -1187,8 +1133,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 样板自带的整数输入事件为白屏弹窗且可以误输入任意非法内容但不支持负整数，观感较差。本插件可以将其美化成仿RM样式，使其支持负整数同时带有音效
 		// 另一方面，4399等第三方平台不允许使用包括 core.myprompt() 和 core.myconfirm() 在内的弹窗，因此也需要此插件来替代，不然类似生命魔杖的道具就不好实现了
 		// 关于负整数输入，V2.8.2原生支持其录像的压缩和解压，只是默认的 core.events._action_input() 函数将负数取了绝对值，可以只复写下面的 core.isReplaying() 部分来取消
-
-		// 是否启用本插件，false表示禁用，true表示启用
 		var __enable = true;
 		if (!__enable) return;
 
@@ -1537,12 +1481,9 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 			}
 
-			/** 添加事件监听器 */
 			this.addEventListener = function () {
 				this.canvas.addEventListener.apply(this.canvas, arguments);
 			}
-
-			/** 移除事件监听器 */
 			this.removeEventListener = function () {
 				this.canvas.removeEventListener.apply(this.canvas, arguments);
 			}
@@ -1678,9 +1619,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					}
 				}
 			} else if (data === 'functions') {
-				// 脚本编辑略微麻烦点
 				const before = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a;
-				// 这里不能用动态导入，因为动态导入会变成模块，变量就不是全局的了
 				const script = document.createElement('script');
 				script.src = `/project/functions.js?v=${Date.now()}`;
 				document.body.appendChild(script);
@@ -1688,7 +1627,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					script.onload = () => res('success');
 				});
 				const after = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a;
-				// 找到差异的函数
 				for (const mod in before) {
 					const fns = before[mod];
 					for (const id in fns) {
