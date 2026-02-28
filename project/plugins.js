@@ -23,8 +23,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// core.plugin.drawLight('test2', 0.9, [[25,11,46],[105,121,88],[301,221,106]]); // 创建test2图层，且存在三个灯光效果，分别是中心(25,11)半径46，中心(105,121)半径88，中心(301,221)半径106。
 		// core.plugin.drawLight('xxx', 0.3, [[25,11,46],[105,121,88,0.2]], 0.4); // 存在两个灯光效果，它们在内圈40%范围内保持全亮，40%后才开始衰减。
 		this.drawLight = function (name, color, lights, lightDec) {
-
-			// 清空色调层；也可以修改成其它层比如animate/weather层，或者用自己创建的canvas
 			var ctx = core.getContextByName(name);
 			if (ctx == null) {
 				if (typeof name == 'string')
@@ -358,7 +356,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		if (!__enable) return;
 
 		// 创建新图层
-		function createCanvas (name, zIndex) {
+		function createCanvas(name, zIndex) {
 			if (!name) return;
 			var canvas = document.createElement('canvas');
 			canvas.id = name;
@@ -1404,7 +1402,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		 * @param {'game' | 'window'} reference 参考系，游戏画面或者窗口
 		 * @param {string} name 可选，sprite的名称，方便通过core.dymCanvas获取
 		 */
-		function Sprite (x, y, w, h, z, reference, name) {
+		function Sprite(x, y, w, h, z, reference, name) {
 			this.x = x;
 			this.y = y;
 			this.width = w;
