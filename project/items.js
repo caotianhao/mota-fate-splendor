@@ -117,8 +117,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			},
 			"percentage": {}
 		},
-		"itemEffect": "",
-		"itemEffectTip": ""
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"sword2": {
 		"cls": "items",
@@ -190,17 +190,18 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": "，防御+0"
 	},
 	"shield1": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "铁盾",
-		"text": "一个很普通的铁盾",
+		"text": "批量装备于王国下级士兵的盾牌",
 		"equip": {
 			"type": 1,
 			"value": {
-				"def": 10
-			}
+				"def": 3
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.def += 10",
-		"itemEffectTip": "，防御+10"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"shield2": {
 		"cls": "items",
