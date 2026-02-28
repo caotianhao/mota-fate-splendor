@@ -16,7 +16,16 @@ main.floors.MT2=
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
-    "changeFloor": {},
+    "changeFloor": {
+        "3,11": {
+            "floorId": ":before",
+            "stair": "upFloor"
+        },
+        "6,11": {
+            "floorId": ":next",
+            "stair": "downFloor"
+        }
+    },
     "beforeBattle": {},
     "afterBattle": {},
     "afterGetItem": {},
@@ -36,7 +45,7 @@ main.floors.MT2=
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
-    [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+    [  1,  0,  0, 88,  0,  0, 87,  0,  0,  0,  0,  0,  1],
     [  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1]
 ],
     "bgmap": [

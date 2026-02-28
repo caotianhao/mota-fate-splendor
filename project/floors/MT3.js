@@ -16,7 +16,16 @@ main.floors.MT3=
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
-    "changeFloor": {},
+    "changeFloor": {
+        "1,8": {
+            "floorId": ":before",
+            "stair": "upFloor"
+        },
+        "4,8": {
+            "floorId": ":next",
+            "stair": "downFloor"
+        }
+    },
     "beforeBattle": {},
     "afterBattle": {},
     "afterGetItem": {},
@@ -33,7 +42,7 @@ main.floors.MT3=
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
-    [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+    [  1, 88,  0,  0, 87,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
