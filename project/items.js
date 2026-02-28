@@ -108,16 +108,17 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"sword1": {
 		"cls": "items",
 		"name": "铁剑",
-		"text": "一把很普通的铁剑",
+		"text": "批量装备于王国下级士兵的武器",
 		"equip": {
 			"type": 0,
 			"animate": "sword",
 			"value": {
-				"atk": 10
-			}
+				"atk": 3
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.atk += 10",
-		"itemEffectTip": "，攻击+10"
+		"itemEffect": "core.status.hero.atk += 3",
+		"itemEffectTip": "，攻击+3"
 	},
 	"sword2": {
 		"cls": "items",
