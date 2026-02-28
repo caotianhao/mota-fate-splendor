@@ -545,6 +545,26 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"cls": "constants",
 		"name": "血瓶数据显示开关",
 		"canUseItemEffect": "true",
-		"text": "开启或者关闭血瓶宝石数据显示"
+		"text": "开启或者关闭血瓶宝石数据显示",
+		"useItemEvent": [
+			{
+				"type": "confirm",
+				"text": "是否开启血瓶宝石显示数据(默认开启)",
+				"yes": [
+					{
+						"type": "setValue",
+						"name": "flag:itemDetail",
+						"value": "true"
+					}
+				],
+				"no": [
+					{
+						"type": "setValue",
+						"name": "flag:itemDetail",
+						"value": "false"
+					}
+				]
+			}
+		]
 	}
 }

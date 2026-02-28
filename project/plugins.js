@@ -1619,5 +1619,155 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}, 1000);
 			}
 		})();
-	}
+	},
+	"drawBloodAndGem": function () {
+		var origin = core.control.updateStatusBar;
+		core.updateStatusBar = core.control.updateStatusBar = function () {
+			if (core.getFlag('__statistics__')) return;
+			else return origin.apply(core.control, arguments);
+		}
+
+		core.bigmap.threshold = 256;
+		core.control.updateDamage = function (floorId, ctx) {
+			floorId = floorId || core.status.floorId;
+			if (!floorId || core.status.gameOver || main.mode != 'play') return;
+			var onMap = ctx == null;
+
+			if (!core.hasItem('book')) return;
+			core.status.damage.posX = core.bigmap.posX;
+			core.status.damage.posY = core.bigmap.posY;
+			if (!onMap) {
+				var width = core.floors[floorId].width,
+					height = core.floors[floorId].height;
+				if (width * height > core.bigmap.threshold) return;
+			}
+			this._updateDamage_damage(floorId, onMap);
+			this._updateDamage_extraDamage(floorId, onMap);
+			core.getItemDetail(floorId);
+			this.drawDamage(ctx);
+		};
+		control.prototype._drawDamage_draw = function (ctx, onMap) {
+			if (!core.hasItem('book')) return;
+			core.setFont(ctx, "bold 11px Arial");
+			core.setTextAlign(ctx, 'left');
+			core.status.damage.data.forEach(function (one) {
+				var px = one.px,
+					py = one.py;
+				if (onMap && core.bigmap.v2) {
+					px -= core.bigmap.posX * 32;
+					py -= core.bigmap.posY * 32;
+					if (px < -32 * 2 || px > core._PX_ + 32 || py < -32 || py > core._PY_ + 32)
+						return;
+				}
+				core.fillBoldText(ctx, one.text, px, py, one.color);
+			});
+			core.setTextAlign(ctx, 'center');
+			core.status.damage.extraData.forEach(function (one) {
+				var px = one.px,
+					py = one.py;
+				if (onMap && core.bigmap.v2) {
+					px -= core.bigmap.posX * 32;
+					py -= core.bigmap.posY * 32;
+					if (px < -32 || px > core._PX_ + 32 || py < -32 || py > core._PY_ + 32)
+						return;
+				}
+				core.fillBoldText(ctx, one.text, px, py, one.color);
+			});
+		};
+		this.getItemDetail = function (floorId) {
+			if (!core.getFlag("itemDetail")) return;
+			floorId = floorId || core.status.thisMap.floorId;
+			core.status.maps[floorId].blocks.forEach(function (block) {
+				if (block.event.cls !== 'items' || block.event.id === 'superPotion') return;
+				var x = block.x,
+					y = block.y;
+				if (core.bigmap.v2) {
+					if (x < core.bigmap.posX - core.bigmap.extend || x > core.bigmap.posX + core.__SIZE__ + core.bigmap.extend ||
+						y < core.bigmap.posY - core.bigmap.extend || y > core.bigmap.posY + core.__SIZE__ + core.bigmap.extend) {
+						return;
+					}
+				}
+				var id = block.event.id;
+				var item = core.material.items[id];
+				if (item.cls === 'equips') {
+					var diff = core.clone(item.equip.value || {});
+					var per = item.equip.percentage;
+					for (var name in per) {
+						diff[name + 'per'] = per[name].toString() + '%';
+					}
+					drawItemDetail(diff, x, y);
+					return;
+				}
+				var before = core.clone(core.status.hero);
+				core.setFlag("__statistics__", true);
+				try {
+					eval(item.itemEffect);
+				} catch (error) { }
+				var diff = compareObject(before, core.status.hero);
+
+				// 暂时保留这两行即可
+				// 如果运行时报 hero is not defined 或 flags is not defined，再改成显式写全局
+				/*
+					core.status.hero = before;
+					if (typeof window !== 'undefined') {
+						window.hero = before;
+						window.flags = core.status.hero.flags;
+					}
+				 */
+				core.status.hero = hero = before;
+				flags = core.status.hero.flags;
+
+				drawItemDetail(diff, x, y);
+			});
+		};
+		function compareObject(a, b) {
+			a = a || {};
+			b = b || {};
+			var diff = {};
+			for (var name in a) {
+				diff[name] = b[name] - (a[name] || 0);
+				if (!diff[name]) diff[name] = void 0;
+			}
+			return diff;
+		};
+		function drawItemDetail(diff, x, y) {
+			var px = 32 * x + 2,
+				py = 32 * y + 30;
+			var content = "";
+			var i = 0;
+			for (var name in diff) {
+				if (!diff[name]) continue;
+				var color = "#ffffff";
+				if (typeof diff[name] === 'number')
+					diff[name] = core.formatBigNumber(diff[name], true);
+				switch (name) {
+					case 'atk':
+					case 'atkper':
+						color = "#FF7A7A";
+						break;
+					case 'def':
+					case 'defper':
+						color = "#00E6F1";
+						break;
+					case 'mdef':
+					case 'mdefper':
+						color = "#6EFF83";
+						break;
+					case 'hp':
+						color = "#A4FF00";
+						break;
+					case 'hpmax':
+					case 'hpmaxper':
+						color = "#F9FF00";
+						break;
+					case 'mana':
+						color = "#cc6666";
+						break;
+				}
+				content = diff[name];
+				core.status.damage.data.push({ text: content, px: px, py: py - 10 * i, color: color });
+				i++;
+			}
+		}
+	},
 }
