@@ -3,7 +3,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"greenSlime": {"name":"史莱姆","hp":70,"atk":6,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"redSlime": {"name":"红色史莱姆","hp":95,"atk":7,"def":0,"money":1,"exp":0,"point":0,"special":[],"value":null},
 	"blackSlime": {"name":"大史莱姆","hp":170,"atk":15,"def":8,"money":1,"exp":0,"point":0,"special":[1]},
-	"slimelord": {"name":"怪王","hp":100,"atk":120,"def":0,"money":10,"exp":0,"point":0,"special":[1]},
+	"slimelord": {"name":"史莱姆王","hp":200,"atk":21,"def":9,"money":1,"exp":0,"point":0,"special":[]},
 	"bat": {"name":"蝙蝠幼崽","hp":95,"atk":9,"def":2,"money":1,"exp":0,"point":0,"special":[1]},
 	"bigBat": {"name":"大蝙蝠","hp":135,"atk":17,"def":3,"money":1,"exp":0,"point":0,"special":0},
 	"redBat": {"name":"红蝙蝠","hp":270,"atk":18,"def":5,"money":1,"exp":0,"point":0,"special":[4]},
