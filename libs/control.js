@@ -1,13 +1,6 @@
-
-/*
-control.js：游戏主要逻辑控制
-主要负责status相关内容，以及各种变量获取/存储
-寻路算法和人物行走也在此文件内
- */
-
 "use strict";
 
-function control () {
+function control() {
     this._init();
 }
 
@@ -50,7 +43,6 @@ control.prototype._init = function () {
     this.registerReplayAction("click", this._replayAction_click);
     this.registerReplayAction("ignoreInput", this._replayAction_ignoreInput);
     this.registerReplayAction("no", this._replayAction_no);
-    // --- 注册系统的resize
     this.registerResize("gameGroup", this._resize_gameGroup);
     this.registerResize("canvas", this._resize_canvas);
     this.registerResize("statusBar", this._resize_statusBar);
@@ -413,7 +405,6 @@ control.prototype.isPlaying = function () {
 
 ////// 清除游戏状态和数据 //////
 control.prototype.clearStatus = function () {
-    // 停止各个Timeout和Interval
     for (var i in core.timeout) {
         clearTimeout(core.timeout[i]);
         core.timeout[i] = null;

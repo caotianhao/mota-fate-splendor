@@ -7,7 +7,7 @@
 
 "use strict";
 
-function ui () {
+function ui() {
     this._init();
 }
 
@@ -15,8 +15,6 @@ function ui () {
 ui.prototype._init = function () {
     this.uidata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.ui;
 }
-
-////////////////// 地图设置
 
 ui.prototype.getContextByName = function (name) {
     if (name instanceof HTMLCanvasElement) return name.getContext('2d');
@@ -184,7 +182,6 @@ ui.prototype._uievent_fillRect = function (data) {
     }
 }
 
-////// 在某个canvas上绘制一个矩形的边框 //////
 ui.prototype.strokeRect = function (name, x, y, width, height, style, lineWidth, angle) {
     if (style) core.setStrokeStyle(name, style);
     if (lineWidth) core.setLineWidth(name, lineWidth);
@@ -214,7 +211,6 @@ ui.prototype._uievent_strokeRect = function (data) {
     }
 }
 
-////// 在某个canvas上绘制一个圆角矩形 //////
 ui.prototype.fillRoundRect = function (name, x, y, width, height, radius, style, angle) {
     if (style) core.setFillStyle(name, style);
     var ctx = this.getContextByName(name);
@@ -288,7 +284,6 @@ ui.prototype._uievent_fillPolygon = function (data) {
     this.fillPolygon('uievent', data.nodes, data.style);
 }
 
-////// 在某个canvas上绘制一个多边形的边框 //////
 ui.prototype.strokePolygon = function (name, nodes, style, lineWidth) {
     if (style) core.setStrokeStyle(name, style);
     if (lineWidth) core.setLineWidth(name, lineWidth);
@@ -330,7 +325,6 @@ ui.prototype._uievent_fillEllipse = function (data) {
         core.calValue(data.b), (core.calValue(data.angle) || 0) * Math.PI / 180, data.style);
 }
 
-////// 在某个canvas上绘制一个圆的边框 //////
 ui.prototype.strokeEllipse = function (name, x, y, a, b, angle, style, lineWidth) {
     if (style) core.setStrokeStyle(name, style);
     if (lineWidth) core.setLineWidth(name, lineWidth);
@@ -384,7 +378,6 @@ ui.prototype._uievent_strokeArc = function (data) {
         (core.calValue(data.start) || 0) * Math.PI / 180, (core.calValue(data.end) || 0) * Math.PI / 180, data.style, data.lineWidth);
 }
 
-////// 在某个canvas上绘制一条线 //////
 ui.prototype.drawLine = function (name, x1, y1, x2, y2, style, lineWidth) {
     if (style) core.setStrokeStyle(name, style);
     if (lineWidth != null) core.setLineWidth(name, lineWidth);
@@ -482,25 +475,21 @@ ui.prototype.setFilter = function (name, filter) {
     }
 }
 
-////// 设置某个canvas的绘制属性（如颜色等） //////
 ui.prototype.setFillStyle = function (name, style) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.fillStyle = core.arrayToRGBA(style);
 }
 
-////// 设置某个canvas边框属性 //////
 ui.prototype.setStrokeStyle = function (name, style) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.strokeStyle = core.arrayToRGBA(style);
 }
 
-////// 设置某个canvas的对齐 //////
 ui.prototype.setTextAlign = function (name, align) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.textAlign = align;
 }
 
-////// 设置某个canvas的baseline //////
 ui.prototype.setTextBaseline = function (name, baseline) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.textBaseline = baseline;
@@ -538,7 +527,6 @@ ui.prototype.calWidth = function (name, text, font) {
     return 0;
 }
 
-////// 字符串自动换行的分割 //////
 ui.prototype.splitLines = function (name, text, maxWidth, font) {
     var ctx = this.getContextByName(name);
     if (!ctx) return [text];
@@ -568,12 +556,9 @@ ui.prototype.splitLines = function (name, text, maxWidth, font) {
     return contents;
 }
 
-////// 绘制一张图片 //////
 ui.prototype.drawImage = function (name, image, x, y, w, h, x1, y1, w1, h1, angle, reverse) {
-    // 检测文件名以 :x, :y, :o 结尾，表示左右翻转，上下翻转和中心翻转
     var ctx = this.getContextByName(name);
     if (!ctx) return;
-    // var reverse = null;
     if (typeof image == 'string') {
         if (image.endsWith(':x') || image.endsWith(':y') || image.endsWith(':o')) {
             reverse = image.charAt(image.length - 1);
@@ -590,10 +575,8 @@ ui.prototype.drawImage = function (name, image, x, y, w, h, x1, y1, w1, h1, angl
         'o': [-1, -1]
     };
 
-    // 只能接受2, 4, 8个参数
     if (x != null && y != null) {
         if (w == null || h == null) {
-            // 两个参数变成四个参数
             w = image.width;
             h = image.height;
         }
@@ -636,7 +619,6 @@ ui.prototype.drawIcon = function (name, id, x, y, w, h, frame) {
     if (!ctx) return;
     var info = core.getBlockInfo(id);
     if (!info) {
-        // 检查状态栏图标
         if (core.statusBar.icons[id] instanceof Image)
             info = { image: core.statusBar.icons[id], posX: 0, posY: 0, height: 32 };
         else return;
@@ -653,8 +635,6 @@ ui.prototype._uievent_drawIcon = function (data) {
     } catch (e) { id = data.id; }
     this.drawIcon('uievent', id, core.calValue(data.x), core.calValue(data.y), core.calValue(data.width), core.calValue(data.height), data.frame || 0);
 }
-
-///////////////// UI绘制
 
 ////// 结束一切事件和绘制，关闭UI窗口，返回游戏进程 //////
 ui.prototype.closePanel = function () {
@@ -751,7 +731,6 @@ ui.prototype.drawText = function (contents, callback) {
 }
 
 ui.prototype._drawText_setContent = function (contents, callback) {
-    // 合并进 insertAction
     if ((core.status.event && core.status.event.id == 'action')
         || (!core.hasFlag('__replayText__') && core.isReplaying())) {
         core.insertAction(contents, null, null, callback);
@@ -902,14 +881,11 @@ ui.prototype.clearUIEventSelector = function (codes) {
 ui.prototype._drawSelector = function (ctx, background, w, h, left, top) {
     left = left || 0;
     top = top || 0;
-    // back
     core.drawImage(ctx, background, 130, 66, 28, 28, left + 2, top + 2, w - 4, h - 4);
-    // corner
     core.drawImage(ctx, background, 128, 64, 2, 2, left, top, 2, 2);
     core.drawImage(ctx, background, 158, 64, 2, 2, left + w - 2, top, 2, 2);
     core.drawImage(ctx, background, 128, 94, 2, 2, left, top + h - 2, 2, 2);
     core.drawImage(ctx, background, 158, 94, 2, 2, left + w - 2, top + h - 2, 2, 2);
-    // border
     core.drawImage(ctx, background, 130, 64, 28, 2, left + 2, top, w - 4, 2);
     core.drawImage(ctx, background, 130, 94, 28, 2, left + 2, top + h - 2, w - 4, 2);
     core.drawImage(ctx, background, 128, 66, 2, 28, left, top + 2, 2, h - 4);
@@ -919,11 +895,7 @@ ui.prototype._drawSelector = function (ctx, background, w, h, left, top) {
 ////// 绘制 WindowSkin
 ui.prototype.drawWindowSkin = function (background, ctx, x, y, w, h, direction, px, py) {
     background = background || core.status.textAttribute.background;
-    // 仿RM窗口皮肤 ↓
-    // 绘制背景
     core.drawImage(ctx, background, 0, 0, 128, 128, x + 2, y + 2, w - 4, h - 4);
-    // 绘制边框
-    // 上方
     core.drawImage(ctx, background, 128, 0, 16, 16, x, y, 16, 16);
     for (var dx = 0; dx < w - 64; dx += 32) {
         core.drawImage(ctx, background, 144, 0, 32, 16, x + dx + 16, y, 32, 16);
@@ -932,18 +904,15 @@ ui.prototype.drawWindowSkin = function (background, ctx, x, y, w, h, direction, 
     core.drawImage(ctx, background, 144, 0, w - dx - 32, 16, x + dx + 16, y, w - dx - 32, 16);
     core.drawImage(ctx, background, 144, 48, w - dx - 32, 16, x + dx + 16, y + h - 16, w - dx - 32, 16);
     core.drawImage(ctx, background, 176, 0, 16, 16, x + w - 16, y, 16, 16);
-    // 左右
     for (var dy = 0; dy < h - 64; dy += 32) {
         core.drawImage(ctx, background, 128, 16, 16, 32, x, y + dy + 16, 16, 32);
         core.drawImage(ctx, background, 176, 16, 16, 32, x + w - 16, y + dy + 16, 16, 32);
     }
     core.drawImage(ctx, background, 128, 16, 16, h - dy - 32, x, y + dy + 16, 16, h - dy - 32);
     core.drawImage(ctx, background, 176, 16, 16, h - dy - 32, x + w - 16, y + dy + 16, 16, h - dy - 32);
-    // 下方
     core.drawImage(ctx, background, 128, 48, 16, 16, x, y + h - 16, 16, 16);
     core.drawImage(ctx, background, 176, 48, 16, 16, x + w - 16, y + h - 16, 16, 16);
 
-    // arrow
     if (px != null && py != null) {
         if (direction == 'up') {
             core.drawImage(ctx, background, 128, 96, 32, 32, px, y + h - 3, 32, 32);
@@ -951,7 +920,6 @@ ui.prototype.drawWindowSkin = function (background, ctx, x, y, w, h, direction, 
             core.drawImage(ctx, background, 160, 96, 32, 32, px, y - 29, 32, 32);
         }
     }
-    // 仿RM窗口皮肤 ↑
 }
 
 ////// 绘制一个背景图，可绘制 winskin 或纯色背景；支持小箭头绘制
@@ -1116,7 +1084,6 @@ ui.prototype.drawTextContent = function (ctx, content, config) {
     config.blocks = [];
     config.isHD = ctx == null || ctx.canvas.hasAttribute('isHD');
 
-    // 创建一个新的临时画布
     var tempCtx = document.createElement('canvas').getContext('2d');
     if (config.isHD && ctx) {
         core.maps._setHDCanvasSize(

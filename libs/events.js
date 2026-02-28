@@ -996,28 +996,23 @@ events.prototype.startEvents = function (list, x, y, callback) {
 
 ////// 执行当前自定义事件列表中的下一个事件 //////
 events.prototype.doAction = function () {
-    // 清空boxAnimate和UI层
     clearInterval(core.status.event.interval);
     clearTimeout(core.status.event.interval);
     clearInterval(core.status.event.animateUI);
     core.status.event.interval = null;
     delete core.status.event.aniamteUI;
     if (core.status.gameOver || core.status.replay.failed) return;
-    // 判定是否执行完毕
     if (this._doAction_finishEvents()) return;
     core.clearUI();
     var floorId = core.status.event.data.floorId || core.status.floorId;
-    // 当前点坐标和前缀
     var x = core.status.event.data.x, y = core.status.event.data.y;
     var prefix = [floorId || ":f", x != null ? x : "x", y != null ? y : "y"].join("@");
     var current = core.status.event.data.list[0];
     if (this._popEvents(current, prefix)) return;
-    // 当前要执行的事件
     var data = current.todo.shift();
     core.status.event.data.current = data;
     if (typeof data == "string")
         data = { "type": "text", "text": data };
-    // 该事件块已经被禁用
     if (data._disabled) return core.doAction();
     data.floorId = data.floorId || floorId;
     core.status.event.data.type = data.type;
@@ -1027,9 +1022,7 @@ events.prototype.doAction = function () {
 
 events.prototype._doAction_finishEvents = function () {
     if (core.status.event.id != 'action') return true;
-    // 事件处理完毕
     if (core.status.event.data.list.length == 0) {
-        // 检测并执行延迟自动事件
         if (core.status.event.data.appendingEvents.length > 0) {
             this.setEvents(core.status.event.data.appendingEvents.shift());
             return false;
@@ -1044,12 +1037,12 @@ events.prototype._doAction_finishEvents = function () {
 }
 
 events.prototype._popEvents = function (current, prefix) {
-    if (current.todo.length == 0) { // current list is empty
-        if (core.calValue(current.condition, prefix)) { // check condition
+    if (current.todo.length == 0) {
+        if (core.calValue(current.condition, prefix)) {
             current.todo = core.clone(current.total);
         }
         else {
-            core.status.event.data.list.shift(); // remove stack
+            core.status.event.data.list.shift();
         }
         core.doAction();
         return true;
@@ -1136,7 +1129,6 @@ events.prototype.checkAutoEvents = function () {
     var todo = [], delay = [];
     core.status.autoEvents.forEach(function (autoEvent) {
         var symbol = autoEvent.symbol, x = autoEvent.x, y = autoEvent.y, floorId = autoEvent.floorId;
-        // 不在当前楼层 or 已经执行过 or 已被分区 or 正在执行中
         if (autoEvent.currentFloor && floorId != core.status.floorId) return;
         if (!autoEvent.multiExecute && core.autoEventExecuted(symbol)) return;
         if ((flags.__removed__ || []).indexOf(floorId) >= 0) return;
@@ -1154,7 +1146,6 @@ events.prototype.checkAutoEvents = function () {
         var event;
         if (x == null && y == null) {
             event = [
-                // 用do-while(0)包一层防止break影响事件流
                 { "type": "dowhile", "condition": "false", "data": autoEvent.data },
                 {
                     "type": "function", "function":
