@@ -1,4 +1,4 @@
-var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
+var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a = 
 {
 	"yellowKey": {
 		"cls": "tools",
@@ -106,7 +106,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": "，攻击+0"
 	},
 	"sword1": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "铁剑",
 		"text": "批量装备于王国下级士兵的武器",
 		"equip": {
@@ -117,8 +117,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			},
 			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.atk += 3",
-		"itemEffectTip": "，攻击+3"
+		"itemEffect": "",
+		"itemEffectTip": ""
 	},
 	"sword2": {
 		"cls": "items",
