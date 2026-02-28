@@ -27,10 +27,48 @@ main.floors.MT5=
         }
     },
     "beforeBattle": {},
-    "afterBattle": {},
+    "afterBattle": {
+        "5,4": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MT5_6_3",
+                "operator": "+=",
+                "value": "1"
+            }
+        ],
+        "7,4": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MT5_6_3",
+                "operator": "+=",
+                "value": "1"
+            }
+        ]
+    },
     "afterGetItem": {},
     "afterOpenDoor": {},
-    "autoEvent": {},
+    "autoEvent": {
+        "6,3": {
+            "0": {
+                "condition": "flag:door_MT5_6_3==2",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MT5_6_3",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        }
+    },
     "cannotMove": {},
     "cannotMoveIn": {},
     "map": [
