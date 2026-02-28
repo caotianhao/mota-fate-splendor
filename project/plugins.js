@@ -479,7 +479,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 	"itemShop": function () {
 		// 道具商店相关的插件
 		// 可在全塔属性-全局商店中使用「道具商店」事件块进行编辑（如果找不到可以在入口方块中找）
-
 		var shopId = null;
 		var type = 0;
 		var selectItem = 0;
@@ -625,7 +624,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 
 		this._performItemShopKeyBoard = function (keycode) {
 			var item = list[selectItem] || null;
-			// 键盘操作
 			switch (keycode) {
 				case 38:
 					if (selectItem == null) break;
@@ -884,7 +882,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// var hero2 = { ...
 
 		var heroCount = 2; // 包含默认角色在内总共多少个角色，该值需手动修改。
-
 		this.initHeros = function () {
 			core.setFlag("hero1", core.clone(hero1));
 			if (hero1.equipment) {
@@ -920,18 +917,13 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (currHeroId == toHeroId) return;
 
 			var saveList = Object.keys(hero1);
-
-			// 保存当前内容
 			var toSave = {};
-			// 暂时干掉 drawTip 和 音效，避免切装时的提示
 			var _drawTip = core.ui.drawTip;
 			core.ui.drawTip = function () { };
 			var _playSound = core.control.playSound;
 			core.control.playSound = function () { }
-			// 记录当前录像，因为可能存在换装问题
 			core.clearRouteFolding();
 			var routeLength = core.status.route.length;
-			// 优先判定装备
 			if (hero1.equipment) {
 				core.items.quickSaveEquip(100 + currHeroId);
 				core.items.quickLoadEquip(99);
@@ -950,7 +942,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			core.setFlag("hero" + currHeroId, toSave); // 将当前角色信息进行保存
 			var data = core.getFlag("hero" + toHeroId); // 获得要切换的角色保存内容
 
-			// 设置角色的属性值
 			saveList.forEach(function (name) {
 				if (name == "floorId");
 				else if (name == "items") {
@@ -973,23 +964,21 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var toFloorId = data.floorId || core.status.floorId;
 			var toLoc = data.loc || core.status.hero.loc;
 			core.insertAction([
-				{ "type": "setHeroIcon", "name": data.image || "hero.png" }, // 改变行走图
+				{ "type": "setHeroIcon", "name": data.image || "hero.png" },
 				// 同层则用changePos，不同层则用changeFloor；这是为了避免共用楼层造成触发eachArrive
 				toFloorId != core.status.floorId ? {
 					"type": "changeFloor",
 					"floorId": toFloorId,
 					"loc": [toLoc.x, toLoc.y],
 					"direction": toLoc.direction,
-					"time": 0 // 可以在这里设置切换时间
+					"time": 0
 				} : { "type": "changePos", "loc": [toLoc.x, toLoc.y], "direction": toLoc.direction }
-				// 你还可以在这里执行其他事件，比如增加或取消跟随效果
 			]);
-			core.setFlag("heroId", toHeroId); // 保存切换到的角色ID
+			core.setFlag("heroId", toHeroId);
 		}
 	},
 	"heroFourFrames": function () {
 		// 样板的勇士/跟随者移动时只使用2、4两帧，观感较差。本插件可以将四帧全用上。
-
 		// 是否启用本插件
 		var __enable = true;
 		if (!__enable) return;
@@ -1080,35 +1069,35 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		 */
 		core.actions.registerAction('onkeyUp', '_sys_onkeyUp_replay', function (e) {
 			if (this._checkReplaying()) {
-				if (e.keyCode == 27) // ESCAPE
+				if (e.keyCode == 27)
 					core.stopReplay();
-				else if (e.keyCode == 90) // Z
+				else if (e.keyCode == 90)
 					core.speedDownReplay();
-				else if (e.keyCode == 67) // C
+				else if (e.keyCode == 67)
 					core.speedUpReplay();
-				else if (e.keyCode == 32) // SPACE
+				else if (e.keyCode == 32)
 					core.triggerReplay();
-				else if (e.keyCode == 65) // A
+				else if (e.keyCode == 65)
 					core.rewindReplay();
-				else if (e.keyCode == 83) // S
+				else if (e.keyCode == 83)
 					core.control._replay_SL();
-				else if (e.keyCode == 88) // X
+				else if (e.keyCode == 88)
 					core.control._replay_book();
-				else if (e.keyCode == 33 || e.keyCode == 34) // PgUp/PgDn
+				else if (e.keyCode == 33 || e.keyCode == 34)
 					core.control._replay_viewMap();
-				else if (e.keyCode == 78) // N
+				else if (e.keyCode == 78)
 					core.stepReplay();
-				else if (e.keyCode == 84) // T
+				else if (e.keyCode == 84)
 					core.control._replay_toolbox();
-				else if (e.keyCode == 81) // Q
+				else if (e.keyCode == 81)
 					core.control._replay_equipbox();
-				else if (e.keyCode == 66) // B
+				else if (e.keyCode == 66)
 					core.ui._drawStatistics();
-				else if (e.keyCode == 49 || e.keyCode == 54) // 1/6，原速/24倍速播放
+				else if (e.keyCode == 49 || e.keyCode == 54)
 					core.setReplaySpeed(e.keyCode == 49 ? 1 : 24);
-				else if (e.keyCode > 49 && e.keyCode < 54) { // 2-5，录像精修
+				else if (e.keyCode > 49 && e.keyCode < 54) {
 					switch (e.keyCode - 48) {
-						case 2: // pop
+						case 2:
 							alert("您已移除已录制内容的最后一项：" + core.status.route.pop());
 							break;
 						case 3:
@@ -1181,7 +1170,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"case": "keyboard",
 									"keycode": "48,49,50,51,52,53,54,55,56,57",
 									"action": [
-										// 按下数字键，追加到已输入内容的末尾，但禁止越界。变量：keycode-48就是末位数字
 										{ "type": "playSound", "name": "光标移动" },
 										{
 											"type": "if",
@@ -1200,7 +1188,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"case": "keyboard",
 									"keycode": "189",
 									"action": [
-										// 按下减号键，变更已输入内容的符号
 										{ "type": "playSound", "name": "跳跃" },
 										{ "type": "setValue", "name": "flag:input", "value": "-flag:input" },
 									]
@@ -1209,7 +1196,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"case": "keyboard",
 									"keycode": "8",
 									"action": [
-										// 按下退格键，从已输入内容的末尾删除一位
 										{ "type": "playSound", "name": "取消" },
 										{ "type": "setValue", "name": "flag:input", "operator": "//=", "value": "10" },
 									]
@@ -1218,7 +1204,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"case": "keyboard",
 									"keycode": "27",
 									"action": [
-										// 按下ESC键，清空已输入内容
 										{ "type": "playSound", "name": "读档" },
 										{ "type": "setValue", "name": "flag:input", "value": "0" },
 									]
@@ -1227,7 +1212,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"case": "keyboard",
 									"keycode": "13",
 									"action": [
-										// 按下回车键，确定
 										{ "type": "break", "n": 1 },
 									]
 								},
@@ -1236,7 +1220,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"px": [32, 63],
 									"py": [288, 320],
 									"action": [
-										// 点击减号，变号。右边界写63防止和下面重叠
 										{ "type": "playSound", "name": "跳跃" },
 										{ "type": "setValue", "name": "flag:input", "value": "-flag:input" },
 									]
@@ -1246,7 +1229,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"px": [64, 384],
 									"py": [288, 320],
 									"action": [
-										// 点击数字，追加到已输入内容的末尾，但禁止越界。变量：x-2就是末位数字
 										{ "type": "playSound", "name": "光标移动" },
 										{
 											"type": "if",
@@ -1266,7 +1248,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"px": [32, 64],
 									"py": [352, 384],
 									"action": [
-										// 点击左箭头，退格
 										{ "type": "playSound", "name": "取消" },
 										{ "type": "setValue", "name": "flag:input", "operator": "//=", "value": "10" },
 									]
@@ -1276,7 +1257,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"px": [96, 160],
 									"py": [352, 384],
 									"action": [
-										// 点击CE，清空
 										{ "type": "playSound", "name": "读档" },
 										{ "type": "setValue", "name": "flag:input", "value": "0" },
 									]
@@ -1286,7 +1266,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 									"px": [320, 384],
 									"py": [352, 384],
 									"action": [
-										// 点击OK，确定
 										{ "type": "break", "n": 1 },
 									]
 								}
@@ -1295,7 +1274,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 						]
 					},
 					{ "type": "clearMap" },
-					// 裁剪录像，只保留'input:n'，然后继续录制
 					{ "type": "function", "function": "function(){core.status.route.splice(flags['@temp@length']);core.status.route.push('input:'+core.getFlag('input',0))}" }
 				], x, y);
 				core.events.doAction();
@@ -1303,49 +1281,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"sprites": function () {
-		// 基于canvas的sprite化，摘编整理自万宁魔塔
-		// 
-		// ---------------------------------------- 第一部分 js代码 （必装） --------------------------------------- //
-
-		/* ---------------- 用法说明 ---------------- *
-		 * 1. 创建sprite: var sprite = new Sprite(x, y, w, h, z, reference, name);
-		 *   其中x y w h为画布的横纵坐标及长宽，reference为参考系，只能填game（相对于游戏画面）和window（相对于窗口）
-		 *   且当为相对游戏画面时，长宽与坐标将会乘以放缩比例（相当于用createCanvas创建）
-		 *   z为纵深，表示不同元素之间的覆盖关系，大的覆盖小的
-		 *   name为自定义名称，可以不填
-		 * 2. 删除: sprite.destroy();
-		 * 3. 设置css特效: sprite.setCss(css);
-		 *   其中css直接填 box-shadow: 0px 0px 10px black;的形式即可，与style标签与css文件内写法相同
-		 *   对于已设置的特效，如果之后不需要再次设置，可以不填
-		 * 4. 添加事件监听器: sprite.addEventListener(); 用法与html元素的addEventListener完全一致
-		 * 5. 移除事件监听器: sprite.removeEventListener(); 用法与html元素的removeEventListener完全一致
-		 * 6. 属性列表
-		 *   (1) sprite.x | sprite.y | sprite.width | sprite.height | sprite.zIndex | sprite.reference 顾名思义
-		 *   (2) sprite.canvas 该sprite的画布
-		 *   (3) sprite.context 该画布的CanvasRenderingContext2d对象，即样板中常见的ctx
-		 *   (4) sprite.count 不要改这个玩意
-		 * 7. 使用样板api进行绘制
-		 *   示例：
-		 *   var ctx = sprite.context;
-		 *   core.fillText(ctx, 'xxx', 100, 100);
-		 *   core.fillRect(ctx, 0, 0, 50, 50);
-		 *   当然也可以使用原生js
-		 *   ctx.moveTo(0, 0);
-		 *   ctx.bezierCurveTo(50, 50, 100, 0, 100, 50);
-		 *   ctx.stroke();
-		 * ---------------- 用法说明 ---------------- */
-
 		var count = 0;
-
-		/** 创建一个sprite画布
-		 * @param {number} x
-		 * @param {number} y
-		 * @param {number} w
-		 * @param {number} h
-		 * @param {number} z
-		 * @param {'game' | 'window'} reference 参考系，游戏画面或者窗口
-		 * @param {string} name 可选，sprite的名称，方便通过core.dymCanvas获取
-		 */
 		function Sprite(x, y, w, h, z, reference, name) {
 			this.x = x;
 			this.y = y;
@@ -1358,7 +1294,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			this.count = 0;
 			this.name = name || '_sprite_' + count;
 			this.style = null;
-			/** 初始化 */
 			this.init = function () {
 				if (reference === 'window') {
 					var canvas = document.createElement('canvas');
@@ -1385,9 +1320,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 			this.init();
 
-			/** 设置css特效
-			 * @param {string} css
-			 */
 			this.setCss = function (css) {
 				css = css.replace('\n', ';').replace(';;', ';');
 				var effects = css.split(';');
@@ -1407,10 +1339,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return this;
 			}
 
-			/** 
-			 * 移动sprite
-			 * @param {boolean} isDelta 是否是相对位置，如果是，那么sprite会相对于原先的位置进行移动
-			 */
 			this.move = function (x, y, isDelta) {
 				if (x !== undefined && x !== null) this.x = x;
 				if (y !== undefined && y !== null) this.y = y;
@@ -1422,10 +1350,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return this;
 			}
 
-			/** 
-			 * 重新设置sprite的大小
-			 * @param {boolean} styleOnly 是否只修改css效果，如果是，那么将会不高清，如果不是，那么会清空画布
-			 */
 			this.resize = function (w, h, styleOnly) {
 				if (w !== undefined && w !== null) this.w = w;
 				if (h !== undefined && h !== null) this.h = h;
@@ -1441,9 +1365,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return this;
 			}
 
-			/**
-			 * 旋转画布
-			 */
 			this.rotate = function (angle, cx, cy) {
 				if (this.reference === 'window') {
 					var left = this.x;
@@ -1460,9 +1381,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return this;
 			}
 
-			/**
-			 * 清除sprite
-			 */
 			this.clear = function (x, y, w, h) {
 				if (this.reference === 'window') {
 					this.context.clearRect(x, y, w, h);
@@ -1472,7 +1390,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return this;
 			}
 
-			/** 删除 */
 			this.destroy = function () {
 				if (this.reference === 'window') {
 					if (this.canvas) document.body.removeChild(this.canvas);
@@ -1492,35 +1409,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		window.Sprite = Sprite;
 	},
 	"hotReload": function () {
-		/* ---------- 功能说明 ---------- *
-
-		1. 当 libs/ main.js index.html 中的任意一个文件被更改后，会自动刷新塔的页面
-		2. 修改楼层文件后自动在塔的页面上显示出来，不需要刷新
-		3. 修改脚本编辑或插件编写后也能自动更新更改的插件或脚本，但不保证不会出问题（一般都不会有问题的
-		4. 修改图块属性、怪物属性等后会自动更新
-		5. 当全塔属性被修改时，会自动刷新塔的页面
-		6. 样板的 styles.css 被修改后也可以直接显示，不需要刷新
-		7. 其余内容修改后不会自动更新也不会刷新
-
-		/* ---------- 使用方式 ---------- *
-
-		1. 前往 https://nodejs.org/en/ 下载node.js的LTS版本（点左边那个绿色按钮）并安装
-		2. 将该插件复制到插件编写中
-		3. 在造塔群的群文件-魔塔样板·改中找到server.js，下载并放到塔的根目录（与启动服务同一级）
-		4. 在该目录下按下shift+鼠标右键（win11只按右键即可），选择在终端打开或在powershell打开
-		5. 运行node server.js即可
-
-		*/
-
 		if (main.mode !== 'play' || main.replayChecking) return;
 
-		/**
-		 * 发送请求
-		 * @param {string} url
-		 * @param {string} type
-		 * @param {string} data
-		 * @returns {Promise<string>}
-		 */
 		async function post(url, type, data) {
 			const xhr = new XMLHttpRequest();
 			xhr.open(type, url);
@@ -1541,10 +1431,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			else return '@error';
 		}
 
-		/**
-		 * 热重载css
-		 * @param {string} data
-		 */
 		function reloadCss(data) {
 			const all = Array.from(document.getElementsByTagName('link'));
 			all.forEach(v => {
@@ -1561,10 +1447,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			});
 		}
 
-		/**
-		 * 热重载楼层
-		 * @param {string} data
-		 */
 		async function reloadFloor(data) {
 			// 首先重新加载main.floors对应的楼层
 			await import(`/project/floors/${data}.js?v=${Date.now()}`);
@@ -1587,15 +1469,9 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			console.log(`floor hot reload: ${data}`);
 		}
 
-		/**
-		 * 热重载脚本编辑及插件编写
-		 * @param {string} data
-		 */
 		async function reloadScript(data) {
 			if (data === 'plugins') {
-				// 插件编写比较好办
 				const before = plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1;
-				// 这里不能用动态导入，因为动态导入会变成模块，变量就不是全局的了
 				const script = document.createElement('script');
 				script.src = `/project/plugins.js?v=${Date.now()}`;
 				document.body.appendChild(script);
@@ -1603,7 +1479,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					script.onload = () => res('success');
 				});
 				const after = plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1;
-				// 找到差异的函数
 				for (const id in before) {
 					const fn = before[id];
 					if (typeof fn !== 'function') continue;
@@ -1660,10 +1535,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 		}
 
-		/**
-		 * 属性热重载，包括全塔属性等
-		 * @param {string} data
-		 */
 		async function reloadData(data) {
 			const script = document.createElement('script');
 			script.src = `/project/${data}.js?v=${Date.now()}`;
@@ -1721,14 +1592,12 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			console.log(`data hot reload: ${data}`);
 		}
 
-		// 初始化
 		(async function () {
 			const data = await post('/reload', 'POST', 'test');
 			if (data === '@error') {
 				console.log(`未检测到node服务，热重载插件将无法使用`);
 			} else {
 				console.log(`热重载插件加载成功`);
-				// reload
 				setInterval(async () => {
 					const res = await post('/reload', 'POST');
 					if (res === '@error') return;
@@ -1736,7 +1605,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					else return;
 				}, 1000);
 
-				// hot reload
 				setInterval(async () => {
 					const res = await post('/hotReload', 'POST');
 					const data = res.split('@@');

@@ -695,107 +695,97 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 	},
 	"actions": {
 		"onKeyUp": function (keyCode, altKey) {
-			// 键盘按键处理，可以在这里自定义快捷键列表
-			// keyCode：当前按键的keyCode（每个键的keyCode自行百度）
 			// altKey：Alt键是否被按下，为true代表同时按下了Alt键
-			// 可以在这里任意增加或编辑每个按键的行为
-
-			// 如果处于正在行走状态，则不处理
 			if (core.isMoving()) return;
-
-			// 商店长按时忽略
 			if (core.status.onShopLongDown) return core.status.onShopLongDown = false;
-
-			// Alt+0~9，快捷换上套装
 			if (altKey && keyCode >= 48 && keyCode <= 57) {
 				core.items.quickLoadEquip(keyCode - 48);
 				return;
 			}
 
-			// 根据keyCode值来执行对应操作
 			switch (keyCode) {
-				case 27: // ESC：打开菜单栏
+				case 27:
 					core.openSettings(true);
 					break;
-				case 88: // X：使用怪物手册
+				case 88:
 					core.openBook(true);
 					break;
-				case 71: // G：使用楼传器
+				case 71:
 					core.useFly(true);
 					break;
-				case 65: // A：读取自动存档（回退）
+				case 65:
 					core.doSL("autoSave", "load");
 					break;
-				case 87: // W：撤销回退
+				case 87:
 					core.doSL("autoSave", "reload");
 					break;
-				case 83: // S：存档
+				case 83:
 					core.save(true);
 					break;
-				case 68: // D：读档
+				case 68:
 					core.load(true);
 					break;
-				case 69: // E：打开光标
+				case 69:
 					core.ui._drawCursor();
 					break;
-				case 84: // T：打开道具栏
+				case 84:
 					core.openToolbox(true);
 					break;
-				case 81: // Q：打开装备栏
+				case 81:
 					core.openEquipbox(true);
 					break;
-				case 90: // Z：转向
+				case 90:
 					core.turnHero();
 					break;
-				case 86: // V：打开快捷商店列表
+				case 86:
 					core.openQuickShop(true);
 					break;
-				case 32: // SPACE：轻按
+				case 32:
 					core.getNextItem();
 					break;
-				case 82: // R：回放录像
+				case 82:
 					core.ui._drawReplay();
 					break;
 				case 33:
-				case 34: // PgUp/PgDn：浏览地图
+				case 34:
 					core.ui._drawViewMaps();
 					break;
-				case 66: // B：打开数据统计
+				case 66:
 					core.ui._drawStatistics();
 					break;
-				case 72: // H：打开帮助页面
+				case 72:
 					core.ui._drawHelp();
 					break;
-				case 77: // M：打开存档笔记
+				case 77:
 					core.actions._clickNotes_show();
 					break;
-				case 78: // N：重新开始
+				case 78:
 					core.confirmRestart();
 					break;
-				case 79: // O：查看工程
+				case 79:
 					core.actions._clickGameInfo_openProject();
 					break;
-				case 80: // P：游戏主页
+				case 80:
 					core.actions._clickGameInfo_openComments();
 					break;
-				case 49: // 快捷键1: 破
+				case 49:
 					if (core.hasItem('pickaxe')) {
 						core.status.route.push("key:49"); // 将按键记在录像中
 						core.useItem('pickaxe', true); // 第二个参数true代表该次使用道具是被按键触发的，使用过程不计入录像
 					}
 					break;
-				case 50: // 快捷键2: 炸
+				case 50:
 					if (core.hasItem('bomb')) {
 						core.status.route.push("key:50"); // 将按键记在录像中
 						core.useItem('bomb', true); // 第二个参数true代表该次使用道具是被按键触发的，使用过程不计入录像
 					}
 					break;
-				case 51: // 快捷键3: 飞
+				case 51:
 					if (core.hasItem('centerFly')) {
 						core.ui._drawCenterFly();
 					}
 					break;
-				case 52: // 快捷键4：破冰/冰冻/地震/上下楼器/... 其他道具依次判断
+				case 52:
 					{
 						var list = ["icePickaxe", "freezeBadge", "earthquake", "upFly", "downFly", "jumpShoes", "lifeWand", "poisonWine", "weakWine", "curseWine", "superWine"];
 						for (var i = 0; i < list.length; i++) {
@@ -808,13 +798,13 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 						}
 					}
 					break;
-				case 53: // 5：读取自动存档（回退），方便手机版操作
+				case 53:
 					core.doSL("autoSave", "load");
 					break;
-				case 54: // 6：撤销回退，方便手机版操作
+				case 54:
 					core.doSL("autoSave", "reload");
 					break;
-				case 55: // 快捷键7：绑定为轻按，方便手机版操作
+				case 55:
 					core.getNextItem();
 					break;
 				case 118: // F7：开启debug模式
@@ -853,8 +843,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// 横屏模式下状态栏的画布大小是 129*416 （开启拓展装备栏后是 129*457）
 			// 竖屏模式下状态栏的画布大小是 416*(32*rows+9) 其中rows为状态栏行数，即全塔属性中statusCanvasRowsOnMobile值
 			// 可以使用 _isVertical() 来判定当前是否是竖屏模式
-
-			// 判定当前是否是竖屏模式。录像播放过程中可能会记录当时的横竖屏信息以覆盖。
 			var _isVertical = function () {
 				if (core.isReplaying() && vertical != null) return vertical;
 				return core.domStyle.isVertical;
@@ -887,13 +875,10 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			return data;
 		},
 		"loadData": function (data, callback) {
-			// 读档操作；从存储中读取了内容后的行为
-
 			// 重置游戏和路线
 			core.resetGame(data.hero, data.hard, data.floorId, core.maps.loadMap(data.maps, null, data.hero.flags), data.values);
 			core.status.route = core.decodeRoute(data.route);
 			core.control._bindRoutePush();
-			// 文字属性，全局属性
 			core.status.textAttribute = core.getFlag('textAttribute', core.status.textAttribute);
 			var toAttribute = core.getFlag('globalAttribute', core.status.globalAttribute);
 			if (!core.same(toAttribute, core.status.globalAttribute)) {
@@ -910,8 +895,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			}
 			core.setFlag('__fromLoad__', true);
 			core.changeFloor(data.floorId, null, data.hero.loc, 0, function () {
-				// TODO：可以在这里设置读档后播放BGM
-				if (core.hasFlag("__bgm__")) { // 持续播放
+				if (core.hasFlag("__bgm__")) {
 					core.playBgm(core.getFlag("__bgm__"));
 				}
 
@@ -920,10 +904,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			});
 		},
 		"getStatusLabel": function (name) {
-			// 返回某个状态英文名的对应中文标签，如atk -> 攻击，def -> 防御等。
-			// 请注意此项仅影响 libs/ 下的内容（如绘制怪物手册、数据统计等）
-			// 自行定义的（比如获得道具效果）中用到的“攻击+3”等需要自己去对应地方修改
-
 			return {
 				name: "名称",
 				lv: "等级",
@@ -1003,7 +983,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			if (core.flags.statusBarItems.indexOf('enableHPMax') >= 0) {
 				core.setStatus('hp', Math.min(core.getRealStatus('hpmax'), core.getStatus('hp')));
 			}
-
 			if (core.status.floorId) {
 				core.setStatusBarInnerHTML('floor', core.status.maps[core.status.floorId].name);
 			}
@@ -1272,10 +1251,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// 1. 将全塔属性中的cannotMoveDirectly这个开关勾上，即可在全塔中全程禁止使用瞬移。
 			// 2, 将楼层属性中的cannotMoveDirectly这个开关勾上，即禁止在该层楼使用瞬移。
 			// 3. 将flag:cannotMoveDirectly置为true，即可使用flag控制在某段剧情范围内禁止瞬移。
-
-			// 增加步数
 			core.status.hero.steps++;
-			// 更新跟随者状态，并绘制
 			core.updateFollowers();
 			core.drawHero();
 			// 检查中毒状态的扣血和死亡
@@ -1295,8 +1271,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			// 从v2.7开始，每一步行走不会再刷新状态栏。
 			// 如果有特殊要求（如每走一步都加buff之类），可手动取消注释下面这一句：
 			// core.updateStatusBar(true, true);
-
-			// 检查自动事件
 			core.checkAutoEvents();
 
 			// ------ 检查目标点事件 ------ //
@@ -1310,21 +1284,13 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				hasTrigger = true;
 				core.trigger(nowx, nowy, callback);
 			}
-			// 执行目标点的阻激夹域事件
 			core.checkBlock();
 
-			// 执行目标点的script和事件
 			if (!hasTrigger)
 				core.trigger(nowx, nowy, callback);
-
-			// 检查该点是否是滑冰
 			if (core.onSki()) {
-				// 延迟到事件最后执行，因为这之前可能有阻激夹域动画
 				core.insertAction({ "type": "moveAction" }, null, null, null, true);
 			}
-
-			// ------ 检查目标点事件 END ------ //
-
 			// 如需强行终止行走可以在这里条件判定：
 			// core.stopAutomaticRoute();
 		},
@@ -1353,9 +1319,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				core.status.hero.loc.x = x;
 				core.status.hero.loc.y = y;
 				core.drawHero();
-				// 记录录像
 				core.status.route.push("move:" + x + ":" + y);
-				// 统计信息
 				core.status.hero.statistics.moveDirectly++;
 				core.status.hero.statistics.ignoreSteps += ignoreSteps;
 				if (core.hasFlag('poison')) {
@@ -1368,9 +1332,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			return false;
 		},
 		"parallelDo": function (timestamp) {
-			// 并行事件处理，可以在这里写任何需要并行处理的脚本或事件
-			// 该函数将被系统反复执行，每次执行间隔视浏览器或设备性能而定，一般约为16.6ms一次
-			// 参数timestamp为“从游戏资源加载完毕到当前函数执行时”的时间差，以毫秒为单位
 			if (!core.isPlaying()) return;
 			if (core.status.floorId) {
 				try {
@@ -1398,9 +1359,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				core.ui.fillBoldText(ctx, text, x, y, style);
 			};
 			if (core.flags.statusCanvas) { // 系统开关「自绘状态栏」开启
-				core.ui.clearMap(ctx = core.dom.statusCanvasCtx); // 清空状态栏
+				core.ui.clearMap(ctx = core.dom.statusCanvasCtx);
 				core.ui.setFillStyle(ctx, core.status.globalAttribute.statusBarColor);
-				if (core.domStyle.isVertical) { // 竖屏
+				if (core.domStyle.isVertical) {
 					core.drawImage(ctx, core.statusBar.icons.floor, 6, 6, 25, 25);
 					fill((core.status.thisMap || {}).name || "Loading", 42, 26);
 					core.drawImage(ctx, core.statusBar.icons.hp, 137, 6, 25, 25);
@@ -1415,7 +1376,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 					fill(core.formatBigNumber(core.status.hero.money), 304, 58);
 					core.drawImage(ctx, core.statusBar.icons.exp, 6, 70, 25, 25);
 					fill(core.formatBigNumber(core.status.hero.exp), 42, 90);
-				} else if (!core.flags.hideLeftStatusBar) { // 横屏且未隐藏状态栏
+				} else if (!core.flags.hideLeftStatusBar) {
 					core.drawImage(ctx, core.statusBar.icons.floor, 6, 9, 25, 25);
 					fill((core.status.thisMap || {}).name || "Loading", 42, 29);
 					core.drawImage(ctx, core.statusBar.icons.hp, 6, 43, 25, 25);
@@ -1434,9 +1395,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 					fill(core.setTwoDigits(core.itemCount('blueKey')), 46, 267, '#AAAADD');
 					fill(core.setTwoDigits(core.itemCount('redKey')), 81, 267, '#FF8888');
 				}
-			} else if (core.flags.hideLeftStatusBar && !core.domStyle.isVertical) { // 横屏且隐藏状态栏
+			} else if (core.flags.hideLeftStatusBar && !core.domStyle.isVertical) {
 				if (!core.dymCanvas['status'])
-					core.ui.createCanvas('status', 0, 0, core._PX_, core._PY_, 66); // 刚好盖过显伤层
+					core.ui.createCanvas('status', 0, 0, core._PX_, core._PY_, 66);
 				core.ui.clearMap(ctx = core.dymCanvas['status']);
 				core.ui.setFillStyle(ctx, core.status.globalAttribute.statusBarColor);
 				var offset = core.status.hero.loc.x - core.bigmap.offsetX / 32 >= core._HEIGHT_ ? 0 : core._PY_;
@@ -1463,8 +1424,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			}
 		},
 		"drawStatistics": function () {
-			// 浏览地图时参与的统计项目
-
 			return [
 				'yellowDoor', 'blueDoor', 'redDoor', 'greenDoor', 'steelDoor',
 				'yellowKey', 'blueKey', 'redKey', 'greenKey', 'steelKey',
