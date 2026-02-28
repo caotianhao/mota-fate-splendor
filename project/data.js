@@ -807,16 +807,15 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 	"flags": {
 		"statusBarItems": [
 			"enableFloor",
-			"enableLv",
 			"enableHPMax",
 			"enableHP",
-			"enableMana",
 			"enableAtk",
 			"enableDef",
 			"enableMDef",
 			"enableMoney",
 			"enableKeys",
-			"enablePZF"
+			"enablePZF",
+			"enableDebuff"
 		],
 		"autoScale": true,
 		"extendToolbar": false,
