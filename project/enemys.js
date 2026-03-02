@@ -24,7 +24,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"darkKnight": {"name":"黑骑士","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"blueKnight": {"name":"蓝骑士","hp":100,"atk":120,"def":0,"money":9,"exp":0,"point":0,"special":8},
 	"goldSlime": {"name":"黄金史莱姆","hp":480,"atk":50,"def":38,"money":20,"exp":0,"point":0,"special":[1,28]},
-	"poisonSkeleton": {"name":"骷髅统领","hp":600,"atk":55,"def":37,"money":2,"exp":0,"point":0,"special":13},
+	"poisonSkeleton": {"name":"骷髅统领","hp":600,"atk":55,"def":37,"money":2,"exp":0,"point":0,"special":[]},
 	"poisonBat": {"name":"紫蝙蝠","hp":100,"atk":120,"def":0,"money":14,"exp":0,"point":0,"special":13},
 	"skeletonPriest": {"name":"骷髅法师","hp":100,"atk":100,"def":0,"money":0,"exp":0,"point":0,"special":18,"value":20},
 	"skeletonKing": {"name":"骷髅王","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
