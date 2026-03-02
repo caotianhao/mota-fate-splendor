@@ -78,6 +78,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		"images": [
 			"bear.png",
 			"bg.jpg",
+			"brave.png",
 			"dragon.png",
 			"hero.png",
 			"winskin.png"
@@ -235,7 +236,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		"version": "Ver 2.10.3",
 		"floorId": "MT0",
 		"hero": {
-			"image": "hero.png",
+			"image": "brave.png",
 			"animate": false,
 			"name": "阳光",
 			"lv": 1,
