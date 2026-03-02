@@ -12,7 +12,15 @@ main.floors.MT13=
     "ratio": 1,
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
-    "firstArrive": [],
+    "firstArrive": [
+        "\t[勇士,hero]对了，妖精。我发现每只黄金史莱姆都没有挡在干路上，有的甚至被其他魔物守卫着，这其中有什么机关吗？",
+        "\t[妖精,fairy]没什么机关，别想太多。你翻翻怪物手册，看看这种魔物的某项反常属性就知道了。",
+        "\t[勇士,hero]......这样啊。",
+        {
+            "type": "callBook"
+        },
+        "\t[妖精,fairy]以后的区域里会出现更多这种拥有赐宝属性的奖励怪物，务必不要放过任何一只哦。"
+    ],
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
