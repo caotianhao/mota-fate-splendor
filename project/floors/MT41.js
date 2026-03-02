@@ -2,7 +2,7 @@ main.floors.MT41 =
 {
     "floorId": "MT41",
     "title": "主塔 41 层",
-    "name": "41",
+    "name": "主塔 41 层",
     "width": 13,
     "height": 13,
     "canFlyTo": true,

@@ -2,7 +2,7 @@ main.floors.MA13=
 {
     "floorId": "MA13",
     "title": "地下 13 层",
-    "name": "-13",
+    "name": "地下 13 层",
     "width": 13,
     "height": 13,
     "canFlyTo": true,

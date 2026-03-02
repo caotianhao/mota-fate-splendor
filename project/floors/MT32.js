@@ -2,7 +2,7 @@ main.floors.MT32 =
 {
     "floorId": "MT32",
     "title": "主塔 32 层",
-    "name": "32",
+    "name": "主塔 32 层",
     "width": 13,
     "height": 13,
     "canFlyTo": true,

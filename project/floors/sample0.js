@@ -2,7 +2,7 @@ main.floors.sample0=
 {
     "floorId": "sample0",
     "title": "样板 0 层",
-    "name": "0",
+    "name": "样板 0 层",
     "canFlyTo": true,
     "canFlyFrom": true,
     "canUseQuickShop": true,

@@ -2,7 +2,7 @@ main.floors.MA5=
 {
     "floorId": "MA5",
     "title": "地下 5 层",
-    "name": "-5",
+    "name": "地下 5 层",
     "width": 13,
     "height": 13,
     "canFlyTo": true,
