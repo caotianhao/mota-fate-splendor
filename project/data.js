@@ -82,7 +82,8 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 			"brave_black.png",
 			"dragon.png",
 			"hero.png",
-			"winskin.png"
+			"winskin.png",
+			"yaojing.png"
 		],
 		"tilesets": [
 			"magictower.png"
@@ -245,10 +246,10 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 			"hp": 200,
 			"manamax": -1,
 			"mana": 0,
-			"atk": 1999,
-			"def": 1999,
-			"mdef": 0,
-			"money": 0,
+			"atk": 970925,
+			"def": 980511,
+			"mdef": 42949,
+			"money": 67296,
 			"exp": 0,
 			"equipment": [],
 			"items": {

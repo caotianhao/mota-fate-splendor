@@ -25,7 +25,12 @@ main.floors.MT0=
     [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
     [  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0]
 ],
-    "firstArrive": [],
+    "firstArrive": [
+        {
+            "type": "follow",
+            "name": "yaojing.png"
+        }
+    ],
     "parallelDo": "",
     "events": {},
     "changeFloor": {
