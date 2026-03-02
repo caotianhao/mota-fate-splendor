@@ -2295,7 +2295,6 @@ control.prototype.unregisterWeather = function (name) {
         this.setWeather(null);
     }
 }
-
 control.prototype._weather_rain = function (level) {
     var number = level * parseInt(20 * core.bigmap.width * core.bigmap.height / (core._WIDTH_ * core._HEIGHT_));
     for (var a = 0; a < number; a++) {
@@ -2308,7 +2307,6 @@ control.prototype._weather_rain = function (level) {
         })
     }
 }
-
 control.prototype._weather_snow = function (level) {
     var number = level * parseInt(20 * core.bigmap.width * core.bigmap.height / (core._WIDTH_ * core._HEIGHT_));
     for (var a = 0; a < number; a++) {
@@ -2320,7 +2318,6 @@ control.prototype._weather_snow = function (level) {
         })
     }
 }
-
 control.prototype._weather_fog = function (level) {
     if (!core.animateFrame.weather.fog) return;
     core.animateFrame.weather.nodes = [{
@@ -2333,7 +2330,6 @@ control.prototype._weather_fog = function (level) {
         'delta': 0.001,
     }];
 }
-
 control.prototype._weather_cloud = function (level) {
     if (!core.animateFrame.weather.cloud) return;
     core.animateFrame.weather.nodes = [{
@@ -2365,24 +2361,20 @@ control.prototype.setCurtain = function (color, time, moveMode, callback) {
     color[3] = core.clamp(color[3], 0, 1);
 
     if (time == 0) {
-        // 直接变色
         core.clearMap('curtain');
         core.fillRect('curtain', 0, 0, core._PX_, core._PY_, core.arrayToRGBA(color));
         core.status.curtainColor = color;
         if (callback) callback();
         return;
     }
-
     this._setCurtain_animate(core.status.curtainColor, color, time, moveMode, callback);
 }
-
 control.prototype._setCurtain_animate = function (nowColor, color, time, moveMode, callback) {
     time /= Math.max(core.status.replay.speed, 1)
     var per_time = 10, step = 0, steps = parseInt(time / per_time);
     if (steps <= 0) steps = 1;
     var curr = nowColor;
     var moveFunc = core.applyEasing(moveMode);
-
     var cb = function () {
         core.status.curtainColor = curr;
         if (callback) callback();
@@ -2403,12 +2395,9 @@ control.prototype._setCurtain_animate = function (nowColor, color, time, moveMod
             cb();
         }
     }, per_time);
-
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 }
-
-////// 画面闪烁 //////
 control.prototype.screenFlash = function (color, time, times, moveMode, callback) {
     times = times || 1;
     time = time / 3;
@@ -2423,12 +2412,9 @@ control.prototype.screenFlash = function (color, time, times, moveMode, callback
         });
     });
 }
-
-////// 播放背景音乐 //////
 control.prototype.playBgm = function (bgm, startTime) {
     bgm = core.getMappedName(bgm);
     if (main.mode != 'play' || !core.material.bgms[bgm]) return;
-    // 如果不允许播放
     if (!core.musicStatus.bgmStatus) {
         try {
             core.musicStatus.playingBgm = bgm;
@@ -2441,7 +2427,6 @@ control.prototype.playBgm = function (bgm, startTime) {
         return;
     }
     this.setMusicBtn();
-
     try {
         this._playBgm_play(bgm, startTime);
     }
@@ -2451,19 +2436,14 @@ control.prototype.playBgm = function (bgm, startTime) {
         core.musicStatus.playingBgm = null;
     }
 }
-
 control.prototype._playBgm_play = function (bgm, startTime) {
-    // 如果当前正在播放，且和本BGM相同，直接忽略
     if (core.musicStatus.playingBgm == bgm && !core.material.bgms[core.musicStatus.playingBgm].paused) {
         return;
     }
-    // 如果正在播放中，暂停
     if (core.musicStatus.playingBgm) {
         core.material.bgms[core.musicStatus.playingBgm].pause();
     }
-    // 缓存BGM
     core.loader.loadBgm(bgm);
-    // 播放当前BGM
     core.material.bgms[bgm].volume = core.musicStatus.userVolume * core.musicStatus.designVolume;
     core.material.bgms[bgm].currentTime = startTime || 0;
     core.material.bgms[bgm].play();
@@ -2471,8 +2451,6 @@ control.prototype._playBgm_play = function (bgm, startTime) {
     core.musicStatus.lastBgm = bgm;
     core.setBgmSpeed(100);
 }
-
-///// 设置当前背景音乐的播放速度 //////
 control.prototype.setBgmSpeed = function (speed, usePitch) {
     var bgm = core.musicStatus.playingBgm;
     if (main.mode != 'play' || !core.material.bgms[bgm]) return;
@@ -2480,7 +2458,6 @@ control.prototype.setBgmSpeed = function (speed, usePitch) {
     if (speed < 30 || speed > 300) return;
     bgm.playbackRate = speed / 100;
     core.musicStatus.bgmSpeed = speed;
-
     if (bgm.preservesPitch != null) {
         if (bgm.__preservesPitch == null) bgm.__preservesPitch = bgm.preservesPitch;
         if (usePitch == null) bgm.preservesPitch = bgm.__preservesPitch;
@@ -2489,8 +2466,6 @@ control.prototype.setBgmSpeed = function (speed, usePitch) {
         core.musicStatus.bgmUsePitch = usePitch;
     }
 }
-
-////// 暂停背景音乐的播放 //////
 control.prototype.pauseBgm = function () {
     if (main.mode != 'play') return;
     try {
@@ -2506,8 +2481,6 @@ control.prototype.pauseBgm = function () {
     }
     this.setMusicBtn();
 }
-
-////// 恢复背景音乐的播放 //////
 control.prototype.resumeBgm = function (resumeTime) {
     if (main.mode != 'play') return;
     try {
@@ -2525,18 +2498,14 @@ control.prototype.resumeBgm = function (resumeTime) {
     }
     this.setMusicBtn();
 }
-
 control.prototype.setMusicBtn = function () {
     if (core.musicStatus.bgmStatus)
         core.dom.musicBtn.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAABWVBMVEX///9iYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmL///8AAAC5ubn+/v6xsbEtLS0MDAxmZmZoaGhvb2/c3Nzd3d38/Pz9/f0oKCgpKSl0dHR1dXW6urrb29v7+/v09PTv7+/39/cgICACAgImJibh4eGFhYWGhoaHh4eOjo5paWm7u7vDw8PMzMwyMjI7OztAQEDe3t5FRUVMTEzj4+Pl5eXm5ubp6enr6+tcXFzi4uL19fVeXl74+PgjIyNkZGQGBgaSkpKYmJiampqenp4DAwMwMDBnZ2cICAivr68eHh63t7cLCwsSEhLw8PBhYWEUFBQVFRXNzc3Pz8/Z2dna2toaGhqkpKSlpaWpqamrq6tFOUNAAAAAc3RSTlMAAwQFBhUWGxwkJSYyO0dISVBRUmpvj5CSk5SVoaOlpqiysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKyA0IuUgAAAVdJREFUeF5NkVVbw0AQRTcQrLR4IIEGcidJoaUuQHF3d3d3+P/CkuxCzss8nG++mbnDBJXhNt2CpbeFK1kQpSEKidlc8S9qdATRa6UIdQMoxEpDA0Ov3wUAPfW+qLWACydNv9zMrzkJwPK6FB3oHyOfXfuNxvoBQ+GmBYinhHB77TmiVBxoYUw1AYcEq332AS8OYKosAuTT0nza9uU2USYPRJgGxEiSOFywJ3mNARozgBJJzkfLvfu8JgGDWcC9FEsjWzR+y80gYDEAA8QZ3N6kmP1Fs3fEASB7pob7Hh+Wz5L0ci17Or05J7bH6B6dZv05XWK3rG+myV05Ert592Qo55sPuoIr7hEZHHtieIPWy0RU9DLwc3Mnck/vi8/E8XNrDWQtEVnL/ySKMrv0jPwPp870fprcyYifmiEmqGpHkI5q9ofSFIUk2qiwIGpEMyxYhhZRRcMPz89RJ2s9W8wAAAAASUVORK5CYII=";
     else
         core.dom.musicBtn.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAABYlBMVEX///9iYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmL////8/PwAAABmZmZoaGihoaGioqKxsbG5ubnb29vc3Nzd3d3h4eHi4uL9/f3+/v4tLS1nZ2d0dHSUlJSenp66uroMDAz7+/spKSkoKCgUFBRpaWkVFRVvb291dXU7OzuVlZWYmJhkZGQgICAjIyOkpKQCAgK3t7cGBgbv7++pqamrq6seHh4mJiZhYWGamprp6enr6+saGhpeXl7j4+Pl5eXm5uZKSkrw8PD09PT19fW7u7vDw8PMzMwICAgwMDAyMjILCwtAQECGhoaHh4eBgYGFhYUSEhJXV1dZWVlcXFyOjo6SkpLNzc339/fPz8/Z2dna2tqTk5OlpaWxOPeTAAAAdnRSTlMAAwQFBhUWGxwkJSYyO0dISVBRUmpvj5CSk5SVoaOlpqiysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKyNuo+uwAAAWJJREFUeF5NkmV34zAQReUm7WbTuJBNunY3bvXGDjNTkZkZlpn5/9eR5FPfbzr3jGb0RkwRiMQMDm7EIgHmRxtLwMOaHHoQjwz4MUKeCM8AWMrmd7u7f/aXAMyOShHiQD1n04DtN5e5FMBFlSauIsm585dKi4CpuSYKJIv1tBDVmvOSqJgEoowFLSBHaQh10XHWiCgHWEGmAw2blPrvOK/KRJUGoLM4kCVSKrWz7HwgoiwQZyaQJ0+9PvxV23BNATAZB25IqX9b3+jTW9fcApwB6NLgUD5NY3mPXnwmFwBezff1ztzRFzTp94FXMy36HDuCa2RafdnnmZqtL818Gl9/qNnEeyrUk2aTPiKj3qMyWBVi/YSuWq5qiwxkbtX3vYWzdz/l8M0k8ERlvViiB1Ygslb7SbVtJezncj+Cx5bYaeGuonZqhZlieAp+no74/s5EAh6JcY35Cepxk4ObcT3IJPe/1lKsDpFCFQAAAABJRU5ErkJggg==";
 }
-
-////// 更改背景音乐的播放 //////
 control.prototype.triggerBgm = function () {
     if (main.mode != 'play') return;
-
     core.musicStatus.bgmStatus = !core.musicStatus.bgmStatus;
     if (core.musicStatus.bgmStatus)
         this.resumeBgm();
@@ -2544,8 +2513,6 @@ control.prototype.triggerBgm = function () {
         this.pauseBgm();
     core.setLocalStorage('bgmStatus', core.musicStatus.bgmStatus);
 }
-
-////// 播放音频 //////
 control.prototype.playSound = function (sound, pitch, callback) {
     sound = core.getMappedName(sound);
     if (main.mode != 'play' || !core.musicStatus.soundStatus || !core.material.sounds[sound]) return;
@@ -2698,17 +2665,13 @@ control.prototype.showStatusBar = function () {
 
 control.prototype.hideStatusBar = function (showToolbox) {
     if (main.mode == 'editor') return;
-
-    // 如果原本就是隐藏的，则先显示
     if (!core.domStyle.showStatusBar)
         this.showStatusBar();
     if (core.isReplaying()) showToolbox = true;
-
     var statusItems = core.dom.status, toolItems = core.dom.tools;
     core.domStyle.showStatusBar = false;
     core.setFlag('hideStatusBar', true);
     core.setFlag('showToolbox', showToolbox || null);
-    // 隐藏
     for (var i = 0; i < statusItems.length; ++i)
         statusItems[i].style.opacity = 0;
     if ((!core.domStyle.isVertical && !core.flags.extendToolbar) || !showToolbox) {
@@ -2719,15 +2682,11 @@ control.prototype.hideStatusBar = function (showToolbox) {
         core.dom.toolBar.style.display = 'none';
     }
 }
-
-////// 更新状态栏的勇士图标 //////
 control.prototype.updateHeroIcon = function (name) {
     name = name || "hero.png";
     if (core.statusBar.icons.name == name) return;
     core.statusBar.icons.name = name;
-
     var image = core.material.images.hero;
-    // 全身图
     var w = core.material.icons.hero.width || 32;
     var h = core.material.icons.hero.height || 48;
     var ratio = Math.min(w / h, 1), width = 32 * ratio, left = 16 - width / 2;
@@ -2737,14 +2696,10 @@ control.prototype.updateHeroIcon = function (name) {
     canvas.width = 32;
     canvas.height = 32;
     core.drawImage(ctx, image, 0, 0, w, h, left, 0, width, 32);
-
     core.statusBar.image.name.src = canvas.toDataURL("image/png");
 }
-
-////// 改变工具栏为按钮1-8 //////
 control.prototype.setToolbarButton = function (useButton) {
     if (!core.domStyle.showStatusBar) {
-        // 隐藏状态栏时检查竖屏
         if (!core.domStyle.isVertical && !core.flags.extendToolbar) {
             for (var i = 0; i < core.dom.tools.length; ++i)
                 core.dom.tools[i].style.display = 'none';
@@ -2753,11 +2708,9 @@ control.prototype.setToolbarButton = function (useButton) {
         if (!core.hasFlag('showToolbox')) return;
         else core.dom.tools.hard.style.display = 'block';
     }
-
     if (useButton == null) useButton = core.domStyle.toolbarBtn;
     if ((!core.domStyle.isVertical && !core.flags.extendToolbar)) useButton = false;
     core.domStyle.toolbarBtn = useButton;
-
     if (useButton) {
         ["book", "fly", "toolbox", "keyboard", "shop", "save", "load", "settings"].forEach(function (t) {
             core.statusBar.image[t].style.display = 'none';
@@ -2779,9 +2732,6 @@ control.prototype.setToolbarButton = function (useButton) {
             = core.domStyle.isVertical || core.flags.extendToolbar ? "block" : "none";
     }
 }
-
-////// ------ resize处理 ------ //
-
 control.prototype._shouldDisplayStatus = function (id) {
     if (id == null) {
         var toDraw = [], status = core.dom.status;
@@ -2816,20 +2766,13 @@ control.prototype._shouldDisplayStatus = function (id) {
         default: return true;
     }
 }
-
-////// 注册一个resize函数 //////
-// name为名称，可供注销使用
-// func可以是一个函数，或者是插件中的函数名；可以接受obj参数，详见resize函数。
 control.prototype.registerResize = function (name, func) {
     this.unregisterResize(name);
     this.resizes.push({ name: name, func: func });
 }
-
-////// 注销一个resize函数 //////
 control.prototype.unregisterResize = function (name) {
     this.resizes = this.resizes.filter(function (b) { return b.name != name; });
 }
-
 control.prototype._doResize = function (obj) {
     for (var i in this.resizes) {
         try {
@@ -2842,8 +2785,6 @@ control.prototype._doResize = function (obj) {
     }
     return false;
 }
-
-////// 屏幕分辨率改变后重新自适应 //////
 control.prototype.resize = function () {
     if (main.mode == 'editor') return;
     var clientWidth = main.dom.body.clientWidth, clientHeight = main.dom.body.clientHeight;
@@ -2851,13 +2792,9 @@ control.prototype.resize = function () {
     var extendToolbar = core.flags.extendToolbar;
     let hideLeftStatusBar = core.flags.hideLeftStatusBar;
     var BAR_WIDTH = hideLeftStatusBar ? 0 : Math.round(core._PY_ * 0.31);
-
     var horizontalMaxRatio = (clientHeight - 2 * BORDER - (hideLeftStatusBar ? BORDER : 0)) / (core._PY_ + (hideLeftStatusBar ? 38 : 0));
-
     if (clientWidth - 3 * BORDER >= core._PX_ + BAR_WIDTH || (clientWidth > clientHeight && horizontalMaxRatio < 1)) {
-        // 横屏
         core.domStyle.isVertical = false;
-
         core.domStyle.availableScale = [];
         [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5].forEach(function (v) {
             if (clientWidth - 3 * BORDER >= v * (core._PX_ + BAR_WIDTH) && horizontalMaxRatio >= v) {
@@ -3057,7 +2994,6 @@ control.prototype._resize_status = function (obj) {
         core.statusBar.greenKey.style.display = 'none';
     }
 }
-
 control.prototype._resize_toolBar = function (obj) {
     var toolBar = core.dom.toolBar;
     if (core.domStyle.isVertical) {
