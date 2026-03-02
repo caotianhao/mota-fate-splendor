@@ -19,7 +19,7 @@ main.floors.MT13=
         {
             "type": "callBook"
         },
-        "\t[妖精,fairy]以后的区域里会出现更多这种拥有赐宝属性的奖励怪物，务必不要放过任何一只哦。"
+        "\t[妖精,fairy]以后的区域里会出现更多这种拥有\r[#aaaaaa]赐宝\r属性的奖励怪物，务必不要放过任何一只哦。"
     ],
     "eachArrive": [],
     "parallelDo": "",
