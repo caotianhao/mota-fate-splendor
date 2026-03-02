@@ -50,10 +50,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"name": "黄宝石",
 		"text": "，生命上限+50",
 		"itemEffect": "core.status.hero.hpmax += 50 * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命上限+50*${core.status.thisMap.ratio}",
+		"itemEffectTip": "，生命上限+${50*core.status.thisMap.ratio}",
 		"useItemEvent": null,
 		"canUseItemEffect": "true",
-		"useItemEffect": "core.status.hero.hpmax += 50"
+		"useItemEffect": ""
 	},
 	"redPotion": {
 		"cls": "items",

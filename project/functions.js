@@ -252,9 +252,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 
 			var hint = "打败 " + core.getEnemyValue(enemy, "name", x, y);
 			if (core.flags.statusBarItems.indexOf('enableMoney') >= 0)
-				hint += ',' + core.getStatusLabel('money') + '+' + money; // hint += "，金币+" + money;
+				hint += '，' + core.getStatusLabel('money') + '+' + money; // hint += "，金币+" + money;
 			if (core.flags.statusBarItems.indexOf('enableExp') >= 0)
-				hint += ',' + core.getStatusLabel('exp') + '+' + exp; // hint += "，经验+" + exp;
+				hint += '，' + core.getStatusLabel('exp') + '+' + exp; // hint += "，经验+" + exp;
 			core.drawTip(hint, enemy.id);
 
 			if (core.enemys.hasSpecial(special, 12)) {
