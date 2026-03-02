@@ -27,10 +27,92 @@ main.floors.MT10=
         }
     },
     "beforeBattle": {},
-    "afterBattle": {},
+    "afterBattle": {
+        "6,7": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MT10_5_10",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MT10_6_9",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MT10_7_10",
+                "operator": "+=",
+                "value": "1"
+            }
+        ]
+    },
     "afterGetItem": {},
     "afterOpenDoor": {},
-    "autoEvent": {},
+    "autoEvent": {
+        "5,10": {
+            "0": {
+                "condition": "flag:door_MT10_5_10==1",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MT10_5_10",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        },
+        "6,9": {
+            "0": {
+                "condition": "flag:door_MT10_6_9==1",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MT10_6_9",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        },
+        "7,10": {
+            "0": {
+                "condition": "flag:door_MT10_7_10==1",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MT10_7_10",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        }
+    },
     "cannotMove": {},
     "cannotMoveIn": {},
     "map": [
@@ -41,10 +123,10 @@ main.floors.MT10=
     [  1, 27,217,  1, 27,  1,221,  1, 30,  1,221, 28,  1],
     [  1,  1, 21,  1,  1,  1, 83,  1,  1,  1, 32,  1,  1],
     [  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  1,  1],
-    [  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  1,  1],
+    [  1,  1,  1,  1,  1,  0,884,  0,  1,  1,  1,  1,  1],
     [  1,  1,  1,  1,  1,  0,  0,  0,  1,  1,  1,  1,  1],
     [  1,  1,  1,  1,  1,  1, 85,  1,  1,  1,  1,  1,  1],
-    [  1, 30, 30, 21, 21, 85,  0, 85,  0,  0, 29, 29,  1],
+    [  1, 30, 30, 21, 21, 85,  0, 85, 22, 22, 29, 29,  1],
     [  1, 27, 27, 32, 32,  1,  0,  1, 32, 32, 28, 28,  1],
     [  1,  1,  1,  1,  1,  1, 87,  1,  1,  1,  1,  1,  1]
 ],
