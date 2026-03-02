@@ -65,9 +65,7 @@ function main() {
         skillCol: document.getElementById('skillCol'),
         hard: document.getElementById('hard'),
         statusCanvas: document.getElementById('statusCanvas'),
-        statusCanvasCtx: document
-            .getElementById('statusCanvas')
-            .getContext('2d'),
+        statusCanvasCtx: document.getElementById('statusCanvas').getContext('2d'),
         inputDiv: document.getElementById('inputDiv'),
         inputMessage: document.getElementById('inputMessage'),
         inputBox: document.getElementById('inputBox'),
