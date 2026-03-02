@@ -551,7 +551,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"useItemEvent": [
 			{
 				"type": "confirm",
-				"text": "是否开启血瓶宝石显示数据(默认开启)",
+				"text": "是否开启血瓶宝石显示数据(建议开启)",
 				"yes": [
 					{
 						"type": "setValue",

@@ -1675,7 +1675,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			});
 		};
 		this.getItemDetail = function (floorId) {
-			if (!core.getFlag("itemDetail")) return;
+			if (core.getFlag("itemDetail") === false) return;
 			floorId = floorId || core.status.thisMap.floorId;
 			core.status.maps[floorId].blocks.forEach(function (block) {
 				if (block.event.cls !== 'items' || block.event.id === 'superPotion') return;

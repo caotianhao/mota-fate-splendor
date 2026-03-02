@@ -79,6 +79,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 			"bear.png",
 			"bg.jpg",
 			"brave.png",
+			"brave_black.png",
 			"dragon.png",
 			"hero.png",
 			"winskin.png"
@@ -236,7 +237,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		"version": "Ver 2.10.3",
 		"floorId": "MT0",
 		"hero": {
-			"image": "brave.png",
+			"image": "brave_black.png",
 			"animate": false,
 			"name": "阳光",
 			"lv": 1,
@@ -820,7 +821,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		"extendToolbar": false,
 		"flyNearStair": false,
 		"flyRecordPosition": false,
-		"itemFirstText": false,
+		"itemFirstText": true,
 		"equipboxButton": false,
 		"enableAddPoint": false,
 		"enableNegativeDamage": false,
