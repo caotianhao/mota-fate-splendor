@@ -1,14 +1,5 @@
-
-/*
-extensions.js：负责拓展插件
- */
-
 "use strict";
-
-function extensions () {
-
-}
-
+function extensions() { }
 extensions.prototype._load = function (callback) {
     if (main.replayChecking) return callback();
     if (!window.fs) {
@@ -17,7 +8,6 @@ extensions.prototype._load = function (callback) {
         }, callback);
     } else this._listExtensions(callback);
 }
-
 extensions.prototype._loadJs = function (file, callback, onerror) {
     var script = document.createElement('script');
     script.src = file + '?v=' + main.version;
@@ -25,7 +15,6 @@ extensions.prototype._loadJs = function (file, callback, onerror) {
     script.onerror = onerror;
     main.dom.body.appendChild(script);
 }
-
 extensions.prototype._listExtensions = function (callback) {
     if (!window.fs) return callback();
     fs.readdir('extensions', function (error, data) {
@@ -40,7 +29,6 @@ extensions.prototype._listExtensions = function (callback) {
         core.extensions._loadExtensions(list, callback);
     });
 }
-
 extensions.prototype._loadExtensions = function (list, callback) {
     var i = 0;
     var load = function () {

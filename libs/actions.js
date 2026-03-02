@@ -2190,13 +2190,11 @@ actions.prototype._clickSwitchs_action = function (x, y) {
         }
     }
 }
-
 actions.prototype._clickSwitchs_action_moveSpeed = function (delta) {
     core.values.moveSpeed = core.clamp(core.values.moveSpeed + delta, 50, 200);
     core.setLocalStorage("moveSpeed", core.values.moveSpeed);
     core.ui._drawSwitchs_action();
 }
-
 actions.prototype._clickSwitchs_action_floorChangeTime = function (delta) {
     core.values.floorChangeTime = core.clamp(core.values.floorChangeTime + delta, 0, 2000);
     core.setLocalStorage("floorChangeTime", core.values.floorChangeTime);
@@ -2768,9 +2766,8 @@ actions.prototype._clickKeyBoard = function (x, y) {
     }
     if (y == this._HY_ - 2 && x >= m - 5 && x <= m + 4) {
         core.ui.closePanel();
-        core.keyUp(x == m + 4 ? 48 : 49 + x + 5 - m); // 1-9: 49-57; 0: 48
+        core.keyUp(x == m + 4 ? 48 : 49 + x + 5 - m);
     }
-    // 字母
     var lines = [
         ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
         ["A", "S", "D", "F", "G", "H", "J", "K", "L"],

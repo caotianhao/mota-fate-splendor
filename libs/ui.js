@@ -1992,31 +1992,24 @@ ui.prototype._drawSyncSave = function () {
         "同步存档到服务器", "从服务器加载存档", "存档至本地文件", "从本地文件读档", "回放和下载录像", "清空本地存档", "返回主菜单"
     ]);
 }
-
-////// 绘制存档同步选择页面 //////
 ui.prototype._drawSyncSelect = function () {
     core.status.event.id = 'syncSelect';
     this.drawChoices(null, [
         "同步本地所有存档", "只同步当前单存档", "返回上级菜单"
     ]);
 }
-
-////// 绘制单存档界面 //////
 ui.prototype._drawLocalSaveSelect = function () {
     core.status.event.id = 'localSaveSelect';
     this.drawChoices(null, [
         "下载所有存档", "只下载当前单存档", "返回上级菜单"
     ]);
 }
-
-////// 绘制存档删除页面 //////
 ui.prototype._drawStorageRemove = function () {
     core.status.event.id = 'storageRemove';
     this.drawChoices(null, [
         "清空全部塔的存档", "只清空当前塔的存档", "返回上级菜单"
     ]);
 }
-
 ui.prototype._drawReplay = function () {
     core.lockControl();
     core.status.event.id = 'replay';
@@ -2032,27 +2025,19 @@ ui.prototype._drawGameInfo = function () {
         "数据统计", "查看工程", "游戏主页", "操作帮助", "关于游戏", "下载离线版本", "返回主菜单"
     ]);
 }
-
-////// 绘制分页 //////
 ui.prototype.drawPagination = function (page, totalPage, y) {
-    // if (totalPage<page) totalPage=page;
     if (totalPage <= 1) return;
     if (y == null) y = core._HEIGHT_ - 1;
-
     core.setFillStyle('ui', '#DDDDDD');
     var length = core.calWidth('ui', page + " / " + page, this._buildFont(15, true));
-
     core.setTextAlign('ui', 'left');
     core.fillText('ui', page + " / " + totalPage, parseInt((core._PX_ - length) / 2), y * 32 + 19);
-
     core.setTextAlign('ui', 'center');
     if (page > 1)
         core.fillText('ui', '上一页', core._PX_ / 2 - 80, y * 32 + 19);
     if (page < totalPage)
         core.fillText('ui', '下一页', core._PX_ / 2 + 80, y * 32 + 19);
 }
-
-////// 绘制键盘光标 //////
 ui.prototype._drawCursor = function () {
     var automaticRoute = core.status.automaticRoute;
     automaticRoute.cursorX = core.clamp(automaticRoute.cursorX, 0, core._WIDTH_ - 1);
@@ -2063,13 +2048,9 @@ ui.prototype._drawCursor = function () {
     var width = 4;
     core.strokeRect('ui', 32 * automaticRoute.cursorX + width / 2, 32 * automaticRoute.cursorY + width / 2,
         32 - width, 32 - width, core.status.globalAttribute.selectColor, width);
-
 }
-
-////// 绘制怪物手册 //////
 ui.prototype.drawBook = function (index) {
     var floorId = core.floorIds[(core.status.event.ui || {}).index] || core.status.floorId;
-    // 清除浏览地图时的光环缓存
     if (floorId != core.status.floorId && core.status.checkBlock) {
         core.status.checkBlock.cache = {};
     }
@@ -2083,31 +2064,25 @@ ui.prototype.drawBook = function (index) {
     if (enemys.length == 0) {
         return this._drawBook_drawEmpty();
     }
-
     index = core.clamp(index, 0, enemys.length - 1);
     core.status.event.data = index;
     var pageinfo = this._drawBook_pageinfo();
     var perpage = pageinfo.per_page, page = parseInt(index / perpage) + 1, totalPage = Math.ceil(enemys.length / perpage);
-
     var start = (page - 1) * perpage;
     enemys = enemys.slice(start, page * perpage);
-
     for (var i = 0; i < enemys.length; i++)
         this._drawBook_drawOne(floorId, i, enemys[i], pageinfo, index == start + i);
-
     core.drawBoxAnimate();
     this.drawPagination(page, totalPage);
     core.setTextAlign('ui', 'center');
     core.fillText('ui', '返回游戏', core._PX_ - 46, core._PY_ - 13, '#DDDDDD', this._buildFont(15, true));
 }
-
 ui.prototype._drawBook_pageinfo = function () {
     var per_page = core._HALF_HEIGHT_;
     var padding_top = 12;
     var per_height = (core._PY_ - 32 - padding_top) / per_page;
     return { per_page: per_page, padding_top: padding_top, per_height: per_height };
 }
-
 ui.prototype._drawBook_drawBackground = function () {
     core.setAlpha('ui', 1);
     core.setFillStyle('ui', core.material.groundPattern);
@@ -2137,7 +2112,6 @@ ui.prototype._drawBook_drawOne = function (floorId, index, enemy, pageinfo, sele
     if (selected)
         core.strokeRoundRect('ui', 10, top + 1, core._PX_ - 10 * 2, pageinfo.per_height, 10, core.status.globalAttribute.selectColor);
 }
-
 ui.prototype._drawBook_is32x32 = function (blockInfo) {
     var height = blockInfo.height - 32;
     var canvas = document.createElement('canvas');
@@ -2148,13 +2122,11 @@ ui.prototype._drawBook_is32x32 = function (blockInfo) {
     core.clearMap(ctx);
     return url == canvas.toDataURL();
 }
-
 ui.prototype._drawBook_drawBox = function (index, enemy, top, pageinfo) {
     var border_top = top + (pageinfo.per_height - 42) / 2, border_left = 22;
     var img_top = border_top + 5, img_left = border_left + 5;
     core.strokeRect('ui', 22, border_top, 42, 42, '#DDDDDD', 2);
     var blockInfo = core.getBlockInfo(enemy.id);
-
     if (blockInfo.bigImage) {
         core.status.boxAnimateObjs.push({
             bigImage: blockInfo.bigImage, face: blockInfo.face, centerX: border_left + 21, centerY: border_top + 21,
@@ -2222,16 +2194,13 @@ ui.prototype._drawBook_drawName = function (index, enemy, top, left, width) {
         }
     }
 }
-
 ui.prototype._drawBook_drawContent = function (index, enemy, top, left) {
     var width = core._PX_ - left;
     this._drawBook_drawRow1(index, enemy, top, left, width, top + 20);
     this._drawBook_drawRow2(index, enemy, top, left, width, top + 38);
     this._drawBook_drawRow3(index, enemy, top, left, width, top + 56);
 }
-
 ui.prototype._drawBook_drawRow1 = function (index, enemy, top, left, width, position) {
-    // 绘制第一行
     core.setTextAlign('ui', 'left');
     var b13 = this._buildFont(13, true), f13 = this._buildFont(13, false);
     var col1 = left, col2 = left + width * 9 / 25, col3 = left + width * 17 / 25;
@@ -2242,7 +2211,6 @@ ui.prototype._drawBook_drawRow1 = function (index, enemy, top, left, width, posi
     core.fillText('ui', core.getStatusLabel('def'), col3, position, null, f13);
     core.fillText('ui', core.formatBigNumber(enemy.def || 0), col3 + 30, position, null, b13);
 }
-
 ui.prototype._drawBook_drawRow2 = function (index, enemy, top, left, width, position) {
     core.setTextAlign('ui', 'left');
     var b13 = this._buildFont(13, true), f13 = this._buildFont(13, false);
@@ -2251,7 +2219,6 @@ ui.prototype._drawBook_drawRow2 = function (index, enemy, top, left, width, posi
     if (core.flags.statusBarItems.indexOf('enableMoney') >= 0) second_line.push([core.getStatusLabel('money'), core.formatBigNumber(enemy.money || 0)]);
     if (core.flags.enableAddPoint) second_line.push([core.getStatusLabel('point'), core.formatBigNumber(enemy.point || 0)]);
     if (core.flags.statusBarItems.indexOf('enableExp') >= 0) second_line.push([core.getStatusLabel('exp'), core.formatBigNumber(enemy.exp || 0)]);
-
     var damage_offset = col1 + (core._PX_ - col1) / 2 - 12;
     if (second_line.length > 0) {
         var one = second_line.shift();
@@ -2299,7 +2266,6 @@ ui.prototype._drawBook_drawDamage = function (index, enemy, offset, position) {
     if (enemy.notBomb) damage += "[b]";
     core.fillText('ui', damage, offset, position, color, this._buildFont(13, true));
 }
-
 ui.prototype._drawBookDetail = function (index) {
     var info = this._drawBookDetail_getInfo(index), enemy = info[0];
     if (!enemy) return;
@@ -2307,12 +2273,10 @@ ui.prototype._drawBookDetail = function (index) {
     core.status.event.id = 'book-detail';
     core.animateFrame.tip = null;
     core.clearMap('data');
-
     var left = 10, width = core._PX_ - 2 * left, right = left + width;
     var content_left = left + 25, validWidth = right - content_left - 13;
     var height = Math.max(this.getTextContentHeight(content, { fontSize: 16, lineHeight: 24, maxWidth: validWidth }) + 58, 80),
         top = (core._PY_ - height) / 2, bottom = top + height;
-
     core.setAlpha('data', 0.9);
     core.fillRect('data', left, top, width, height, '#000000');
     core.setAlpha('data', 1);
@@ -2321,7 +2285,6 @@ ui.prototype._drawBookDetail = function (index) {
     core.playSound('确定');
     this._drawBookDetail_drawContent(enemy, content, { top: top, content_left: content_left, bottom: bottom, validWidth: validWidth });
 }
-
 ui.prototype._drawBookDetail_getInfo = function (index) {
     var floorId = core.floorIds[(core.status.event.ui || {}).index] || core.status.floorId;
     if (floorId != core.status.floorId && core.status.checkBlock) {
@@ -2338,7 +2301,6 @@ ui.prototype._drawBookDetail_getInfo = function (index) {
     this._drawBookDetail_getTexts(enemy, floorId, texts);
     return [enemy, texts];
 }
-
 ui.prototype._drawBookDetail_getTexts = function (enemy, floorId, texts) {
     this._drawBookDetail_origin(enemy, texts);
     this._drawBookDetail_mofang(enemy, texts);
@@ -2346,7 +2308,6 @@ ui.prototype._drawBookDetail_getTexts = function (enemy, floorId, texts) {
     this._drawBookDetail_hatred(enemy, texts);
     this._drawBookDetail_turnAndCriticals(enemy, floorId, texts);
 }
-
 ui.prototype._drawBookDetail_origin = function (enemy, texts) {
     var originEnemy = core.enemys._getCurrentEnemys_getEnemy(enemy.id);
     var content = [];
@@ -2363,7 +2324,6 @@ ui.prototype._drawBookDetail_origin = function (enemy, texts) {
         texts.push("\r[#FF6A6A]\\d原始数值：\\d\r[]" + content.join("；"));
     }
 }
-
 ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
     if (core.enemys.hasSpecial(enemy.special, 10)) {
         var hp = enemy.hp;
@@ -2384,7 +2344,6 @@ ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
         }
     }
 }
-
 ui.prototype._drawBookDetail_mofang_getArray = function (hp) {
     var arr = [];
     var last = 0, start = 0;
@@ -2404,7 +2363,6 @@ ui.prototype._drawBookDetail_mofang_getArray = function (hp) {
     }
     return arr;
 }
-
 ui.prototype._drawBookDetail_vampire = function (enemy, floorId, texts) {
     if (core.enemys.hasSpecial(enemy.special, 11)) {
         var damage = core.getDamage(enemy.id);
@@ -2426,13 +2384,11 @@ ui.prototype._drawBookDetail_vampire = function (enemy, floorId, texts) {
         }
     }
 }
-
 ui.prototype._drawBookDetail_hatred = function (enemy, texts) {
     if (core.enemys.hasSpecial(enemy.special, 17)) {
         texts.push("\r[#FF6A6A]\\d当前仇恨伤害值：\\d\r[]" + core.getFlag('hatred', 0));
     }
 }
-
 ui.prototype._drawBookDetail_turnAndCriticals = function (enemy, floorId, texts) {
     var damageInfo = core.getDamageInfo(enemy.id, null, enemy.x, enemy.y, floorId);
     texts.push("\r[#FF6A6A]\\d战斗回合数：\\d\r[]" + ((damageInfo || {}).turn || 0));
@@ -2442,7 +2398,6 @@ ui.prototype._drawBookDetail_turnAndCriticals = function (enemy, floorId, texts)
     while (criticals[0] == '0:0') criticals.shift();
     texts.push("\r[#FF6A6A]\\d临界表：\\d\r[]" + JSON.stringify(criticals));
 }
-
 ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
     core.setTextAlign('data', 'left');
     core.fillText('data', enemy.name, pos.content_left, pos.top + 30, core.status.globalAttribute.selectColor, this._buildFont(22, true));
@@ -2453,7 +2408,6 @@ ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
         fontSize: 16, lineHeight: 24
     });
 }
-
 ui.prototype.drawFly = function (page) {
     core.status.event.data = page;
     var floorId = core.floorIds[page];
@@ -2469,11 +2423,8 @@ ui.prototype.drawFly = function (page) {
     core.fillText('ui', '浏览地图时也', core._PX_ - 10, core._PY_ - 23, '#aaaaaa', this._buildFont(10, false));
     core.fillText('ui', '可楼层跳跃！', core._PX_ - 10, core._PY_ - 11, null, this._buildFont(10, false));
     core.setTextAlign('ui', 'center');
-
     var middle = core._PY_ / 2 + 39;
     const lastWidth = 0.25 * core._PX_ - 16;
-
-    // 换行
     var lines = core.splitLines('ui', title, lastWidth, this._buildFont(19, true));
     var start_y = middle - (lines.length - 1) * 11;
     for (var i in lines) {
@@ -2535,7 +2486,6 @@ ui.prototype._drawViewMaps = function (index, x, y) {
     core.fillRect('data', 5, 5, width, height, 'rgba(0,0,0,0.4)');
     core.fillText('data', text, textX + 5, textY + 15, 'rgba(255,255,255,0.6)');
 }
-
 ui.prototype._drawViewMaps_drawHint = function () {
     core.playSound('打开界面');
     core.fillRect('ui', 0, 0, core._PX_, core._PY_, 'rgba(0,0,0,0.7)');
@@ -2543,7 +2493,6 @@ ui.prototype._drawViewMaps_drawHint = function () {
     var stroke = function (left, top, width, height, fillStyle, lineWidth) {
         core.strokeRect('ui', left + 2, top + 2, width - 4, height - 4, fillStyle, lineWidth);
     }
-
     var perpx = core._PX_ / 5, cornerpx = perpx * 3 / 4, perpy = core._PY_ / 5, cornerpy = perpy * 3 / 4;
     stroke(perpx, 0, 3 * perpx, perpy, core.status.globalAttribute.selectColor, 4); // up
     stroke(0, perpy, perpx, 3 * perpy);
@@ -2554,14 +2503,12 @@ ui.prototype._drawViewMaps_drawHint = function () {
     stroke(0, 0, cornerpx, cornerpy);
     stroke(core._PX_ - cornerpx, 0, cornerpx, cornerpy);
     stroke(0, core._PY_ - cornerpy, cornerpx, cornerpy);
-
     core.setTextBaseline('ui', 'middle');
     core.fillText('ui', "上移地图 [W]", core._PX_ / 2, perpy / 2, core.status.globalAttribute.selectColor, '20px Arial');
     core.fillText('ui', "下移地图 [S]", core._PX_ / 2, core._PY_ - perpy / 2);
     core.fillText('ui', 'V', cornerpx / 2, cornerpy / 2);
     core.fillText('ui', 'Z', core._PX_ - cornerpx / 2, cornerpy / 2);
     core.fillText('ui', 'B', cornerpx / 2, core._PY_ - cornerpy / 2);
-
     var top = core._PY_ / 2 - 66, left = perpx / 2, right = core._PX_ - left;
     var lt = ["左", "移", "地", "图", "[A]"], rt = ["右", "移", "地", "图", "[D]"];
     for (var i = 0; i < 5; ++i) {
@@ -2570,14 +2517,11 @@ ui.prototype._drawViewMaps_drawHint = function () {
     }
     core.fillText('ui', "前张地图 [▲ / PGUP]", core._PX_ / 2, perpy * 1.5);
     core.fillText('ui', "后张地图 [▼ / PGDN]", core._PX_ / 2, core._PY_ - perpy * 1.5);
-
     core.fillText('ui', "退出 [ESC / ENTER]", core._PX_ / 2, core._PY_ / 2);
     core.fillText('ui', "[X] 可查看" + core.material.items['book'].name +
         "   [G] 可使用" + core.material.items['fly'].name, core._PX_, core._PY_ + 32, null, '12px Arial');
-
     core.setTextBaseline('ui', 'alphabetic');
 }
-
 ui.prototype._drawViewMaps_buildData = function (index, x, y) {
     var damage = (core.status.event.data || {}).damage;
     var all = (core.status.event.data || { all: true }).all;
@@ -2585,25 +2529,21 @@ ui.prototype._drawViewMaps_buildData = function (index, x, y) {
     if (index.all != null) all = index.all;
     if (index.index != null) { x = index.x; y = index.y; index = index.index; }
     index = core.clamp(index, 0, core.floorIds.length - 1);
-    if (damage == null) damage = true; // 浏览地图默认开显伤好了
-
+    if (damage == null) damage = true;
     var floorId = core.floorIds[index], mw = core.floors[floorId].width, mh = core.floors[floorId].height;
     if (x == null) x = parseInt(mw / 2);
     if (y == null) y = parseInt(mh / 2);
     x = core.clamp(x, core._HALF_WIDTH_, mw - core._HALF_WIDTH_ - 1);
     y = core.clamp(y, core._HALF_HEIGHT_, mh - core._HALF_HEIGHT_ - 1);
-
     core.status.event.data = {
         index: index, x: x, y: y, floorId: floorId, mw: mw, mh: mh,
         damage: damage, all: all
     };
     return core.status.event.data;
 }
-
 ui.prototype._drawToolbox = function (index) {
     var info = this._drawToolbox_getInfo(index);
     this._drawToolbox_drawBackground();
-
     core.setAlpha('ui', 1);
     core.setStrokeStyle('ui', '#DDDDDD');
     core.canvas.ui.lineWidth = 2;
@@ -2618,12 +2558,10 @@ ui.prototype._drawToolbox = function (index) {
     this.drawPagination(info.toolsPage, info.toolsTotalPage, core._HEIGHT_ - 6);
     this._drawToolbox_drawContent(info, line2, info.constants, info.constantsPage);
     this.drawPagination(info.constantsPage, info.constantsTotalPage);
-
     core.setTextAlign('ui', 'center');
     core.fillText('ui', '[装备栏]', core._PX_ - 46, 25, '#DDDDDD', this._buildFont(15, true));
     core.fillText('ui', '返回游戏', core._PX_ - 46, core._PY_ - 13);
 }
-
 ui.prototype.getToolboxItems = function (cls) {
     if (this.uidata.getToolboxItems) {
         return this.uidata.getToolboxItems(cls);
@@ -2632,7 +2570,6 @@ ui.prototype.getToolboxItems = function (cls) {
         .filter(function (id) { return !core.material.items[id].hideInToolbox; })
         .sort();
 }
-
 ui.prototype._drawToolbox_getInfo = function (index) {
     if (!core.status.event.data || core.status.event.data.toolsPage == null)
         core.status.event.data = { "toolsPage": 1, "constantsPage": 1, "selectId": null }
@@ -2664,13 +2601,11 @@ ui.prototype._drawToolbox_getInfo = function (index) {
         toolsTotalPage: toolsTotalPage, constantsTotalPage: constantsTotalPage, selectId: selectId
     };
 }
-
 ui.prototype._drawToolbox_drawBackground = function () {
     core.clearMap('ui');
     core.setAlpha('ui', 0.85);
     core.fillRect('ui', 0, 0, core._PX_, core._PY_, '#000000');
 }
-
 ui.prototype._drawToolbox_drawLine = function (yoffset, text) {
     core.setFillStyle('ui', '#DDDDDD');
     core.canvas.ui.beginPath();
@@ -2709,7 +2644,6 @@ ui.prototype._drawToolbox_drawDescription = function (info, max_height) {
         core.fillText('ui', '<继续点击该道具即可进行使用>', 10, max_height - 15, '#CCCCCC', this._buildFont(14, false));
     }
 }
-
 ui.prototype._drawToolbox_drawContent = function (info, line, items, page, drawCount) {
     var n = core._HALF_WIDTH_;
     core.setTextAlign('ui', 'right');
@@ -2725,11 +2659,9 @@ ui.prototype._drawToolbox_drawContent = function (info, line, items, page, drawC
             core.strokeRoundRect('ui', 64 * (i % n) + 17, yoffset - 4, 40, 40, 6, core.status.globalAttribute.selectColor);
     }
 }
-
 ui.prototype._drawEquipbox = function (index) {
     var info = this._drawEquipbox_getInfo(index);
     this._drawToolbox_drawBackground();
-
     core.setAlpha('ui', 1);
     core.setStrokeStyle('ui', '#DDDDDD');
     core.canvas.ui.lineWidth = 2;
@@ -2743,12 +2675,10 @@ ui.prototype._drawEquipbox = function (index) {
     this._drawEquipbox_drawEquiped(info, line1);
     this._drawToolbox_drawContent(info, line2, info.ownEquipment, info.page, true);
     this.drawPagination(info.page, info.totalPage);
-
     core.setTextAlign('ui', 'center');
     core.fillText('ui', '[道具栏]', core._PX_ - 46, 25, '#DDDDDD', this._buildFont(15, true));
     core.fillText('ui', '返回游戏', core._PX_ - 46, core._PY_ - 13);
 }
-
 ui.prototype._drawEquipbox_getInfo = function (index) {
     if (!core.status.event.data || core.status.event.data.page == null)
         core.status.event.data = { "page": 1, "selectId": null };
@@ -2783,7 +2713,6 @@ ui.prototype._drawEquipbox_getInfo = function (index) {
         equipLength: equipLength, equipEquipment: equipEquipment, ownEquipment: ownEquipment
     };
 }
-
 ui.prototype._drawEquipbox_description = function (info, max_height) {
     core.setTextAlign('ui', 'left');
     if (!info.selectId) return;
@@ -2796,7 +2725,6 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
     }
     else equipString = info.allEquips[equipType] || "未知部位";
     core.fillText('ui', equip.name + "（" + equipString + "）", 10, 32, core.status.globalAttribute.selectColor, this._buildFont(20, true))
-
     var text = equip.text || "该装备暂无描述。";
     try { text = core.replaceText(text); } catch (e) { }
     var height = null;
@@ -2808,10 +2736,8 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
             break;
         }
     }
-    // --- 变化值
     this._drawEquipbox_drawStatusChanged(info, max_height - 15, equip, equipType);
 }
-
 ui.prototype._drawEquipbox_getStatusChanged = function (info, equip, equipType, y) {
     if (info.index < core._WIDTH_ - 1) {
         return core.compareEquipment(null, info.selectId);
@@ -2822,12 +2748,10 @@ ui.prototype._drawEquipbox_getStatusChanged = function (info, equip, equipType, 
     }
     return core.compareEquipment(info.selectId, info.equipEquipment[equipType]);
 }
-
 ui.prototype._drawEquipbox_drawStatusChanged = function (info, y, equip, equipType) {
     var compare = this._drawEquipbox_getStatusChanged(info, equip, equipType, y);
     if (compare == null) return;
     var obj = { drawOffset: 10, y: y };
-
     core.setFont('ui', this._buildFont(14, true));
     for (var name in core.status.hero) {
         if (typeof core.status.hero[name] != 'number') continue;
@@ -2845,21 +2769,18 @@ ui.prototype._drawEquipbox_drawStatusChanged = function (info, y, equip, equipTy
         obj.drawOffset += 8;
     }
 }
-
 ui.prototype._drawEquipbox_drawStatusChanged_draw = function (text, color, obj) {
     var len = core.calWidth('ui', text);
-    if (obj.drawOffset + len >= core._PX_) { // 换行
+    if (obj.drawOffset + len >= core._PX_) {
         obj.y += 19;
         obj.drawOffset = 10;
     }
     core.fillText('ui', text, obj.drawOffset, obj.y, color);
     obj.drawOffset += len;
 }
-
 ui.prototype._drawEquipbox_drawEquiped = function (info, line) {
     core.setTextAlign('ui', 'center');
     var per_line = core._HALF_WIDTH_ - 3, width = Math.floor(core._PX_ / (per_line + 0.25));
-    // 当前装备
     for (var i = 0; i < info.equipLength; i++) {
         var equipId = info.equipEquipment[i] || null;
         // var offset_text = width * (i % per_line) + 56;
@@ -2874,12 +2795,10 @@ ui.prototype._drawEquipbox_drawEquiped = function (info, line) {
         core.strokeRoundRect('ui', offset_image - 4, y - 4, 40, 40, 6, info.index == i ? core.status.globalAttribute.selectColor : "#FFFFFF");
     }
 }
-
 ui.prototype._drawSLPanel = function (index, refresh) {
     core.control._loadFavoriteSaves();
     if (index == null) index = 1;
     if (index < 0) index = 0;
-
     var page = parseInt(index / 10), offset = index % 10;
     var max_page = main.savePages || 30;
     if (core.status.event.data && core.status.event.data.mode == 'fav')
@@ -2889,7 +2808,6 @@ ui.prototype._drawSLPanel = function (index, refresh) {
     if (core.status.event.data && core.status.event.data.mode == 'fav' && page == max_page - 1) {
         offset = Math.min(offset, (core.saves.favorite || []).length - 5 * page);
     }
-
     var last_page = -1;
     var mode = 'all';
     if (core.status.event.data) {
@@ -2906,14 +2824,12 @@ ui.prototype._drawSLPanel = function (index, refresh) {
     }
     else this._drawSLPanel_draw(page, max_page);
 }
-
 ui.prototype._drawSLPanel_draw = function (page, max_page) {
     this._drawSLPanel_drawBackground();
     core.ui.drawPagination(page + 1, max_page);
     core.setTextAlign('ui', 'center');
     var bottom = core._PY_ - 13;
     core.fillText('ui', '返回游戏', core._PX_ - 48, bottom, '#DDDDDD', this._buildFont(15, true));
-
     if (core.status.event.selection)
         core.setFillStyle('ui', '#FF6A6A');
     if (core.status.event.id == 'save')
@@ -2927,14 +2843,12 @@ ui.prototype._drawSLPanel_draw = function (page, max_page) {
     }
     this._drawSLPanel_drawRecords();
 }
-
 ui.prototype._drawSLPanel_drawBackground = function () {
     core.clearMap('ui');
     core.setAlpha('ui', 0.85);
     core.fillRect('ui', 0, 0, core._PX_, core._PY_, '#000000'); // 可改成背景图
     core.setAlpha('ui', 1);
 }
-
 ui.prototype._drawSLPanel_loadSave = function (page, callback) {
     var ids = [0];
     for (var i = 1; i <= 5; ++i) {
@@ -2950,8 +2864,6 @@ ui.prototype._drawSLPanel_loadSave = function (page, callback) {
         callback();
     });
 }
-
-// 在以x为中心轴 y为顶坐标 的位置绘制一条宽为size的记录 cho表示是否被选中 选中会加粗 highlight表示高亮标题 ✐
 ui.prototype._drawSLPanel_drawRecord = function (title, data, x, y, size, cho, highLight) {
     var globalAttribute = core.status.globalAttribute || core.initStatus.globalAttribute;
     var strokeColor = globalAttribute.selectColor;
@@ -2973,7 +2885,6 @@ ui.prototype._drawSLPanel_drawRecord = function (title, data, x, y, size, cho, h
             core.fillRect('ui', x - w / 2, y + 15, w, h, [0, 0, 0, 0.4]);
             core.fillText('ui', data.hard, x, parseInt(y + 22 + h / 2), data.hero.flags.__hardColor__ || 'white', this._buildFont(30, true));
         }
-        // 绘制存档笔记
         if (data.hero.notes && data.hero.notes.length > 0) {
             core.setTextAlign('ui', 'left');
             if (data.hero.notes.length >= 2) {
@@ -3029,19 +2940,15 @@ ui.prototype._drawSLPanel_drawRecords = function (n) {
         }
     }
 };
-
 ui.prototype._drawKeyBoard = function () {
     core.lockControl();
     core.status.event.id = 'keyBoard';
     core.clearUI();
     core.playSound('打开界面');
-
     var offset = core._WIDTH_ % 2 == 0 ? 16 : 0;
-
     var width = 384, height = 320;
     var left = (core._PX_ - width) / 2 + offset, right = left + width;
     var top = (core._PY_ - height) / 2 + (core._HEIGHT_ % 2 == 0 ? 16 : 0), bottom = top + height;
-
     var isWindowSkin = this.drawBackground(left, top, right, bottom);
     core.setTextAlign('ui', 'center');
     core.setFillStyle('ui', core.arrayToRGBA(core.status.textAttribute.title));
@@ -3049,7 +2956,6 @@ ui.prototype._drawKeyBoard = function () {
     core.setFont('ui', this._buildFont(17, false));
     core.setFillStyle('ui', core.arrayToRGBA(core.status.textAttribute.text));
     var now = core._PY_ / 2 - 89 + (core._HEIGHT_ % 2 == 0 ? 16 : 0);
-
     var lines = [
         ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "10", "11"],
         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
@@ -3059,26 +2965,21 @@ ui.prototype._drawKeyBoard = function () {
         ["-", "=", "[", "]", "\\", ";", "'", ",", ".", "/", "`"],
         ["ES", "TA", "CA", "SH", "CT", "AL", "SP", "BS", "EN", "DE"]
     ];
-
     lines.forEach(function (line) {
         for (var i = 0; i < line.length; i++) {
             core.fillText('ui', line[i], core._PX_ / 2 + 32 * (i - 5) + offset, now);
         }
         now += 32;
     });
-
     core.fillText("ui", "返回游戏", core._PX_ / 2 + 128 + offset, now - 3, '#FFFFFF', this._buildFont(15, true));
-
     if (isWindowSkin)
         this._drawWindowSelector(core.status.textAttribute.background, core._PX_ / 2 + 92 + offset, now - 22, 72, 27);
     else
         core.strokeRoundRect('ui', core._PX_ / 2 + 92 + offset, now - 22, 72, 27, 6, core.status.globalAttribute.selectColor, 2);
 }
-
 ui.prototype.drawStatusBar = function () {
     this.uidata.drawStatusBar();
 }
-
 ui.prototype._drawStatistics = function (floorIds) {
     core.playSound('打开界面');
     var obj = this._drawStatistics_buildObj();
@@ -3108,15 +3009,7 @@ ui.prototype._drawStatistics = function (floorIds) {
     ])
     core.removeFlag("__replayText__");
 }
-
 ui.prototype._drawStatistics_buildObj = function () {
-    // 数据统计要统计如下方面：
-    // 1. 当前全塔剩余下的怪物数量，总金币数，总经验数，总加点数
-    // 2. 当前全塔剩余的黄蓝红铁门数量，和对应的钥匙数量
-    // 3. 当前全塔剩余的三种宝石数量，血瓶数量，装备数量；总共增加的攻防生命值
-    // 4. 当前层的上述信息
-    // 5. 当前已走的步数；瞬间移动的步数，瞬间移动的次数（和少走的步数）；游戏时长
-    // 6. 当前已恢复的生命值；当前总伤害、战斗伤害、阻激夹域血网伤害、中毒伤害。
     var ori = this.uidata.drawStatistics();
     var ids = ori.filter(function (e) {
         return e.endsWith("Door") || core.material.items[e];
@@ -3144,7 +3037,6 @@ ui.prototype._drawStatistics_buildObj = function () {
     };
     return { ids: ids, cls: cls, ext: ext, total: core.clone(obj), current: core.clone(obj), marked: core.clone(obj) };
 }
-
 ui.prototype._drawStatistics_add = function (floorId, obj, x1, x2, value) {
     obj.total[x1][x2] += value || 0;
     if (floorId == core.status.floorId)
@@ -3152,11 +3044,9 @@ ui.prototype._drawStatistics_add = function (floorId, obj, x1, x2, value) {
     if (core.markedFloorIds[floorId])
         obj.marked[x1][x2] += value || 0;
 }
-
 ui.prototype._drawStatistics_floorId = function (floorId, obj) {
     core.extractBlocks(floorId);
     var floor = core.status.maps[floorId], blocks = floor.blocks;
-    // 隐藏层不给看
     if (floor.cannotViewMap && floorId != core.status.floorId) return;
     blocks.forEach(function (block) {
         if (block.disable) return;
@@ -3171,7 +3061,6 @@ ui.prototype._drawStatistics_floorId = function (floorId, obj) {
         }
     })
 }
-
 ui.prototype._drawStatistics_enemy = function (floorId, id, obj) {
     var enemy = core.material.enemys[id];
     this._drawStatistics_add(floorId, obj, 'monster', 'money', enemy.money);
@@ -3179,7 +3068,6 @@ ui.prototype._drawStatistics_enemy = function (floorId, id, obj) {
     this._drawStatistics_add(floorId, obj, 'monster', 'point', enemy.point);
     this._drawStatistics_add(floorId, obj, 'monster', 'count', 1);
 }
-
 ui.prototype._drawStatistics_items = function (floorId, floor, id, obj) {
     var hp = 0, atk = 0, def = 0, mdef = 0;
     if (obj.cls[id] == 'items' && id != 'superPotion') {
@@ -3217,7 +3105,6 @@ ui.prototype._drawStatistics_items = function (floorId, floor, id, obj) {
     this._drawStatistics_add(floorId, obj, 'add', 'def', def);
     this._drawStatistics_add(floorId, obj, 'add', 'mdef', mdef);
 }
-
 ui.prototype._drawStatistics_generateText = function (obj, type, data) {
     var text = type + "地图中：\n";
     text += "共有怪物" + data.monster.count + "个";
@@ -3225,7 +3112,6 @@ ui.prototype._drawStatistics_generateText = function (obj, type, data) {
     if (core.flags.statusBarItems.indexOf('enableExp') >= 0) text += "，总经验数" + data.monster.exp;
     if (core.flags.enableAddPoint) text += "，总加点数" + data.monster.point;
     text += "。\n";
-
     var prev = "";
     obj.ids.forEach(function (key) {
         var value = data.count[key];
@@ -3250,11 +3136,9 @@ ui.prototype._drawStatistics_generateText = function (obj, type, data) {
         + core.formatBigNumber(data.add.mdef) + "点。";
     return text;
 }
-
 ui.prototype._drawAbout = function () {
     return this.uidata.drawAbout();
 }
-
 ui.prototype._drawHelp = function () {
     core.playSound('打开界面');
     core.clearUI();
@@ -3292,7 +3176,6 @@ ui.prototype._drawHelp = function () {
         ]);
     }
 }
-
 ui.prototype.createCanvas = function (name, x, y, width, height, z) {
     if (core.dymCanvas[name]) {
         this.relocateCanvas(name, x, y);
@@ -3339,8 +3222,6 @@ ui.prototype.relocateCanvas = function (name, x, y, useDelta) {
     }
     return ctx;
 }
-
-////// canvas旋转 //////
 ui.prototype.rotateCanvas = function (name, angle, centerX, centerY) {
     var ctx = core.getContextByName(name);
     if (!ctx) return null;
@@ -3360,7 +3241,6 @@ ui.prototype.rotateCanvas = function (name, angle, centerX, centerY) {
     }
     canvas.setAttribute('_angle', angle);
 }
-
 ui.prototype.resizeCanvas = function (name, width, height, styleOnly) {
     var ctx = core.getContextByName(name);
     const canvas = ctx.canvas;
@@ -3379,7 +3259,6 @@ ui.prototype.resizeCanvas = function (name, width, height, styleOnly) {
     }
     return ctx;
 }
-////// canvas删除 //////
 ui.prototype.deleteCanvas = function (name) {
     if (name instanceof Function) {
         Object.keys(core.dymCanvas).forEach(function (one) {
@@ -3387,12 +3266,10 @@ ui.prototype.deleteCanvas = function (name) {
         });
         return;
     }
-
     if (!core.dymCanvas[name]) return null;
     core.dom.gameDraw.removeChild(core.dymCanvas[name].canvas);
     delete core.dymCanvas[name];
 }
-
 ui.prototype.deleteAllCanvas = function () {
     return this.deleteCanvas(function () { return true; })
 }
