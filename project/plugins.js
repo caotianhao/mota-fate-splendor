@@ -1572,13 +1572,11 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (core.getFlag('__statistics__')) return;
 			else return origin.apply(core.control, arguments);
 		}
-
 		core.bigmap.threshold = 256;
 		core.control.updateDamage = function (floorId, ctx) {
 			floorId = floorId || core.status.floorId;
 			if (!floorId || core.status.gameOver || main.mode != 'play') return;
 			var onMap = ctx == null;
-
 			if (!core.hasItem('book')) return;
 			core.status.damage.posX = core.bigmap.posX;
 			core.status.damage.posY = core.bigmap.posY;
