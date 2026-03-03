@@ -514,7 +514,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var per_page = 6;
 			totalPage = Math.ceil(list.length / per_page);
 			page = Math.floor((selectItem || 0) / per_page) + 1;
-
 			if (totalPage > 1) {
 				var half = 156;
 				core.setTextAlign('uievent', 'center');
@@ -561,7 +560,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					core.setTextAlign("uievent", "right");
 					totalMoney = selectCount * (type == 0 ? core.calValue(item.money) : core.calValue(item.sell));
 					core.fillText("uievent", core.formatBigNumber(totalMoney), 405, 280);
-
 					core.setTextAlign("uievent", "left");
 					core.fillText("uievent", type == 0 ? "已购次数" : "已卖次数", 324, 170);
 					core.setTextAlign("uievent", "right");
@@ -751,7 +749,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		 */
 		// 然后保存刷新，可以看到怪物的属性定义中出现了【境界】。再开启本插件即可。
 
-		// 是否开启本插件，默认禁用；将此改成 true 将启用本插件。
 		var __enable = false;
 		if (!__enable) return;
 
@@ -821,7 +818,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// Step 2: 定义每个新的角色各项初始数据（参见下方注释）
 		// Step 3: 在游戏中的任何地方都可以调用 `core.changeHero()` 进行切换；也可以 `core.changeHero(1)` 来切换到某个具体的角色上
 
-		// 是否开启本插件，默认禁用；将此改成 true 将启用本插件。
 		var __enable = false;
 		if (!__enable) return;
 		// 在这里定义全部的新角色属性
