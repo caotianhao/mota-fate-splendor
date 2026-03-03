@@ -159,8 +159,34 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 				],
 				"action": [
 					{
-						"type": "comment",
-						"text": "在这里写该难度需执行的事件"
+						"type": "setValue",
+						"name": "status:atk",
+						"value": "9999"
+					},
+					{
+						"type": "setValue",
+						"name": "status:def",
+						"value": "9999"
+					},
+					{
+						"type": "setValue",
+						"name": "status:money",
+						"value": "9999"
+					},
+					{
+						"type": "setValue",
+						"name": "status:mdef",
+						"value": "9999"
+					},
+					{
+						"type": "setValue",
+						"name": "status:hp",
+						"value": "999999"
+					},
+					{
+						"type": "setValue",
+						"name": "status:hpmax",
+						"value": "99999999"
 					}
 				]
 			},
@@ -242,14 +268,14 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 			"animate": false,
 			"name": "阳光",
 			"lv": 1,
-			"hpmax": 40000000,
-			"hp": 20000000,
+			"hpmax": 400,
+			"hp": 200,
 			"manamax": -1,
 			"mana": 0,
-			"atk": 9999,
-			"def": 9999,
-			"mdef": 99999,
-			"money": 99999,
+			"atk": 1,
+			"def": 1,
+			"mdef": 0,
+			"money": 0,
 			"exp": 0,
 			"equipment": [],
 			"items": {
