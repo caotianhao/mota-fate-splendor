@@ -2,12 +2,9 @@
 var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 {
 	"init": function () {
-		this._afterLoadResources = function () {
-			// 本函数将在所有资源加载完毕后，游戏开启前被执行
-		}
+		this._afterLoadResources = function () { }
 	},
 	"drawLight": function () {
-
 		// 绘制灯光/漆黑层效果。调用方式 core.plugin.drawLight(...)
 		// 【参数说明】
 		// name：必填，要绘制到的画布名；可以是一个系统画布，或者是个自定义画布；如果不存在则创建
@@ -29,20 +26,16 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					ctx = core.createCanvas(name, 0, 0, core._PX_ || core.__PIXELS__, core._PY_ || core.__PIXELS__, 98);
 				else return;
 			}
-
 			ctx.mozImageSmoothingEnabled = false;
 			ctx.webkitImageSmoothingEnabled = false;
 			ctx.msImageSmoothingEnabled = false;
 			ctx.imageSmoothingEnabled = false;
-
 			core.clearMap(name);
 			// 绘制色调层，默认不透明度
 			if (color == null) color = 0.9;
 			ctx.fillStyle = "rgba(0,0,0," + color + ")";
 			ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
 			lightDec = core.clamp(lightDec, 0, 1);
-
 			// 绘制每个灯光效果
 			ctx.globalCompositeOperation = 'destination-out';
 			lights.forEach(function (light) {
@@ -97,7 +90,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				core.insertCommonEvent(shop.commonEvent, shop.args);
 				return;
 			}
-
 			_shouldProcessKeyUp = true;
 
 			// Step 4: 执行标准公共商店    
@@ -145,7 +137,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				{ "type": "function", "function": "function() {core.addFlag('@temp@shop', -1);}" }
 			];
 		}
-
 		this._convertShop_replaceChoices = function (shopId, previewMode) {
 			var shop = core.status.shops[shopId];
 			var choices = (shop.choices || []).filter(function (choice) {
@@ -353,7 +344,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			canvas.className = 'gameCanvas anti-aliasing';
 			// 编辑器模式下设置zIndex会导致加入的图层覆盖优先级过高
 			if (main.mode != "editor") canvas.style.zIndex = zIndex || 0;
-			// 将图层插入进游戏内容
 			document.getElementById('gameDraw').appendChild(canvas);
 			var ctx = canvas.getContext('2d');
 			core.canvas[name] = ctx;
@@ -361,14 +351,11 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			canvas.height = core._PY_ || core.__PIXELS__;
 			return canvas;
 		}
-
 		var bg2Canvas = createCanvas('bg2', 20);
 		var fg2Canvas = createCanvas('fg2', 63);
-		// 大地图适配
 		core.bigmap.canvas = ["bg2", "fg2", "bg", "event", "event2", "fg", "damage"];
 		core.initStatus.bg2maps = {};
 		core.initStatus.fg2maps = {};
-
 		if (main.mode == 'editor') {
 			/*插入编辑器的图层 不做此步新增图层无法在编辑器显示*/
 			// 编辑器图层覆盖优先级 eui > efg > fg(前景层) > event2(48*32图块的事件层) > event(事件层) > bg(背景层)
@@ -384,7 +371,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			editor.dom.fg2Ctx = core.canvas.fg2;
 			editor.dom.maps.push('bg2map', 'fg2map');
 			editor.dom.canvas.push('bg2', 'fg2');
-
 			// 创建编辑器上的按钮
 			var createCanvasBtn = function (name) {
 				var input = document.createElement('input');
@@ -400,7 +386,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 				return input;
 			};
-
 			var createCanvasBtn_mobile = function (name) {
 				var input = document.createElement('option');
 				var id = 'layerMod' + num++;
@@ -434,7 +419,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				parent.appendChild(input2);
 			}
 		}
-
 		var _loadFloor_doNotCopy = core.maps._loadFloor_doNotCopy;
 		core.maps._loadFloor_doNotCopy = function () {
 			return ["bg2map", "fg2map"].concat(_loadFloor_doNotCopy());
@@ -491,10 +475,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		var choices = [];
 		var use = 'money';
 		var useText = '金币';
-
 		var bigFont = core.ui._buildFont(20, false),
 			middleFont = core.ui._buildFont(18, false);
-
 		this._drawItemShop = function () {
 			core.ui._createUIEvent();
 			core.clearMap('uievent');
@@ -523,7 +505,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				core.fillText("uievent", "<   " + selectCount + "   >", 364, 350);
 				core.fillText("uievent", "确定", 364, 380);
 			}
-
 			list = choices.filter(function (one) {
 				if (one.condition != null && one.condition != '') {
 					try { if (!core.calValue(one.condition)) return false; } catch (e) { }
@@ -542,7 +523,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				if (page < totalPage) core.fillText('uievent', '下一页', half + 80, 388);
 			}
 			core.setTextAlign('uievent', 'left');
-
 			var start = (page - 1) * per_page;
 			for (var i = 0; i < per_page; ++i) {
 				var curr = start + i;
@@ -588,11 +568,9 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					core.fillText("uievent", (type == 0 ? item.money_count : item.sell_count) || 0, 405, 200);
 				}
 			}
-
 			core.setTextAlign('uievent', 'left');
 			core.setTextBaseline('uievent', 'alphabetic');
 		}
-
 		var _add = function (item, delta) {
 			if (item == null) return;
 			selectCount = core.clamp(
@@ -601,7 +579,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					type == 0 && item.number != null ? item.number : Number.MAX_SAFE_INTEGER)
 			);
 		}
-
 		var _confirm = function (item) {
 			if (item == null || selectCount == 0) return;
 			if (type == 0) {
@@ -621,7 +598,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 			selectCount = 0;
 		}
-
 		this._performItemShopKeyBoard = function (keycode) {
 			var item = list[selectItem] || null;
 			switch (keycode) {
@@ -674,7 +650,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					break;
 			}
 		}
-
 		this._performItemShopClick = function (px, py) {
 			var item = list[selectItem] || null;
 			if (px >= 22 && px <= 82 && py >= 71 && py <= 102) {
@@ -728,12 +703,10 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return;
 			}
 		}
-
 		this._performItemShopAction = function () {
 			if (flags.type == 0) return this._performItemShopKeyBoard(flags.keycode);
 			else return this._performItemShopClick(flags.px, flags.py);
 		}
-
 		this.openItemShop = function (itemShopId) {
 			shopId = itemShopId;
 			type = 0;
@@ -747,7 +720,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			use = core.status.shops[shopId].use;
 			if (use != 'exp') use = 'money';
 			useText = use == 'money' ? '金币' : '经验';
-
 			core.insertAction([{
 				"type": "while",
 				"condition": "true",
@@ -828,7 +800,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					top + 56, core.arrayToRGBA(levelToColors[enemy.level] || '#DDDDDD'), this._buildFont(14, true));
 			}
 		}
-
 		core.ui._drawBook_drawRow1 = function (index, enemy, top, left, width, position) {
 			core.setTextAlign('ui', 'left');
 			var b13 = this._buildFont(13, true),
@@ -853,7 +824,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 是否开启本插件，默认禁用；将此改成 true 将启用本插件。
 		var __enable = false;
 		if (!__enable) return;
-
 		// 在这里定义全部的新角色属性
 		// 请注意，在这里定义的内容不会多角色共用，在切换时会进行恢复。
 		// 你也可以自行新增或删除，比如不共用金币则可以加上"money"的初始化，不共用道具则可以加上"items"的初始化，
@@ -898,14 +868,12 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 			}
 		}
-
 		// 在游戏开始注入initHeros
 		var _startGame_setHard = core.events._startGame_setHard;
 		core.events._startGame_setHard = function () {
 			_startGame_setHard.call(core.events);
 			core.initHeros();
 		}
-
 		// 切换角色
 		// 可以使用 core.changeHero() 来切换到下一个角色
 		// 也可以 core.changeHero(1) 来切换到某个角色（默认角色为0）
@@ -938,10 +906,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					});
 				} else toSave[name] = core.clone(core.status.hero[name]); // 使用core.clone()来创建新对象
 			});
-
 			core.setFlag("hero" + currHeroId, toSave); // 将当前角色信息进行保存
 			var data = core.getFlag("hero" + toHeroId); // 获得要切换的角色保存内容
-
 			saveList.forEach(function (name) {
 				if (name == "floorId");
 				else if (name == "items") {
@@ -955,12 +921,10 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (hero1.equipment) {
 				core.items.quickLoadEquip(100 + toHeroId);
 			}
-
 			core.ui.drawTip = _drawTip;
 			core.control.playSound = _playSound;
 			core.status.route = core.status.route.slice(0, routeLength);
 			core.control._bindRoutePush();
-
 			var toFloorId = data.floorId || core.status.floorId;
 			var toLoc = data.loc || core.status.hero.loc;
 			core.insertAction([
@@ -982,11 +946,9 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		// 是否启用本插件
 		var __enable = true;
 		if (!__enable) return;
-
 		["up", "down", "left", "right"].forEach(function (one) {
 			core.material.icons.hero[one].midFoot = 2;
 		});
-
 		var heroMoving = function (timestamp) {
 			if (core.status.heroMoving <= 0) return;
 			if (timestamp - core.animateFrame.moveTime > core.values.moveSpeed) {
@@ -996,7 +958,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			core.drawHero(['stop', 'leftFoot', 'midFoot', 'rightFoot'][core.animateFrame.leftLeg % 4], 4 * core.status.heroMoving);
 		}
 		core.registerAnimationFrame('heroMoving', true, heroMoving);
-
 		core.events._eventMoveHero_moving = function (step, moveSteps) {
 			var curr = moveSteps[0];
 			var direction = curr[0], x = core.getHeroLoc('x'), y = core.getHeroLoc('y');
@@ -1338,7 +1299,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				});
 				return this;
 			}
-
 			this.move = function (x, y, isDelta) {
 				if (x !== undefined && x !== null) this.x = x;
 				if (y !== undefined && y !== null) this.y = y;
@@ -1349,7 +1309,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				} else core.relocateCanvas(this.context, x, y, isDelta);
 				return this;
 			}
-
 			this.resize = function (w, h, styleOnly) {
 				if (w !== undefined && w !== null) this.w = w;
 				if (h !== undefined && h !== null) this.h = h;
@@ -1364,7 +1323,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				} else core.resizeCanvas(this.context, w, h, styleOnly);
 				return this;
 			}
-
 			this.rotate = function (angle, cx, cy) {
 				if (this.reference === 'window') {
 					var left = this.x;
@@ -1380,7 +1338,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 				return this;
 			}
-
 			this.clear = function (x, y, w, h) {
 				if (this.reference === 'window') {
 					this.context.clearRect(x, y, w, h);
@@ -1389,7 +1346,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 				return this;
 			}
-
 			this.destroy = function () {
 				if (this.reference === 'window') {
 					if (this.canvas) document.body.removeChild(this.canvas);
@@ -1397,7 +1353,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					core.deleteCanvas(this.name || '_sprite_' + this.count);
 				}
 			}
-
 			this.addEventListener = function () {
 				this.canvas.addEventListener.apply(this.canvas, arguments);
 			}
@@ -1410,7 +1365,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 	},
 	"hotReload": function () {
 		if (main.mode !== 'play' || main.replayChecking) return;
-
 		async function post(url, type, data) {
 			const xhr = new XMLHttpRequest();
 			xhr.open(type, url);
@@ -1430,7 +1384,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (res === 'success') return xhr.response;
 			else return '@error';
 		}
-
 		function reloadCss(data) {
 			const all = Array.from(document.getElementsByTagName('link'));
 			all.forEach(v => {
@@ -1446,11 +1399,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 			});
 		}
-
 		async function reloadFloor(data) {
-			// 首先重新加载main.floors对应的楼层
 			await import(`/project/floors/${data}.js?v=${Date.now()}`);
-			// 然后写入core.floors并解析
 			core.floors[data] = main.floors[data];
 			const floor = core.loadFloor(data);
 			if (core.isPlaying()) {
@@ -1468,7 +1418,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 			console.log(`floor hot reload: ${data}`);
 		}
-
 		async function reloadScript(data) {
 			if (data === 'plugins') {
 				const before = plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1;
@@ -1534,7 +1483,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 			}
 		}
-
 		async function reloadData(data) {
 			const script = document.createElement('script');
 			script.src = `/project/${data}.js?v=${Date.now()}`;
@@ -1542,7 +1490,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			await new Promise(res => {
 				script.onload = () => res('success');
 			});
-
 			let after;
 			if (data === 'data')
 				after = data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d;
@@ -1556,7 +1503,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				after = maps_90f36752_8815_4be8_b32b_d7fad1d0542e;
 			if (data === 'events')
 				after = events_c12a15a8_c380_4b28_8144_256cba95f760;
-
 			if (data === 'enemys') {
 				core.enemys.enemys = after;
 				for (var enemyId in after) {

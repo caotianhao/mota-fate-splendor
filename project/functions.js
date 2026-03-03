@@ -665,20 +665,16 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.removeFlag("__extraTurn__");
 			// ------ 支援END ------ //
 
-			// 最终伤害：初始伤害 + 怪物对勇士造成的伤害 + 反击伤害
 			var damage = init_damage + (turn - 1) * per_damage + turn * counterDamage;
-			// 再扣去护盾
 			damage -= hero_mdef;
 
-			// 检查是否允许负伤
 			if (!core.flags.enableNegativeDamage)
 				damage = Math.max(0, damage);
 
-			// 最后处理仇恨和固伤（因为这两个不能被护盾减伤）
-			if (core.hasSpecial(mon_special, 17)) { // 仇恨
+			if (core.hasSpecial(mon_special, 17)) {
 				damage += core.getFlag('hatred', 0);
 			}
-			if (core.hasSpecial(mon_special, 22)) { // 固伤
+			if (core.hasSpecial(mon_special, 22)) {
 				damage += enemy.damage || 0;
 			}
 
@@ -696,7 +692,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 	},
 	"actions": {
 		"onKeyUp": function (keyCode, altKey) {
-			// altKey：Alt键是否被按下，为true代表同时按下了Alt键
 			if (core.isMoving()) return;
 			if (core.status.onShopLongDown) return core.status.onShopLongDown = false;
 			if (altKey && keyCode >= 48 && keyCode <= 57) {
@@ -837,13 +832,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 
 		},
 		"onStatusBarClick": function (px, py, vertical) {
-			// 点击状态栏时触发的事件，仅在自绘状态栏开启时生效
-			// px和py为点击的像素坐标
-			// vertical为录像播放过程中的横竖屏信息
-			// 
-			// 横屏模式下状态栏的画布大小是 129*416 （开启拓展装备栏后是 129*457）
-			// 竖屏模式下状态栏的画布大小是 416*(32*rows+9) 其中rows为状态栏行数，即全塔属性中statusCanvasRowsOnMobile值
-			// 可以使用 _isVertical() 来判定当前是否是竖屏模式
 			var _isVertical = function () {
 				if (core.isReplaying() && vertical != null) return vertical;
 				return core.domStyle.isVertical;
@@ -876,7 +864,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			return data;
 		},
 		"loadData": function (data, callback) {
-			// 重置游戏和路线
 			core.resetGame(data.hero, data.hard, data.floorId, core.maps.loadMap(data.maps, null, data.hero.flags), data.values);
 			core.status.route = core.decodeRoute(data.route);
 			core.control._bindRoutePush();
@@ -922,57 +909,44 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			}[name] || name;
 		},
 		"triggerDebuff": function (action, type) {
-			// 毒衰咒效果的获得与解除
-			// action：获得还是解除；'get'表示获得，'remove'表示解除
-			// type：一个数组表示获得了哪些毒衰咒效果；poison, weak，curse
 			if (!(type instanceof Array)) type = [type];
 
 			if (action == 'get') {
 				if (core.inArray(type, 'poison') && !core.hasFlag("poison")) {
-					// 获得毒效果
 					core.setFlag('poison', true);
 				}
 				if (core.inArray(type, 'weak') && !core.hasFlag('weak')) {
-					// 获得衰效果
 					core.setFlag('weak', true);
 					if (core.values.weakValue >= 1) {
-						// >=1，直接扣数值
 						core.addStatus('atk', -core.values.weakValue);
 						core.addStatus('def', -core.values.weakValue);
 					} else {
-						// <1，扣比例
 						core.addBuff('atk', -core.values.weakValue);
 						core.addBuff('def', -core.values.weakValue);
 					}
 				}
 				if (core.inArray(type, 'curse') && !core.hasFlag('curse')) {
-					// 获得咒效果
 					core.setFlag('curse', true);
 				}
 			} else if (action == 'remove') {
 				var success = false;
 				if (core.inArray(type, "poison") && core.hasFlag("poison")) {
 					success = true;
-					// 移除毒效果
 					core.setFlag("poison", false);
 				}
 				if (core.inArray(type, "weak") && core.hasFlag("weak")) {
 					success = true;
-					// 移除衰效果
 					core.setFlag("weak", false);
 					if (core.values.weakValue >= 1) {
-						// >=1，直接扣数值
 						core.addStatus('atk', core.values.weakValue);
 						core.addStatus('def', core.values.weakValue);
 					} else {
-						// <1，扣比例
 						core.addBuff('atk', core.values.weakValue);
 						core.addBuff('def', core.values.weakValue);
 					}
 				}
 				if (core.inArray(type, "curse") && core.hasFlag("curse")) {
 					success = true;
-					// 移除咒效果
 					core.setFlag("curse", false);
 				}
 				if (success) core.playSound('回血');
@@ -980,17 +954,14 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 		},
 		"updateStatusBar": function () {
 			core.events.checkLvUp();
-
 			if (core.flags.statusBarItems.indexOf('enableHPMax') >= 0) {
 				core.setStatus('hp', Math.min(core.getRealStatus('hpmax'), core.getStatus('hp')));
 			}
 			if (core.status.floorId) {
 				core.setStatusBarInnerHTML('floor', core.status.maps[core.status.floorId].name);
 			}
-
 			core.setStatusBarInnerHTML('name', core.getStatus('name'));
 			core.setStatusBarInnerHTML('lv', core.getLvName());
-
 			var statusList = ['hpmax', 'hp', 'mana', 'atk', 'def', 'mdef', 'money', 'exp'];
 			statusList.forEach(function (item) {
 				core.status.hero[item] = Math.floor(core.status.hero[item]);
@@ -1022,7 +993,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.setStatusBarInnerHTML('pickaxe', "破" + core.itemCount('pickaxe'));
 			core.setStatusBarInnerHTML('bomb', "炸" + core.itemCount('bomb'));
 			core.setStatusBarInnerHTML('fly', "飞" + core.itemCount('centerFly'));
-
 			if (core.statusBar.hard.innerText != core.status.hard) {
 				core.statusBar.hard.innerText = core.status.hard;
 			}
@@ -1039,11 +1009,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 		"updateCheckBlock": function (floorId) {
 			floorId = floorId || core.status.floorId;
 			if (!floorId || !core.status.maps) return;
-
 			var width = core.floors[floorId].width,
 				height = core.floors[floorId].height;
 			var blocks = core.getMapBlocksObj(floorId);
-
 			var damage = {},
 				type = {},
 				repulse = {},
@@ -1052,7 +1020,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			var needCache = false;
 			var canGoDeadZone = core.flags.canGoDeadZone;
 			core.flags.canGoDeadZone = true;
-
 			for (var loc in blocks) {
 				var block = blocks[loc],
 					x = block.x,
