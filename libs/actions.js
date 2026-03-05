@@ -939,7 +939,8 @@ actions.prototype._clickAction_text = function () {
     if (core.status.event.animateUI)
         return;
     var data = core.clone(core.status.event.data.current);
-    if (typeof data == 'string') data = { "type": "text", "text": data };
+    if (typeof data == 'string')
+        data = { "type": "text", "text": data };
     if (core.status.event.interval != null) {
         data.showAll = true;
         core.insertAction(data);
@@ -1430,7 +1431,8 @@ actions.prototype._clickToolbox = function (x, y) {
         }
     }
     var index = parseInt(x / 2);
-    if (y === core._HEIGHT_ - 1 - 8) index += 0;
+    if (y === core._HEIGHT_ - 1 - 8)
+        index += 0;
     else if (y === core._HEIGHT_ - 1 - 6) index += this._HX_;
     else if (y === core._HEIGHT_ - 1 - 3) index += this.LAST;
     else if (y === core._HEIGHT_ - 1 - 1) index += this.LAST + this._HX_;
@@ -2893,30 +2895,51 @@ actions.prototype._clickKeyBoard = function (x, y) {
     }
     if (y == this._HY_ + 2 && x >= m - 5 && x <= m + 5) {
         core.ui.closePanel();
-        if (x == m - 5) core.keyUp(189); // -
-        if (x == m - 4) core.keyUp(187); // =
-        if (x == m - 3) core.keyUp(219); // [
-        if (x == m - 2) core.keyUp(221); // ]
-        if (x == m - 1) core.keyUp(220); // \
-        if (x == m) core.keyUp(186); // ;
-        if (x == m + 1) core.keyUp(222); // '
-        if (x == m + 2) core.keyUp(188); // ,
-        if (x == m + 3) core.keyUp(190); // .
-        if (x == m + 4) core.keyUp(191); // /
-        if (x == m + 5) core.keyUp(192); // `
+        if (x == m - 5)
+            core.keyUp(189); // -
+        if (x == m - 4)
+            core.keyUp(187); // =
+        if (x == m - 3)
+            core.keyUp(219); // [
+        if (x == m - 2)
+            core.keyUp(221); // ]
+        if (x == m - 1)
+            core.keyUp(220); // \
+        if (x == m)
+            core.keyUp(186); // ;
+        if (x == m + 1)
+            core.keyUp(222); // '
+        if (x == m + 2)
+            core.keyUp(188); // ,
+        if (x == m + 3)
+            core.keyUp(190); // .
+        if (x == m + 4)
+            core.keyUp(191); // /
+        if (x == m + 5)
+            core.keyUp(192); // `
     }
     if (y == this._HY_ + 3 && x >= m - 5 && x <= m + 4) {
         core.ui.closePanel();
-        if (x == m - 5) core.keyUp(27); // ESC
-        if (x == m - 4) core.keyUp(9); // TAB
-        if (x == m - 3) core.keyUp(20); // CAPS
-        if (x == m - 2) core.keyUp(16); // SHIFT
-        if (x == m - 1) core.keyUp(17); // CTRL
-        if (x == m) core.keyUp(18); // ALT
-        if (x == m + 1) core.keyUp(32); // SPACE
-        if (x == m + 2) core.keyUp(8); // BACKSPACE
-        if (x == m + 3) core.keyUp(13); // ENTER
-        if (x == m + 4) core.keyUp(46); // DEL
+        if (x == m - 5)
+            core.keyUp(27); // ESC
+        if (x == m - 4)
+            core.keyUp(9); // TAB
+        if (x == m - 3)
+            core.keyUp(20); // CAPS
+        if (x == m - 2)
+            core.keyUp(16); // SHIFT
+        if (x == m - 1)
+            core.keyUp(17); // CTRL
+        if (x == m)
+            core.keyUp(18); // ALT
+        if (x == m + 1)
+            core.keyUp(32); // SPACE
+        if (x == m + 2)
+            core.keyUp(8); // BACKSPACE
+        if (x == m + 3)
+            core.keyUp(13); // ENTER
+        if (x == m + 4)
+            core.keyUp(46); // DEL
     }
     if (y == this._HY_ + 4 && x >= m + 3 && x <= m + 5) {
         core.playSound('取消');
