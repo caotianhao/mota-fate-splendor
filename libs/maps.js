@@ -1,10 +1,13 @@
 "use strict";
+
 function maps() {
     this._init();
 }
+
 maps.prototype._init = function () {
     this.blocksInfo = maps_90f36752_8815_4be8_b32b_d7fad1d0542e;
 };
+
 maps.prototype._initFloors = function (floorId) {
     if (!floorId) {
         core.floorIds.forEach(function (floorId) {
@@ -17,6 +20,7 @@ maps.prototype._initFloors = function (floorId) {
     if (!core.floors[floorId].cannotMoveIn)
         core.floors[floorId].cannotMoveIn = {};
 };
+
 maps.prototype._resetFloorImages = function () {
     for (var floorId in core.status.maps) {
         (core.status.maps[floorId].images || []).forEach(function (one) {
@@ -27,6 +31,7 @@ maps.prototype._resetFloorImages = function () {
         });
     }
 };
+
 maps.prototype._setHDCanvasSize = function (ctx, width, height) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var ratio = core.domStyle.scale;
@@ -36,6 +41,7 @@ maps.prototype._setHDCanvasSize = function (ctx, width, height) {
     ctx.scale(ratio, ratio);
     ctx.canvas.setAttribute("isHD", 1);
 };
+
 maps.prototype.loadFloor = function (floorId, map) {
     var floor = core.floors[floorId];
     if (!map) map = core.cloneArray(floor.map);
@@ -59,6 +65,7 @@ maps.prototype.loadFloor = function (floorId, map) {
     }
     return content;
 };
+
 maps.prototype._loadFloor_doNotCopy = function () {
     return [
         "firstArrive",
@@ -94,6 +101,7 @@ maps.prototype.extractBlocks = function (map) {
         floorId,
     );
 };
+
 maps.prototype._mapIntoBlocks = function (map, floor, floorId) {
     var blocks = [];
     var mw = core.floors[floorId].width;
@@ -118,6 +126,7 @@ maps.prototype._mapIntoBlocks = function (map, floor, floorId) {
     }
     return blocks;
 };
+
 maps.prototype.extractBlocksForUI = function (map, flags) {
     if (!map || map.blocks) return;
     if (map.deleted) return (map.blocks = []);
@@ -160,12 +169,14 @@ maps.prototype.extractBlocksForUI = function (map, flags) {
         }
     }
 };
+
 maps.prototype.getNumberById = function (id) {
     id = this.getIdOfThis(id);
     core.status.id2number = core.status.id2number || {};
     if (core.status.id2number[id] != null) return core.status.id2number[id];
     return (core.status.id2number[id] = this._getNumberById(id));
 };
+
 maps.prototype._getNumberById = function (id) {
     for (var number in this.blocksInfo) {
         if ((this.blocksInfo[number] || {}).id == id)
@@ -189,9 +200,11 @@ maps.prototype.getBlockByNumber = function (number) {
         true,
     ));
 };
+
 maps.prototype.getBlockById = function (id) {
     return this.getBlockByNumber(this.getNumberById(id));
 };
+
 maps.prototype.getIdOfThis = function (id) {
     if (id != "this") return id;
     if (core.status.event.id != "action") return id;
@@ -206,6 +219,7 @@ maps.prototype.getIdOfThis = function (id) {
         id
     );
 };
+
 maps.prototype.initBlock = function (x, y, id, addInfo, eventFloor) {
     var disable = null;
     var opacity = null;
@@ -258,6 +272,7 @@ maps.prototype.initBlock = function (x, y, id, addInfo, eventFloor) {
     if (main.mode == "editor") delete block.disable;
     return block;
 };
+
 maps.prototype._addInfo = function (block) {
     if (block.event.cls.indexOf("enemy") == 0 && !block.event.trigger) {
         block.event.trigger = "battle";
@@ -272,6 +287,7 @@ maps.prototype._addInfo = function (block) {
     if (block.event.cls == "enemy48" || block.event.cls == "npc48")
         block.event.height = 48;
 };
+
 maps.prototype._addEvent = function (block, x, y, event) {
     if (!event) return;
     if (typeof event == "string") {
@@ -307,6 +323,7 @@ maps.prototype._addEvent = function (block, x, y, event) {
         block.event.trigger = "action";
     }
 };
+
 maps.prototype._initMaps = function () {
     var floorIds = core.floorIds;
     var maps = {};
@@ -316,6 +333,7 @@ maps.prototype._initMaps = function () {
     }
     return maps;
 };
+
 maps.prototype.compressMap = function (mapArr, floorId) {
     var floorMap = core.floors[floorId].map;
     if (core.utils.same(mapArr, floorMap)) return null;
@@ -335,6 +353,7 @@ maps.prototype.compressMap = function (mapArr, floorId) {
     }
     return mapArr;
 };
+
 maps.prototype._processInvalidMap = function (mapArr, width, height) {
     if (mapArr.length == height && mapArr[0].length == width) return mapArr;
     var map = [];
@@ -349,6 +368,7 @@ maps.prototype._processInvalidMap = function (mapArr, width, height) {
     }
     return map;
 };
+
 maps.prototype._getBlockOpacityFromFlag = function (floorId, x, y, flags) {
     if (flags == null) flags = (core.status.hero || {}).flags;
     if (flags == null) return null;
@@ -359,6 +379,7 @@ maps.prototype._getBlockOpacityFromFlag = function (floorId, x, y, flags) {
     var index = x + y * core.floors[floorId].width;
     return (__opacity__[floorId] || {})[index];
 };
+
 maps.prototype._getBlockFilterFromFlag = function (floorId, x, y, flags) {
     if (flags == null) flags = (core.status.hero || {}).flags;
     if (flags == null) return null;
@@ -369,6 +390,7 @@ maps.prototype._getBlockFilterFromFlag = function (floorId, x, y, flags) {
     var index = x + y * core.floors[floorId].width;
     return core.clone((__filter__[floorId] || {})[index]);
 };
+
 maps.prototype.setBlockOpacity = function (opacity, x, y, floorId) {
     if (window.flags == null) return;
     floorId = floorId || core.status.floorId;
@@ -393,6 +415,7 @@ maps.prototype.setBlockOpacity = function (opacity, x, y, floorId) {
         }
     }
 };
+
 maps.prototype.setBlockFilter = function (filter, x, y, floorId) {
     if (window.flags == null) return;
     floorId = floorId || core.status.floorId;
@@ -427,6 +450,7 @@ maps.prototype.setBlockFilter = function (filter, x, y, floorId) {
         }
     }
 };
+
 maps.prototype.isMapBlockDisabled = function (floorId, x, y, flags) {
     if (flags == null) flags = (core.status.hero || {}).flags;
     if (flags == null) return null;
@@ -439,6 +463,7 @@ maps.prototype.isMapBlockDisabled = function (floorId, x, y, flags) {
     if (__disabled__[floorId][0].indexOf(index) >= 0) return true;
     if (__disabled__[floorId][1].indexOf(index) >= 0) return false;
 };
+
 maps.prototype.setMapBlockDisabled = function (floorId, x, y, disabled) {
     if (window.flags == null) return;
     floorId = floorId || core.status.floorId;
@@ -458,6 +483,7 @@ maps.prototype.setMapBlockDisabled = function (floorId, x, y, disabled) {
     if (disabled) __disabled__[floorId][0].push(index);
     else __disabled__[floorId][1].push(index);
 };
+
 maps.prototype.decompressMap = function (mapArr, floorId) {
     var mw = core.floors[floorId].width;
     var mh = core.floors[floorId].height;
@@ -480,6 +506,7 @@ maps.prototype.decompressMap = function (mapArr, floorId) {
     }
     return mapArr;
 };
+
 maps.prototype.saveMap = function (floorId) {
     var maps = core.status.maps;
     if (!floorId) {
@@ -498,17 +525,18 @@ maps.prototype.saveMap = function (floorId) {
     var mapArr = this.compressMap(
         map.blocks
             ? this._getMapArrayFromBlocks(
-                  map.blocks,
-                  map.width,
-                  map.height,
-                  true,
-              )
+                map.blocks,
+                map.width,
+                map.height,
+                true,
+            )
             : map.map,
         floorId,
     );
     if (mapArr != null) thisFloor.map = mapArr;
     return thisFloor;
 };
+
 maps.prototype._compressFloorData = function (map, floor) {
     var thisFloor = {};
     var notCopy = this._loadFloor_doNotCopy();
@@ -522,6 +550,7 @@ maps.prototype._compressFloorData = function (map, floor) {
     }
     return thisFloor;
 };
+
 maps.prototype.loadMap = function (data, floorId, flags) {
     if (!floorId) {
         var map = {};
@@ -540,6 +569,7 @@ maps.prototype.loadMap = function (data, floorId, flags) {
     }
     return this.loadFloor(floorId, data[floorId]);
 };
+
 maps.prototype.resizeMap = function (floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -572,6 +602,7 @@ maps.prototype.resizeMap = function (floorId) {
         }
     });
 };
+
 maps.prototype.getMapArray = function (floorId, noCache) {
     floorId = floorId || core.status.floorId;
     var map = core.status.maps[floorId];
@@ -582,6 +613,7 @@ maps.prototype.getMapArray = function (floorId, noCache) {
         map.height,
     ));
 };
+
 maps.prototype.getMapNumber = function (x, y, floorId, noCache) {
     return this.getMapArray(floorId, noCache)[y][x];
 };
@@ -594,6 +626,7 @@ maps.prototype._updateMapArray = function (floorId, x, y) {
     if (block == null || block.disable) map.map[y][x] = 0;
     else map.map[y][x] = block.id;
 };
+
 maps.prototype._getMapArrayFromBlocks = function (
     blockArray,
     width,
@@ -608,6 +641,7 @@ maps.prototype._getMapArrayFromBlocks = function (
     });
     return blocks;
 };
+
 maps.prototype.getMapBlocksObj = function (floorId, noCache) {
     floorId = floorId || core.status.floorId;
     if (core.status.mapBlockObjs[floorId] && !noCache)
@@ -620,6 +654,7 @@ maps.prototype.getMapBlocksObj = function (floorId, noCache) {
     });
     return (core.status.mapBlockObjs[floorId] = obj);
 };
+
 maps.prototype._getBgFgMapArray = function (name, floorId, noCache) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return [];
@@ -629,7 +664,7 @@ maps.prototype._getBgFgMapArray = function (name, floorId, noCache) {
         return core.status[name + "maps"][floorId];
     var arr =
         main.mode == "editor" &&
-        !(window.editor && editor.uievent && editor.uievent.isOpen)
+            !(window.editor && editor.uievent && editor.uievent.isOpen)
             ? core.cloneArray(editor[name + "map"])
             : null;
     if (arr == null)
@@ -657,23 +692,29 @@ maps.prototype._getBgFgMapArray = function (name, floorId, noCache) {
     if (core.status[name + "maps"]) core.status[name + "maps"][floorId] = arr;
     return arr;
 };
+
 maps.prototype.getBgMapArray = function (floorId) {
     return this._getBgFgMapArray("bg", floorId);
 };
+
 maps.prototype.getFgMapArray = function (floorId) {
     return this._getBgFgMapArray("fg", floorId);
 };
+
 maps.prototype._getBgFgNumber = function (name, x, y, floorId) {
     if (x == null) x = core.getHeroLoc("x");
     if (y == null) y = core.getHeroLoc("y");
     return this._getBgFgMapArray(name, floorId)[y][x];
 };
+
 maps.prototype.getBgNumber = function (x, y, floorId) {
     return this._getBgFgNumber("bg", x, y, floorId);
 };
+
 maps.prototype.getFgNumber = function (x, y, floorId) {
     return this._getBgFgNumber("fg", x, y, floorId);
 };
+
 maps.prototype.generateMovableArray = function (floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return null;
@@ -688,16 +729,16 @@ maps.prototype.generateMovableArray = function (floorId) {
     var startX = v2 ? Math.max(0, core.bigmap.posX - core.bigmap.extend) : 0;
     var endX = v2
         ? Math.min(
-              width,
-              core.bigmap.posX + core._WIDTH_ + core.bigmap.extend + 1,
-          )
+            width,
+            core.bigmap.posX + core._WIDTH_ + core.bigmap.extend + 1,
+        )
         : width;
     var startY = v2 ? Math.max(0, core.bigmap.posY - core.bigmap.extend) : 0;
     var endY = v2
         ? Math.min(
-              height,
-              core.bigmap.posY + core._HEIGHT_ + core.bigmap.extend + 1,
-          )
+            height,
+            core.bigmap.posY + core._HEIGHT_ + core.bigmap.extend + 1,
+        )
         : height;
 
     for (var x = startX; x < endX; x++) {
@@ -788,7 +829,7 @@ maps.prototype._canMoveHero_checkPoint = function (
         !core.flags.canGoDeadZone &&
         !core.status.lockControl &&
         Math.max(core.status.hero.hp, 1) <=
-            ((core.status.checkBlock.damage || {})[nx + "," + ny] || 0) &&
+        ((core.status.checkBlock.damage || {})[nx + "," + ny] || 0) &&
         arrays.eventArray[ny][nx] == 0
     )
         return false;
@@ -813,9 +854,11 @@ maps.prototype._canMoveHero_checkCannotInOut = function (
         direction,
     );
 };
+
 maps.prototype.canMoveDirectly = function (destX, destY) {
     return this.canMoveDirectlyArray([[destX, destY]])[0];
 };
+
 maps.prototype.canMoveDirectlyArray = function (locs, canMoveArray) {
     var ans = [],
         number = locs.length;
@@ -855,12 +898,14 @@ maps.prototype.canMoveDirectlyArray = function (locs, canMoveArray) {
         canMoveArray,
     );
 };
+
 maps.prototype._canMoveDirectly_checkGlobal = function () {
     if (!core.flags.enableMoveDirectly) return false;
     if (core.status.thisMap.cannotMoveDirectly) return false;
     if (core.hasFlag("cannotMoveDirectly")) return false;
     return true;
 };
+
 maps.prototype._canMoveDirectly_checkStartPoint = function (sx, sy) {
     if (core.status.checkBlock.damage[sx + "," + sy]) return false;
     var block = core.getBlock(sx, sy);
@@ -869,6 +914,7 @@ maps.prototype._canMoveDirectly_checkStartPoint = function (sx, sy) {
     }
     return true;
 };
+
 maps.prototype._canMoveDirectly_bfs = function (
     sx,
     sy,
@@ -898,10 +944,8 @@ maps.prototype._canMoveDirectly_bfs = function (
             if (!this._canMoveDirectly_checkNextPoint(blocksObj, nx, ny))
                 continue;
             visited[nindex] = visited[now] + 1;
-            // if (nx == ex && ny == ey) return visited[nindex];
             for (var i in ans) {
                 if (locs[i][0] == nx && locs[i][1] == ny && ans[i] == null) {
-                    // 不可以绿点为终点
                     var block = blocksObj[nx + "," + ny];
                     if (block && !block.disable && block.event.trigger) {
                         ans[i] = -1;
@@ -920,6 +964,7 @@ maps.prototype._canMoveDirectly_bfs = function (
     }
     return ans;
 };
+
 maps.prototype._canMoveDirectly_checkNextPoint = function (blocksObj, x, y) {
     var index = x + "," + y;
     var block = blocksObj[index];
@@ -941,6 +986,7 @@ maps.prototype._canMoveDirectly_checkNextPoint = function (blocksObj, x, y) {
     if (core.status.checkBlock.ambush[index]) return false;
     return true;
 };
+
 maps.prototype.automaticRoute = function (destX, destY) {
     var startX = core.getHeroLoc("x"),
         startY = core.getHeroLoc("y");
@@ -959,6 +1005,7 @@ maps.prototype.automaticRoute = function (destX, destY) {
     ans.reverse();
     return ans;
 };
+
 maps.prototype._automaticRoute_bfs = function (startX, startY, destX, destY) {
     var route = {},
         canMoveArray = this.generateMovableArray();
@@ -1003,6 +1050,7 @@ maps.prototype._automaticRoute_bfs = function (startX, startY, destX, destY) {
     }
     return route;
 };
+
 maps.prototype._automaticRoute_deepAdd = function (x, y, blocks) {
     var deepAdd = 1;
     var block = blocks[x + "," + y];
@@ -1021,6 +1069,7 @@ maps.prototype._automaticRoute_deepAdd = function (x, y, blocks) {
     if (core.status.checkBlock.ambush[x + "," + y]) deepAdd += 1000;
     return deepAdd;
 };
+
 maps.prototype._getBigImageInfo = function (bigImage, face, animate) {
     face = face || "down";
     if (["up", "down", "left", "right"].indexOf(face) < 0) face = "down";
@@ -1055,6 +1104,7 @@ maps.prototype._getBigImageInfo = function (bigImage, face, animate) {
         dy: dy,
     };
 };
+
 maps.prototype.drawBlock = function (block, animate, ctx) {
     if (block.event.id == "none") return;
     var redraw = animate != null;
@@ -1094,6 +1144,7 @@ maps.prototype.drawBlock = function (block, animate, ctx) {
     if (!block.name) this._drawBlockInfo(blockInfo, block.x, block.y, ctx);
     else this._drawBlockInfo_bgfg(blockInfo, block.name, block.x, block.y, ctx);
 };
+
 maps.prototype._drawBlockInfo_bigImage = function (blockInfo, x, y, ctx) {
     var bigImageInfo = this._getBigImageInfo(
         blockInfo.bigImage,
@@ -1176,6 +1227,7 @@ maps.prototype._drawBlockInfo_bigImage = function (blockInfo, x, y, ctx) {
         core.dymCanvas[body].canvas.setAttribute("_oy", 32 * y);
     }
 };
+
 maps.prototype._drawBlockInfo_drawWithFilter = function (blockInfo, ctx, func) {
     var alpha = null;
     if (blockInfo.opacity != null)
@@ -1185,6 +1237,7 @@ maps.prototype._drawBlockInfo_drawWithFilter = function (blockInfo, ctx, func) {
     core.setFilter(ctx, null);
     if (alpha != null) core.setAlpha(ctx, alpha);
 };
+
 maps.prototype._drawBlockInfo = function (blockInfo, x, y, ctx) {
     if (blockInfo.bigImage)
         return this._drawBlockInfo_bigImage(blockInfo, x, y, ctx);
@@ -1228,6 +1281,7 @@ maps.prototype._drawBlockInfo = function (blockInfo, x, y, ctx) {
         });
     }
 };
+
 maps.prototype._drawBlockInfo_bgfg = function (blockInfo, name, x, y, ctx) {
     var image = blockInfo.image,
         posX = blockInfo.posX,
@@ -1265,6 +1319,7 @@ maps.prototype._drawBlockInfo_bgfg = function (blockInfo, name, x, y, ctx) {
     core.setFilter(ctx, null);
     if (alpha != null) core.setAlpha(ctx, alpha);
 };
+
 maps.prototype._drawBlockInfo_shouldBlurFg = function (x, y) {
     if (main.mode == "play" && !core.flags.blurFg) return false;
     var block = this.getBlock(x, y);
@@ -1273,6 +1328,7 @@ maps.prototype._drawBlockInfo_shouldBlurFg = function (x, y) {
         return block.event.script || block.event.event;
     return true;
 };
+
 maps.prototype.generateGroundPattern = function (floorId) {
     var groundId =
         (
@@ -1298,6 +1354,7 @@ maps.prototype.generateGroundPattern = function (floorId) {
         "repeat",
     );
 };
+
 maps.prototype.drawMap = function (floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -1321,6 +1378,7 @@ maps.prototype.drawMap = function (floorId) {
     core.drawHero();
     core.updateStatusBar();
 };
+
 maps.prototype.redrawMap = function () {
     core.bigmap.canvas.forEach(function (one) {
         core.clearMap(one);
@@ -1328,6 +1386,7 @@ maps.prototype.redrawMap = function () {
     this._drawMap_drawAll(null, { redraw: true });
     core.drawDamage();
 };
+
 maps.prototype._drawMap_drawAll = function (floorId, config) {
     floorId = floorId || core.status.floorId;
     this.drawBg(floorId, config);
@@ -1441,6 +1500,7 @@ maps.prototype.drawBg = function (floorId, config) {
     this._drawBg_draw(floorId, toDrawCtx, cacheCtx, config);
     if (config.onMap) cacheCtx.translate(0, 0);
 };
+
 maps.prototype._drawBg_draw = function (floorId, toDrawCtx, cacheCtx, config) {
     config.ctx = cacheCtx;
     core.maps._drawBg_drawBackground(floorId, config);
@@ -1462,6 +1522,7 @@ maps.prototype._drawBg_draw = function (floorId, toDrawCtx, cacheCtx, config) {
         );
     config.ctx = toDrawCtx;
 };
+
 maps.prototype._drawBg_drawBackground = function (floorId, config) {
     var groundId =
         (core.status.maps || core.floors)[floorId].defaultGround || "ground";
@@ -1504,7 +1565,6 @@ maps.prototype._drawBg_drawBackground = function (floorId, config) {
     }
 };
 
-////// 绘制事件层 //////
 maps.prototype.drawEvents = function (floorId, blocks, config) {
     floorId = floorId || core.status.floorId;
     if (config == null) config = {};
@@ -1578,6 +1638,7 @@ maps.prototype.drawEvents = function (floorId, blocks, config) {
         cacheCtx.translate(0, 0);
     }
 };
+
 maps.prototype.drawFg = function (floorId, config) {
     floorId = floorId || core.status.floorId;
     if (config == null) config = {};
@@ -1620,6 +1681,7 @@ maps.prototype._drawFg_draw = function (floorId, toDrawCtx, cacheCtx, config) {
         );
     config.ctx = toDrawCtx;
 };
+
 maps.prototype._drawBgFgMap = function (floorId, name, config) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -1662,6 +1724,7 @@ maps.prototype._drawBgFgMap = function (floorId, name, config) {
     });
     delete config.postDraw;
 };
+
 maps.prototype._drawFloorImages = function (
     floorId,
     ctx,
@@ -1689,6 +1752,7 @@ maps.prototype._drawFloorImages = function (
         this._drawFloorImage(ctx, name, one, image, currStatus, onMap);
     }, this);
 };
+
 maps.prototype._getFloorImages = function (floorId) {
     return (
         (
@@ -1697,6 +1761,7 @@ maps.prototype._getFloorImages = function (floorId) {
         ).images || []
     );
 };
+
 maps.prototype._drawFloorImages_gif = function (image, dx, dy) {
     core.dom.gif.innerHTML = "";
     var gif = new Image();
@@ -1709,6 +1774,7 @@ maps.prototype._drawFloorImages_gif = function (image, dx, dy) {
     core.dom.gif.appendChild(gif);
     return;
 };
+
 maps.prototype._drawFloorImage = function (
     ctx,
     name,
@@ -1788,6 +1854,7 @@ maps.prototype._drawFloorImage = function (
         }
     }
 };
+
 maps.prototype._drawAutotile = function (
     ctx,
     mapArr,
@@ -2076,6 +2143,7 @@ maps.prototype._drawAutotile_renderCut = function (
         );
     }
 };
+
 maps.prototype._drawAutotile_drawBlockByIndex = function (
     ctx,
     dx,
@@ -2137,6 +2205,7 @@ maps.prototype._drawAutotile_checkAround = function (x, y, mapArr) {
     }
     return pointBlock;
 };
+
 maps.prototype._drawAutotile_getAutotileIndexs = function (
     x,
     y,
@@ -2151,6 +2220,7 @@ maps.prototype._drawAutotile_getAutotileIndexs = function (
     }
     return indexArr;
 };
+
 maps.prototype._drawAutotileAnimate = function (block, animate) {
     var x = block.x,
         y = block.y;
@@ -2273,6 +2343,7 @@ maps.prototype._makeAutotileEdges = function () {
         }
     }
 };
+
 maps.prototype.drawThumbnail = function (floorId, blocks, options) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -2284,6 +2355,7 @@ maps.prototype.drawThumbnail = function (floorId, blocks, options) {
     options.ctx = ctx;
     this._drawThumbnail_drawToTarget(floorId, options);
 };
+
 maps.prototype._drawThumbnail_drawTempCanvas = function (
     floorId,
     blocks,
@@ -2312,10 +2384,10 @@ maps.prototype._drawThumbnail_drawTempCanvas = function (
         if (centerX == null) centerX = Math.floor(width / 2);
         if (centerY == null) centerY = Math.floor(height / 2);
         var offsetX = core.clamp(
-                centerX - core._HALF_WIDTH_,
-                0,
-                width - core._WIDTH_,
-            ),
+            centerX - core._HALF_WIDTH_,
+            0,
+            width - core._WIDTH_,
+        ),
             offsetY = core.clamp(
                 centerY - core._HALF_HEIGHT_,
                 0,
@@ -2344,6 +2416,7 @@ maps.prototype._drawThumbnail_drawTempCanvas = function (
     else if (flags != null) core.status.hero.flags = flags;
     tempCanvas.setTransform(1, 0, 0, 1, 0, 0);
 };
+
 maps.prototype._drawThumbnail_realDrawTempCanvas = function (
     floorId,
     blocks,
@@ -2512,21 +2585,25 @@ maps.prototype._drawThumbnail_drawToTarget = function (floorId, options) {
         }
     }
 };
+
 maps.prototype.noPass = function (x, y, floorId) {
     var block = core.getBlock(x, y, floorId);
     if (block == null) return false;
     return block.event.noPass;
 };
+
 maps.prototype.npcExists = function (x, y, floorId) {
     var block = this.getBlock(x, y, floorId);
     if (block == null) return false;
     return block.event.cls.indexOf("npc") == 0;
 };
+
 maps.prototype.terrainExists = function (x, y, id, floorId) {
     var block = this.getBlock(x, y, floorId);
     if (block == null) return false;
     return block.event.cls == "terrains" && (id ? block.event.id == id : true);
 };
+
 maps.prototype.stairExists = function (x, y, floorId) {
     var blockId = this.getBlockId(x, y, floorId);
     if (blockId == null) return false;
@@ -2588,7 +2665,6 @@ maps.prototype.getBlockOpacity = function (x, y, floorId, showDisable) {
     return block.opacity == null ? 1.0 : block.opacity;
 };
 
-////// 获得某个点的filter //////
 maps.prototype.getBlockFilter = function (x, y, floorId, showDisable) {
     var block = core.getBlock(x, y, floorId, showDisable);
     if (block == null) return null;
@@ -2596,6 +2672,7 @@ maps.prototype.getBlockFilter = function (x, y, floorId, showDisable) {
         return { blur: 0, hue: 0, grayscale: 0, invert: false, shadow: 0 };
     return core.clone(block.filter);
 };
+
 maps.prototype.getBlockInfo = function (block) {
     if (!block) return null;
     if (typeof block == "string") {
@@ -2762,6 +2839,7 @@ maps.prototype.showBlock = function (x, y, floorId) {
         }
     }
 };
+
 maps.prototype.hideBlock = function (x, y, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -2772,6 +2850,7 @@ maps.prototype.hideBlock = function (x, y, floorId) {
     this._updateMapArray(floorId, block.x, block.y);
     this._removeBlockFromMap(floorId, block);
 };
+
 maps.prototype.hideBlockByIndex = function (index, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -2782,6 +2861,7 @@ maps.prototype.hideBlockByIndex = function (index, floorId) {
     core.setMapBlockDisabled(floorId, block.x, block.y, true);
     this._updateMapArray(floorId, block.x, block.y);
 };
+
 maps.prototype.hideBlockByIndexes = function (indexes, floorId) {
     indexes
         .sort(function (a, b) {
@@ -2812,6 +2892,7 @@ maps.prototype._removeBlockFromMap = function (floorId, block) {
         core.updateStatusBar();
     }
 };
+
 maps.prototype.removeBlock = function (x, y, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return false;
@@ -2827,6 +2908,7 @@ maps.prototype.removeBlock = function (x, y, floorId) {
     }
     return false;
 };
+
 maps.prototype.removeBlockByIndex = function (index, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -2839,6 +2921,7 @@ maps.prototype.removeBlockByIndex = function (index, floorId) {
     core.setMapBlockDisabled(floorId, block.x, block.y, true);
     this._updateMapArray(floorId, block.x, block.y);
 };
+
 maps.prototype.removeBlockByIndexes = function (indexes, floorId) {
     indexes
         .sort(function (a, b) {
@@ -2848,12 +2931,15 @@ maps.prototype.removeBlockByIndexes = function (indexes, floorId) {
             core.removeBlockByIndex(index, floorId);
         });
 };
+
 maps.prototype.showBgFgMap = function (name, loc, floorId, callback) {
     this._triggerBgFgMap("show", name, loc, floorId, callback);
 };
+
 maps.prototype.hideBgFgMap = function (name, loc, floorId, callback) {
     this._triggerBgFgMap("hide", name, loc, floorId, callback);
 };
+
 maps.prototype._triggerBgFgMap = function (type, name, loc, floorId, callback) {
     if (type != "show") type = "hide";
     if (!name || (!name.startsWith("bg") && !name.startsWith("fg"))) return;
@@ -2883,17 +2969,14 @@ maps.prototype._triggerBgFgMap = function (type, name, loc, floorId, callback) {
     if (callback) callback();
 };
 
-////// 显示一个楼层贴图 //////
 maps.prototype.showFloorImage = function (loc, floorId, callback) {
     this._triggerFloorImage("show", loc, floorId, callback);
 };
 
-////// 隐藏一个楼层贴图 //////
 maps.prototype.hideFloorImage = function (loc, floorId, callback) {
     this._triggerFloorImage("hide", loc, floorId, callback);
 };
 
-///// 设置贴图显示状态 //////
 maps.prototype._triggerFloorImage = function (type, loc, floorId, callback) {
     if (type != "show") type = "hide";
     if (typeof loc[0] == "number" && typeof loc[1] == "number") loc = [loc];
@@ -2914,6 +2997,7 @@ maps.prototype._triggerFloorImage = function (type, loc, floorId, callback) {
     }
     if (callback) callback();
 };
+
 maps.prototype.setBlock = function (number, x, y, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId || number == null || x == null || y == null) return;
@@ -2969,6 +3053,7 @@ maps.prototype.setBlock = function (number, x, y, floorId) {
         }
     }
 };
+
 maps.prototype.animateSetBlock = function (
     number,
     x,
@@ -3080,6 +3165,7 @@ maps.prototype._animateSetBlock_originDisabled = function (
     core.setBlock(number, x, y, floorId);
     if (callback) callback();
 };
+
 maps.prototype.animateSetBlocks = function (
     number,
     locs,
@@ -3103,6 +3189,7 @@ maps.prototype.animateSetBlocks = function (
         core.animateSetBlock(number, loc[0], loc[1], floorId, time, _afterSet);
     });
 };
+
 maps.prototype.turnBlock = function (direction, x, y, floorId) {
     var id = core.getBlockId(x, y, floorId, true);
     var blockInfo = core.getBlockInfo(id);
@@ -3121,6 +3208,7 @@ maps.prototype.turnBlock = function (direction, x, y, floorId) {
         this.setBlock(nextId, x, y, floorId);
     }
 };
+
 maps.prototype.replaceBlock = function (fromNumber, toNumber, floorId) {
     floorId = floorId || core.status.floorId;
     if (floorId instanceof Array) {
@@ -3142,6 +3230,7 @@ maps.prototype.replaceBlock = function (fromNumber, toNumber, floorId) {
     }, this);
     if (floorId == core.status.floorId) core.redrawMap();
 };
+
 maps.prototype.setBgFgBlock = function (name, number, x, y, floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId || number == null || x == null || y == null) return;
@@ -3176,6 +3265,7 @@ maps.prototype.setBgFgBlock = function (name, number, x, y, floorId) {
         else core.drawFg(floorId);
     }
 };
+
 maps.prototype.resetMap = function (floorId) {
     floorId = floorId || core.status.floorId;
     if (!floorId) return;
@@ -3194,16 +3284,15 @@ maps.prototype.resetMap = function (floorId) {
     if (needRefresh) this.redrawMap();
     core.drawTip("地图重置成功");
 };
+
 maps.prototype._initDetachedBlock = function (blockInfo, x, y, displayDamage) {
     var headCanvas = null,
         bodyCanvas = "__body_" + x + "_" + y,
         damageCanvas = null;
-    // head
     if (!blockInfo.bigImage && blockInfo.height > 32) {
         headCanvas = "__head_" + x + "_" + y;
         core.createCanvas(headCanvas, 0, 0, 32, blockInfo.height - 32, 55);
     }
-    // body
     if (blockInfo.bigImage) {
         var bigImageInfo = this._getBigImageInfo(
             blockInfo.bigImage,
@@ -3221,7 +3310,6 @@ maps.prototype._initDetachedBlock = function (blockInfo, x, y, displayDamage) {
     } else {
         core.createCanvas(bodyCanvas, 0, 0, 32, 32, 35);
     }
-    // damage
     var damage = null,
         damageColor = null;
     if (
@@ -3253,6 +3341,7 @@ maps.prototype._initDetachedBlock = function (blockInfo, x, y, displayDamage) {
         damageCanvas: damageCanvas,
     };
 };
+
 maps.prototype._moveDetachedBlock = function (
     blockInfo,
     nowX,
@@ -3359,11 +3448,13 @@ maps.prototype._moveDetachedBlock = function (
         core.setOpacity(damageCanvas, opacity);
     }
 };
+
 maps.prototype._deleteDetachedBlock = function (canvases) {
     core.deleteCanvas(canvases.headCanvas);
     core.deleteCanvas(canvases.bodyCanvas);
     core.deleteCanvas(canvases.damageCanvas);
 };
+
 maps.prototype._getAndRemoveBlock = function (x, y) {
     var block = core.getBlock(x, y);
     if (block == null) return null;
@@ -3372,6 +3463,7 @@ maps.prototype._getAndRemoveBlock = function (x, y) {
     core.removeBlock(x, y);
     return [block, blockInfo];
 };
+
 maps.prototype.moveBlock = function (x, y, steps, time, keep, callback) {
     if (core.status.replay.speed == 24) time = 1;
     time = time || 500;
@@ -3427,6 +3519,7 @@ maps.prototype.moveBlock = function (x, y, steps, time, keep, callback) {
     };
     this._moveBlock_doMove(blockInfo, canvases, moveInfo, callback);
 };
+
 maps.prototype._moveBlock_doMove = function (
     blockInfo,
     canvases,
@@ -3498,6 +3591,7 @@ maps.prototype._moveBlock_updateSpeed = function (moveInfo) {
     }
     return false;
 };
+
 maps.prototype._moveBlock_updateDirection = function (blockInfo, moveInfo) {
     moveInfo.offset = 1;
     var curr = moveInfo.moveSteps[0];
@@ -3539,7 +3633,6 @@ maps.prototype._moveBlock_updateDirection = function (blockInfo, moveInfo) {
             blockInfo.posY = posY;
         }
     }
-    // 处理 left:0 的情况，仅转向
     if (curr[1] <= 0) {
         moveInfo.moveSteps.shift();
         return false;
@@ -3593,6 +3686,7 @@ maps.prototype.jumpBlock = function (sx, sy, ex, ey, time, keep, callback) {
 
     this._jumpBlock_doJump(blockInfo, canvases, jumpInfo, callback);
 };
+
 maps.prototype.__generateJumpInfo = function (sx, sy, ex, ey, time) {
     var dx = ex - sx,
         dy = ey - sy,
@@ -3616,6 +3710,7 @@ maps.prototype.__generateJumpInfo = function (sx, sy, ex, ey, time) {
         per_time: time / jump_count,
     };
 };
+
 maps.prototype._jumpBlock_doJump = function (
     blockInfo,
     canvases,
@@ -3701,6 +3796,7 @@ maps.prototype._moveJumpBlock_finished = function (
         );
     }
 };
+
 maps.prototype.animateBlock = function (loc, type, time, callback) {
     if (core.status.replay.speed == 24) time = 1;
     if (typeof loc[0] == "number" && typeof loc[1] == "number") loc = [loc];
@@ -3721,6 +3817,7 @@ maps.prototype.animateBlock = function (loc, type, time, callback) {
     time /= Math.max(core.status.replay.speed, 1);
     this._animateBlock_doAnimate(loc, list, type, time, callback);
 };
+
 maps.prototype._animateBlock_doAnimate = function (
     loc,
     list,
@@ -3757,6 +3854,7 @@ maps.prototype._animateBlock_doAnimate = function (
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 maps.prototype._animateBlock_getList = function (loc, type) {
     var list = [];
     loc.forEach(function (t) {
@@ -3805,6 +3903,7 @@ maps.prototype._animateBlock_getList = function (loc, type) {
     });
     return list;
 };
+
 maps.prototype._animateBlock_drawList = function (list, progress) {
     list.forEach(function (t) {
         if (t.blockInfo)
@@ -3817,6 +3916,7 @@ maps.prototype._animateBlock_drawList = function (list, progress) {
             );
     });
 };
+
 maps.prototype.addGlobalAnimate = function (block) {
     if (!block || !block.event) return;
     this.removeGlobalAnimate(block.x, block.y, block.name);
@@ -3834,6 +3934,7 @@ maps.prototype.addGlobalAnimate = function (block) {
         core.status.globalAnimateObjs.push(block);
     }
 };
+
 maps.prototype.removeGlobalAnimate = function (x, y, name) {
     if (x == null || y == null) {
         core.status.globalAnimateStatus = 0;
@@ -3853,9 +3954,9 @@ maps.prototype.removeGlobalAnimate = function (x, y, name) {
         },
     );
 };
+
 maps.prototype.drawBoxAnimate = function () {
     if (core.status.boxAnimateObjs.length == 0) return;
-    // check ui2
     if (
         main.mode == "play" &&
         core.status.boxAnimateObjs.filter(function (one) {
@@ -3933,11 +4034,8 @@ maps.prototype.drawBoxAnimate = function () {
     if (main.mode != "play") core.status.boxAnimateObjs = [];
 };
 
-////// 绘制动画 //////
 maps.prototype.drawAnimate = function (name, x, y, alignWindow, callback) {
     name = core.getMappedName(name);
-
-    // 正在播放录像：不显示动画
     if (
         core.isReplaying() ||
         !core.material.animates[name] ||
@@ -3947,8 +4045,6 @@ maps.prototype.drawAnimate = function (name, x, y, alignWindow, callback) {
         if (callback) callback();
         return -1;
     }
-
-    // 开始绘制
     var animate = core.material.animates[name],
         centerX = 32 * x + 16,
         centerY = 32 * y + 16;
@@ -3958,7 +4054,6 @@ maps.prototype.drawAnimate = function (name, x, y, alignWindow, callback) {
     }
     animate.se = animate.se || {};
     if (typeof animate.se == "string") animate.se = { 1: animate.se };
-
     var id = setTimeout(null);
     core.status.animateObjs.push({
         name: name,
@@ -3969,9 +4064,9 @@ maps.prototype.drawAnimate = function (name, x, y, alignWindow, callback) {
         index: 0,
         callback: callback,
     });
-
     return id;
 };
+
 maps.prototype.drawHeroAnimate = function (name, callback) {
     name = core.getMappedName(name);
     if (core.isReplaying() || !core.material.animates[name]) {
@@ -3992,6 +4087,7 @@ maps.prototype.drawHeroAnimate = function (name, callback) {
     });
     return id;
 };
+
 maps.prototype.getPlayingAnimates = function (name) {
     return (core.status.animateObjs || [])
         .filter(function (one) {
@@ -4001,6 +4097,7 @@ maps.prototype.getPlayingAnimates = function (name) {
             return one.id;
         });
 };
+
 maps.prototype._drawAnimateFrame = function (
     name,
     animate,
@@ -4045,6 +4142,7 @@ maps.prototype._drawAnimateFrame = function (
         core.setAlpha(ctx, 1);
     });
 };
+
 maps.prototype.stopAnimate = function (id, doCallback) {
     for (var i = 0; i < core.status.animateObjs.length; i++) {
         var obj = core.status.animateObjs[i];
