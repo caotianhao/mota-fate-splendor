@@ -939,10 +939,12 @@ actions.prototype._sys_keyDownCtrl = function () {
         return true;
     }
 };
+
 actions.prototype.longClick = function (x, y, px, py) {
     if (!core.isPlaying()) return false;
     return this.doRegisteredAction("longClick", x, y, px, py);
 };
+
 actions.prototype._sys_longClick_lockControl = function (x, y, px, py) {
     if (!core.status.lockControl) return false;
     if (core.status.event.id == "text") {
@@ -997,6 +999,7 @@ actions.prototype._sys_longClick_lockControl = function (x, y, px, py) {
     }
     return false;
 };
+
 actions.prototype.onStatusBarClick = function (e) {
     if (!core.isPlaying()) return false;
     var left = core.dom.gameGroup.offsetLeft + 3;
@@ -1014,6 +1017,7 @@ actions.prototype._sys_onStatusBarClick = function (px, py, vertical) {
     if (this.actionsdata.onStatusBarClick)
         return this.actionsdata.onStatusBarClick(px, py, vertical);
 };
+
 actions.prototype._getChoicesTopIndex = function (length) {
     return (
         this._HY_ -
@@ -1021,6 +1025,7 @@ actions.prototype._getChoicesTopIndex = function (length) {
         (core.status.event.ui.offset || 0)
     );
 };
+
 actions.prototype._selectChoices = function (length, keycode, callback) {
     var topIndex = this._getChoicesTopIndex(length);
     if (keycode == 13 || keycode == 32 || keycode == 67) {
@@ -3409,6 +3414,7 @@ actions.prototype._clickGameInfo = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickGameInfo_openProject = function () {
     if (core.platform.isPC) window.open("editor.html", "_blank");
     else {
@@ -3417,6 +3423,7 @@ actions.prototype._clickGameInfo_openProject = function () {
         });
     }
 };
+
 actions.prototype._clickGameInfo_openComments = function () {
     if (core.platform.isPC) {
         window.open("/score.php?name=" + core.firstData.name, "_blank");
@@ -3426,10 +3433,12 @@ actions.prototype._clickGameInfo_openComments = function () {
         });
     }
 };
+
 actions.prototype._clickGameInfo_download = function () {
     if (core.platform.isPC) window.open(core.firstData.name + ".zip");
     else window.location.href = core.firstData.name + ".zip";
 };
+
 actions.prototype._keyUpGameInfo = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 5;
@@ -3442,6 +3451,7 @@ actions.prototype._keyUpGameInfo = function (keycode) {
         this._clickGameInfo,
     );
 };
+
 actions.prototype._clickKeyBoard = function (x, y) {
     var m = this._HX_;
     if (y == this._HY_ - 3 && x >= m - 5 && x <= m + 5) {
