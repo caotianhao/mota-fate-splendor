@@ -154,7 +154,6 @@ loader.prototype._loadExtraImages_async = function (onprogress, onfinished) {
     core.material.images.images = {};
     var images = core.images;
 
-    // Check .gif
     var gifs = images.filter(function (name) {
         return name.toLowerCase().endsWith(".gif");
     });
@@ -277,6 +276,7 @@ loader.prototype.loadImages = function (dir, names, toSave, callback) {
         });
     }
 };
+
 loader.prototype.loadImage = function (dir, imgName, callback) {
     try {
         var name = imgName;
@@ -485,6 +485,7 @@ loader.prototype._loadMusic_async = function (onprogress, onfinished) {
     );
     core.playBgm(main.startBgm);
 };
+
 loader.prototype.loadOneMusic = function (name) {
     var music = new Audio();
     music.preload = "none";
@@ -494,6 +495,7 @@ loader.prototype.loadOneMusic = function (name) {
     music.loop = "loop";
     core.material.bgms[name] = music;
 };
+
 loader.prototype.loadOneSound = function (name) {
     core.http(
         "GET",
