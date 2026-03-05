@@ -1,7 +1,9 @@
 "use strict";
+
 function enemys() {
     this._init();
 }
+
 enemys.prototype._init = function () {
     this.enemys = enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80;
     this.enemydata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.enemys;
@@ -14,6 +16,7 @@ enemys.prototype._init = function () {
         };
     }
 };
+
 enemys.prototype.getEnemys = function () {
     var enemys = core.clone(this.enemys);
     var enemyInfo = core.getFlag("enemyInfo");
@@ -52,6 +55,7 @@ enemys.prototype.getEnemys = function () {
     }
     return enemys;
 };
+
 enemys.prototype.hasSpecial = function (special, test) {
     if (special == null) return false;
 
@@ -69,9 +73,11 @@ enemys.prototype.hasSpecial = function (special, test) {
     }
     return false;
 };
+
 enemys.prototype.getSpecials = function () {
     return this.enemydata.getSpecials();
 };
+
 enemys.prototype.getSpecialText = function (enemy) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     if (!enemy) return [];
@@ -87,6 +93,7 @@ enemys.prototype.getSpecialText = function (enemy) {
     }
     return text;
 };
+
 enemys.prototype.getSpecialColor = function (enemy) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     if (!enemy) return [];
@@ -102,6 +109,7 @@ enemys.prototype.getSpecialColor = function (enemy) {
     }
     return colors;
 };
+
 enemys.prototype.getSpecialFlag = function (enemy) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     if (!enemy) return [];
@@ -117,6 +125,7 @@ enemys.prototype.getSpecialFlag = function (enemy) {
     }
     return flag;
 };
+
 enemys.prototype.getSpecialHint = function (enemy, special) {
     var specials = this.getSpecials();
     if (special == null) {
@@ -126,11 +135,11 @@ enemys.prototype.getSpecialHint = function (enemy, special) {
             if (this.hasSpecial(enemy, specials[i][0]))
                 hints.push(
                     "\r[" +
-                        core.arrayToRGBA(specials[i][3] || "#FF6A6A") +
-                        "]\\d" +
-                        this._calSpecialContent(enemy, specials[i][1]) +
-                        "：\\d\r[]" +
-                        this._calSpecialContent(enemy, specials[i][2]),
+                    core.arrayToRGBA(specials[i][3] || "#FF6A6A") +
+                    "]\\d" +
+                    this._calSpecialContent(enemy, specials[i][1]) +
+                    "：\\d\r[]" +
+                    this._calSpecialContent(enemy, specials[i][2]),
                 );
         }
         return hints;
@@ -147,6 +156,7 @@ enemys.prototype.getSpecialHint = function (enemy, special) {
     }
     return "";
 };
+
 enemys.prototype._calSpecialContent = function (enemy, content) {
     if (typeof content == "string") return content;
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
@@ -155,11 +165,12 @@ enemys.prototype._calSpecialContent = function (enemy, content) {
     }
     return "";
 };
+
 enemys.prototype.getEnemyValue = function (enemy, name, x, y, floorId) {
     floorId = floorId || core.status.floorId;
     if (
         (((flags.enemyOnPoint || {})[floorId] || {})[x + "," + y] || {})[
-            name
+        name
         ] != null
     ) {
         return flags.enemyOnPoint[floorId][x + "," + y][name];
@@ -173,11 +184,13 @@ enemys.prototype.getEnemyValue = function (enemy, name, x, y, floorId) {
     if (enemy == null) return null;
     return enemy[name];
 };
+
 enemys.prototype.canBattle = function (enemy, x, y, floorId) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     var damage = this.getDamage(enemy, x, y, floorId);
     return damage != null && damage < core.status.hero.hp;
 };
+
 enemys.prototype.getDamageString = function (enemy, x, y, floorId) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     var damage = this.getDamage(enemy, x, y, floorId);
@@ -204,6 +217,7 @@ enemys.prototype.getDamageString = function (enemy, x, y, floorId) {
         color: color,
     };
 };
+
 enemys.prototype.nextCriticals = function (enemy, number, x, y, floorId) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     number = number || 1;
@@ -252,6 +266,7 @@ enemys.prototype.nextCriticals = function (enemy, number, x, y, floorId) {
         return this._nextCriticals_useTurn(enemy, info, number, x, y, floorId);
     }
 };
+
 enemys.prototype._nextCriticals_overAtk = function (enemy, x, y, floorId) {
     var calNext = function (currAtk, maxAtk) {
         var start = currAtk,
@@ -284,7 +299,7 @@ enemys.prototype._nextCriticals_overAtk = function (enemy, x, y, floorId) {
     return calNext(
         core.status.hero.atk + 1,
         core.getEnemyValue(enemy, "hp", x, y, floorId) +
-            core.getEnemyValue(enemy, "def", x, y, floorId),
+        core.getEnemyValue(enemy, "def", x, y, floorId),
     );
 };
 enemys.prototype._nextCriticals_special = function (
@@ -298,6 +313,7 @@ enemys.prototype._nextCriticals_special = function (
         return [];
     return null;
 };
+
 enemys.prototype._nextCriticals_useLoop = function (
     enemy,
     info,
@@ -329,6 +345,7 @@ enemys.prototype._nextCriticals_useLoop = function (
     if (list.length == 0) list.push([0, 0]);
     return list;
 };
+
 enemys.prototype._nextCriticals_useBinarySearch = function (
     enemy,
     info,
@@ -391,6 +408,7 @@ enemys.prototype._nextCriticals_useBinarySearch = function (
     if (list.length == 0) list.push([0, 0]);
     return list;
 };
+
 enemys.prototype._nextCriticals_useTurn = function (
     enemy,
     info,
@@ -459,19 +477,23 @@ enemys.prototype.getDefDamage = function (enemy, k, x, y, floorId) {
     if (nowDamage == null || nextDamage == null) return "???";
     return nowDamage - nextDamage;
 };
+
 enemys.prototype.getEnemyInfo = function (enemy, hero, x, y, floorId) {
     if (enemy == null) return null;
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     return this.enemydata.getEnemyInfo(enemy, hero, x, y, floorId);
 };
+
 enemys.prototype.getDamageInfo = function (enemy, hero, x, y, floorId) {
     if (enemy == null) return null;
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     return this.enemydata.getDamageInfo(enemy, hero, x, y, floorId);
 };
+
 enemys.prototype.getDamage = function (enemy, x, y, floorId) {
     return this._getDamage(enemy, null, x, y, floorId);
 };
+
 enemys.prototype._getDamage = function (enemy, hero, x, y, floorId) {
     if (enemy == null) enemy = core.getBlockId(x, y, floorId);
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
@@ -481,6 +503,7 @@ enemys.prototype._getDamage = function (enemy, hero, x, y, floorId) {
     if (typeof info == "number") return info;
     return info.damage;
 };
+
 enemys.prototype.getCurrentEnemys = function (floorId) {
     floorId = floorId || core.status.floorId;
     var enemys = [],
@@ -510,6 +533,7 @@ enemys.prototype._getCurrentEnemys_getEnemy = function (enemyId) {
         enemy
     );
 };
+
 enemys.prototype._getCurrentEnemys_addEnemy = function (
     enemyId,
     enemys,
@@ -584,6 +608,7 @@ enemys.prototype._getCurrentEnemys_addEnemy_defDamage = function (
     var ratio = core.status.maps[floorId || core.status.floorId].ratio || 1;
     return this.getDefDamage(enemy, ratio, x, y, floorId);
 };
+
 enemys.prototype._getCurrentEnemys_sort = function (enemys) {
     return enemys.sort(function (a, b) {
         if (a.damage == b.damage) {
@@ -598,6 +623,7 @@ enemys.prototype._getCurrentEnemys_sort = function (enemys) {
         return a.damage - b.damage;
     });
 };
+
 enemys.prototype.hasEnemyLeft = function (enemyId, floorId) {
     if (floorId == null) floorId = core.status.floorId;
     if (!(floorId instanceof Array)) floorId = [floorId];
