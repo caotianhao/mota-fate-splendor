@@ -37,7 +37,8 @@ actions.prototype._init = function () {
 actions.prototype.registerAction = function (action, name, func, priority) {
     if (!name || !func)
         return;
-    if (action == 'onclick') action = 'ondown';
+    if (action == 'onclick')
+        action = 'ondown';
     priority = priority || 0;
     if (!this.actions[action]) {
         this.actions[action] = [];
@@ -51,15 +52,18 @@ actions.prototype.registerAction = function (action, name, func, priority) {
     });
 }
 actions.prototype.unregisterAction = function (action, name) {
-    if (action == 'onclick') action = 'ondown';
-    if (!this.actions[action]) return;
+    if (action == 'onclick')
+        action = 'ondown';
+    if (!this.actions[action])
+        return;
     this.actions[action] = this.actions[action].filter(function (x) {
         return x.name != name;
     });
 }
 actions.prototype.doRegisteredAction = function (action) {
     var actions = this.actions[action];
-    if (!actions) return false;
+    if (!actions)
+        return false;
     for (var i = 0; i < actions.length; ++i) {
         try {
             if (core.doFunc.apply(core, [actions[i].func, this].concat(Array.prototype.slice.call(arguments, 1))))
@@ -82,7 +86,8 @@ actions.prototype._sys_checkReplay = function () {
     if (this._checkReplaying()) return true;
 }
 actions.prototype.__checkLeftHandPrefer = function (e) {
-    if (!core.flags.leftHandPrefer) return e;
+    if (!core.flags.leftHandPrefer)
+        return e;
     var map = {
         87: 38,
         83: 40,
@@ -119,11 +124,13 @@ actions.prototype._sys_onkeyDown = function (e) {
                 return;
             }
         }
-        if (e.preventDefault) e.preventDefault();
+        if (e.preventDefault)
+            e.preventDefault();
         core.status.holdingKeys.push(e.keyCode);
         this.pressKey(e.keyCode);
     } else {
-        if (e.keyCode == 17) core.status.ctrlDown = true;
+        if (e.keyCode == 17)
+            core.status.ctrlDown = true;
         this.keyDown(e.keyCode);
     }
 }
@@ -173,14 +180,17 @@ actions.prototype._sys_onkeyUp = function (e) {
         for (var ii = 0; ii < core.status.holdingKeys.length; ii++) {
             if (core.status.holdingKeys[ii] === e.keyCode) {
                 core.status.holdingKeys = core.status.holdingKeys.slice(0, ii).concat(core.status.holdingKeys.slice(ii + 1));
-                if (ii === core.status.holdingKeys.length && core.status.holdingKeys.length !== 0) core.pressKey(core.status.holdingKeys.slice(-1)[0]);
+                if (ii === core.status.holdingKeys.length && core.status.holdingKeys.length !== 0)
+                    core.pressKey(core.status.holdingKeys.slice(-1)[0]);
                 break;
             }
         }
-        if (e.preventDefault) e.preventDefault();
+        if (e.preventDefault)
+            e.preventDefault();
         this.keyUp(e.keyCode, e.altKey);
     } else {
-        if (e.keyCode == 17) core.status.ctrlDown = false;
+        if (e.keyCode == 17)
+            core.status.ctrlDown = false;
         this.keyUp(e.keyCode, e.altKey);
     }
 }
@@ -199,7 +209,8 @@ actions.prototype.keyDown = function (keyCode) {
     this.doRegisteredAction('keyDown', keyCode);
 }
 actions.prototype._sys_keyDown_lockControl = function (keyCode) {
-    if (!core.status.lockControl) return false;
+    if (!core.status.lockControl)
+        return false;
     if (keyCode == 17) {
         this.keyDownCtrl();
         return true;
@@ -277,7 +288,8 @@ actions.prototype._sys_keyUp_replay = function (keyCode, altKey, fromReplay) {
     if (!fromReplay && this._checkReplaying()) return true;
 }
 actions.prototype._sys_keyUp_lockControl = function (keyCode, altKey) {
-    if (!core.status.lockControl) return false;
+    if (!core.status.lockControl)
+        return false;
 
     var ok = function () {
         return keyCode == 27 || keyCode == 88 || keyCode == 13 || keyCode == 32 || keyCode == 67;
@@ -392,7 +404,8 @@ actions.prototype.ondown = function (loc) {
     this.doRegisteredAction('ondown', x, y, px, py);
 }
 actions.prototype._sys_ondown_lockControl = function (x, y, px, py) {
-    if (core.status.played && !core.status.lockControl) return false;
+    if (core.status.played && !core.status.lockControl)
+        return false;
 
     switch (core.status.event.id) {
         case 'centerFly':
@@ -498,7 +511,8 @@ actions.prototype._sys_ondown_lockControl = function (x, y, px, py) {
 }
 
 actions.prototype._sys_ondown = function (x, y, px, py) {
-    if (core.status.lockControl) return false;
+    if (core.status.lockControl)
+        return false;
     core.status.downTime = new Date();
     core.deleteCanvas('route');
     var pos = { 'x': parseInt((px + core.bigmap.offsetX) / 32), 'y': parseInt((py + core.bigmap.offsetY) / 32) };
@@ -529,7 +543,8 @@ actions.prototype.onmove = function (loc) {
     this.doRegisteredAction('onmove', x, y, px, py);
 }
 actions.prototype._sys_onmove_choices = function (x, y, px, py) {
-    if (!core.status.lockControl) return false;
+    if (!core.status.lockControl)
+        return false;
 
     switch (core.status.event.id) {
         case 'action':
@@ -566,7 +581,8 @@ actions.prototype._sys_onmove_choices = function (x, y, px, py) {
     return false;
 }
 actions.prototype._sys_onmove = function (x, y, px, py) {
-    if (core.status.lockControl) return false;
+    if (core.status.lockControl)
+        return false;
     if (core.status.preview.dragging) {
         core.setViewport(core.bigmap.offsetX - px + core.status.preview.px, core.bigmap.offsetY - py + core.status.preview.py);
         core.status.preview.px = px;
@@ -667,30 +683,40 @@ actions.prototype.onmousewheel = function (direct) {
 }
 actions.prototype._sys_onmousewheel = function (direct) {
     if (this._checkReplaying()) {
-        if (direct == 1) core.speedUpReplay();
-        if (direct == -1) core.speedDownReplay();
+        if (direct == 1)
+            core.speedUpReplay();
+        if (direct == -1)
+            core.speedDownReplay();
         return;
     }
     if (core.status.lockControl && core.status.event.id == 'fly') {
-        if (direct == 1) core.ui.drawFly(this._getNextFlyFloor(1));
-        if (direct == -1) core.ui.drawFly(this._getNextFlyFloor(-1));
+        if (direct == 1)
+            core.ui.drawFly(this._getNextFlyFloor(1));
+        if (direct == -1)
+            core.ui.drawFly(this._getNextFlyFloor(-1));
         return;
     }
     if (core.status.lockControl && core.status.event.id == 'book') {
         var pageinfo = core.ui._drawBook_pageinfo();
-        if (direct == 1) core.ui.drawBook(core.status.event.data - pageinfo.per_page);
-        if (direct == -1) core.ui.drawBook(core.status.event.data + pageinfo.per_page);
+        if (direct == 1)
+            core.ui.drawBook(core.status.event.data - pageinfo.per_page);
+        if (direct == -1)
+            core.ui.drawBook(core.status.event.data + pageinfo.per_page);
         return;
     }
     if (core.status.lockControl && (core.status.event.id == 'save' || core.status.event.id == 'load')) {
         var index = core.status.event.data.page * 10 + core.status.event.data.offset;
-        if (direct == 1) core.ui._drawSLPanel(index - 10);
-        if (direct == -1) core.ui._drawSLPanel(index + 10);
+        if (direct == 1)
+            core.ui._drawSLPanel(index - 10);
+        if (direct == -1)
+            core.ui._drawSLPanel(index + 10);
         return;
     }
     if (core.status.lockControl && core.status.event.id == 'viewMaps') {
-        if (direct == 1) this._clickViewMaps(this._HX_, this._HY_ - 3, core._PX_ / 2, core._PY_ / 5 * 1.5);
-        if (direct == -1) this._clickViewMaps(this._HX_, this._HY_ + 3, core._PX_ / 2, core._PY_ / 5 * 3.5);
+        if (direct == 1)
+            this._clickViewMaps(this._HX_, this._HY_ - 3, core._PX_ / 2, core._PY_ / 5 * 1.5);
+        if (direct == -1)
+            this._clickViewMaps(this._HX_, this._HY_ + 3, core._PX_ / 2, core._PY_ / 5 * 3.5);
         return;
     }
     if (core.status.lockControl && core.status.event.id == 'action' && core.status.event.data.type == 'wait') {
@@ -740,7 +766,8 @@ actions.prototype.longClick = function (x, y, px, py) {
     return this.doRegisteredAction('longClick', x, y, px, py);
 }
 actions.prototype._sys_longClick_lockControl = function (x, y, px, py) {
-    if (!core.status.lockControl) return false;
+    if (!core.status.lockControl)
+        return false;
     if (core.status.event.id == 'text') {
         core.drawText();
         return true;
@@ -819,7 +846,8 @@ actions.prototype._onMoveChoices = function (x, y) {
     var topIndex = this._getChoicesTopIndex(choices.length);
     if (y >= topIndex && y < topIndex + choices.length) {
         var selection = y - topIndex;
-        if (selection == core.status.event.selection) return;
+        if (selection == core.status.event.selection)
+            return;
         core.status.event.selection = selection;
         core.playSound('光标移动');
         core.ui.drawChoices(core.status.event.ui.text, core.status.event.ui.choices, core.status.event.ui.width);
@@ -908,7 +936,8 @@ actions.prototype._onMoveConfirmBox = function (x, y, px, py) {
     }
 }
 actions.prototype._clickAction_text = function () {
-    if (core.status.event.animateUI) return;
+    if (core.status.event.animateUI)
+        return;
     var data = core.clone(core.status.event.data.current);
     if (typeof data == 'string') data = { "type": "text", "text": data };
     if (core.status.event.interval != null) {
@@ -947,7 +976,8 @@ actions.prototype._clickAction = function (x, y, px, py) {
     if (core.status.event.data.type == 'choices') {
         var data = core.status.event.data.current;
         var choices = data.choices;
-        if (choices.length == 0) return;
+        if (choices.length == 0)
+            return;
         if (this._out(x)) return;
         var topIndex = this._getChoicesTopIndex(choices.length);
         if (y >= topIndex && y < topIndex + choices.length) {
@@ -1141,20 +1171,24 @@ actions.prototype._keyDownFly = function (keycode) {
 }
 
 actions.prototype._getNextFlyFloor = function (delta, index) {
-    if (index == null) index = core.status.event.data;
-    if (delta == 0) return index;
+    if (index == null)
+        index = core.status.event.data;
+    if (delta == 0)
+        return index;
     var sign = Math.sign(delta);
     delta = Math.abs(delta);
     var ans = index;
     while (true) {
         index += sign;
-        if (index < 0 || index >= core.floorIds.length) break;
+        if (index < 0 || index >= core.floorIds.length)
+            break;
         var floorId = core.floorIds[index];
         if (core.status.maps[floorId].canFlyTo && core.hasVisitedFloor(floorId)) {
             delta--;
             ans = index;
         }
-        if (delta == 0) break;
+        if (delta == 0)
+            break;
     }
     return ans;
 }
@@ -1185,8 +1219,10 @@ actions.prototype._clickViewMaps = function (x, y, px, py) {
         return;
     }
     if (px <= cornerpx && py >= core._PY_ - cornerpy) {
-        if (core.markedFloorIds[floorId]) delete core.markedFloorIds[floorId];
-        else core.markedFloorIds[floorId] = true;
+        if (core.markedFloorIds[floorId])
+            delete core.markedFloorIds[floorId];
+        else
+            core.markedFloorIds[floorId] = true;
         core.playSound('光标移动');
         core.ui._drawViewMaps(index, cx, cy);
         return;
@@ -1243,14 +1279,21 @@ actions.prototype._clickViewMaps = function (x, y, px, py) {
     }
 }
 actions.prototype._keyDownViewMaps = function (keycode) {
-    if (core.status.event.data == null) return;
+    if (core.status.event.data == null)
+        return;
     var floorId = core.floorIds[core.status.event.data.index], mh = core.floors[floorId].height;
-    if (keycode == 38 || keycode == 33) this._clickViewMaps(this._HX_, this._HY_ - 3, core._PX_ / 2, core._PY_ / 5 * 1.5);
-    if (keycode == 40 || keycode == 34) this._clickViewMaps(this._HX_, this._HY_ + 3, core._PX_ / 2, core._PY_ / 5 * 3.5);
-    if (keycode == 87 && mh > core._HEIGHT_) this._clickViewMaps(this._HX_, 0, core._PX_ / 2, 1);
-    if (keycode == 65) this._clickViewMaps(0, this._HY_, 1, core._PY_ / 2);
-    if (keycode == 83 && mh > core._HEIGHT_) this._clickViewMaps(this._HX_, core._HEIGHT_ - 1, core._PX_ / 2, core._PY_ - 1);
-    if (keycode == 68) this._clickViewMaps(core._WIDTH_ - 1, this._HY_, core._PX_, core._PY_ / 2 - 1);
+    if (keycode == 38 || keycode == 33)
+        this._clickViewMaps(this._HX_, this._HY_ - 3, core._PX_ / 2, core._PY_ / 5 * 1.5);
+    if (keycode == 40 || keycode == 34)
+        this._clickViewMaps(this._HX_, this._HY_ + 3, core._PX_ / 2, core._PY_ / 5 * 3.5);
+    if (keycode == 87 && mh > core._HEIGHT_)
+        this._clickViewMaps(this._HX_, 0, core._PX_ / 2, 1);
+    if (keycode == 65)
+        this._clickViewMaps(0, this._HY_, 1, core._PY_ / 2);
+    if (keycode == 83 && mh > core._HEIGHT_)
+        this._clickViewMaps(this._HX_, core._HEIGHT_ - 1, core._PX_ / 2, core._PY_ - 1);
+    if (keycode == 68)
+        this._clickViewMaps(core._WIDTH_ - 1, this._HY_, core._PX_, core._PY_ / 2 - 1);
     return;
 }
 actions.prototype._keyUpViewMaps = function (keycode) {
@@ -1279,8 +1322,10 @@ actions.prototype._keyUpViewMaps = function (keycode) {
         return;
     }
     if (keycode == 66) {
-        if (core.markedFloorIds[floorId]) delete core.markedFloorIds[floorId];
-        else core.markedFloorIds[floorId] = true;
+        if (core.markedFloorIds[floorId])
+            delete core.markedFloorIds[floorId];
+        else
+            core.markedFloorIds[floorId] = true;
         core.playSound('光标移动');
         core.ui._drawViewMaps(core.status.event.data);
         return;
@@ -1409,8 +1454,10 @@ actions.prototype._clickToolboxIndex = function (index) {
         select = index % this.LAST + this.LAST * (core.status.event.data.constantsPage - 1);
         items = constants;
     }
-    if (items == null) return;
-    if (select >= items.length) return;
+    if (items == null)
+        return;
+    if (select >= items.length)
+        return;
     var itemId = items[select];
     if (itemId == core.status.event.data.selectId) {
         if (core.isReplaying()) return;
@@ -1424,7 +1471,8 @@ actions.prototype._clickToolboxIndex = function (index) {
 
 ////// 工具栏界面时，按下某个键的操作 //////
 actions.prototype._keyDownToolbox = function (keycode) {
-    if (core.status.event.data == null) return;
+    if (core.status.event.data == null)
+        return;
 
     var last_index = this.LAST - 1;
 
@@ -1448,7 +1496,8 @@ actions.prototype._keyDownToolbox = function (keycode) {
         }
         else if (index == this.LAST) {
             if (constantsPage == 1) {
-                if (toolsTotalPage == 0) return;
+                if (toolsTotalPage == 0)
+                    return;
                 core.status.event.data.toolsPage = toolsTotalPage;
                 index = (tools.length + last_index) % this.LAST;
             }
@@ -1463,11 +1512,14 @@ actions.prototype._keyDownToolbox = function (keycode) {
     }
     if (keycode == 38) { // up
         if (index >= this.LAST && index < this.LAST + this._HX_) { // 进入tools
-            if (toolsTotalPage == 0) return;
-            if (toolsLastIndex >= this._HX_) index = Math.min(toolsLastIndex, index - this._HX_);
+            if (toolsTotalPage == 0)
+                return;
+            if (toolsLastIndex >= this._HX_)
+                index = Math.min(toolsLastIndex, index - this._HX_);
             else index = Math.min(toolsLastIndex, index - this.LAST);
         }
-        else if (index < this._HX_) return; // 第一行没有向上
+        else if (index < this._HX_)
+            return; // 第一行没有向上
         else index -= this._HX_;
         this._clickToolboxIndex(index);
         return;
@@ -1482,7 +1534,8 @@ actions.prototype._keyDownToolbox = function (keycode) {
             index = this.LAST;
         }
         else if (index == toolsLastIndex) {
-            if (constantsTotalPage == 0) return;
+            if (constantsTotalPage == 0)
+                return;
             core.status.event.data.constantsPage = 1;
             index = this.LAST;
         }
@@ -1495,11 +1548,13 @@ actions.prototype._keyDownToolbox = function (keycode) {
     if (keycode == 40) { // down
         var nextIndex = null;
         if (index < this._HX_) {
-            if (toolsLastIndex >= this._HX_) nextIndex = Math.min(toolsLastIndex, index + this._HX_);
+            if (toolsLastIndex >= this._HX_)
+                nextIndex = Math.min(toolsLastIndex, index + this._HX_);
             else index += this._HX_;
         }
         if (nextIndex == null && index < this.LAST) {
-            if (constantsTotalPage == 0) return;
+            if (constantsTotalPage == 0)
+                return;
             nextIndex = Math.min(index + this._HX_, constantsLastIndex);
         }
         if (nextIndex == null && index < this.LAST + this._HX_) {
@@ -1534,7 +1589,8 @@ actions.prototype._keyUpToolbox = function (keycode) {
         core.checkAutoEvents();
         return;
     }
-    if (core.status.event.data == null) return;
+    if (core.status.event.data == null)
+        return;
 
     if (keycode == 13 || keycode == 32 || keycode == 67) {
         this._clickToolboxIndex(core.status.event.selection);
@@ -1594,9 +1650,11 @@ actions.prototype._clickEquipbox = function (x, y, px, py) {
 ////// 选择装备栏界面中某个Index后的操作 //////
 actions.prototype._clickEquipboxIndex = function (index) {
     if (index < this.LAST) {
-        if (index >= core.status.globalAttribute.equipName.length) return;
+        if (index >= core.status.globalAttribute.equipName.length)
+            return;
         if (index == core.status.event.selection && core.status.hero.equipment[index]) {
-            if (core.isReplaying()) return;
+            if (core.isReplaying())
+                return;
             core.unloadEquip(index);
             core.status.route.push("unEquip:" + index);
         } else core.playSound('光标移动');
@@ -1604,7 +1662,8 @@ actions.prototype._clickEquipboxIndex = function (index) {
     else {
         var equips = core.getToolboxItems('equips');
         if (index == core.status.event.selection) {
-            if (core.isReplaying()) return;
+            if (core.isReplaying())
+                return;
             var equipId = equips[index - this.LAST + (core.status.event.data.page - 1) * this.LAST];
             core.loadEquip(equipId);
             core.status.route.push("equip:" + equipId);
@@ -1615,7 +1674,8 @@ actions.prototype._clickEquipboxIndex = function (index) {
 
 ////// 装备栏界面时，按下某个键的操作 //////
 actions.prototype._keyDownEquipbox = function (keycode) {
-    if (core.status.event.data == null) return;
+    if (core.status.event.data == null)
+        return;
 
     var last_index = this.LAST - 1;
     var per_line = this._HX_ - 3;
@@ -1627,7 +1687,8 @@ actions.prototype._keyDownEquipbox = function (keycode) {
     var totalLastIndex = this.LAST + (page < totalPage ? last_index : (ownEquipment.length + last_index) % this.LAST);
 
     if (keycode == 37) { // left
-        if (index == 0) return;
+        if (index == 0)
+            return;
         if (index == this.LAST) {
             if (page > 1) {
                 core.status.event.data.page--;
@@ -1636,18 +1697,21 @@ actions.prototype._keyDownEquipbox = function (keycode) {
             }
             else if (page == 1)
                 index = equipCapacity - 1;
-            else return;
+            else
+                return;
         }
         else index -= 1;
         this._clickEquipboxIndex(index);
         return;
     }
     if (keycode == 38) { // up
-        if (index < per_line) return;
+        if (index < per_line)
+            return;
         else if (index < 2 * per_line) index -= per_line;
         else if (index < this.LAST + this._HX_) {
             index = parseInt((index - this.LAST) / 2);
-            if (equipCapacity > per_line) index = Math.min(equipCapacity - 1, index + per_line);
+            if (equipCapacity > per_line)
+                index = Math.min(equipCapacity - 1, index + per_line);
             else index = Math.min(equipCapacity - 1, index);
         }
         else index -= this._HX_;
@@ -1661,7 +1725,8 @@ actions.prototype._keyDownEquipbox = function (keycode) {
             index = this.LAST;
         }
         else if (index == equipCapacity - 1) {
-            if (totalPage == 0) return;
+            if (totalPage == 0)
+                return;
             index = this.LAST;
         }
         else if (index == totalLastIndex)
@@ -1672,14 +1737,17 @@ actions.prototype._keyDownEquipbox = function (keycode) {
     }
     if (keycode == 40) { // down
         if (index < per_line) {
-            if (equipCapacity > per_line) index = Math.min(index + per_line, equipCapacity - 1);
+            if (equipCapacity > per_line)
+                index = Math.min(index + per_line, equipCapacity - 1);
             else {
-                if (totalPage == 0) return;
+                if (totalPage == 0)
+                return;
                 index = Math.min(2 * index + 1 + this.LAST, totalLastIndex);
             }
         }
         else if (index < 2 * per_line) {
-            if (totalPage == 0) return;
+            if (totalPage == 0)
+                return;
             index = Math.min(2 * (index - per_line) + 1 + this.LAST, totalLastIndex);
         }
         else if (index < this.LAST + this._HX_)
@@ -1715,7 +1783,8 @@ actions.prototype._keyUpEquipbox = function (keycode, altKey) {
         core.checkAutoEvents();
         return;
     }
-    if (!core.status.event.data.selectId) return;
+    if (!core.status.event.data.selectId)
+        return;
 
     if (keycode == 13 || keycode == 32 || keycode == 67) {
         this._clickEquipboxIndex(core.status.event.selection);
@@ -1772,24 +1841,35 @@ actions.prototype._clickSL = function (x, y) {
     var xLeft = parseInt(core._WIDTH_ / 3), xRight = parseInt(core._WIDTH_ * 2 / 3);
     var topY1 = 0, topY2 = this._HY_;
     if (y >= topY1 && y <= topY1 + 1) {
-        if (x >= xLeft && x < xRight) return this._clickSL_favorite(page, 1);
-        if (x >= xRight) return this._clickSL_favorite(page, 2);
+        if (x >= xLeft && x < xRight)
+            return this._clickSL_favorite(page, 1);
+        if (x >= xRight)
+            return this._clickSL_favorite(page, 2);
     }
     if (y >= topY2 && y <= topY2 + 1) {
-        if (x < xLeft) return this._clickSL_favorite(page, 3);
-        if (x >= xLeft && x < xRight) return this._clickSL_favorite(page, 4);
-        if (x >= xRight) return this._clickSL_favorite(page, 5);
+        if (x < xLeft)
+            return this._clickSL_favorite(page, 3);
+        if (x >= xLeft && x < xRight)
+            return this._clickSL_favorite(page, 4);
+        if (x >= xRight)
+            return this._clickSL_favorite(page, 5);
     }
     var id = null;
     if (y >= topY1 + 2 && y < this._HY_ - 1) {
-        if (x < xLeft) id = "autoSave";
-        if (x >= xLeft && x < xRight) id = 5 * page + 1;
-        if (x >= xRight) id = 5 * page + 2;
+        if (x < xLeft)
+            id = "autoSave";
+        if (x >= xLeft && x < xRight)
+            id = 5 * page + 1;
+        if (x >= xRight)
+            id = 5 * page + 2;
     }
     if (y >= topY2 + 2 && y < core._HEIGHT_ - 1) {
-        if (x < xLeft) id = 5 * page + 3;
-        if (x >= xLeft && x < xRight) id = 5 * page + 4;
-        if (x >= xRight) id = 5 * page + 5;
+        if (x < xLeft)
+            id = 5 * page + 3;
+        if (x >= xLeft && x < xRight)
+            id = 5 * page + 4;
+        if (x >= xRight)
+            id = 5 * page + 5;
     }
     if (id != null) {
         if (core.status.event.selection) {
@@ -1810,7 +1890,8 @@ actions.prototype._clickSL = function (x, y) {
     }
 }
 actions.prototype._clickSL_favorite = function (page, offset) {
-    if (offset == 0) return;
+    if (offset == 0)
+        return;
     var index = 5 * page + offset;
     if (core.status.event.data.mode == 'fav') { // 收藏模式下点击的下标直接对应favorite
         index = core.saves.favorite[index - 1];
@@ -1902,7 +1983,8 @@ actions.prototype._keyUpSL = function (keycode) {
         return;
     }
     if (keycode >= 48 && keycode <= 57) {
-        if (keycode == 48) keycode = 58;
+        if (keycode == 48)
+            keycode = 58;
         core.ui._drawSLPanel((keycode - 49) * 1000 + 1);
         return;
     }
@@ -1911,7 +1993,8 @@ actions.prototype._keyUpSL = function (keycode) {
             core.doSL("autoSave", core.status.event.id);
         else {
             var id = 5 * page + offset;
-            if (core.status.event.data.mode == 'fav') id = core.saves.favorite[id - 1];
+            if (core.status.event.data.mode == 'fav')
+                id = core.saves.favorite[id - 1];
             core.doSL(id, core.status.event.id);
         }
         return;
@@ -1927,7 +2010,8 @@ actions.prototype._keyUpSL = function (keycode) {
         }
         else {
             var id = 5 * page + offset;
-            if (core.status.event.data.mode == 'fav') id = core.saves.favorite[id - 1];
+            if (core.status.event.data.mode == 'fav')
+                id = core.saves.favorite[id - 1];
             core.removeSave(id, function () {
                 core.ui._drawSLPanel(index, true);
             });
@@ -1980,7 +2064,8 @@ actions.prototype._clickSwitchs_sounds = function (x, y) {
     var topIndex = this._getChoicesTopIndex(choices.length);
     var selection = y - topIndex;
     if (this._out(x)) {
-        if (selection != 2) return;
+        if (selection != 2)
+            return;
     }
     if (selection >= 0 && selection < choices.length) {
         var width = choices[selection].width;
@@ -1993,8 +2078,10 @@ actions.prototype._clickSwitchs_sounds = function (x, y) {
             case 1:
                 return this._clickSwitchs_sounds_se();
             case 2:
-                if (x == leftGrid || x == leftGrid + 1) return this._clickSwitchs_sounds_userVolume(-1);
-                if (x == rightGrid || x == rightGrid + 1) return this._clickSwitchs_sounds_userVolume(1);
+                if (x == leftGrid || x == leftGrid + 1)
+                    return this._clickSwitchs_sounds_userVolume(-1);
+                if (x == rightGrid || x == rightGrid + 1)
+                    return this._clickSwitchs_sounds_userVolume(1);
                 return;
             case 3:
                 core.status.event.selection = 0;
@@ -2017,10 +2104,13 @@ actions.prototype._clickSwitchs_sounds_se = function () {
 }
 actions.prototype._clickSwitchs_sounds_userVolume = function (delta) {
     var value = Math.round(Math.sqrt(100 * core.musicStatus.userVolume));
-    if (value == 0 && delta < 0) return;
+    if (value == 0 && delta < 0)
+        return;
     core.musicStatus.userVolume = core.clamp(Math.pow(value + delta, 2) / 100, 0, 1);
-    if (core.musicStatus.gainNode != null) core.musicStatus.gainNode.gain.value = core.musicStatus.userVolume;
-    if (core.musicStatus.playingBgm) core.material.bgms[core.musicStatus.playingBgm].volume = core.musicStatus.userVolume * core.musicStatus.designVolume;
+    if (core.musicStatus.gainNode != null)
+        core.musicStatus.gainNode.gain.value = core.musicStatus.userVolume;
+    if (core.musicStatus.playingBgm)
+        core.material.bgms[core.musicStatus.playingBgm].volume = core.musicStatus.userVolume * core.musicStatus.designVolume;
     core.setLocalStorage('userVolume', core.musicStatus.userVolume);
     core.playSound('确定');
     core.ui._drawSwitchs_sounds();
@@ -2049,7 +2139,8 @@ actions.prototype._clickSwitchs_display = function (x, y) {
     var topIndex = this._getChoicesTopIndex(choices.length);
     var selection = y - topIndex;
     if (this._out(x)) {
-        if (selection != 0) return;
+        if (selection != 0)
+            return;
     }
     if (selection >= 0 && selection < choices.length) {
         var width = choices[selection].width;
@@ -2058,8 +2149,10 @@ actions.prototype._clickSwitchs_display = function (x, y) {
         core.status.event.selection = selection;
         switch (selection) {
             case 0:
-                if (x == leftGrid || x == leftGrid + 1) return this._clickSwitchs_display_setSize(-1);
-                if (x == rightGrid || x == rightGrid + 1) return this._clickSwitchs_display_setSize(1);
+                if (x == leftGrid || x == leftGrid + 1)
+                    return this._clickSwitchs_display_setSize(-1);
+                if (x == rightGrid || x == rightGrid + 1)
+                    return this._clickSwitchs_display_setSize(1);
                 return;
             case 1:
                 core.playSound('确定');
@@ -2158,7 +2251,8 @@ actions.prototype._clickSwitchs_action = function (x, y) {
     var topIndex = this._getChoicesTopIndex(choices.length);
     var selection = y - topIndex;
     if (this._out(x)) {
-        if (selection != 0 && selection != 1) return;
+        if (selection != 0 && selection != 1)
+            return;
     }
     if (selection >= 0 && selection < choices.length) {
         var width = choices[selection].width;
@@ -2201,13 +2295,17 @@ actions.prototype._clickSwitchs_action_floorChangeTime = function (delta) {
     core.ui._drawSwitchs_action();
 }
 actions.prototype._clickSwitchs_action_potionNoRouting = function () {
-    if (core.hasFlag('__potionNoRouting__')) core.removeFlag('__potionNoRouting__');
-    else core.setFlag('__potionNoRouting__', true);
+    if (core.hasFlag('__potionNoRouting__'))
+        core.removeFlag('__potionNoRouting__');
+    else
+        core.setFlag('__potionNoRouting__', true);
     core.ui._drawSwitchs_action();
 }
 actions.prototype._clickSwitchs_action_clickMove = function () {
-    if (core.hasFlag('__noClickMove__')) core.removeFlag('__noClickMove__');
-    else core.setFlag('__noClickMove__', true);
+    if (core.hasFlag('__noClickMove__'))
+        core.removeFlag('__noClickMove__');
+    else
+        core.setFlag('__noClickMove__', true);
     core.ui._drawSwitchs_action();
 }
 actions.prototype._clickSwitchs_action_leftHandPrefer = function () {
@@ -2328,7 +2426,8 @@ actions.prototype.__clickNotes_replaceText = function (data) {
         .replace("\b", "\\b")
         .replace(/\\b\[.*?\]/g, "")
         .replace(/\n|\\n/g, " ");
-    if (data.length > 45) data = data.substring(0, 43) + "...";
+    if (data.length > 45)
+        data = data.substring(0, 43) + "...";
     return data;
 }
 actions.prototype._clickNotes_new = function () {
@@ -2354,7 +2453,8 @@ actions.prototype._clickNotes_show = function () {
         }
         result.push("\t[存档笔记]" + v.join("\n"));
     }
-    if (result.length == 0) result.push("当前没有存档笔记，试着新增一个吧！\n（菜单栏 -> 存档笔记 -> 新增存档笔记）");
+    if (result.length == 0)
+        result.push("当前没有存档笔记，试着新增一个吧！\n（菜单栏 -> 存档笔记 -> 新增存档笔记）");
     core.drawText(result);
 }
 actions.prototype._clickNotes_edit = function () {
@@ -2363,7 +2463,8 @@ actions.prototype._clickNotes_edit = function () {
         core.drawText("当前没有存档笔记，试着新增一个吧！");
     } else {
         core.myprompt("请输入要编辑的存档笔记编号（1 - " + core.status.hero.notes.length + "）", "1", function (data) {
-            if (!data) core.ui.closePanel();
+            if (!data)
+                core.ui.closePanel();
             var value = parseInt(data) || 0;
             if (!value || value <= 0 || value > core.status.hero.notes.length) {
                 core.drawText("不合法的输入！");
@@ -2465,9 +2566,12 @@ actions.prototype._clickSyncSave = function (x, y) {
 }
 actions.prototype._clickSyncSave_readFile = function () {
     core.readFile(function (obj) {
-        if (obj.name != core.firstData.name) return alert("存档和游戏不一致！");
-        if (obj.version != core.firstData.version) return alert("游戏版本不一致！");
-        if (!obj.data) return alert("无效的存档！");
+        if (obj.name != core.firstData.name)
+            return alert("存档和游戏不一致！");
+        if (obj.version != core.firstData.version)
+            return alert("游戏版本不一致！");
+        if (!obj.data)
+            return alert("无效的存档！");
         core.control._syncLoad_write(obj.data);
     }, null, ".h5save");
 }
@@ -2537,7 +2641,8 @@ actions.prototype._clickLocalSaveSelect = function (x, y) {
                         LZString.compressToBase64(JSON.stringify(content)));
                 }
             };
-            if (selection == 0) core.getAllSaves(callback);
+            if (selection == 0)
+                core.getAllSaves(callback);
             else core.getSave(core.saves.saveIndex, callback);
         }
         core.status.event.selection = 2;
@@ -2704,7 +2809,8 @@ actions.prototype._keyUpReplay = function (keycode) {
     this._selectChoices(core.status.event.ui.choices.length, keycode, this._clickReplay);
 }
 actions.prototype._clickGameInfo = function (x, y) {
-    if (this._out(x)) return;
+    if (this._out(x))
+        return;
     var choices = core.status.event.ui.choices;
     var topIndex = this._getChoicesTopIndex(choices.length);
     if (y >= topIndex && y < topIndex + choices.length) {
