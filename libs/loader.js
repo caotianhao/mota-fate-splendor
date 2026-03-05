@@ -3,13 +3,17 @@
 function loader() {
     this._init();
 }
-loader.prototype._init = function () {};
+
+loader.prototype._init = function () { };
+
 loader.prototype._setStartProgressVal = function (val) {
     core.dom.startTopProgress.style.width = val + "%";
 };
+
 loader.prototype._setStartLoadTipText = function (text) {
     core.dom.startTopLoadTips.innerText = text;
 };
+
 loader.prototype._load = function (callback) {
     if (main.useCompress) {
         this._load_async(callback);
@@ -17,6 +21,7 @@ loader.prototype._load = function (callback) {
         this._load_sync(callback);
     }
 };
+
 loader.prototype._load_sync = function (callback) {
     this._loadAnimates_sync();
     this._loadMusic_sync();
@@ -28,6 +33,7 @@ loader.prototype._load_sync = function (callback) {
         });
     });
 };
+
 loader.prototype._load_async = function (callback) {
     core.loader._setStartLoadTipText("正在加载资源文件...");
     var all = {};
@@ -50,12 +56,12 @@ loader.prototype._load_async = function (callback) {
                 } else {
                     core.loader._setStartLoadTipText(
                         "正在加载资源文件... " +
-                            core.formatSize(allLoaded) +
-                            " / " +
-                            core.formatSize(allTotal) +
-                            " (" +
-                            ((allLoaded / allTotal) * 100).toFixed(2) +
-                            "%)",
+                        core.formatSize(allLoaded) +
+                        " / " +
+                        core.formatSize(allTotal) +
+                        " (" +
+                        ((allLoaded / allTotal) * 100).toFixed(2) +
+                        "%)",
                     );
                 }
                 core.loader._setStartProgressVal((allLoaded / allTotal) * 100);
@@ -95,6 +101,7 @@ loader.prototype._load_async = function (callback) {
         _makeOnFinished("tilesets"),
     );
 };
+
 loader.prototype._loadMaterials_sync = function (callback) {
     this._setStartLoadTipText("正在加载资源文件...");
     this.loadImages(
@@ -107,6 +114,7 @@ loader.prototype._loadMaterials_sync = function (callback) {
         },
     );
 };
+
 loader.prototype._loadMaterials_async = function (onprogress, onfinished) {
     this.loadImagesFromZip(
         "project/materials/materials.h5data",
@@ -119,6 +127,7 @@ loader.prototype._loadMaterials_async = function (onprogress, onfinished) {
         },
     );
 };
+
 loader.prototype._loadMaterials_afterLoad = function () {
     var images = core.splitImage(core.material.images["icons"]);
     for (var key in core.statusBar.icons) {
@@ -129,8 +138,6 @@ loader.prototype._loadMaterials_afterLoad = function () {
         }
     }
 };
-
-// ------ 加载使用的图片 ------ //
 
 loader.prototype._loadExtraImages_sync = function (callback) {
     core.material.images.images = {};
@@ -170,6 +177,7 @@ loader.prototype._loadExtraImages_async = function (onprogress, onfinished) {
         });
     }, this);
 };
+
 loader.prototype._loadAutotiles_sync = function (callback) {
     core.material.images.autotile = {};
     var keys = Object.keys(core.material.icons.autotile);
@@ -180,6 +188,7 @@ loader.prototype._loadAutotiles_sync = function (callback) {
         callback();
     });
 };
+
 loader.prototype._loadAutotiles_async = function (onprogress, onfinished) {
     core.material.images.autotile = {};
     var keys = Object.keys(core.material.icons.autotile);
@@ -205,6 +214,7 @@ loader.prototype._loadAutotiles_afterLoad = function (keys, autotiles) {
         core.maps._makeAutotileEdges();
     });
 };
+
 loader.prototype._loadTilesets_sync = function (callback) {
     core.material.images.tilesets = {};
     this._setStartLoadTipText("正在加载额外素材...");
@@ -218,6 +228,7 @@ loader.prototype._loadTilesets_sync = function (callback) {
         },
     );
 };
+
 loader.prototype._loadTilesets_async = function (onprogress, onfinished) {
     core.material.images.tilesets = {};
     this.loadImagesFromZip(
@@ -233,7 +244,6 @@ loader.prototype._loadTilesets_async = function (onprogress, onfinished) {
 };
 
 loader.prototype._loadTilesets_afterLoad = function () {
-    // 检查宽高是32倍数，如果出错在控制台报错
     for (var imgName in core.material.images.tilesets) {
         var img = core.material.images.tilesets[imgName];
         if (img.width % 32 != 0 || img.height % 32 != 0) {
@@ -244,8 +254,6 @@ loader.prototype._loadTilesets_afterLoad = function () {
         }
     }
 };
-
-// ------ 实际加载一系列图片 ------ //
 
 loader.prototype.loadImages = function (dir, names, toSave, callback) {
     if (!names || names.length == 0) {
@@ -288,6 +296,7 @@ loader.prototype.loadImage = function (dir, imgName, callback) {
         console.error(e);
     }
 };
+
 loader.prototype.loadImagesFromZip = function (
     url,
     names,
@@ -329,6 +338,7 @@ loader.prototype.loadImagesFromZip = function (
         onprogress,
     );
 };
+
 loader.prototype._loadAnimates_sync = function () {
     this._setStartLoadTipText("正在加载动画文件...");
     if (main.supportBunch) {
@@ -336,9 +346,9 @@ loader.prototype._loadAnimates_sync = function () {
             core.http(
                 "GET",
                 "__all_animates__?v=" +
-                    main.version +
-                    "&id=" +
-                    core.animates.join(","),
+                main.version +
+                "&id=" +
+                core.animates.join(","),
                 null,
                 function (content) {
                     var u = content.split("@@@~~~###~~~@@@");
@@ -374,6 +384,7 @@ loader.prototype._loadAnimates_sync = function () {
         );
     });
 };
+
 loader.prototype._loadAnimates_async = function (onprogress, onfinished) {
     core.unzip(
         "project/animates/animates.h5data?v=" + main.version,
@@ -394,6 +405,7 @@ loader.prototype._loadAnimates_async = function (onprogress, onfinished) {
         onprogress,
     );
 };
+
 loader.prototype._loadAnimate = function (content) {
     try {
         content = JSON.parse(content);
@@ -440,8 +452,6 @@ loader.prototype._loadAnimate = function (content) {
     }
 };
 
-// ------ 加载音乐和音效 ------ //
-
 loader.prototype._loadMusic_sync = function () {
     this._setStartLoadTipText("正在加载音效文件...");
     core.bgms.forEach(function (t) {
@@ -450,7 +460,6 @@ loader.prototype._loadMusic_sync = function () {
     core.sounds.forEach(function (t) {
         core.loader.loadOneSound(t);
     });
-    // 直接开始播放
     core.playBgm(main.startBgm);
 };
 
@@ -461,7 +470,6 @@ loader.prototype._loadMusic_async = function (onprogress, onfinished) {
     core.unzip(
         "project/sounds/sounds.h5data?v=" + main.version,
         function (data) {
-            // 延迟解析
             setTimeout(function () {
                 for (var name in data) {
                     if (core.sounds.indexOf(name) >= 0) {
@@ -502,6 +510,7 @@ loader.prototype.loadOneSound = function (name) {
         "arraybuffer",
     );
 };
+
 loader.prototype._loadOneSound_decodeData = function (name, data) {
     if (data instanceof Blob) {
         var blobReader = new zip.BlobReader(data);
@@ -528,6 +537,7 @@ loader.prototype._loadOneSound_decodeData = function (name, data) {
         core.material.sounds[name] = null;
     }
 };
+
 loader.prototype.loadBgm = function (name) {
     name = core.getMappedName(name);
     if (!core.material.bgms[name]) return;
@@ -546,10 +556,12 @@ loader.prototype.loadBgm = function (name) {
     }
     core.musicStatus.cachedBgms.unshift(name);
 };
+
 loader.prototype._preloadBgm = function (bgm) {
     bgm.volume = 0;
     bgm.play();
 };
+
 loader.prototype.freeBgm = function (name) {
     name = core.getMappedName(name);
     if (!core.material.bgms[name]) return;
