@@ -129,7 +129,6 @@ utils.prototype.calValue = function (value, prefix) {
     return value;
 };
 
-////// 向某个数组前插入另一个数组或元素 //////
 utils.prototype.unshift = function (a, b) {
     if (!(a instanceof Array) || b == null) return;
     if (b instanceof Array) {
@@ -142,7 +141,6 @@ utils.prototype.unshift = function (a, b) {
     return a;
 };
 
-////// 向某个数组后插入另一个数组或元素 //////
 utils.prototype.push = function (a, b) {
     if (!(a instanceof Array) || b == null) return;
     if (b instanceof Array) {
@@ -170,7 +168,6 @@ utils.prototype.decompress = function (value) {
     return null;
 };
 
-////// 设置本地存储 //////
 utils.prototype.setLocalStorage = function (key, value) {
     try {
         if (value == null) {
@@ -199,7 +196,6 @@ utils.prototype.setLocalStorage = function (key, value) {
     }
 };
 
-////// 获得本地存储 //////
 utils.prototype.getLocalStorage = function (key, defaultValue) {
     try {
         var value = JSON.parse(
@@ -212,7 +208,6 @@ utils.prototype.getLocalStorage = function (key, defaultValue) {
     }
 };
 
-////// 移除本地存储 //////
 utils.prototype.removeLocalStorage = function (key) {
     localStorage.removeItem(core.firstData.name + "_" + key);
     if (key == "autoSave") delete core.saves.ids[0];
@@ -405,13 +400,11 @@ utils.prototype.getGlobal = function (key, defaultValue) {
 
 utils.prototype.clone = function (data, filter, recursion) {
     if (!core.isset(data)) return null;
-    // date
     if (data instanceof Date) {
         var copy = new Date();
         copy.setTime(data.getTime());
         return copy;
     }
-    // array
     if (data instanceof Array) {
         var copy = [];
         for (var i in data) {
@@ -547,9 +540,7 @@ utils.prototype.formatBigNumber = function (x, digits) {
     var sign = x < 0 ? "-" : "";
     if (sign) --digits;
     x = Math.abs(x);
-
     if (x < Math.pow(10, digits)) return sign + x;
-
     for (var i = 0; i < units.length; ++i) {
         var each = units[i];
         var u = (x / each.val).toFixed(digits).substring(0, digits);
