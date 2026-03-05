@@ -2070,9 +2070,9 @@ actions.prototype._clickEquipboxIndex = function (index) {
             if (core.isReplaying()) return;
             var equipId =
                 equips[
-                    index -
-                        this.LAST +
-                        (core.status.event.data.page - 1) * this.LAST
+                index -
+                this.LAST +
+                (core.status.event.data.page - 1) * this.LAST
                 ];
             core.loadEquip(equipId);
             core.status.route.push("equip:" + equipId);
@@ -2912,9 +2912,9 @@ actions.prototype._clickNotes_show = function () {
         for (var j = i; j < i + 5 && j < core.status.hero.notes.length; ++j) {
             v.push(
                 j +
-                    1 +
-                    ". " +
-                    this.__clickNotes_replaceText(core.status.hero.notes[j]),
+                1 +
+                ". " +
+                this.__clickNotes_replaceText(core.status.hero.notes[j]),
             );
         }
         result.push("\t[存档笔记]" + v.join("\n"));
@@ -2932,8 +2932,8 @@ actions.prototype._clickNotes_edit = function () {
     } else {
         core.myprompt(
             "请输入要编辑的存档笔记编号（1 - " +
-                core.status.hero.notes.length +
-                "）",
+            core.status.hero.notes.length +
+            "）",
             "1",
             function (data) {
                 if (!data) core.ui.closePanel();
@@ -3154,9 +3154,9 @@ actions.prototype._clickLocalSaveSelect = function (x, y) {
                     };
                     core.download(
                         core.firstData.name +
-                            "_" +
-                            core.formatDate2(new Date()) +
-                            ".h5save",
+                        "_" +
+                        core.formatDate2(new Date()) +
+                        ".h5save",
                         LZString.compressToBase64(JSON.stringify(content)),
                     );
                 }
@@ -3182,6 +3182,7 @@ actions.prototype._keyUpLocalSaveSelect = function (keycode) {
         this._clickLocalSaveSelect,
     );
 };
+
 actions.prototype._clickStorageRemove = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3202,6 +3203,7 @@ actions.prototype._clickStorageRemove = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickStorageRemove_all = function () {
     core.myconfirm(
         "你确定要清除【全部游戏】的所有本地存档？\n此行为不可逆！！！",
@@ -3224,6 +3226,7 @@ actions.prototype._clickStorageRemove_all = function () {
         },
     );
 };
+
 actions.prototype._clickStorageRemove_current = function () {
     core.myconfirm(
         "你确定要清除本游戏的所有本地存档？\n此行为不可逆！！！",
@@ -3262,6 +3265,7 @@ actions.prototype._keyUpStorageRemove = function (keycode) {
         this._clickStorageRemove,
     );
 };
+
 actions.prototype._clickReplay = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3316,8 +3320,8 @@ actions.prototype._clickReplay_replayRemain = function () {
     core.drawText(
         [
             "\t[接续播放录像]该功能允许你播放\r[yellow]两个存档之间的录像\r，常常用于\r[yellow]区域优化\r。\n" +
-                "例如，有若干个区，已经全部通关；之后重打一区并进行了优化，则可以对剩余区域直接播放录像而无需全部重打。\n\n" +
-                "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
+            "例如，有若干个区，已经全部通关；之后重打一区并进行了优化，则可以对剩余区域直接播放录像而无需全部重打。\n\n" +
+            "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
             "\t[步骤1]请选择一个存档。\n\r[yellow]该存档的坐标必须和当前勇士坐标完全相同。\r\n将尝试从此处开始回放。",
         ],
         function () {
@@ -3330,14 +3334,15 @@ actions.prototype._clickReplay_replayRemain = function () {
         },
     );
 };
+
 actions.prototype._clickReplay_replaySince = function () {
     core.closePanel();
     core.drawText(
         [
             "\t[播放存档剩余录像]该功能为【接续播放录像】的简化版本，允许你播放\r[yellow]一个存档中剩余的录像\r，常常用于\r[yellow]录像局部优化\r。\n" +
-                "在录像正常播放中，你随时可以暂停并按S键进行存档；此时\r[yellow]剩余录像\r也会被记在存档中（在读档界面用\r[yellow][R]\r标识。）\n" +
-                "之后，你可以选择在路线优化后直接播放该存档的\r[yellow]剩余录像\r，而无需再像接续播放一样选择录像起点和终点。\n\n" +
-                "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
+            "在录像正常播放中，你随时可以暂停并按S键进行存档；此时\r[yellow]剩余录像\r也会被记在存档中（在读档界面用\r[yellow][R]\r标识。）\n" +
+            "之后，你可以选择在路线优化后直接播放该存档的\r[yellow]剩余录像\r，而无需再像接续播放一样选择录像起点和终点。\n\n" +
+            "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
             "请选择一个存档。\n\n\r[yellow]该存档需为录像播放中存的，且坐标必须和当前勇士坐标完全相同。\r\n将尝试播放此存档的剩余录像。",
         ],
         function () {
@@ -3375,6 +3380,7 @@ actions.prototype._keyUpReplay = function (keycode) {
         this._clickReplay,
     );
 };
+
 actions.prototype._clickGameInfo = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3465,36 +3471,37 @@ actions.prototype._clickKeyBoard = function (x, y) {
     }
     if (y == this._HY_ + 2 && x >= m - 5 && x <= m + 5) {
         core.ui.closePanel();
-        if (x == m - 5) core.keyUp(189); // -
-        if (x == m - 4) core.keyUp(187); // =
-        if (x == m - 3) core.keyUp(219); // [
-        if (x == m - 2) core.keyUp(221); // ]
-        if (x == m - 1) core.keyUp(220); // \
-        if (x == m) core.keyUp(186); // ;
-        if (x == m + 1) core.keyUp(222); // '
-        if (x == m + 2) core.keyUp(188); // ,
-        if (x == m + 3) core.keyUp(190); // .
-        if (x == m + 4) core.keyUp(191); // /
-        if (x == m + 5) core.keyUp(192); // `
+        if (x == m - 5) core.keyUp(189);
+        if (x == m - 4) core.keyUp(187);
+        if (x == m - 3) core.keyUp(219);
+        if (x == m - 2) core.keyUp(221);
+        if (x == m - 1) core.keyUp(220);
+        if (x == m) core.keyUp(186);
+        if (x == m + 1) core.keyUp(222);
+        if (x == m + 2) core.keyUp(188);
+        if (x == m + 3) core.keyUp(190);
+        if (x == m + 4) core.keyUp(191);
+        if (x == m + 5) core.keyUp(192);
     }
     if (y == this._HY_ + 3 && x >= m - 5 && x <= m + 4) {
         core.ui.closePanel();
-        if (x == m - 5) core.keyUp(27); // ESC
-        if (x == m - 4) core.keyUp(9); // TAB
-        if (x == m - 3) core.keyUp(20); // CAPS
-        if (x == m - 2) core.keyUp(16); // SHIFT
-        if (x == m - 1) core.keyUp(17); // CTRL
-        if (x == m) core.keyUp(18); // ALT
-        if (x == m + 1) core.keyUp(32); // SPACE
-        if (x == m + 2) core.keyUp(8); // BACKSPACE
-        if (x == m + 3) core.keyUp(13); // ENTER
-        if (x == m + 4) core.keyUp(46); // DEL
+        if (x == m - 5) core.keyUp(27);
+        if (x == m - 4) core.keyUp(9);
+        if (x == m - 3) core.keyUp(20);
+        if (x == m - 2) core.keyUp(16);
+        if (x == m - 1) core.keyUp(17);
+        if (x == m) core.keyUp(18);
+        if (x == m + 1) core.keyUp(32);
+        if (x == m + 2) core.keyUp(8);
+        if (x == m + 3) core.keyUp(13);
+        if (x == m + 4) core.keyUp(46);
     }
     if (y == this._HY_ + 4 && x >= m + 3 && x <= m + 5) {
         core.playSound("取消");
         core.ui.closePanel();
     }
 };
+
 actions.prototype._clickCursor = function (x, y, px, py) {
     if (
         x == core.status.automaticRoute.cursorX &&
@@ -3509,6 +3516,7 @@ actions.prototype._clickCursor = function (x, y, px, py) {
     core.status.automaticRoute.cursorY = y;
     core.ui._drawCursor();
 };
+
 actions.prototype._keyDownCursor = function (keycode) {
     if (keycode == 37) {
         core.status.automaticRoute.cursorX--;
@@ -3535,6 +3543,7 @@ actions.prototype._keyDownCursor = function (keycode) {
         return;
     }
 };
+
 actions.prototype._keyUpCursor = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.playSound("取消");
