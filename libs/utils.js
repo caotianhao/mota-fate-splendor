@@ -1,8 +1,3 @@
-/*
-utils.js 工具类
-
- */
-
 "use strict";
 
 function utils() {
@@ -25,11 +20,8 @@ function utils() {
     };
 }
 
-utils.prototype._init = function () {
-    //
-};
+utils.prototype._init = function () { };
 
-////// 将文字中的${和}（表达式）进行替换 //////
 utils.prototype.replaceText = function (text, prefix) {
     if (typeof text != "string") return text;
     var index = text.indexOf("${");
@@ -78,8 +70,6 @@ utils.prototype.replaceValue = function (value) {
                 /flag[:：]([a-zA-Z0-9_\u4E00-\u9FCC\u3040-\u30FF\u2160-\u216B\u0391-\u03C9]+)/g,
                 "core.getFlag('$1', 0)",
             );
-        //if (value.indexOf('switch:' >= 0))
-        //    value = value.replace(/switch:([a-zA-Z0-9_]+)/g, "core.getFlag('" + (prefix || ":f@x@y") + "@$1', 0)");
         if (value.indexOf("global:") >= 0 || value.indexOf("global：") >= 0)
             value = value.replace(
                 /global[:：]([a-zA-Z0-9_\u4E00-\u9FCC\u3040-\u30FF\u2160-\u216B\u0391-\u03C9]+)/g,
@@ -116,7 +106,6 @@ utils.prototype.replaceValue = function (value) {
     return value;
 };
 
-////// 计算表达式的值 //////
 utils.prototype.calValue = function (value, prefix) {
     if (!core.isset(value)) return null;
     if (typeof value === "string") {
@@ -168,11 +157,11 @@ utils.prototype.decompress = function (value) {
     try {
         var output = lzw_decode(value);
         if (output) return JSON.parse(output);
-    } catch (e) {}
+    } catch (e) { }
     try {
         var output = LZString.decompress(value);
         if (output) return JSON.parse(output);
-    } catch (e) {}
+    } catch (e) { }
     try {
         return JSON.parse(value);
     } catch (e) {
@@ -390,7 +379,6 @@ utils.prototype.setGlobal = function (key, value) {
 utils.prototype.getGlobal = function (key, defaultValue) {
     var value;
     if (core.isReplaying()) {
-        // 不考虑key不一致的情况
         var action = core.status.replay.toReplay.shift();
         if (action.indexOf("input2:") == 0) {
             value = JSON.parse(core.decodeBase64(action.substring(7)));
@@ -399,8 +387,6 @@ utils.prototype.getGlobal = function (key, defaultValue) {
                 "input2:" + core.encodeBase64(JSON.stringify(value)),
             );
         } else {
-            // 录像兼容性：尝试从flag和localStorage获得
-            // 注意这里不再二次记录 input2: 到录像
             core.status.replay.toReplay.unshift(action);
             value = core.getFlag(
                 "__global__" + key,
@@ -417,7 +403,6 @@ utils.prototype.getGlobal = function (key, defaultValue) {
     return value;
 };
 
-////// 深拷贝一个对象 //////
 utils.prototype.clone = function (data, filter, recursion) {
     if (!core.isset(data)) return null;
     // date
@@ -439,11 +424,9 @@ utils.prototype.clone = function (data, filter, recursion) {
         }
         return copy;
     }
-    // 函数
     if (data instanceof Function) {
         return data;
     }
-    // object
     if (data instanceof Object) {
         var copy = {};
         for (var i in data) {
@@ -459,7 +442,6 @@ utils.prototype.clone = function (data, filter, recursion) {
     return data;
 };
 
-////// 深拷贝1D/2D数组优化 //////
 utils.prototype.cloneArray = function (data) {
     if (!(data instanceof Array)) return this.clone(data);
     if (data[0] instanceof Array) {
@@ -471,7 +453,6 @@ utils.prototype.cloneArray = function (data) {
     }
 };
 
-////// 裁剪图片 //////
 utils.prototype.splitImage = function (image, width, height) {
     if (typeof image == "string") {
         image = core.getMappedName(image);
@@ -498,7 +479,6 @@ utils.prototype.splitImage = function (image, width, height) {
     return ans;
 };
 
-////// 格式化时间为字符串 //////
 utils.prototype.formatDate = function (date) {
     if (!date) date = new Date();
     return (
@@ -517,7 +497,6 @@ utils.prototype.formatDate = function (date) {
     );
 };
 
-////// 格式化时间为最简字符串 //////
 utils.prototype.formatDate2 = function (date) {
     if (!date) date = new Date();
     return (
@@ -541,7 +520,6 @@ utils.prototype.formatTime = function (time) {
     );
 };
 
-////// 两位数显示 //////
 utils.prototype.setTwoDigits = function (x) {
     return parseInt(x) < 10 && parseInt(x) >= 0 ? "0" + x : x;
 };
@@ -553,12 +531,11 @@ utils.prototype.formatSize = function (size) {
 };
 
 utils.prototype.formatBigNumber = function (x, digits) {
-    if (digits === true) digits = 5; // 兼容旧版onMap参数
-    if (!digits || digits < 5) digits = 6; // 连同负号、小数点和后缀字母在内的总位数，至少需为5，默认为6
-    x = Math.trunc(parseFloat(x)); // 尝试识别为小数，然后向0取整
-    if (x == null || !Number.isFinite(x)) return "???"; // 无法识别的数或正负无穷大，显示'???'
+    if (digits === true) digits = 5;
+    if (!digits || digits < 5) digits = 6;
+    x = Math.trunc(parseFloat(x));
+    if (x == null || !Number.isFinite(x)) return "???";
     var units = [
-        // 单位及其后缀字母，可自定义，如改成千进制下的K、M、G、T、P
         { val: 1e4, suffix: "w" },
         { val: 1e8, suffix: "e" },
         { val: 1e12, suffix: "z" },
@@ -566,9 +543,9 @@ utils.prototype.formatBigNumber = function (x, digits) {
         { val: 1e20, suffix: "g" },
     ];
     if (Math.abs(x) > 1e20 * Math.pow(10, digits - 2))
-        return x.toExponential(0); // 绝对值过大以致于失去精度的数，直接使用科学记数法，系数只保留整数
+        return x.toExponential(0);
     var sign = x < 0 ? "-" : "";
-    if (sign) --digits; // 符号位单独处理，负号要占一位
+    if (sign) --digits;
     x = Math.abs(x);
 
     if (x < Math.pow(10, digits)) return sign + x;
@@ -586,7 +563,6 @@ utils.prototype.formatBigNumber = function (x, digits) {
     return sign + x.toExponential(0);
 };
 
-////// 变速移动 //////
 utils.prototype.applyEasing = function (name) {
     var list = {
         easeIn: function (t) {
@@ -596,7 +572,6 @@ utils.prototype.applyEasing = function (name) {
             return 1 - Math.pow(1 - t, 3);
         },
         easeInOut: function (t) {
-            // easeInOut试了一下感觉二次方效果明显点
             if (t < 0.5) return Math.pow(t, 2) * 2;
             else return 1 - Math.pow(1 - t, 2) * 2;
         },
@@ -611,7 +586,6 @@ utils.prototype.applyEasing = function (name) {
     return list[name] || list.linear;
 };
 
-////// 数组转RGB //////
 utils.prototype.arrayToRGB = function (color) {
     if (!(color instanceof Array)) return color;
     var nowR = this.clamp(parseInt(color[0]), 0, 255),
@@ -633,7 +607,6 @@ utils.prototype.arrayToRGBA = function (color) {
     return "rgba(" + nowR + "," + nowG + "," + nowB + "," + nowA + ")";
 };
 
-////// 加密路线 //////
 utils.prototype.encodeRoute = function (route) {
     var ans = "",
         lastMove = "",
@@ -696,17 +669,14 @@ utils.prototype._encodeRoute_encodeOne = function (t) {
     return "(" + t + ")";
 };
 
-////// 解密路线 //////
 utils.prototype.decodeRoute = function (route) {
     if (!route) return route;
-
-    // 解压缩
     try {
         var v = LZString.decompressFromBase64(route);
         if (v != null && /^[-_a-zA-Z0-9+\/=:()]*$/.test(v)) {
             if (v != "" || route.length < 8) route = v;
         }
-    } catch (e) {}
+    } catch (e) { }
 
     var decodeObj = { route: route, index: 0, ans: [] };
     while (decodeObj.index < decodeObj.route.length) {
@@ -754,7 +724,6 @@ utils.prototype._decodeRoute_number2id = function (number) {
 };
 
 utils.prototype._decodeRoute_decodeOne = function (decodeObj, c) {
-    // --- 特殊处理自定义项
     if (c == "(") {
         var idx = decodeObj.route.indexOf(")", decodeObj.index);
         if (idx >= 0) {
@@ -955,13 +924,13 @@ utils.prototype.matchWildcard = function (pattern, string) {
     try {
         return new RegExp(
             "^" +
-                pattern
-                    .split(/\*+/)
-                    .map(function (s) {
-                        return s.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
-                    })
-                    .join(".*") +
-                "$",
+            pattern
+                .split(/\*+/)
+                .map(function (s) {
+                    return s.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
+                })
+                .join(".*") +
+            "$",
         ).test(string);
     } catch (e) {
         return false;
@@ -1103,7 +1072,6 @@ utils.prototype.readFile = function (success, error, accept, readType) {
     core.platform.fileInput.click();
 };
 
-////// 读取文件完毕 //////
 utils.prototype.readFileContent = function (content) {
     var obj = null;
     if (content.slice(0, 4) === "data") {
@@ -1111,10 +1079,9 @@ utils.prototype.readFileContent = function (content) {
             core.platform.successCallback(content);
         return;
     }
-    // 检查base64
     try {
         obj = JSON.parse(LZString.decompressFromBase64(content));
-    } catch (e) {}
+    } catch (e) { }
     if (!obj) {
         try {
             obj = JSON.parse(content);
@@ -1131,20 +1098,15 @@ utils.prototype.readFileContent = function (content) {
     if (core.platform.errorCallback) core.platform.errorCallback();
 };
 
-////// 下载文件到本地 //////
 utils.prototype.download = function (filename, content) {
     if (window.jsinterface) {
         window.jsinterface.download(filename, content);
         return;
     }
-
-    // Step 0: 不为http/https，直接不支持
     if (!core.platform.isOnline) {
         alert("离线状态下不支持下载操作！");
         return;
     }
-
-    // Step 1: 如果是iOS平台，直接不支持
     if (core.platform.isIOS) {
         if (core.copy(content)) {
             alert(
@@ -1155,8 +1117,6 @@ utils.prototype.download = function (filename, content) {
         }
         return;
     }
-
-    // Step 2: 如果不是PC平台（Android），则只支持chrome
     if (!core.platform.isPC) {
         if (
             !core.platform.isChrome ||
@@ -1174,8 +1134,6 @@ utils.prototype.download = function (filename, content) {
             return;
         }
     }
-
-    // Step 3: 如果是Safari浏览器，则提示并打开新窗口
     if (core.platform.isSafari) {
         alert(
             "你当前使用的是Safari浏览器，不支持直接下载文件。\n即将打开一个新窗口为应下载内容，请自行全选复制然后创建空白文件并粘贴。",
@@ -1186,8 +1144,6 @@ utils.prototype.download = function (filename, content) {
         window.URL.revokeObjectURL(href);
         return;
     }
-
-    // Step 4: 下载
     var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
     if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
@@ -1203,7 +1159,6 @@ utils.prototype.download = function (filename, content) {
     }
 };
 
-////// 复制一段内容到剪切板 //////
 utils.prototype.copy = function (data) {
     if (window.jsinterface) {
         window.jsinterface.copy(data);
@@ -1238,7 +1193,6 @@ utils.prototype.copy = function (data) {
     return successful;
 };
 
-////// 显示一段confirm //////
 utils.prototype.myconfirm = function (hint, yesCallback, noCallback) {
     main.dom.inputDiv.style.display = "block";
     main.dom.inputMessage.innerHTML = hint.replace(/\n/g, "<br/>");
@@ -1251,7 +1205,6 @@ utils.prototype.myconfirm = function (hint, yesCallback, noCallback) {
     core.platform.errorCallback = noCallback;
 };
 
-////// 让用户输入一段文字 //////
 utils.prototype.myprompt = function (hint, value, callback) {
     main.dom.inputDiv.style.display = "block";
     main.dom.inputMessage.innerHTML = hint.replace(/\n/g, "<br/>");
@@ -1263,11 +1216,9 @@ utils.prototype.myprompt = function (hint, value, callback) {
         main.dom.inputBox.focus();
     });
     core.status.holdingKeys = [];
-
     core.platform.successCallback = core.platform.errorCallback = callback;
 };
 
-////// 动画显示某对象 //////
 utils.prototype.showWithAnimate = function (obj, speed, callback) {
     obj.style.display = "block";
     if (!speed || main.mode != "play") {
@@ -1287,7 +1238,6 @@ utils.prototype.showWithAnimate = function (obj, speed, callback) {
     }, speed);
 };
 
-////// 动画使某对象消失 //////
 utils.prototype.hideWithAnimate = function (obj, speed, callback) {
     if (!speed || main.mode != "play") {
         obj.style.display = "none";
@@ -1307,7 +1257,6 @@ utils.prototype.hideWithAnimate = function (obj, speed, callback) {
     }, speed);
 };
 
-////// 生成浏览器唯一的 guid //////
 utils.prototype.getGuid = function () {
     var guid = localStorage.getItem("guid");
     if (guid != null) return guid;
@@ -1479,8 +1428,6 @@ utils.prototype.http = function (
     else xhr.send();
 };
 
-// LZW-compress
-// https://gist.github.com/revolunet/843889
 function lzw_encode(s) {
     var dict = {};
     var data = (s + "").split("");
@@ -1506,7 +1453,6 @@ function lzw_encode(s) {
     return out.join("");
 }
 
-// Decompress an LZW-encoded string
 function lzw_decode(s) {
     var dict = {};
     var data = (s + "").split("");
