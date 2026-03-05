@@ -807,12 +807,10 @@ utils.prototype._decodeRoute_decodeOne = function (decodeObj, c) {
     }
 };
 
-////// 判断某对象是否不为null也不为NaN //////
 utils.prototype.isset = function (val) {
     return val != null && !(typeof val == "number" && isNaN(val));
 };
 
-////// 获得子数组 //////
 utils.prototype.subarray = function (a, b) {
     if (!(a instanceof Array) || !(b instanceof Array) || a.length < b.length)
         return null;
@@ -837,7 +835,6 @@ utils.prototype.getCookie = function (name) {
     return match ? match[2] : null;
 };
 
-////// 设置statusBar的innerHTML，会自动斜体和放缩，也可以增加自定义css //////
 utils.prototype.setStatusBarInnerHTML = function (name, value, css) {
     if (!core.statusBar[name]) return;
     if (typeof value == "number") value = this.formatBigNumber(value);
@@ -847,7 +844,6 @@ utils.prototype.setStatusBarInnerHTML = function (name, value, css) {
     var style = "font-style: " + (italic ? "italic" : "normal") + "; ";
     style +=
         "text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0; ";
-    // 判定是否需要缩放
     var length = this.strlen(value) || 1;
     style += "font-size: " + Math.min(1, 7 / length) + "em; ";
     if (css) style += css;
@@ -939,7 +935,6 @@ utils.prototype.matchRegex = function (pattern, string) {
     }
 };
 
-////// Base64加密 //////
 utils.prototype.encodeBase64 = function (str) {
     return btoa(
         encodeURIComponent(str).replace(
@@ -951,7 +946,6 @@ utils.prototype.encodeBase64 = function (str) {
     );
 };
 
-////// Base64解密 //////
 utils.prototype.decodeBase64 = function (str) {
     return decodeURIComponent(
         atob(str)
@@ -972,7 +966,6 @@ utils.prototype.rand = function (num) {
     return ans;
 };
 
-////// 生成随机数（录像方法） //////
 utils.prototype.rand2 = function (num) {
     num = num || 2147483648;
     num = Math.abs(num);
@@ -1012,7 +1005,6 @@ utils.prototype.__next_rand = function (_rand) {
     return _rand;
 };
 
-////// 读取一个本地文件内容 //////
 utils.prototype.readFile = function (success, error, accept, readType) {
     core.platform.successCallback = success;
     core.platform.errorCallback = error;
@@ -1021,21 +1013,16 @@ utils.prototype.readFile = function (success, error, accept, readType) {
         window.jsinterface.readFile();
         return;
     }
-
-    // step 0: 不为http/https，直接不支持
     if (!core.platform.isOnline) {
         alert("离线状态下不支持文件读取！");
         if (error) error();
         return;
     }
-
-    // Step 1: 如果不支持FileReader，直接不支持
     if (core.platform.fileReader == null) {
         alert("当前浏览器不支持FileReader！");
         if (error) error();
         return;
     }
-
     if (core.platform.fileInput == null) {
         core.platform.fileInput = document.createElement("input");
         core.platform.fileInput.style.opacity = 0;
@@ -1114,7 +1101,6 @@ utils.prototype.download = function (filename, content) {
             core.platform.isQQ ||
             core.platform.isWeChat
         ) {
-            // 检测chrome
             if (core.copy(content)) {
                 alert(
                     "移动端只有Chrome浏览器支持直接下载文件！\n所有应下载内容已经复制到您的剪切板，请自行创建空白文件并粘贴。",
