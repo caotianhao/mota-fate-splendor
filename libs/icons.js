@@ -1,23 +1,28 @@
 "use strict";
+
 function icons() {
     this._init();
 }
+
 icons.prototype._init = function () {
     this.icons = icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1;
     this.tilesetStartOffset = 10000;
 };
+
 icons.prototype.getIcons = function () {
     var icons = core.clone(this.icons);
     icons.hero.leftup = icons.hero.leftdown = icons.hero.left;
     icons.hero.rightup = icons.hero.rightdown = icons.hero.right;
     return icons;
 };
+
 icons.prototype.getClsFromId = function (id) {
     for (var cls in core.material.icons) {
         if (cls != "hero" && id in core.material.icons[cls]) return cls;
     }
     return null;
 };
+
 icons.prototype.getAllIconIds = function () {
     if (this.allIconIds) return this.allIconIds;
     this.allIconIds = [];
@@ -26,6 +31,7 @@ icons.prototype.getAllIconIds = function () {
     }
     return this.allIconIds;
 };
+
 icons.prototype._getAnimateFrames = function (cls) {
     if (cls == "enemys" || cls == "npcs") {
         return 2;
@@ -35,6 +41,7 @@ icons.prototype._getAnimateFrames = function (cls) {
     }
     return 1;
 };
+
 icons.prototype.getTilesetOffset = function (id) {
     if (typeof id == "string") {
         id = core.getIdOfThis(id);
