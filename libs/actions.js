@@ -1,4 +1,5 @@
 "use strict";
+
 function actions() {
     this._init();
     this._HX_ = core._HALF_WIDTH_;
@@ -8,6 +9,7 @@ function actions() {
     };
     this.LAST = core._WIDTH_ - 1;
 }
+
 actions.prototype._init = function () {
     this.actionsdata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.actions;
     this.actions = {};
@@ -111,6 +113,7 @@ actions.prototype._init = function () {
         0,
     );
 };
+
 actions.prototype.registerAction = function (action, name, func, priority) {
     if (!name || !func) return;
     if (action == "onclick") action = "ondown";
@@ -129,6 +132,7 @@ actions.prototype.registerAction = function (action, name, func, priority) {
         return b.priority - a.priority;
     });
 };
+
 actions.prototype.unregisterAction = function (action, name) {
     if (action == "onclick") action = "ondown";
     if (!this.actions[action]) return;
@@ -136,6 +140,7 @@ actions.prototype.unregisterAction = function (action, name) {
         return x.name != name;
     });
 };
+
 actions.prototype.doRegisteredAction = function (action) {
     var actions = this.actions[action];
     if (!actions) return false;
@@ -157,6 +162,7 @@ actions.prototype.doRegisteredAction = function (action) {
     }
     return false;
 };
+
 actions.prototype._checkReplaying = function () {
     if (
         core.isReplaying() &&
@@ -173,9 +179,11 @@ actions.prototype._checkReplaying = function () {
         return true;
     return false;
 };
+
 actions.prototype._sys_checkReplay = function () {
     if (this._checkReplaying()) return true;
 };
+
 actions.prototype.__checkLeftHandPrefer = function (e) {
     if (!core.flags.leftHandPrefer) return e;
     var map = {
@@ -204,9 +212,11 @@ actions.prototype.__checkLeftHandPrefer = function (e) {
     newEvent.keyCode = map[e.keyCode] || e.keyCode;
     return newEvent;
 };
+
 actions.prototype.onkeyDown = function (e) {
     this.doRegisteredAction("onkeyDown", this.__checkLeftHandPrefer(e));
 };
+
 actions.prototype._sys_onkeyDown = function (e) {
     core.status.holdingKeys = core.status.holdingKeys || [];
     var isArrow = { 37: true, 38: true, 39: true, 40: true }[e.keyCode];
@@ -224,9 +234,11 @@ actions.prototype._sys_onkeyDown = function (e) {
         this.keyDown(e.keyCode);
     }
 };
+
 actions.prototype.onkeyUp = function (e) {
     this.doRegisteredAction("onkeyUp", this.__checkLeftHandPrefer(e));
 };
+
 actions.prototype._sys_onkeyUp_replay = function (e) {
     if (this._checkReplaying()) {
         if (e.keyCode == 27) core.stopReplay();
@@ -250,6 +262,7 @@ actions.prototype._sys_onkeyUp_replay = function (e) {
         return true;
     }
 };
+
 actions.prototype._sys_onkeyUp = function (e) {
     var isArrow = { 37: true, 38: true, 39: true, 40: true }[e.keyCode];
     if (isArrow && !core.status.lockControl) {
@@ -273,9 +286,11 @@ actions.prototype._sys_onkeyUp = function (e) {
         this.keyUp(e.keyCode, e.altKey);
     }
 };
+
 actions.prototype.pressKey = function (keyCode) {
     this.doRegisteredAction("pressKey", keyCode);
 };
+
 actions.prototype._sys_pressKey = function (keyCode) {
     if (keyCode === core.status.holdingKeys.slice(-1)[0]) {
         this.keyDown(keyCode);
@@ -284,9 +299,11 @@ actions.prototype._sys_pressKey = function (keyCode) {
         }, 30);
     }
 };
+
 actions.prototype.keyDown = function (keyCode) {
     this.doRegisteredAction("keyDown", keyCode);
 };
+
 actions.prototype._sys_keyDown_lockControl = function (keyCode) {
     if (!core.status.lockControl) return false;
     if (keyCode == 17) {
@@ -340,6 +357,7 @@ actions.prototype._sys_keyDown_lockControl = function (keyCode) {
     }
     return true;
 };
+
 actions.prototype._sys_keyDown = function (keyCode) {
     if (!core.status.played) return true;
     switch (keyCode) {
@@ -358,12 +376,15 @@ actions.prototype._sys_keyDown = function (keyCode) {
     }
     return true;
 };
+
 actions.prototype.keyUp = function (keyCode, altKey, fromReplay) {
     this.doRegisteredAction("keyUp", keyCode, altKey, fromReplay);
 };
+
 actions.prototype._sys_keyUp_replay = function (keyCode, altKey, fromReplay) {
     if (!fromReplay && this._checkReplaying()) return true;
 };
+
 actions.prototype._sys_keyUp_lockControl = function (keyCode, altKey) {
     if (!core.status.lockControl) return false;
 
@@ -610,7 +631,6 @@ actions.prototype._sys_ondown = function (x, y, px, py) {
         8,
         "#bfbfbf",
     );
-
     clearTimeout(core.timeout.onDownTimeout);
     core.timeout.onDownTimeout = null;
     core.status.preview.prepareDragging = false;
@@ -632,6 +652,7 @@ actions.prototype._sys_ondown = function (x, y, px, py) {
         }, 500);
     }
 };
+
 actions.prototype.onmove = function (loc) {
     var x = parseInt(loc.x / loc.size),
         y = parseInt(loc.y / loc.size);
@@ -639,6 +660,7 @@ actions.prototype.onmove = function (loc) {
         py = parseInt(loc.y / core.domStyle.scale);
     this.doRegisteredAction("onmove", x, y, px, py);
 };
+
 actions.prototype._sys_onmove_choices = function (x, y, px, py) {
     if (!core.status.lockControl) return false;
 
@@ -676,6 +698,7 @@ actions.prototype._sys_onmove_choices = function (x, y, px, py) {
     }
     return false;
 };
+
 actions.prototype._sys_onmove = function (x, y, px, py) {
     if (core.status.lockControl) return false;
     if (core.status.preview.dragging) {
@@ -747,6 +770,7 @@ actions.prototype.onup = function (loc) {
         py = parseInt(loc.y / core.domStyle.scale);
     this.doRegisteredAction("onup", x, y, px, py);
 };
+
 actions.prototype._sys_onup = function (x, y, px, py) {
     clearTimeout(core.timeout.onDownTimeout);
     core.timeout.onDownTimeout = null;
@@ -794,6 +818,7 @@ actions.prototype._sys_onup = function (x, y, px, py) {
     core.status.downTime = null;
     return true;
 };
+
 actions.prototype._getClickLoc = function (x, y) {
     var statusBar = { x: 0, y: 0 };
     var size = 32;
@@ -810,9 +835,11 @@ actions.prototype._getClickLoc = function (x, y) {
     var loc = { x: Math.max(x - left), y: Math.max(y - top, 0), size: size };
     return loc;
 };
+
 actions.prototype.onmousewheel = function (direct) {
     this.doRegisteredAction("onmousewheel", direct);
 };
+
 actions.prototype._sys_onmousewheel = function (direct) {
     if (this._checkReplaying()) {
         if (direct == 1) core.speedUpReplay();
@@ -883,7 +910,6 @@ actions.prototype._sys_onmousewheel = function (direct) {
     }
 };
 
-////// 长按Ctrl键时 //////
 actions.prototype.keyDownCtrl = function () {
     this.doRegisteredAction("keyDownCtrl");
 };
@@ -983,6 +1009,7 @@ actions.prototype.onStatusBarClick = function (e) {
         Math.max(py, 0),
     );
 };
+
 actions.prototype._sys_onStatusBarClick = function (px, py, vertical) {
     if (this.actionsdata.onStatusBarClick)
         return this.actionsdata.onStatusBarClick(px, py, vertical);
@@ -1011,7 +1038,6 @@ actions.prototype._selectChoices = function (length, keycode, callback) {
     }
 };
 
-// 上下键调整选项
 actions.prototype._keyDownChoices = function (keycode) {
     if (keycode == 38) {
         core.status.event.selection--;
@@ -1032,6 +1058,7 @@ actions.prototype._keyDownChoices = function (keycode) {
         );
     }
 };
+
 actions.prototype._onMoveChoices = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -1121,6 +1148,7 @@ actions.prototype._keyUpConfirmBox = function (keycode) {
         }
     }
 };
+
 actions.prototype._onMoveConfirmBox = function (x, y, px, py) {
     if (py >= core._PY_ / 2 && py <= core._PY_ / 2 + 64) {
         if (px >= core._PX_ / 2 - 70 && px <= core._PX_ / 2 - 10) {
@@ -1157,6 +1185,7 @@ actions.prototype._onMoveConfirmBox = function (x, y, px, py) {
         }
     }
 };
+
 actions.prototype._clickAction_text = function () {
     if (core.status.event.animateUI) return;
     var data = core.clone(core.status.event.data.current);
@@ -1173,6 +1202,7 @@ actions.prototype._clickAction_text = function () {
         core.doAction();
     }
 };
+
 actions.prototype._clickAction = function (x, y, px, py) {
     if (core.status.event.data.type == "text") {
         return this._clickAction_text();
@@ -1261,6 +1291,7 @@ actions.prototype._clickAction = function (x, y, px, py) {
         return;
     }
 };
+
 actions.prototype._keyDownAction = function (keycode) {
     if (core.status.event.data.type == "choices") {
         this._keyDownChoices(keycode);
@@ -1326,6 +1357,7 @@ actions.prototype._keyUpAction = function (keycode) {
         return;
     }
 };
+
 actions.prototype._clickBook = function (x, y) {
     var pageinfo = core.ui._drawBook_pageinfo();
     if ((x == this._HX_ - 2 || x == this._HX_ - 3) && y === core._HEIGHT_ - 1) {
@@ -2038,9 +2070,9 @@ actions.prototype._clickEquipboxIndex = function (index) {
             if (core.isReplaying()) return;
             var equipId =
                 equips[
-                    index -
-                        this.LAST +
-                        (core.status.event.data.page - 1) * this.LAST
+                index -
+                this.LAST +
+                (core.status.event.data.page - 1) * this.LAST
                 ];
             core.loadEquip(equipId);
             core.status.route.push("equip:" + equipId);
@@ -2880,9 +2912,9 @@ actions.prototype._clickNotes_show = function () {
         for (var j = i; j < i + 5 && j < core.status.hero.notes.length; ++j) {
             v.push(
                 j +
-                    1 +
-                    ". " +
-                    this.__clickNotes_replaceText(core.status.hero.notes[j]),
+                1 +
+                ". " +
+                this.__clickNotes_replaceText(core.status.hero.notes[j]),
             );
         }
         result.push("\t[存档笔记]" + v.join("\n"));
@@ -2900,8 +2932,8 @@ actions.prototype._clickNotes_edit = function () {
     } else {
         core.myprompt(
             "请输入要编辑的存档笔记编号（1 - " +
-                core.status.hero.notes.length +
-                "）",
+            core.status.hero.notes.length +
+            "）",
             "1",
             function (data) {
                 if (!data) core.ui.closePanel();
@@ -3122,9 +3154,9 @@ actions.prototype._clickLocalSaveSelect = function (x, y) {
                     };
                     core.download(
                         core.firstData.name +
-                            "_" +
-                            core.formatDate2(new Date()) +
-                            ".h5save",
+                        "_" +
+                        core.formatDate2(new Date()) +
+                        ".h5save",
                         LZString.compressToBase64(JSON.stringify(content)),
                     );
                 }
@@ -3284,8 +3316,8 @@ actions.prototype._clickReplay_replayRemain = function () {
     core.drawText(
         [
             "\t[接续播放录像]该功能允许你播放\r[yellow]两个存档之间的录像\r，常常用于\r[yellow]区域优化\r。\n" +
-                "例如，有若干个区，已经全部通关；之后重打一区并进行了优化，则可以对剩余区域直接播放录像而无需全部重打。\n\n" +
-                "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
+            "例如，有若干个区，已经全部通关；之后重打一区并进行了优化，则可以对剩余区域直接播放录像而无需全部重打。\n\n" +
+            "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
             "\t[步骤1]请选择一个存档。\n\r[yellow]该存档的坐标必须和当前勇士坐标完全相同。\r\n将尝试从此处开始回放。",
         ],
         function () {
@@ -3303,9 +3335,9 @@ actions.prototype._clickReplay_replaySince = function () {
     core.drawText(
         [
             "\t[播放存档剩余录像]该功能为【接续播放录像】的简化版本，允许你播放\r[yellow]一个存档中剩余的录像\r，常常用于\r[yellow]录像局部优化\r。\n" +
-                "在录像正常播放中，你随时可以暂停并按S键进行存档；此时\r[yellow]剩余录像\r也会被记在存档中（在读档界面用\r[yellow][R]\r标识。）\n" +
-                "之后，你可以选择在路线优化后直接播放该存档的\r[yellow]剩余录像\r，而无需再像接续播放一样选择录像起点和终点。\n\n" +
-                "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
+            "在录像正常播放中，你随时可以暂停并按S键进行存档；此时\r[yellow]剩余录像\r也会被记在存档中（在读档界面用\r[yellow][R]\r标识。）\n" +
+            "之后，你可以选择在路线优化后直接播放该存档的\r[yellow]剩余录像\r，而无需再像接续播放一样选择录像起点和终点。\n\n" +
+            "详细使用方法参见露珠录制的视频教程：\n\r[yellow]https://bilibili.com/video/BV1az4y1C78x",
             "请选择一个存档。\n\n\r[yellow]该存档需为录像播放中存的，且坐标必须和当前勇士坐标完全相同。\r\n将尝试播放此存档的剩余录像。",
         ],
         function () {
