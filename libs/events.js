@@ -55,6 +55,7 @@ events.prototype._startGame_start = function (hard, seed, route, callback) {
     });
     if (route != null) core.startReplay(route);
 };
+
 events.prototype._startGame_setHard = function () {
     var hardValue = 0;
     var hardColor = "red";
@@ -68,6 +69,7 @@ events.prototype._startGame_setHard = function () {
     core.setFlag("hard", hardValue || 0);
     core.setFlag("__hardColor__", hardColor);
 };
+
 events.prototype._startGame_afterStart = function (callback) {
     core.ui.closePanel();
     core.changeFloor(
@@ -82,6 +84,7 @@ events.prototype._startGame_afterStart = function (callback) {
     );
     this._startGame_upload();
 };
+
 events.prototype._startGame_upload = function () {
     var formData = new FormData();
     formData.append("type", "people");
@@ -93,10 +96,12 @@ events.prototype._startGame_upload = function () {
     formData.append("base64", 1);
     core.utils.http("POST", "/games/upload.php", formData);
 };
+
 events.prototype.win = function (reason, norank, noexit) {
     if (!noexit) core.status.gameOver = true;
     return this.eventdata.win(reason, norank, noexit);
 };
+
 events.prototype.lose = function (reason) {
     if (core.isReplaying())
         return core.control._replay_error(reason, function () {
@@ -105,6 +110,7 @@ events.prototype.lose = function (reason) {
     core.status.gameOver = true;
     return this.eventdata.lose(reason);
 };
+
 events.prototype.gameOver = function (ending, fromReplay, norank) {
     if (!core.status.extraEvent) {
         core.clearMap("all");
@@ -125,6 +131,7 @@ events.prototype.gameOver = function (ending, fromReplay, norank) {
     if (reason != null) core.drawText(reason, core.restart);
     else this._gameOver_confirmUpload(ending, norank);
 };
+
 events.prototype._gameOver_confirmUpload = function (ending, norank) {
     core.ui.closePanel();
     if (ending == null) {
@@ -157,6 +164,7 @@ events.prototype._gameOver_confirmUpload = function (ending, norank) {
         },
     );
 };
+
 events.prototype._gameOver_doUpload = function (username, ending, norank) {
     var hp = core.status.hero.hp;
     if (username == null) hp = 1;
@@ -191,6 +199,7 @@ events.prototype._gameOver_doUpload = function (username, ending, norank) {
 
     core.events._gameOver_confirmDownload(ending);
 };
+
 events.prototype._gameOver_confirmDownload = function (ending) {
     core.ui.closePanel();
     core.ui.drawConfirmBox(
@@ -205,9 +214,9 @@ events.prototype._gameOver_confirmDownload = function (ending) {
             };
             core.download(
                 core.firstData.name +
-                    "_" +
-                    core.formatDate2(new Date()) +
-                    ".h5route",
+                "_" +
+                core.formatDate2(new Date()) +
+                ".h5route",
                 LZString.compressToBase64(JSON.stringify(obj)),
             );
             core.events._gameOver_askRate(ending);
@@ -217,6 +226,7 @@ events.prototype._gameOver_confirmDownload = function (ending) {
         },
     );
 };
+
 events.prototype._gameOver_askRate = function (ending) {
     core.ui.closePanel();
     if (core.status.extraEvent) {
@@ -261,10 +271,12 @@ events.prototype._gameOver_askRate = function (ending) {
         },
     );
 };
+
 events.prototype.restart = function () {
     core.showStartAnimate();
     core.playBgm(main.startBgm);
 };
+
 events.prototype.confirmRestart = function () {
     core.playSound("打开界面");
     core.status.event.selection = 1;
@@ -281,12 +293,15 @@ events.prototype.confirmRestart = function () {
         },
     );
 };
+
 events.prototype.registerSystemEvent = function (type, func) {
     this.systemEvents[type] = func;
 };
+
 events.prototype.unregisterSystemEvent = function (type) {
     delete this.systemEvents[type];
 };
+
 events.prototype.doSystemEvent = function (type, data, callback) {
     core.clearRouteFolding();
     if (this.systemEvents[type]) {
@@ -301,6 +316,7 @@ events.prototype.doSystemEvent = function (type, data, callback) {
     console.error("未知的系统事件: " + type + "！");
     if (callback) callback();
 };
+
 events.prototype.trigger = function (x, y, callback) {
     var _executeCallback = function () {
         if (callback) {
@@ -384,6 +400,7 @@ events.prototype._trigger_inAction = function (x, y) {
     }
     return core.doAction();
 };
+
 events.prototype._trigger_ignoreChangeFloor = function (block) {
     var able = core.flags.ignoreChangeFloor;
     if (block.event.data && block.event.data.ignoreChangeFloor != null)
@@ -398,7 +415,7 @@ events.prototype._trigger_ignoreChangeFloor = function (block) {
         } else if (
             core.status.automaticRoute.autoHeroMove ||
             core.status.automaticRoute.autoStep <
-                core.status.automaticRoute.autoStepRoutes.length
+            core.status.automaticRoute.autoStepRoutes.length
         ) {
             core.status.route.push("no");
             return true;
@@ -432,6 +449,7 @@ events.prototype._sys_battle = function (data, callback) {
         this.battle(data.event.id, data.x, data.y, false, callback);
     }
 };
+
 events.prototype.battle = function (id, x, y, force, callback) {
     core.saveAndStopAutomaticRoute();
     id = id || core.getBlockId(x, y);
@@ -448,18 +466,22 @@ events.prototype.battle = function (id, x, y, force, callback) {
     this.afterBattle(id, x, y);
     if (callback) callback();
 };
+
 events.prototype.beforeBattle = function (enemyId, x, y) {
     return this.eventdata.beforeBattle(enemyId, x, y);
 };
+
 events.prototype.afterBattle = function (enemyId, x, y) {
     return this.eventdata.afterBattle(enemyId, x, y);
 };
+
 events.prototype._sys_openDoor = function (data, callback) {
     this.openDoor(data.x, data.y, true, function () {
         core.replay();
         if (callback) callback();
     });
 };
+
 events.prototype.openDoor = function (x, y, needKey, callback) {
     var block = core.getBlock(x, y);
     core.saveAndStopAutomaticRoute();
@@ -483,6 +505,7 @@ events.prototype.openDoor = function (x, y, needKey, callback) {
         this._openDoor_animate(block, x, y, callback);
     }
 };
+
 events.prototype._openDoor_check = function (block, x, y, needKey) {
     var clearAndReturn = function () {
         core.clearContinueAutomaticRoute();
@@ -516,8 +539,8 @@ events.prototype._openDoor_check = function (block, x, y, needKey) {
                 core.playSound("操作失败");
                 core.drawTip(
                     "你的" +
-                        ((core.material.items[keyName] || {}).name || "钥匙") +
-                        "不足！",
+                    ((core.material.items[keyName] || {}).name || "钥匙") +
+                    "不足！",
                     null,
                     true,
                 );
@@ -533,6 +556,7 @@ events.prototype._openDoor_check = function (block, x, y, needKey) {
     core.playSound(doorInfo.openSound);
     return true;
 };
+
 events.prototype._openDoor_animate = function (block, x, y, callback) {
     var blockInfo = core.getBlockInfo(block);
     blockInfo.opacity = block.opacity;
@@ -569,12 +593,15 @@ events.prototype._openDoor_animate = function (block, x, y, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 events.prototype.afterOpenDoor = function (doorId, x, y) {
     return this.eventdata.afterOpenDoor(doorId, x, y);
 };
+
 events.prototype._sys_getItem = function (data, callback) {
     this.getItem(data.event.id, 1, data.x, data.y, false, callback);
 };
+
 events.prototype.getItem = function (id, num, x, y, isGentleClick, callback) {
     if (num == null) num = 1;
     var itemCls = core.material.items[id].cls;
@@ -595,25 +622,25 @@ events.prototype.getItem = function (id, num, x, y, isGentleClick, callback) {
         var hint = core.material.items[id].text || "该道具暂无描述";
         try {
             hint = core.replaceText(hint);
-        } catch (e) {}
+        } catch (e) { }
         if (!core.status.event.id || core.status.event.id == "action") {
             core.insertAction(
                 "\t[" +
-                    core.material.items[id].name +
-                    "," +
-                    id +
-                    "]" +
-                    hint +
-                    "\n" +
-                    (id.endsWith("Key")
-                        ? "（钥匙类道具，遇到对应的门时自动打开）"
-                        : itemCls == "tools"
-                          ? "（消耗类道具，请按T在道具栏使用）"
-                          : itemCls == "constants"
+                core.material.items[id].name +
+                "," +
+                id +
+                "]" +
+                hint +
+                "\n" +
+                (id.endsWith("Key")
+                    ? "（钥匙类道具，遇到对应的门时自动打开）"
+                    : itemCls == "tools"
+                        ? "（消耗类道具，请按T在道具栏使用）"
+                        : itemCls == "constants"
                             ? "（永久类道具，请按T在道具栏使用）"
                             : itemCls == "equips"
-                              ? "（装备类道具，请按Q在装备栏进行装备）"
-                              : ""),
+                                ? "（装备类道具，请按Q在装备栏进行装备）"
+                                : ""),
             );
         }
         itemHint.push(id);
@@ -635,6 +662,7 @@ events.prototype.getNextItem = function (noRoute) {
         ? this._getNextItem(directions[0], noRoute)
         : false;
 };
+
 events.prototype._canGetNextItem = function (direction) {
     direction = direction || core.getHeroLoc("direction");
     if (!core.canMoveHero(null, null, direction)) return;
@@ -648,6 +676,7 @@ events.prototype._canGetNextItem = function (direction) {
         block.event.trigger == "getItem"
     );
 };
+
 events.prototype._getNextItem = function (direction, noRoute) {
     direction = direction || core.getHeroLoc("direction");
     var nx = core.getHeroLoc("x") + core.utils.scan[direction].x;
@@ -656,6 +685,7 @@ events.prototype._getNextItem = function (direction, noRoute) {
     this.getItem(core.getBlockId(nx, ny), 1, nx, ny, true);
     return true;
 };
+
 events.prototype._sys_changeFloor = function (data, callback) {
     data = data.event.data;
     var heroLoc = {};
@@ -667,6 +697,7 @@ events.prototype._sys_changeFloor = function (data, callback) {
         if (callback) callback();
     });
 };
+
 events.prototype.changeFloor = function (
     floorId,
     stair,
@@ -691,6 +722,7 @@ events.prototype.changeFloor = function (
     core.interval.onDownInterval = "tmp";
     this._changeFloor_beforeChange(info, callback);
 };
+
 events.prototype._changeFloor_getInfo = function (
     floorId,
     stair,
@@ -725,6 +757,7 @@ events.prototype._changeFloor_getInfo = function (
         ),
     };
 };
+
 events.prototype._changeFloor_getHeroLoc = function (floorId, stair, heroLoc) {
     if (!heroLoc) heroLoc = core.clone(core.status.hero.loc);
     if (stair) {
@@ -756,6 +789,7 @@ events.prototype._changeFloor_getHeroLoc = function (floorId, stair, heroLoc) {
     });
     return heroLoc;
 };
+
 events.prototype._changeFloor_beforeChange = function (info, callback) {
     this._changeFloor_playSound();
     window.setTimeout(function () {
@@ -770,11 +804,13 @@ events.prototype._changeFloor_beforeChange = function (info, callback) {
             );
     }, 25);
 };
+
 events.prototype._changeFloor_playSound = function () {
     if (core.hasFlag("__fromLoad__")) core.playSound("读档");
     else if (core.hasFlag("__isFlying__")) core.playSound("飞行器");
     else core.playSound("上下楼");
 };
+
 events.prototype._changeFloor_changing = function (info, callback) {
     this.changingFloor(info.floorId, info.heroLoc);
     var __lockViewport__ = flags.__lockViewport__;
@@ -791,31 +827,38 @@ events.prototype._changeFloor_changing = function (info, callback) {
             },
         );
 };
+
 events.prototype._changeFloor_afterChange = function (info, callback) {
     if (!info.locked) core.unlockControl();
     core.status.replay.animate = false;
     core.events.afterChangeFloor(info.floorId);
     if (callback) callback();
 };
+
 events.prototype.changingFloor = function (floorId, heroLoc) {
     this.eventdata.changingFloor(floorId, heroLoc);
 };
+
 events.prototype.afterChangeFloor = function (floorId) {
     if (main.mode != "play") return;
     return this.eventdata.afterChangeFloor(floorId);
 };
+
 events.prototype.hasVisitedFloor = function (floorId) {
     if (!core.hasFlag("__visited__")) core.setFlag("__visited__", {});
     return core.getFlag("__visited__")[floorId] || false;
 };
+
 events.prototype.visitFloor = function (floorId) {
     if (!core.hasFlag("__visited__")) core.setFlag("__visited__", {});
     core.getFlag("__visited__")[floorId] = true;
 };
+
 events.prototype._sys_pushBox = function (data, callback) {
     this.pushBox(data);
     if (callback) callback();
 };
+
 events.prototype.pushBox = function (data) {
     if (data.event.id != "box" && data.event.id != "boxed") return;
     var direction = core.getHeroLoc("direction"),
@@ -839,18 +882,22 @@ events.prototype.pushBox = function (data) {
         { type: "function", function: "function() { core.afterPushBox(); }" },
     ]);
 };
+
 events.prototype.afterPushBox = function () {
     return this.eventdata.afterPushBox();
 };
+
 events.prototype._sys_ski = function (data, callback) {
     core.insertAction(["V2.6后，请将滑冰放在背景层！"], data.x, data.y);
     if (callback) callback();
 };
+
 events.prototype.onSki = function (number) {
     if (number == null) number = core.getBgNumber();
     var block = core.getBlockByNumber(number);
     return block && block.event && block.event.trigger == "ski";
 };
+
 events.prototype._sys_action = function (data, callback) {
     var ev = core.clone(data.event.data),
         ex = data.x,
@@ -876,12 +923,15 @@ events.prototype._sys_custom = function (data, callback) {
         callback,
     );
 };
+
 events.prototype.registerEvent = function (type, func) {
     this.actions[type] = func;
 };
+
 events.prototype.unregisterEvent = function (type) {
     delete this.actions[type];
 };
+
 events.prototype.doEvent = function (data, x, y, prefix) {
     var type = data.type;
     if (this.actions[type]) {
@@ -897,6 +947,7 @@ events.prototype.doEvent = function (data, x, y, prefix) {
     core.insertAction("未知的自定义事件: " + type + "！");
     core.doAction();
 };
+
 events.prototype.setEvents = function (list, x, y, callback) {
     var data = core.status.event.data || {};
     if (list) {
@@ -918,6 +969,7 @@ events.prototype.setEvents = function (list, x, y, callback) {
     core.status.event.id = "action";
     core.status.event.data = data;
 };
+
 events.prototype.startEvents = function (list, x, y, callback) {
     if (!list) return;
     if (!(list instanceof Array)) {
@@ -929,6 +981,7 @@ events.prototype.startEvents = function (list, x, y, callback) {
         core.doAction();
     });
 };
+
 events.prototype.doAction = function () {
     clearInterval(core.status.event.interval);
     clearTimeout(core.status.event.interval);
@@ -957,6 +1010,7 @@ events.prototype.doAction = function () {
     this.doEvent(data, x, y, prefix);
     return;
 };
+
 events.prototype._doAction_finishEvents = function () {
     if (core.status.event.id != "action") return true;
     if (core.status.event.data.list.length == 0) {
@@ -972,6 +1026,7 @@ events.prototype._doAction_finishEvents = function () {
     }
     return false;
 };
+
 events.prototype._popEvents = function (current, prefix) {
     if (current.todo.length == 0) {
         if (core.calValue(current.condition, prefix)) {
@@ -984,6 +1039,7 @@ events.prototype._popEvents = function (current, prefix) {
     }
     return false;
 };
+
 events.prototype.insertAction = function (action, x, y, callback, addToLast) {
     if (core.hasFlag("__statistics__")) return;
     if (core.status.gameOver) return;
@@ -1006,6 +1062,7 @@ events.prototype.insertAction = function (action, x, y, callback, addToLast) {
         this.setEvents(null, x, y, callback);
     }
 };
+
 events.prototype.insertCommonEvent = function (
     name,
     args,
@@ -1038,10 +1095,12 @@ events.prototype.insertCommonEvent = function (
         addToLast,
     );
 };
+
 events.prototype.getCommonEvent = function (name) {
     if (!name || typeof name !== "string") return null;
     return this.commonEvent[name] || null;
 };
+
 events.prototype.recoverEvents = function (data) {
     if (data) {
         core.ui.closePanel();
@@ -1055,6 +1114,7 @@ events.prototype.recoverEvents = function (data) {
     }
     return false;
 };
+
 events.prototype.checkAutoEvents = function () {
     if (
         !core.isPlaying() ||
@@ -1130,6 +1190,7 @@ events.prototype.checkAutoEvents = function () {
         }
     }
 };
+
 events.prototype.autoEventExecuting = function (symbol, value) {
     var aei = core.getFlag("__aei__", []);
     if (value == null) return aei.indexOf(symbol) >= 0;
@@ -1141,6 +1202,7 @@ events.prototype.autoEventExecuting = function (symbol, value) {
         core.setFlag("__aei__", aei);
     }
 };
+
 events.prototype.autoEventExecuted = function (symbol, value) {
     var aed = core.getFlag("__aed__", []);
     if (value == null) return aed.indexOf(symbol) >= 0;
@@ -1163,6 +1225,7 @@ events.prototype.pushEventLoc = function (x, y, floorId) {
     core.status.event.data.y = y;
     core.status.event.data.floorId = floorId;
 };
+
 events.prototype.popEventLoc = function () {
     if (core.status.event.id != "action") return;
     var loc = core.status.event.data.locStack.shift();
@@ -1172,6 +1235,7 @@ events.prototype.popEventLoc = function () {
         core.status.event.data.floorId = loc.floorId;
     }
 };
+
 events.prototype.precompile = function (data) {
     var array = this.__precompile_getArray();
     if (typeof data == "string") {
@@ -1210,6 +1274,7 @@ events.prototype.precompile = function (data) {
     }
     return data;
 };
+
 events.prototype.__precompile_getArray = function () {
     var texts = [
         "text",
@@ -1299,6 +1364,7 @@ events.prototype.__precompile_text = function (text) {
         return "${" + core.replaceValue(value) + "}";
     });
 };
+
 events.prototype.__precompile_array = function (value) {
     if (typeof value == "string") {
         value = core.replaceValue(value);
@@ -1311,6 +1377,7 @@ events.prototype.__precompile_array = function (value) {
     }
     return value;
 };
+
 events.prototype.__action_checkReplaying = function () {
     if (core.isReplaying()) {
         core.doAction();
@@ -1318,6 +1385,7 @@ events.prototype.__action_checkReplaying = function () {
     }
     return false;
 };
+
 events.prototype.__action_getLoc = function (loc, x, y, prefix) {
     if (loc) {
         x = core.calValue(loc[0], prefix);
@@ -1325,6 +1393,7 @@ events.prototype.__action_getLoc = function (loc, x, y, prefix) {
     }
     return [x, y];
 };
+
 events.prototype.__action_getHeroLoc = function (loc, prefix) {
     return this.__action_getLoc(
         loc,
@@ -1333,11 +1402,13 @@ events.prototype.__action_getHeroLoc = function (loc, prefix) {
         prefix,
     );
 };
+
 events.prototype.__action_getLoc2D = function (loc, x, y, prefix) {
     if (!(loc && loc[0] instanceof Array))
         loc = [this.__action_getLoc(loc, x, y, prefix)];
     return loc;
 };
+
 events.prototype.__action_doAsyncFunc = function (isAsync, func) {
     var parameters = Array.prototype.slice.call(arguments, 2);
     if (isAsync) {
@@ -1368,6 +1439,7 @@ events.prototype._action_text = function (data, x, y, prefix) {
         });
     }
 };
+
 events.prototype._action_moveTextBox = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     this.__action_doAsyncFunc(
@@ -1380,16 +1452,19 @@ events.prototype._action_moveTextBox = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._action_clearTextBox = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     core.clearTextBox(data.code, core.doAction);
 };
+
 events.prototype._action_autoText = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     data.text = core.replaceText(data.text, prefix);
     core.ui.drawTextBox(data.text);
     setTimeout(core.doAction, data.time || 3000);
 };
+
 events.prototype._action_scrollText = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     data.text = core.replaceText(data.text, prefix);
@@ -1401,20 +1476,25 @@ events.prototype._action_scrollText = function (data, x, y, prefix) {
         data.lineHeight || 1.4,
     );
 };
+
 events.prototype._action_comment = function (data, x, y, prefix) {
     core.doAction();
 };
+
 events.prototype._action__label = function (data, x, y, prefix) {
     core.doAction();
 };
+
 events.prototype._action_setText = function (data, x, y, prefix) {
     this.setTextAttribute(data);
     core.doAction();
 };
+
 events.prototype._action_tip = function (data, x, y, prefix) {
     core.drawTip(core.replaceText(data.text, prefix), data.icon);
     core.doAction();
 };
+
 events.prototype._action_show = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     if (data.time > 0 && data.floorId == core.status.floorId) {
@@ -1450,6 +1530,7 @@ events.prototype._action_hide = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_setBlock = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     data.time = data.time || 0;
@@ -1470,6 +1551,7 @@ events.prototype._action_setBlock = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_setBlockOpacity = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     if (data.time > 0 && data.floorId == core.status.floorId) {
@@ -1487,6 +1569,7 @@ events.prototype._action_setBlockOpacity = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_setBlockFilter = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     data.loc.forEach(function (t) {
@@ -1494,6 +1577,7 @@ events.prototype._action_setBlockFilter = function (data, x, y, prefix) {
     });
     core.doAction();
 };
+
 events.prototype._action_turnBlock = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     data.loc.forEach(function (t) {
@@ -1515,6 +1599,7 @@ events.prototype._action_hideFloorImg = function (data, x, y, prefix) {
         core.doAction,
     );
 };
+
 events.prototype._action_showBgFgMap = function (data, x, y, prefix) {
     core.maps.showBgFgMap(
         data.name,
@@ -1523,6 +1608,7 @@ events.prototype._action_showBgFgMap = function (data, x, y, prefix) {
         core.doAction,
     );
 };
+
 events.prototype._action_hideBgFgMap = function (data, x, y, prefix) {
     core.maps.hideBgFgMap(
         data.name,
@@ -1531,6 +1617,7 @@ events.prototype._action_hideBgFgMap = function (data, x, y, prefix) {
         core.doAction,
     );
 };
+
 events.prototype._action_setBgFgBlock = function (data, x, y, prefix) {
     data.loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     data.loc.forEach(function (t) {
@@ -1538,14 +1625,17 @@ events.prototype._action_setBgFgBlock = function (data, x, y, prefix) {
     });
     core.doAction();
 };
+
 events.prototype._action_follow = function (data, x, y, prefix) {
     this.follow(data.name);
     core.doAction();
 };
+
 events.prototype._action_unfollow = function (data, x, y, prefix) {
     this.unfollow(data.name);
     core.doAction();
 };
+
 events.prototype._action_animate = function (data, x, y, prefix) {
     if (data.loc == "hero") {
         this.__action_doAsyncFunc(data.async, core.drawHeroAnimate, data.name);
@@ -1561,17 +1651,19 @@ events.prototype._action_animate = function (data, x, y, prefix) {
         );
     }
 };
+
 events.prototype._action_stopAnimate = function (data, x, y, prefix) {
     core.stopAnimate(null, data.doCallback);
     core.doAction();
 };
+
 events.prototype._action_setViewport = function (data, x, y, prefix) {
     if (data.dxy != null) {
         data.loc = [
             core.bigmap.offsetX / 32 +
-                (core.calValue(data.dxy[0], prefix) || 0),
+            (core.calValue(data.dxy[0], prefix) || 0),
             core.bigmap.offsetY / 32 +
-                (core.calValue(data.dxy[1], prefix) || 0),
+            (core.calValue(data.dxy[1], prefix) || 0),
         ];
     } else if (data.loc == null) {
         data.loc = [
@@ -1590,10 +1682,12 @@ events.prototype._action_setViewport = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._action_lockViewport = function (data, x, y, prefix) {
     core.setFlag("__lockViewport__", data.lock || null);
     core.doAction();
 };
+
 events.prototype._action_move = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, x, y, prefix);
     this.__action_doAsyncFunc(
@@ -1606,6 +1700,7 @@ events.prototype._action_move = function (data, x, y, prefix) {
         data.keep,
     );
 };
+
 events.prototype._action_moveAction = function (data, x, y, prefix) {
     if (core.canMoveHero()) {
         var nx = core.nextX(),
@@ -1626,6 +1721,7 @@ events.prototype._action_moveAction = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._action_moveHero = function (data, x, y, prefix) {
     this.__action_doAsyncFunc(
         data.async,
@@ -1634,6 +1730,7 @@ events.prototype._action_moveHero = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._action_jump = function (data, x, y, prefix) {
     var from = this.__action_getLoc(data.from, x, y, prefix),
         to;
@@ -1656,12 +1753,14 @@ events.prototype._action_jump = function (data, x, y, prefix) {
         data.keep,
     );
 };
+
 events.prototype._precompile_jump = function (data) {
     data.from = this.__precompile_array(data.from);
     data.to = this.__precompile_array(data.to);
     data.dxy = this.__precompile_array(data.dxy);
     return data;
 };
+
 events.prototype._action_jumpHero = function (data, x, y, prefix) {
     var loc;
     if (data.dxy) {
@@ -1680,6 +1779,7 @@ events.prototype._action_jumpHero = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._action_changeFloor = function (data, x, y, prefix) {
     var loc = this.__action_getHeroLoc(data.loc, prefix);
     var heroLoc = { x: loc[0], y: loc[1], direction: data.direction };
@@ -1706,6 +1806,7 @@ events.prototype._action_changePos = function (data, x, y, prefix) {
     core.drawHero();
     core.doAction();
 };
+
 events.prototype._action_showImage = function (data, x, y, prefix) {
     if (core.isReplaying()) data.time = 0;
     this.__action_doAsyncFunc(
@@ -1719,11 +1820,13 @@ events.prototype._action_showImage = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._precompile_showImage = function (data) {
     data.sloc = this.__precompile_array(data.sloc);
     data.loc = this.__precompile_array(data.loc);
     return data;
 };
+
 events.prototype._action_showTextImage = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, 0, 0, prefix);
     if (core.isReplaying()) data.time = 0;
@@ -1743,6 +1846,7 @@ events.prototype._action_showTextImage = function (data, x, y, prefix) {
     );
     delete core.material.images.images[__tmpName];
 };
+
 events.prototype._action_hideImage = function (data, x, y, prefix) {
     if (core.isReplaying()) data.time = 0;
     this.__action_doAsyncFunc(
@@ -1752,11 +1856,13 @@ events.prototype._action_hideImage = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._action_showGif = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, 0, 0, prefix);
     this.showGif(data.name, loc[0], loc[1]);
     core.doAction();
 };
+
 events.prototype._action_moveImage = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     this.__action_doAsyncFunc(
@@ -1773,6 +1879,7 @@ events.prototype._precompile_moveImage = function (data) {
     data.to = this.__precompile_array(data.to);
     return data;
 };
+
 events.prototype._action_rotateImage = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     this.__action_doAsyncFunc(
@@ -1785,10 +1892,12 @@ events.prototype._action_rotateImage = function (data, x, y, prefix) {
         data.time,
     );
 };
+
 events.prototype._precompile_rotateImage = function (data) {
     data.center = this.__precompile_array(data.center);
     return data;
 };
+
 events.prototype._action_scaleImage = function (data, x, y, prefix) {
     if (this.__action_checkReplaying()) return;
     this.__action_doAsyncFunc(
@@ -1806,6 +1915,7 @@ events.prototype._precompile_scaleImage = function (data) {
     data.center = this.__precompile_array(data.center);
     return data;
 };
+
 events.prototype._action_setCurtain = function (data, x, y, prefix) {
     if (data.async) {
         core.setCurtain(
@@ -1829,6 +1939,7 @@ events.prototype._action_setCurtain = function (data, x, y, prefix) {
         );
     }
 };
+
 events.prototype._action_screenFlash = function (data, x, y, prefix) {
     this.__action_doAsyncFunc(
         data.async,
@@ -1839,6 +1950,7 @@ events.prototype._action_screenFlash = function (data, x, y, prefix) {
         data.moveMode,
     );
 };
+
 events.prototype._action_setWeather = function (data, x, y, prefix) {
     core.setWeather(data.name, data.level);
     if (
@@ -1849,6 +1961,7 @@ events.prototype._action_setWeather = function (data, x, y, prefix) {
     else core.removeFlag("__weather__");
     core.doAction();
 };
+
 events.prototype._action_openDoor = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, x, y, prefix);
     var floorId = data.floorId;
@@ -1865,6 +1978,7 @@ events.prototype._action_openDoor = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_closeDoor = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, x, y, prefix);
     this.__action_doAsyncFunc(
@@ -1875,6 +1989,7 @@ events.prototype._action_closeDoor = function (data, x, y, prefix) {
         data.id,
     );
 };
+
 events.prototype._action_useItem = function (data, x, y, prefix) {
     if (data.id != "book" && core.canUseItem(data.id)) {
         core.useItem(data.id, true, core.doAction);
@@ -1882,28 +1997,33 @@ events.prototype._action_useItem = function (data, x, y, prefix) {
         core.playSound("操作失败");
         core.drawTip(
             "当前无法使用" +
-                ((core.material.items[data.id] || {}).name || "未知道具"),
+            ((core.material.items[data.id] || {}).name || "未知道具"),
         );
         core.doAction();
     }
 };
+
 events.prototype._action_loadEquip = function (data, x, y, prefix) {
     core.loadEquip(data.id);
     core.doAction();
 };
+
 events.prototype._action_unloadEquip = function (data, x, y, prefix) {
     core.unloadEquip(data.pos);
     core.doAction();
 };
+
 events.prototype._action_openShop = function (data, x, y, prefix) {
     core.setShopVisited(data.id, true);
     if (data.open) core.openShop(data.id, true);
     core.doAction();
 };
+
 events.prototype._action_disableShop = function (data, x, y, prefix) {
     core.setShopVisited(data.id, false);
     core.doAction();
 };
+
 events.prototype._action_battle = function (data, x, y, prefix) {
     if (data.id) {
         this.battle(data.id, null, null, true, core.doAction);
@@ -1916,10 +2036,12 @@ events.prototype._action_battle = function (data, x, y, prefix) {
         this.battle(null, loc[0], loc[1], true, core.doAction);
     }
 };
+
 events.prototype._action_trigger = function (data, x, y, prefix) {
     var loc = this.__action_getLoc(data.loc, x, y, prefix);
     this._trigger_inAction(loc[0], loc[1]);
 };
+
 events.prototype._action_insert = function (data, x, y, prefix) {
     if (data.name) {
         core.insertCommonEvent(data.name, data.args);
@@ -1943,27 +2065,33 @@ events.prototype._action_insert = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._action_playBgm = function (data, x, y, prefix) {
     core.playBgm(data.name, data.startTime || 0);
     core.setFlag("__bgm__", data.keep ? data.name : null);
     core.doAction();
 };
+
 events.prototype._action_pauseBgm = function (data, x, y, prefix) {
     core.pauseBgm();
     core.doAction();
 };
+
 events.prototype._action_resumeBgm = function (data, x, y, prefix) {
     core.resumeBgm(data.resume);
     core.doAction();
 };
+
 events.prototype._action_loadBgm = function (data, x, y, prefix) {
     core.loadBgm(data.name);
     core.doAction();
 };
+
 events.prototype._action_freeBgm = function (data, x, y, prefix) {
     core.freeBgm(data.name);
     core.doAction();
 };
+
 events.prototype._action_playSound = function (data, x, y, prefix) {
     if (data.stop) core.stopSound();
     if (data.sync) {
@@ -1973,10 +2101,12 @@ events.prototype._action_playSound = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_stopSound = function (data, x, y, prefix) {
     core.stopSound();
     core.doAction();
 };
+
 events.prototype._action_setVolume = function (data, x, y, prefix) {
     data.value = core.clamp(parseInt(data.value) / 100, 0, 1);
     core.setFlag("__volume__", data.value);
@@ -1987,10 +2117,12 @@ events.prototype._action_setVolume = function (data, x, y, prefix) {
         data.time || 0,
     );
 };
+
 events.prototype._action_setBgmSpeed = function (data, x, y, prefix) {
     core.setBgmSpeed(data.value, data.pitch || false);
     core.doAction();
 };
+
 events.prototype._action_setValue = function (data, x, y, prefix) {
     this.setValue(data.name, data.operator, data.value, prefix);
     if (!data.norefresh) {
@@ -2004,10 +2136,12 @@ events.prototype._action_setValue = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._action_addValue = function (data, x, y, prefix) {
     data.operator = "+=";
     this._action_setValue(data, x, y, prefix);
 };
+
 events.prototype._action_setEnemy = function (data, x, y, prefix) {
     this.setEnemy(
         data.id,
@@ -2019,6 +2153,7 @@ events.prototype._action_setEnemy = function (data, x, y, prefix) {
     );
     core.doAction();
 };
+
 events.prototype._action_setEnemyOnPoint = function (data, x, y, prefix) {
     var loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     loc.forEach(function (one) {
@@ -2035,6 +2170,7 @@ events.prototype._action_setEnemyOnPoint = function (data, x, y, prefix) {
     });
     core.doAction();
 };
+
 events.prototype._action_resetEnemyOnPoint = function (data, x, y, prefix) {
     var loc = this.__action_getLoc2D(data.loc, x, y, prefix);
     loc.forEach(function (one) {
@@ -2048,6 +2184,7 @@ events.prototype._precompile_moveEnemyOnPoint = function (data) {
     data.dxy = this.__precompile_array(data.dxy);
     return data;
 };
+
 events.prototype._action_moveEnemyOnPoint = function (data, x, y, prefix) {
     var from = this.__action_getLoc(data.from, x, y, prefix),
         to;
@@ -2069,6 +2206,7 @@ events.prototype._action_moveEnemyOnPoint = function (data, x, y, prefix) {
     );
     core.doAction();
 };
+
 events.prototype._action_setEquip = function (data, x, y, prefix) {
     core.setEquip(
         data.id,
@@ -2080,30 +2218,37 @@ events.prototype._action_setEquip = function (data, x, y, prefix) {
     );
     core.doAction();
 };
+
 events.prototype._action_setFloor = function (data, x, y, prefix) {
     this.setFloorInfo(data.name, data.value, data.floorId, prefix);
     core.doAction();
 };
+
 events.prototype._action_setGlobalAttribute = function (data, x, y, prefix) {
     this.setGlobalAttribute(data.name, data.value);
     core.doAction();
 };
+
 events.prototype._action_setGlobalValue = function (data, x, y, prefix) {
     core.values[data.name] = data.value;
     core.doAction();
 };
+
 events.prototype._action_setGlobalFlag = function (data, x, y, prefix) {
     this.setGlobalFlag(data.name, data.value);
     core.doAction();
 };
+
 events.prototype._action_setNameMap = function (data, x, y, floorId) {
     this.setNameMap(data.name, data.value);
     core.doAction();
 };
+
 events.prototype._action_setHeroIcon = function (data, x, y, prefix) {
     this.setHeroIcon(data.name, data.noDraw);
     core.doAction();
 };
+
 events.prototype._action_input = function (data, x, y, prefix) {
     this.__action_getInput(
         core.replaceText(data.text, prefix),
@@ -2116,6 +2261,7 @@ events.prototype._action_input = function (data, x, y, prefix) {
         },
     );
 };
+
 events.prototype._action_input2 = function (data, x, y, prefix) {
     this.__action_getInput(
         core.replaceText(data.text, prefix),
@@ -2128,6 +2274,7 @@ events.prototype._action_input2 = function (data, x, y, prefix) {
         },
     );
 };
+
 events.prototype.__action_getInput = function (hint, isText, callback) {
     var value,
         prefix = isText ? "input2:" : "input:";
@@ -2152,18 +2299,21 @@ events.prototype.__action_getInput = function (hint, isText, callback) {
         core.myprompt(core.replaceText(hint), null, callback);
     }
 };
+
 events.prototype._action_if = function (data, x, y, prefix) {
     if (core.calValue(data.condition, prefix))
         core.events.insertAction(data["true"]);
     else core.events.insertAction(data["false"]);
     core.doAction();
 };
+
 events.prototype._precompile_if = function (data) {
     data.condition = core.replaceValue(data.condition);
     data["true"] = this.precompile(data["true"]);
     data["false"] = this.precompile(data["false"]);
     return data;
 };
+
 events.prototype._action_switch = function (data, x, y, prefix) {
     var key = core.calValue(data.condition, prefix);
     var list = [];
@@ -2181,6 +2331,7 @@ events.prototype._action_switch = function (data, x, y, prefix) {
     core.insertAction(list);
     core.doAction();
 };
+
 events.prototype._precompile_switch = function (data) {
     data.condition = core.replaceValue(data.condition);
     for (var i = 0; i < data.caseList.length; i++) {
@@ -2189,6 +2340,7 @@ events.prototype._precompile_switch = function (data) {
     }
     return data;
 };
+
 events.prototype._action_choices = function (data, x, y, prefix) {
     data.choices = data.choices.filter(function (x) {
         if (x._disabled) return false;
@@ -2230,7 +2382,7 @@ events.prototype._action_choices = function (data, x, y, prefix) {
                         core.events.__action_choices_replaying(
                             data,
                             ((parseInt(value) || 0) + data.choices.length) %
-                                data.choices.length,
+                            data.choices.length,
                         );
                     },
                 );
@@ -2257,6 +2409,7 @@ events.prototype._action_choices = function (data, x, y, prefix) {
         data.width,
     );
 };
+
 events.prototype.__action_choices_replaying = function (data, index) {
     var selection = index;
     if (index != "none") {
@@ -2295,6 +2448,7 @@ events.prototype.__action_choices_replaying = function (data, index) {
     );
     return true;
 };
+
 events.prototype._precompile_choices = function (data) {
     if (!(data.choices instanceof Array)) return data;
     for (var i = 0; i < data.choices.length; ++i) {
@@ -2306,6 +2460,7 @@ events.prototype._precompile_choices = function (data) {
     }
     return data;
 };
+
 events.prototype._action_confirm = function (data, x, y, prefix) {
     data.text = core.replaceText(data.text, prefix);
     core.status.event.ui = { text: data.text, yes: data.yes, no: data.no };
@@ -2343,6 +2498,7 @@ events.prototype._action_confirm = function (data, x, y, prefix) {
     }
     core.ui.drawConfirmBox(data.text);
 };
+
 events.prototype.__action_confirm_replaying = function (data, index) {
     if (index != "none") {
         var timeout = Math.floor(index / 100) || 0;
@@ -2364,11 +2520,13 @@ events.prototype.__action_confirm_replaying = function (data, index) {
             : 750 / Math.max(1, core.status.replay.speed),
     );
 };
+
 events.prototype._precompile_confirm = function (data) {
     data.yes = this.precompile(data.yes);
     data.no = this.precompile(data.no);
     return data;
 };
+
 events.prototype._action_for = function (data, x, y, prefix) {
     if (!/^temp:[A-Z]$/.test(data.name)) {
         core.insertAction("循环遍历事件只支持临时变量！");
@@ -2424,6 +2582,7 @@ events.prototype._action_for = function (data, x, y, prefix) {
         prefix,
     );
 };
+
 events.prototype._precompile_for = function (data) {
     data.from = core.replaceValue(data.from);
     data.to = core.replaceValue(data.to);
@@ -2431,6 +2590,7 @@ events.prototype._precompile_for = function (data) {
     data.data = this.precompile(data.data);
     return data;
 };
+
 events.prototype._action_forEach = function (data, x, y, prefix) {
     if (!/^temp:[A-Z]$/.test(data.name)) {
         core.insertAction(["循环遍历事件只支持临时变量！"]);
@@ -2456,10 +2616,12 @@ events.prototype._action_forEach = function (data, x, y, prefix) {
         prefix,
     );
 };
+
 events.prototype._precompile_forEach = function (data) {
     data.data = this.precompile(data.data);
     return data;
 };
+
 events.prototype._action_while = function (data, x, y, prefix) {
     if (core.calValue(data.condition, prefix)) {
         var list = core.clone(data.data);
@@ -2473,11 +2635,13 @@ events.prototype._action_while = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._precompile_while = function (data) {
     data.condition = core.replaceValue(data.condition);
     data.data = this.precompile(data.data);
     return data;
 };
+
 events.prototype._action_dowhile = function (data, x, y, prefix) {
     var list = core.clone(data.data);
     if (!(list instanceof Array)) list = [list];
@@ -2489,11 +2653,13 @@ events.prototype._action_dowhile = function (data, x, y, prefix) {
     });
     core.doAction();
 };
+
 events.prototype._precompile_dowhile = function (data) {
     data.condition = core.replaceValue(data.condition);
     data.data = this.precompile(data.data);
     return data;
 };
+
 events.prototype._action_break = function (data, x, y, prefix) {
     var n = data.n || 1;
     while (n--) {
@@ -2502,6 +2668,7 @@ events.prototype._action_break = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._action_continue = function (data, x, y, prefix) {
     var n = data.n || 1;
     while (n-- > 1) {
@@ -2519,15 +2686,19 @@ events.prototype._action_continue = function (data, x, y, prefix) {
     }
     core.doAction();
 };
+
 events.prototype._action_win = function (data, x, y, prefix) {
     this.win(core.replaceText(data.reason, prefix), data.norank, data.noexit);
 };
+
 events.prototype._action_lose = function (data, x, y, prefix) {
     this.lose(core.replaceText(data.reason, prefix));
 };
+
 events.prototype._action_restart = function (data, x, y, prefix) {
     core.restart();
 };
+
 events.prototype._action_function = function (data, x, y, prefix) {
     var func = data["function"];
     try {
@@ -2539,26 +2710,32 @@ events.prototype._action_function = function (data, x, y, prefix) {
     }
     if (!data.async) core.doAction();
 };
+
 events.prototype._action_update = function (data, x, y, prefix) {
     core.updateStatusBar(data.doNotCheckAutoEvents, true);
     core.doAction();
 };
+
 events.prototype._action_showStatusBar = function (data, x, y, prefix) {
     core.showStatusBar();
     core.doAction();
 };
+
 events.prototype._action_hideStatusBar = function (data, x, y, prefix) {
     core.hideStatusBar(data.toolbox);
     core.doAction();
 };
+
 events.prototype._action_showHero = function (data, x, y, prefix) {
     data.opacity = 1;
     return this._action_setHeroOpacity(data, x, y, prefix);
 };
+
 events.prototype._action_hideHero = function (data, x, y, prefix) {
     data.opacity = 0;
     return this._action_setHeroOpacity(data, x, y, prefix);
 };
+
 events.prototype._action_setHeroOpacity = function (data, x, y, prefix) {
     data.time = data.time || 0;
     if (data.opacity == null) data.opacity = 1;
@@ -2576,6 +2753,7 @@ events.prototype._action_setHeroOpacity = function (data, x, y, prefix) {
         core.doAction();
     }
 };
+
 events.prototype._action_vibrate = function (data, x, y, prefix) {
     this.__action_doAsyncFunc(
         data.async,
@@ -2586,6 +2764,7 @@ events.prototype._action_vibrate = function (data, x, y, prefix) {
         data.power,
     );
 };
+
 events.prototype._action_sleep = function (data, x, y, prefix) {
     core.timeout.sleepTimeout = setTimeout(
         function () {
@@ -2595,6 +2774,7 @@ events.prototype._action_sleep = function (data, x, y, prefix) {
         core.isReplaying() ? Math.min(data.time, 20) : data.time,
     );
 };
+
 events.prototype._action_wait = function (data, x, y, prefix) {
     if (core.isReplaying()) {
         var code = core.status.replay.toReplay.shift();
@@ -2629,6 +2809,7 @@ events.prototype._action_wait = function (data, x, y, prefix) {
     }
     core.status.event.timeout = new Date().getTime() + (data.timeout || 0);
 };
+
 events.prototype.__action_wait_getValue = function (value) {
     core.setFlag("timeout", Math.floor(value / 1e8) || 0);
     value %= 1e8;
@@ -2653,6 +2834,7 @@ events.prototype.__action_wait_getValue = function (value) {
         core.setFlag("keycode", value);
     }
 };
+
 events.prototype.__action_wait_afterGet = function (data) {
     if (!data.data) return false;
     var todo = [];
@@ -2691,7 +2873,7 @@ events.prototype.__action_wait_afterGet = function (data) {
             var condition = false;
             try {
                 condition = core.calValue(one.condition);
-            } catch (e) {}
+            } catch (e) { }
             if (condition) {
                 found = true;
                 core.push(todo, one.action);
@@ -2710,6 +2892,7 @@ events.prototype.__action_wait_afterGet = function (data) {
     }
     return false;
 };
+
 events.prototype._precompile_wait = function (data) {
     if (data.data) {
         data.data.forEach(function (v) {
@@ -2722,6 +2905,7 @@ events.prototype._precompile_wait = function (data) {
     }
     return data;
 };
+
 events.prototype._action_waitAsync = function (data, x, y, prefix) {
     var test = window.setInterval(function () {
         if (
@@ -2738,10 +2922,12 @@ events.prototype._action_waitAsync = function (data, x, y, prefix) {
         }
     }, 50 / core.status.replay.speed);
 };
+
 events.prototype._action_stopAsync = function (data, x, y, prefix) {
     core.stopAsync();
     core.doAction();
 };
+
 events.prototype._action_callBook = function (data, x, y, prefix) {
     if (core.isReplaying() || !core.hasItem("book")) {
         core.doAction();
@@ -2752,6 +2938,7 @@ events.prototype._action_callBook = function (data, x, y, prefix) {
         core.status.event.interval = e;
     }
 };
+
 events.prototype._action_callSave = function (data, x, y, prefix) {
     if (core.isReplaying() || core.hasFlag("__events__")) {
         core.removeFlag("__events__");
@@ -2847,53 +3034,68 @@ events.prototype._precompile_fillPolygon = function (data) {
 events.prototype._action_strokeRect = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_strokePolygon = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._precompile_strokePolygon = function (data) {
     data.nodes = this.__precompile_array(data.nodes);
     return data;
 };
+
 events.prototype._action_fillEllipse = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_strokeEllipse = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_fillArc = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_strokeArc = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawLine = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawArrow = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
 events.prototype._action_setAttribute = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_setFilter = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawImage = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawIcon = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawSelector = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawBackground = function (data, x, y, prefix) {
     this.__action_doUIEvent(data);
 };
+
 events.prototype._action_drawTextContent = function (data, x, y, prefix) {
     data.text = core.replaceText(data.text, prefix);
     this.__action_doUIEvent(data);
 };
+
 events.prototype._checkStatus = function (name, fromUserAction, checkItem) {
     if (fromUserAction && core.status.event.id == name) {
         core.ui.closePanel();
@@ -2914,6 +3116,7 @@ events.prototype._checkStatus = function (name, fromUserAction, checkItem) {
     core.status.event.id = name;
     return true;
 };
+
 events.prototype.openBook = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (
@@ -2934,6 +3137,7 @@ events.prototype.openBook = function (fromUserAction) {
     core.playSound("打开界面");
     core.useItem("book", true);
 };
+
 events.prototype.useFly = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (core.status.event.id == "viewMaps") {
@@ -2975,21 +3179,25 @@ events.prototype.useFly = function (fromUserAction) {
     core.useItem("fly", true);
     return;
 };
+
 events.prototype.flyTo = function (toId, callback) {
     return this.eventdata.flyTo(toId, callback);
 };
+
 events.prototype.openEquipbox = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (!this._checkStatus("equipbox", fromUserAction)) return;
     core.playSound("打开界面");
     core.ui._drawEquipbox();
 };
+
 events.prototype.openToolbox = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (!this._checkStatus("toolbox", fromUserAction)) return;
     core.playSound("打开界面");
     core.ui._drawToolbox();
 };
+
 events.prototype.openQuickShop = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (Object.keys(core.status.shops).length == 0) {
@@ -3017,11 +3225,13 @@ events.prototype.openQuickShop = function (fromUserAction) {
     if (!this._checkStatus("selectShop", fromUserAction)) return;
     core.ui._drawQuickShop();
 };
+
 events.prototype.openKeyBoard = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (!this._checkStatus("keyBoard", fromUserAction)) return;
     core.ui._drawKeyBoard();
 };
+
 events.prototype.save = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (core.hasFlag("__forbidSave__")) {
@@ -3042,13 +3252,11 @@ events.prototype.save = function (fromUserAction) {
     core.ui._drawSLPanel(10 * page + offset);
 };
 
-////// 点击读取按钮时的打开操作 //////
 events.prototype.load = function (fromUserAction) {
     if (core.isReplaying()) return;
     var saveIndex = core.saves.saveIndex;
     var page = parseInt((saveIndex - 1) / 5),
         offset = saveIndex - 5 * page;
-    // 游戏开始前读档
     if (!core.isPlaying()) {
         core.dom.startPanel.style.display = "none";
         core.clearStatus();
@@ -3069,16 +3277,17 @@ events.prototype.load = function (fromUserAction) {
     core.ui._drawSLPanel(10 * page + offset);
 };
 
-////// 点击设置按钮时的操作 //////
 events.prototype.openSettings = function (fromUserAction) {
     if (core.isReplaying()) return;
     if (!this._checkStatus("settings", fromUserAction)) return;
     core.playSound("打开界面");
     core.ui._drawSettings();
 };
+
 events.prototype.hasAsync = function () {
     return Object.keys(core.animateFrame.asyncId).length > 0;
 };
+
 events.prototype.stopAsync = function () {
     var callbacks = [];
     for (var id in core.animateFrame.asyncId) {
@@ -3090,9 +3299,11 @@ events.prototype.stopAsync = function () {
         if (cb && cb instanceof Function) cb();
     });
 };
+
 events.prototype.hasAsyncAnimate = function () {
     return (core.status.animateObjs || []).length > 0;
 };
+
 events.prototype.follow = function (name) {
     name = core.getMappedName(name);
     if (core.material.images.images[name]) {
@@ -3103,6 +3314,7 @@ events.prototype.follow = function (name) {
     }
     core.clearRouteFolding();
 };
+
 events.prototype.unfollow = function (name) {
     if (!name) {
         core.status.hero.followers = [];
@@ -3120,6 +3332,7 @@ events.prototype.unfollow = function (name) {
     core.drawHero();
     core.clearRouteFolding();
 };
+
 events.prototype._updateValueByOperator = function (
     value,
     originValue,
@@ -3158,6 +3371,7 @@ events.prototype._updateValueByOperator = function (
     }
     return value;
 };
+
 events.prototype.setValue = function (name, operator, value, prefix) {
     value = this._updateValueByOperator(
         core.calValue(value, prefix),
@@ -3172,14 +3386,17 @@ events.prototype.setValue = function (name, operator, value, prefix) {
     this._setValue_setTemp(name, value, prefix);
     this._setValue_setGlobal(name, value);
 };
+
 events.prototype._setValue_setStatus = function (name, value) {
     if (name.indexOf("status:") !== 0) return;
     core.setStatus(name.substring(7), value);
 };
+
 events.prototype._setValue_setBuff = function (name, value) {
     if (name.indexOf("buff:") !== 0) return;
     core.setBuff(name.substring(5), value);
 };
+
 events.prototype._setValue_setItem = function (name, value) {
     if (name.indexOf("item:") !== 0) return;
     var itemId = name.substring(5),
@@ -3187,22 +3404,27 @@ events.prototype._setValue_setItem = function (name, value) {
     if (value > count) core.getItem(itemId, value - count);
     else core.setItem(itemId, value);
 };
+
 events.prototype._setValue_setFlag = function (name, value) {
     if (name.indexOf("flag:") !== 0) return;
     core.setFlag(name.substring(5), value);
 };
+
 events.prototype._setValue_setSwitch = function (name, value, prefix) {
     if (name.indexOf("switch:") !== 0) return;
     core.setFlag((prefix || ":f@x@y") + "@" + name.substring(7), value);
 };
+
 events.prototype._setValue_setTemp = function (name, value) {
     if (name.indexOf("temp:") !== 0) return;
     core.setFlag("@temp@" + name.substring(5), value);
 };
+
 events.prototype._setValue_setGlobal = function (name, value) {
     if (name.indexOf("global:") !== 0) return;
     core.setGlobal(name.substring(7), value);
 };
+
 events.prototype.setEnemy = function (
     id,
     name,
@@ -3227,6 +3449,7 @@ events.prototype.setEnemy = function (
     (core.material.enemys[id] || {})[name] = core.clone(value);
     if (!norefresh) core.updateStatusBar();
 };
+
 events.prototype.setEnemyOnPoint = function (
     x,
     y,
@@ -3257,6 +3480,7 @@ events.prototype.setEnemyOnPoint = function (
     flags.enemyOnPoint[floorId][x + "," + y][name] = value;
     if (!norefresh) core.updateStatusBar();
 };
+
 events.prototype.resetEnemyOnPoint = function (x, y, floorId, norefresh) {
     delete ((flags.enemyOnPoint || {})[floorId || core.status.floorId] || {})[
         x + "," + y
@@ -3280,12 +3504,12 @@ events.prototype.moveEnemyOnPoint = function (
     }
 };
 
-////// 设置楼层属性 //////
 events.prototype.setFloorInfo = function (name, value, floorId, prefix) {
     floorId = floorId || core.status.floorId;
     core.status.maps[floorId][name] = value;
     core.updateStatusBar();
 };
+
 events.prototype.setGlobalAttribute = function (name, value) {
     if (typeof value == "string") {
         if (
@@ -3303,6 +3527,7 @@ events.prototype.setGlobalAttribute = function (name, value) {
     core.setFlag("globalAttribute", core.status.globalAttribute);
     core.resize();
 };
+
 events.prototype.setGlobalFlag = function (name, value) {
     var flags = core.getFlag("globalFlags", {});
     if (name.startsWith("s:")) {
@@ -3321,13 +3546,11 @@ events.prototype.setGlobalFlag = function (name, value) {
     if (name == "blurFg") core.redrawMap();
 };
 
-////// 设置文件别名 //////
 events.prototype.setNameMap = function (name, value) {
     if (!core.hasFlag("__nameMap__")) core.setFlag("__nameMap__", {});
     flags.__nameMap__[name] = value;
 };
 
-////// 设置剧情文本的属性 //////
 events.prototype.setTextAttribute = function (data) {
     if (!core.isPlaying()) return;
     [
@@ -3360,6 +3583,7 @@ events.prototype.setTextAttribute = function (data) {
     if (main.mode == "play")
         core.setFlag("textAttribute", core.status.textAttribute);
 };
+
 events.prototype.moveTextBox = function (
     code,
     loc,
@@ -3398,6 +3622,7 @@ events.prototype.moveTextBox = function (
     };
     this._moveTextBox_moving(ctx, moveInfo, callback);
 };
+
 events.prototype._moveTextBox_moving = function (ctx, moveInfo, callback) {
     var step = 0,
         steps = moveInfo.time / 10;
@@ -3425,7 +3650,6 @@ events.prototype._moveTextBox_moving = function (ctx, moveInfo, callback) {
     core.animateFrame.asyncId[animate] = callback;
 };
 
-////// 清除对话框 //////
 events.prototype.clearTextBox = function (code, callback) {
     if (code == null) {
         code = Object.keys(core.dymCanvas)
@@ -3454,7 +3678,6 @@ events.prototype.clearTextBox = function (code, callback) {
     _work();
 };
 
-////// 关门 //////
 events.prototype.closeDoor = function (x, y, id, callback) {
     id = id || "";
     if (
@@ -3500,6 +3723,7 @@ events.prototype.closeDoor = function (x, y, id, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 events.prototype.showImage = function (
     code,
     image,
@@ -3564,6 +3788,7 @@ events.prototype.showImage = function (
     core.setOpacity(name, 0);
     this.moveImage(code, null, opacityVal, null, time, callback);
 };
+
 events.prototype.hideImage = function (code, time, callback) {
     time = time || 0;
     var name = "image" + (code + 100);
@@ -3577,6 +3802,7 @@ events.prototype.hideImage = function (code, time, callback) {
         if (callback) callback();
     });
 };
+
 events.prototype.moveImage = function (
     code,
     to,
@@ -3623,6 +3849,7 @@ events.prototype.moveImage = function (
         callback,
     );
 };
+
 events.prototype._moveImage_moving = function (name, moveInfo, callback) {
     var per_time = 10,
         step = 0,
@@ -3654,6 +3881,7 @@ events.prototype._moveImage_moving = function (name, moveInfo, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 events.prototype.rotateImage = function (
     code,
     center,
@@ -3687,6 +3915,7 @@ events.prototype.rotateImage = function (
     };
     this._rotateImage_rotating(name, rotateInfo, callback);
 };
+
 events.prototype._rotateImage_rotating = function (name, rotateInfo, callback) {
     var per_time = 10,
         step = 0,
@@ -3712,6 +3941,7 @@ events.prototype._rotateImage_rotating = function (name, rotateInfo, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 events.prototype.scaleImage = function (
     code,
     center,
@@ -3756,6 +3986,7 @@ events.prototype.scaleImage = function (
     };
     this._scaleImage_scale(ctx, scaleInfo, callback);
 };
+
 events.prototype._scaleInfo_scale = function (ctx, scaleInfo, scale) {
     core.resizeCanvas(
         ctx,
@@ -3770,6 +4001,7 @@ events.prototype._scaleInfo_scale = function (ctx, scaleInfo, scale) {
     );
     ctx.canvas.setAttribute("_scale", scale);
 };
+
 events.prototype._scaleImage_scale = function (ctx, scaleInfo, callback) {
     if (!scaleInfo.time) {
         this._scaleInfo_scale(ctx, scaleInfo, scaleInfo.scale);
@@ -3797,6 +4029,7 @@ events.prototype._scaleImage_scale = function (ctx, scaleInfo, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 events.prototype.showGif = function (name, x, y) {
     name = core.getMappedName(name);
     var image = core.material.images.images[name];
@@ -3813,6 +4046,7 @@ events.prototype.showGif = function (name, x, y) {
         core.dom.gif2.innerHTML = "";
     }
 };
+
 events.prototype.setVolume = function (value, time, callback) {
     var set = function (value) {
         core.musicStatus.designVolume = value;
@@ -3843,6 +4077,7 @@ events.prototype.setVolume = function (value, time, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 events.prototype.vibrate = function (direction, time, speed, power, callback) {
     if (core.isReplaying()) {
         if (callback) callback();
@@ -3891,6 +4126,7 @@ events.prototype.vibrate = function (direction, time, speed, power, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 events.prototype._vibrate_update = function (shakeInfo) {
     if (shakeInfo.duration >= 1 || shakeInfo.shake != 0) {
         var delta = (shakeInfo.speed * shakeInfo.direction) / 6;
@@ -3913,6 +4149,7 @@ events.prototype._vibrate_update = function (shakeInfo) {
         }
     }
 };
+
 events.prototype.eventMoveHero = function (steps, time, callback) {
     time = time || core.values.moveSpeed;
     var step = 0,
@@ -3977,6 +4214,7 @@ events.prototype.eventMoveHero = function (steps, time, callback) {
     };
     _run();
 };
+
 events.prototype._eventMoveHero_moving = function (step, moveSteps) {
     var curr = moveSteps[0];
     var direction = curr[0],
@@ -4012,6 +4250,7 @@ events.prototype._eventMoveHero_moving = function (step, moveSteps) {
     }
     return false;
 };
+
 events.prototype.jumpHero = function (ex, ey, time, callback) {
     var sx = core.getHeroLoc("x"),
         sy = core.getHeroLoc("y");
@@ -4047,6 +4286,7 @@ events.prototype._jumpHero_doJump = function (jumpInfo, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 events.prototype._jumpHero_jumping = function (jumpInfo) {
     core.clearMap("hero");
     core.maps.__updateJumpInfo(jumpInfo);
@@ -4058,6 +4298,7 @@ events.prototype._jumpHero_jumping = function (jumpInfo) {
         height = jumpInfo.height;
     core.drawHero("stop", { x: nowx - 32 * x, y: nowy - 32 * y });
 };
+
 events.prototype.setHeroIcon = function (name, noDraw) {
     name = core.getMappedName(name);
     var img = core.material.images.images[name];
@@ -4073,6 +4314,7 @@ events.prototype.setHeroIcon = function (name, noDraw) {
     core.control.updateHeroIcon(name);
     if (!noDraw) core.drawHero();
 };
+
 events.prototype.checkLvUp = function () {
     var actions = [];
     while (true) {
@@ -4082,6 +4324,7 @@ events.prototype.checkLvUp = function () {
     }
     if (actions.length > 0) core.insertAction(actions);
 };
+
 events.prototype._checkLvUp_check = function () {
     if (
         core.flags.statusBarItems.indexOf("enableLevelUp") < 0 ||
@@ -4099,6 +4342,7 @@ events.prototype._checkLvUp_check = function () {
     }
     return null;
 };
+
 events.prototype.tryUseItem = function (itemId) {
     if (itemId == "book") {
         core.ui.closePanel();
