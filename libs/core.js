@@ -1,4 +1,5 @@
 "use strict";
+
 function core() {
     this._WIDTH_ = 13;
     this._HEIGHT_ = 13;
@@ -74,21 +75,19 @@ function core() {
     };
     this.platform = {
         isOnline: true,
-        isPC: true, // 是否是PC
-        isAndroid: false, // 是否是Android
-        isIOS: false, // 是否是iOS
+        isPC: true,
+        isAndroid: false,
+        isIOS: false,
         string: "PC",
-        isWeChat: false, // 是否是微信
-        isQQ: false, // 是否是QQ
-        isChrome: false, // 是否是Chrome
-        supportCopy: false, // 是否支持复制到剪切板
-
-        fileInput: null, // FileInput
+        isWeChat: false,
+        isQQ: false,
+        isChrome: false,
+        supportCopy: false,
+        fileInput: null,
         fileReader: null,
         successCallback: null,
         errorCallback: null,
     };
-    // 样式
     this.domStyle = {
         scale: 1.0,
         ratio: 1.0,
@@ -100,18 +99,18 @@ function core() {
     };
     this.bigmap = {
         canvas: ["bg", "event", "event2", "fg", "damage"],
-        offsetX: 0, // in pixel
+        offsetX: 0,
         offsetY: 0,
-        posX: 0, //
+        posX: 0,
         posY: 0,
-        width: main.mode == "editor" ? this.__SIZE__ : this._WIDTH_, // map width and height
+        width: main.mode == "editor" ? this.__SIZE__ : this._WIDTH_,
         height: main.mode == "editor" ? this.__SIZE__ : this._HEIGHT_,
         v2: false,
         threshold: 1024,
         extend: 10,
         scale: 1.0,
-        tempCanvas: null, // A temp canvas for drawing
-        cacheCanvas: null, // A cache canvas
+        tempCanvas: null,
+        cacheCanvas: null,
     };
     this.saves = {
         saveIndex: null,
@@ -120,8 +119,8 @@ function core() {
             data: null,
             time: 0,
             updated: false,
-            storage: true, // 是否把自动存档写入文件a
-            max: 20, // 自动存档最大回退数
+            storage: true,
+            max: 20,
             now: 0,
         },
         favorite: [],
@@ -248,6 +247,7 @@ function core() {
         );
     }
 }
+
 core.prototype.init = function (coreData, callback) {
     this._forwardFuncs();
     for (var key in coreData) core[key] = coreData[key];
@@ -268,7 +268,6 @@ core.prototype.init = function (coreData, callback) {
             core.canvas[name].canvas.height = b ? core.__PIXELS__ : core._PY_;
         }
     }
-
     core.loader._load(function () {
         core.extensions._load(function () {
             core._afterLoadResources(callback);
@@ -284,7 +283,6 @@ core.prototype._init_flags = function () {
     core.firstData = core.clone(core.data.firstData);
     this._init_sys_flags();
 
-    // 让你总是拼错！
     window.on = true;
     window.off = false;
     window.ture = true;
@@ -299,12 +297,10 @@ core.prototype._init_flags = function () {
     });
 
     core.maps._initFloors();
-    // 初始化怪物、道具等
     core.material.enemys = core.enemys.getEnemys();
     core.material.items = core.items.getItems();
     core.material.icons = core.icons.getIcons();
 
-    // 初始化自动事件
     for (var floorId in core.floors) {
         var autoEvents = core.floors[floorId].autoEvent || {};
         for (var loc in autoEvents) {
@@ -329,6 +325,7 @@ core.prototype._init_flags = function () {
             }
         }
     }
+
     for (var equipId in core.material.items) {
         var equip = core.material.items[equipId];
         if (equip.cls != "equips" || !equip.equip) continue;
@@ -377,6 +374,7 @@ core.prototype._init_flags = function () {
         core.initStatus.autoEvents.push(autoEvent1);
         core.initStatus.autoEvents.push(autoEvent2);
     }
+
     core.initStatus.autoEvents.sort(function (e1, e2) {
         if (e1.floorId == null) return 1;
         if (e2.floorId == null) return -1;
@@ -391,6 +389,7 @@ core.prototype._init_flags = function () {
         return e1.index - e2.index;
     });
 };
+
 core.prototype._init_sys_flags = function () {
     if (core.flags.equipboxButton) core.flags.equipment = true;
     core.flags.displayEnemyDamage = core.getLocalStorage("enemyDamage", true);
@@ -416,6 +415,7 @@ core.prototype._init_sys_flags = function () {
         !core.platform.isIOS,
     );
 };
+
 core.prototype._init_platform = function () {
     core.platform.isOnline = location.protocol.indexOf("http") == 0;
     if (!core.platform.isOnline)
@@ -452,10 +452,10 @@ core.prototype._init_platform = function () {
     core.platform.string = core.platform.isPC
         ? "PC"
         : core.platform.isAndroid
-          ? "Android"
-          : core.platform.isIOS
-            ? "iOS"
-            : "";
+            ? "Android"
+            : core.platform.isIOS
+                ? "iOS"
+                : "";
     core.platform.supportCopy =
         document.queryCommandSupported &&
         document.queryCommandSupported("copy");
@@ -489,6 +489,7 @@ core.prototype._init_platform = function () {
             );
     }
 };
+
 core.prototype._init_others = function () {
     core.material.groundCanvas = document
         .createElement("canvas")
@@ -518,6 +519,7 @@ core.prototype._init_others = function () {
         core.saves.ids = indexes;
     });
 };
+
 core.prototype._afterLoadResources = function (callback) {
     core.initStatus.maps = core.maps._initMaps();
     core.control._setRequestAnimationFrame();
@@ -545,8 +547,9 @@ core.prototype._afterLoadResources = function (callback) {
     core.showStartAnimate();
     if (callback) callback();
 };
+
 core.prototype._init_plugins = function () {
-    core.plugin = new (function () {})();
+    core.plugin = new (function () { })();
     for (var name in plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1) {
         if (
             plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1[name] instanceof
@@ -564,6 +567,7 @@ core.prototype._init_plugins = function () {
     }
     core._forwardFunc("plugin");
 };
+
 core.prototype._forwardFuncs = function () {
     for (var i = 0; i < main.loadList.length; ++i) {
         var name = main.loadList[i];
@@ -571,6 +575,7 @@ core.prototype._forwardFuncs = function () {
         this._forwardFunc(name);
     }
 };
+
 core.prototype._forwardFunc = function (name, funcname) {
     if (funcname == null) {
         for (funcname in core[name]) {
@@ -586,10 +591,10 @@ core.prototype._forwardFunc = function (name, funcname) {
     if (core[funcname]) {
         console.error(
             "ERROR: 无法转发 " +
-                name +
-                " 中的函数 " +
-                funcname +
-                " 到 core 中！同名函数已存在。",
+            name +
+            " 中的函数 " +
+            funcname +
+            " 到 core 中！同名函数已存在。",
         );
         return;
     }
@@ -601,18 +606,19 @@ core.prototype._forwardFunc = function (name, funcname) {
         .replace(/,/g, ", ");
     eval(
         "core." +
-            funcname +
-            " = function (" +
-            parameters +
-            ") {\n\treturn core." +
-            name +
-            "." +
-            funcname +
-            ".apply(core." +
-            name +
-            ", arguments);\n}",
+        funcname +
+        " = function (" +
+        parameters +
+        ") {\n\treturn core." +
+        name +
+        "." +
+        funcname +
+        ".apply(core." +
+        name +
+        ", arguments);\n}",
     );
 };
+
 core.prototype.doFunc = function (func, _this) {
     if (typeof func == "string") {
         func = core.plugin[func];
@@ -620,4 +626,5 @@ core.prototype.doFunc = function (func, _this) {
     }
     return func.apply(_this, Array.prototype.slice.call(arguments, 2));
 };
+
 var core = new core();
