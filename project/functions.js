@@ -466,21 +466,17 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 					core.extractBlocks(floorId);
 					core.status.maps[floorId].blocks.forEach(function (block) {
 						if (!block.disable) {
-							// 获得该图块的ID
 							var id = block.event.id,
 								enemy = core.material.enemys[id];
 							// 检查【光环】技能，数字25
 							if (enemy && core.hasSpecial(enemy.special, 25)) {
-								// 检查是否是范围光环
 								var inRange = enemy.haloRange == null;
 								if (enemy.haloRange != null && x != null && y != null) {
 									var dx = Math.abs(block.x - x),
 										dy = Math.abs(block.y - y);
-									// 检查十字和九宫格光环
 									if (dx + dy <= enemy.haloRange) inRange = true;
 									if (enemy.haloSquare && dx <= enemy.haloRange && dy <= enemy.haloRange) inRange = true;
 								}
-								// 检查是否可叠加
 								if (inRange && (enemy.haloAdd || !usedEnemyIds[enemy.id])) {
 									hp_buff += enemy.hpBuff || 0;
 									atk_buff += enemy.atkBuff || 0;
@@ -532,7 +528,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				"exp": Math.floor(mon_exp),
 				"point": Math.floor(mon_point),
 				"special": mon_special,
-				"guards": guards, // 返回支援情况
+				"guards": guards,
 			};
 		},
 		"getDamageInfo": function (enemy, hero, x, y, floorId) {
@@ -554,30 +550,24 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				origin_hero_atk = core.getStatusOrDefault(hero, 'atk'),
 				origin_hero_def = core.getStatusOrDefault(hero, 'def');
 
-			// 勇士的负属性都按0计算
 			hero_hp = Math.max(0, hero_hp);
 			hero_atk = Math.max(0, hero_atk);
 			hero_def = Math.max(0, hero_def);
 			hero_mdef = Math.max(0, hero_mdef);
 
-			// 怪物的各项数据
-			// 对坚固模仿等处理扔到了脚本编辑-getEnemyInfo之中
 			var enemyInfo = core.enemys.getEnemyInfo(enemy, hero, x, y, floorId);
 			var mon_hp = enemyInfo.hp,
 				mon_atk = enemyInfo.atk,
 				mon_def = enemyInfo.def,
 				mon_special = enemyInfo.special;
 
-			// 技能的处理
-			if (core.getFlag('skill', 0) == 1) { // 开启了技能1：二倍斩
-				hero_atk *= 2; // 计算时攻击力翻倍	
+			if (core.getFlag('skill', 0) == 1) { // 二倍斩
+				hero_atk *= 2;
 			}
 
-			// 如果是无敌属性，且勇士未持有十字架
 			if (core.hasSpecial(mon_special, 20) && !core.hasItem("cross"))
-				return null; // 不可战斗
+				return null;
 
-			// 战前造成的额外伤害（可被护盾抵消）
 			var init_damage = 0;
 
 			// 吸血
@@ -613,21 +603,15 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			if (core.hasSpecial(mon_special, 8))
 				counterDamage += Math.floor((enemy.counterAttack || core.values.counterAttack) * hero_atk);
 
-			// 先攻
 			if (core.hasSpecial(mon_special, 1)) init_damage += per_damage;
 
-			// 破甲
 			if (core.hasSpecial(mon_special, 7))
 				init_damage += Math.floor((enemy.breakArmor || core.values.breakArmor) * hero_def);
 
-			// 净化
 			if (core.hasSpecial(mon_special, 9))
 				init_damage += Math.floor((enemy.purify || core.values.purify) * hero_mdef);
 
-			// 勇士每回合对怪物造成的伤害
 			var hero_per_damage = Math.max(hero_atk - mon_def, 0);
-
-			// 如果没有破防，则不可战斗
 			if (hero_per_damage <= 0) return null;
 
 			// 勇士的攻击回合数；为怪物生命除以每回合伤害向上取整
@@ -650,11 +634,10 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 					// 递归计算支援怪伤害信息，这里不传x,y保证不会重复调用
 					// 这里的mdef传0，因为护盾应该只会被计算一次
 					var info = core.enemys.getDamageInfo(core.material.enemys[gid], { hp: origin_hero_hp, atk: origin_hero_atk, def: origin_hero_def, mdef: 0 });
-					if (info == null) { // 小队中任何一个怪物不可战斗，直接返回null
+					if (info == null) {
 						core.removeFlag("__extraTurn__");
 						return null;
 					}
-					// 已经进行的回合数
 					core.setFlag("__extraTurn__", info.turn);
 					init_damage += info.damage;
 				}
