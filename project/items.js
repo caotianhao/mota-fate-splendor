@@ -1,4 +1,4 @@
-var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
+var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a = 
 {
 	"yellowKey": {
 		"cls": "tools",
@@ -204,17 +204,19 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"shield2": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "银盾",
-		"text": "一个很普通的银盾",
+		"text": "盾面掺入了秘银以提升强度，华丽的外形说明了它比起盾牌更像是礼仪用具。",
 		"equip": {
 			"type": 1,
+			"animate": "sword",
 			"value": {
-				"def": 20
-			}
+				"def": 5
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.def += 20",
-		"itemEffectTip": "，防御+20"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"shield3": {
 		"cls": "items",
