@@ -1,16 +1,9 @@
-/**
- * ui.js：负责所有和UI界面相关的绘制
- * 包括：
- * 自动寻路、怪物手册、楼传器、存读档、菜单栏、NPC对话事件、等等
- */
-
 "use strict";
 
 function ui() {
     this._init();
 }
 
-// 初始化UI
 ui.prototype._init = function () {
     this.uidata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.ui;
 };
@@ -35,7 +28,6 @@ ui.prototype._createUIEvent = function () {
     }
 };
 
-////// 清除地图 //////
 ui.prototype.clearMap = function (name, x, y, width, height) {
     if (name == "all") {
         for (var m in core.canvas) {
@@ -97,7 +89,6 @@ ui.prototype._uievent_clearMap = function (data) {
     );
 };
 
-////// 在某个canvas上绘制一段文字 //////
 ui.prototype.fillText = function (name, text, x, y, style, font, maxWidth) {
     if (style) core.setFillStyle(name, style);
     if (font) core.setFont(name, font);
@@ -147,7 +138,6 @@ ui.prototype._uievent_fillText = function (data) {
     );
 };
 
-////// 自适配字体大小
 ui.prototype.setFontForMaxWidth = function (name, text, maxWidth, font) {
     var ctx = this.getContextByName(name);
     if (font) core.setFont(name, font);
@@ -160,7 +150,6 @@ ui.prototype.setFontForMaxWidth = function (name, text, maxWidth, font) {
     }
 };
 
-////// 在某个canvas上绘制粗体 //////
 ui.prototype.fillBoldText = function (
     name,
     text,
@@ -201,7 +190,6 @@ ui.prototype._uievent_fillBoldText = function (data) {
     );
 };
 
-////// 在某个canvas上绘制一个矩形 //////
 ui.prototype.fillRect = function (name, x, y, width, height, style, angle) {
     if (style) core.setFillStyle(name, style);
     var ctx = this.getContextByName(name);
@@ -327,7 +315,6 @@ ui.prototype.fillRoundRect = function (
     }
 };
 
-////// 在某个canvas上绘制一个圆角矩形的边框 //////
 ui.prototype.strokeRoundRect = function (
     name,
     x,
@@ -378,7 +365,6 @@ ui.prototype._roundRect_buildPath = function (
     ctx.closePath();
 };
 
-////// 在某个canvas上绘制一个多边形 //////
 ui.prototype.fillPolygon = function (name, nodes, style) {
     if (style) core.setFillStyle(name, style);
     var ctx = this.getContextByName(name);
@@ -422,7 +408,6 @@ ui.prototype._uievent_strokePolygon = function (data) {
     this.strokePolygon("uievent", data.nodes, data.style, data.lineWidth);
 };
 
-////// 在某个canvas上绘制一个椭圆 //////
 ui.prototype.fillEllipse = function (name, x, y, a, b, angle, style) {
     if (style) core.setFillStyle(name, style);
     var ctx = this.getContextByName(name);
@@ -567,7 +552,6 @@ ui.prototype._uievent_drawLine = function (data) {
     );
 };
 
-////// 在某个canvas上绘制一个箭头 //////
 ui.prototype.drawArrow = function (name, x1, y1, x2, y2, style, lineWidth) {
     if (x1 == x2 && y1 == y2) return;
     if (style) core.setStrokeStyle(name, style);
@@ -606,31 +590,26 @@ ui.prototype._uievent_drawArrow = function (data) {
     );
 };
 
-////// 设置某个canvas的文字字体 //////
 ui.prototype.setFont = function (name, font) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.font = font;
 };
 
-////// 设置某个canvas的线宽度 //////
 ui.prototype.setLineWidth = function (name, lineWidth) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.lineWidth = lineWidth;
 };
 
-////// 保存某个canvas状态 //////
 ui.prototype.saveCanvas = function (name) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.save();
 };
 
-////// 加载某个canvas状态 //////
 ui.prototype.loadCanvas = function (name) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.restore();
 };
 
-////// 设置某个canvas的alpha值，并返回设置之前的alpha值 //////
 ui.prototype.setAlpha = function (name, alpha) {
     var ctx = this.getContextByName(name);
     if (!ctx) return null;
@@ -639,13 +618,11 @@ ui.prototype.setAlpha = function (name, alpha) {
     return previousAlpha;
 };
 
-////// 设置某个canvas的透明度；尽量不要使用本函数，而是全部换成setAlpha实现 //////
 ui.prototype.setOpacity = function (name, opacity) {
     var ctx = this.getContextByName(name);
     if (ctx) ctx.canvas.style.opacity = opacity;
 };
 
-////// 设置某个canvas的filter //////
 ui.prototype.setFilter = function (name, filter) {
     var ctx = this.getContextByName(name);
     if (!ctx) return;
@@ -706,7 +683,6 @@ ui.prototype._uievent_setFilter = function (data) {
     this.setFilter("uievent", data);
 };
 
-////// 计算某段文字的宽度 //////
 ui.prototype.calWidth = function (name, text, font) {
     var ctx = this.getContextByName(name);
     if (ctx) {
@@ -877,10 +853,8 @@ ui.prototype._uievent_drawIcon = function (data) {
     );
 };
 
-////// 结束一切事件和绘制，关闭UI窗口，返回游戏进程 //////
 ui.prototype.closePanel = function () {
     if (core.status.hero && core.status.hero.flags) {
-        // 清除全部临时变量
         Object.keys(core.status.hero.flags).forEach(function (name) {
             if (name.startsWith("@temp@") || /^arg\d+$/.test(name)) {
                 delete core.status.hero.flags[name];
@@ -896,7 +870,6 @@ ui.prototype.closePanel = function () {
     core.status.event.selection = null;
     core.status.event.ui = null;
     core.status.event.interval = null;
-    // 清除onDownInterval
     clearInterval(core.interval.onDownInterval);
     core.interval.onDownInterval = "tmp";
 };
@@ -912,7 +885,6 @@ ui.prototype.clearUI = function () {
     core.deleteCanvas("ui2");
 };
 
-////// 左上角绘制一段提示 //////
 ui.prototype.drawTip = function (text, id, frame) {
     text = core.replaceText(text) || "";
     var realText = this._getRealContent(text);
@@ -928,7 +900,6 @@ ui.prototype.drawTip = function (text, id, frame) {
     if (id != null) {
         var info = core.getBlockInfo(id);
         if (info == null || !info.image || info.bigImage) {
-            // 检查状态栏图标
             if (core.statusBar.icons[id] instanceof Image) {
                 info = {
                     image: core.statusBar.icons[id],
@@ -970,7 +941,6 @@ ui.prototype._drawTip_drawOne = function (tip) {
     core.setAlpha("data", 1);
 };
 
-////// 地图中间绘制一段文字 //////
 ui.prototype.drawText = function (contents, callback) {
     if (contents != null) return this._drawText_setContent(contents, callback);
 
@@ -1006,7 +976,6 @@ ui.prototype._drawText_setContent = function (contents, callback) {
     return;
 };
 
-////// 正则处理 \t[xx,yy] 问题
 ui.prototype._getTitleAndIcon = function (content) {
     var title = null,
         image = null,
@@ -1060,7 +1029,6 @@ ui.prototype._getTitleAndIcon = function (content) {
     };
 };
 
-////// 正则处理 \b[up,xxx] 问题
 ui.prototype._getPosition = function (content) {
     var pos = null,
         px = null,
@@ -1106,8 +1074,8 @@ ui.prototype._getPosition = function (content) {
                         py == null
                             ? "center"
                             : py > core._HALF_HEIGHT_
-                              ? "up"
-                              : "down";
+                                ? "up"
+                                : "down";
                 }
                 return "";
             },
@@ -1115,14 +1083,12 @@ ui.prototype._getPosition = function (content) {
     return { content: content, position: pos, px: px, py: py, noPeak: noPeak };
 };
 
-////// 绘制系统选择光标
 ui.prototype._drawWindowSelector = function (background, x, y, w, h) {
     ((w = Math.round(w)), (h = Math.round(h)));
     var ctx = core.ui.createCanvas("_selector", x, y, w, h, 165);
     this._drawSelector(ctx, background, w, h);
 };
 
-////// 自绘一个选择光标
 ui.prototype.drawUIEventSelector = function (code, background, x, y, w, h, z) {
     var canvasName = "_uievent_selector_" + (code || 0);
     var background = background || core.status.textAttribute.background;
@@ -1154,7 +1120,6 @@ ui.prototype._uievent_drawSelector = function (data) {
         );
 };
 
-////// 清除自绘的选择光标
 ui.prototype.clearUIEventSelector = function (codes) {
     if (codes == null) {
         core.deleteCanvas(function (one) {
@@ -1229,7 +1194,6 @@ ui.prototype._drawSelector = function (ctx, background, w, h, left, top) {
     );
 };
 
-////// 绘制 WindowSkin
 ui.prototype.drawWindowSkin = function (
     background,
     ctx,
@@ -1379,7 +1343,6 @@ ui.prototype.drawWindowSkin = function (
     }
 };
 
-////// 绘制一个背景图，可绘制 winskin 或纯色背景；支持小箭头绘制
 ui.prototype.drawBackground = function (left, top, right, bottom, posInfo) {
     posInfo = posInfo || {};
     var px =
@@ -1529,7 +1492,6 @@ ui.prototype._drawBackground_drawColor = function (
     core.setAlpha(ctx, 1);
 };
 
-////// 计算有效文本框的宽度
 ui.prototype._calTextBoxWidth = function (
     ctx,
     content,
@@ -1537,10 +1499,7 @@ ui.prototype._calTextBoxWidth = function (
     max_width,
     font,
 ) {
-    // 无限长度自动换行
     var allLines = core.splitLines(ctx, content, null, font);
-
-    // 如果不存在手动换行，尽量调成半行形式
     if (allLines.length == 1) {
         var w = core.calWidth(ctx, allLines[0]) + 10;
         if (w < min_width * 2.3)
@@ -1549,7 +1508,6 @@ ui.prototype._calTextBoxWidth = function (
             return core.clamp(w / 2.4, min_width, max_width);
         return core.clamp(w / 3.4, min_width, max_width);
     }
-    // 存在手动换行：以最长的为准
     else {
         return core.clamp(
             allLines.reduce(function (pre, curr) {
@@ -1561,7 +1519,6 @@ ui.prototype._calTextBoxWidth = function (
     }
 };
 
-////// 处理 \i[xxx] 的问题
 ui.prototype._getDrawableIconInfo = function (id) {
     if (id && id.indexOf("flag:") === 0) {
         id = core.getFlag(id.substring(5), id);
@@ -1592,7 +1549,7 @@ ui.prototype._getDrawableIconInfo = function (id) {
 
 ui.prototype._buildFont = function (fontSize, bold, italic, font) {
     var textAttribute =
-            core.status.textAttribute || core.initStatus.textAttribute,
+        core.status.textAttribute || core.initStatus.textAttribute,
         globalAttribute =
             core.status.globalAttribute || core.initStatus.globalAttribute;
     if (bold == null) bold = textAttribute.bold;
@@ -1605,15 +1562,8 @@ ui.prototype._buildFont = function (fontSize, bold, italic, font) {
     );
 };
 
-////// 绘制一段文字到某个画布上面
-// ctx：要绘制到的画布
-// content：要绘制的内容；转义字符目前只允许留 \n, \r[...], \i[...], \c[...], \d, \e
-// config：绘制配置项，目前暂时包含如下内容（均为可选）
-//         left, top：起始点位置；maxWidth：单行最大宽度；color：默认颜色；align：左中右
-//         fontSize：字体大小；lineHeight：行高；time：打字机间隔；font：字体类型；letterSpacing：字符间距
 ui.prototype.drawTextContent = function (ctx, content, config) {
     ctx = core.getContextByName(ctx);
-    // 设置默认配置项
     var textAttribute =
         core.status.textAttribute || core.initStatus.textAttribute;
     var globalAttribute =
@@ -1681,17 +1631,9 @@ ui.prototype._uievent_drawTextContent = function (data) {
     this.drawTextContent("uievent", core.replaceText(data.text), data);
 };
 
-// 绘制的基本逻辑：
-// 1. 一个个字符绘制到对应画布上（靠左对齐）；这个过程中，记下来每个字对应的方块 [x, y, w, h]
-// 2. 每次换行时，计算当前行的宽度，然后如果是居中或者靠右对齐，则对当前行的每个小方块增加偏移量
-// 3. 实际绘制时，从临时画布直接将一个个小方块绘制到目标画布上，一次全部绘制，或者打字机效果一个个绘制
 ui.prototype._drawTextContent_draw = function (ctx, tempCtx, content, config) {
-    // Step 1: 绘制到tempCtx上，并记录下图块信息
     while (this._drawTextContent_next(tempCtx, content, config));
-
     if (ctx == null) return config;
-
-    // Step 2: 从tempCtx绘制到画布上
     config.index = 0;
     var _drawNext = function () {
         if (config.index >= config.blocks.length) return false;
@@ -1736,7 +1678,6 @@ ui.prototype._drawTextContent_next = function (tempCtx, content, config) {
         this._drawTextContent_newLine(tempCtx, config);
         return false;
     }
-    // get next character
     var ch = content.charAt(config.index);
     var code = content.charCodeAt(config.index++);
     while (code >= 0xd800 && code <= 0xdbff) {
@@ -1746,27 +1687,22 @@ ui.prototype._drawTextContent_next = function (tempCtx, content, config) {
     return this._drawTextContent_drawChar(tempCtx, content, config, ch);
 };
 
-// 绘制下一个字符
 ui.prototype._drawTextContent_drawChar = function (
     tempCtx,
     content,
     config,
     ch,
 ) {
-    // 标点禁则：不能在行首的标点
     var forbidStart =
         "）)】》＞﹞>)]»›〕〉}］」｝〗』" +
         "，。？！：；·…,.?!:;、……~&@#～＆＠＃";
-    // 标点禁则：不能在行尾的标点
     var forbidEnd = "（(【《＜﹝<([«‹〔〈{［「｛〖『";
 
-    // \n, \\n
     if (ch == "\n" || (ch == "\\" && content.charAt(config.index) == "n")) {
         this._drawTextContent_newLine(tempCtx, config);
         if (ch == "\\") config.index++;
         return this._drawTextContent_next(tempCtx, content, config);
     }
-    // \r, \\r
     if (ch == "\r" || (ch == "\\" && content.charAt(config.index) == "r")) {
         if (ch == "\\") config.index++;
         return this._drawTextContent_changeColor(tempCtx, content, config);
@@ -1798,11 +1734,9 @@ ui.prototype._drawTextContent_drawChar = function (
         if (c == "z")
             return this._drawTextContent_emptyChar(tempCtx, content, config);
     }
-    // 检查是不是自动换行
     var charwidth = core.calWidth(tempCtx, ch) + config.letterSpacing;
     if (config.maxWidth != null) {
         if (config.offsetX + charwidth > config.maxWidth) {
-            // --- 当前应当换行，然而还是检查一下是否是forbidStart
             if (!config.forceChangeLine && forbidStart.indexOf(ch) >= 0) {
                 config.forceChangeLine = true;
             } else {
@@ -1814,21 +1748,17 @@ ui.prototype._drawTextContent_drawChar = function (
             forbidEnd.indexOf(ch) >= 0 &&
             config.index < content.length
         ) {
-            // --- 当前不应该换行；但是提前检查一下是否是行尾标点
             var nextch = content.charAt(config.index);
-            // 确认不是手动换行
             if (
                 nextch != "\n" &&
                 !(nextch == "\\" && content.charAt(config.index + 1) == "n")
             ) {
-                // 检查是否会换行
                 var nextchwidth =
                     core.calWidth(tempCtx, nextch) + config.letterSpacing;
                 if (
                     config.offsetX + charwidth + nextchwidth >
                     config.maxWidth
                 ) {
-                    // 下一项会换行，因此在此处换行
                     this._drawTextContent_newLine(tempCtx, config);
                     config.index -= ch.length;
                     return this._drawTextContent_next(tempCtx, content, config);
@@ -1837,7 +1767,6 @@ ui.prototype._drawTextContent_drawChar = function (
         }
     }
 
-    // 输出
     var left = config.offsetX,
         top = config.offsetY + config.topMargin;
     core.fillText(tempCtx, ch, left, top);
@@ -1854,7 +1783,6 @@ ui.prototype._drawTextContent_drawChar = function (
 };
 
 ui.prototype._drawTextContent_newLine = function (tempCtx, config) {
-    // 计算偏移量
     var width = config.offsetX,
         totalWidth = config.right - config.left;
     var marginLeft = 0;
@@ -1865,9 +1793,7 @@ ui.prototype._drawTextContent_newLine = function (tempCtx, config) {
         if (b == null) return;
         if (b.line == config.line) {
             b.marginLeft = marginLeft;
-            // b.marginTop = 0; // 上对齐
-            b.marginTop = (config.lineMaxHeight - b.height) / 2; // 居中对齐
-            // b.marginTop = config.lineMaxHeight - b.height; // 下对齐
+            b.marginTop = (config.lineMaxHeight - b.height) / 2;
         }
     });
 
@@ -1883,14 +1809,12 @@ ui.prototype._drawTextContent_changeColor = function (
     content,
     config,
 ) {
-    // 检查是不是 []
     var index = config.index,
         index2;
     if (
         content.charAt(index) == "[" &&
         (index2 = content.indexOf("]", index)) >= 0
     ) {
-        // 变色
         var str = content.substring(index + 1, index2);
         if (str == "") tempCtx.fillStyle = config.color;
         else tempCtx.fillStyle = str;
@@ -1905,7 +1829,6 @@ ui.prototype._drawTextContent_changeFontSize = function (
     config,
 ) {
     config.index++;
-    // 检查是不是 []
     var index = config.index,
         index2;
     if (
@@ -1932,7 +1855,6 @@ ui.prototype._drawTextContent_changeFontSize = function (
 
 ui.prototype._drawTextContent_changeFont = function (tempCtx, content, config) {
     config.index++;
-    // 检查是不是 []
     var index = config.index,
         index2;
     if (
@@ -1965,7 +1887,7 @@ ui.prototype._drawTextContent_emptyChar = function (tempCtx, content, config) {
         if (/^\d+$/.test(str)) {
             var value = parseInt(str);
             for (var i = 0; i < value; ++i) {
-                config.blocks.push(null); // Empty char
+                config.blocks.push(null);
             }
         } else config.blocks.push(null);
         config.index = index2 + 1;
@@ -1974,7 +1896,6 @@ ui.prototype._drawTextContent_emptyChar = function (tempCtx, content, config) {
 };
 
 ui.prototype._drawTextContent_drawIcon = function (tempCtx, content, config) {
-    // 绘制一个 \i 效果
     var index = config.index,
         index2;
     if (
@@ -1982,14 +1903,12 @@ ui.prototype._drawTextContent_drawIcon = function (tempCtx, content, config) {
         (index2 = content.indexOf("]", index + 1)) >= 0
     ) {
         var str = core.replaceText(content.substring(index + 2, index2));
-        // --- 获得图标
         var cls = core.getClsFromId(str) || "";
         var iconInfo = core.ui._getDrawableIconInfo(str),
             image = iconInfo[0],
             icon = iconInfo[1];
         if (image == null)
             return this._drawTextContent_next(tempCtx, content, config);
-        // 检查自动换行
         var width = config.currfont + 2,
             left = config.offsetX + 2,
             top = config.offsetY + config.topMargin - 1;
@@ -1998,7 +1917,6 @@ ui.prototype._drawTextContent_drawIcon = function (tempCtx, content, config) {
             config.index--;
             return this._drawTextContent_next(tempCtx, content, config);
         }
-        // 绘制到画布上
         var height = 32;
         if (cls.endsWith("48")) height = 48;
         core.drawImage(
@@ -2074,7 +1992,6 @@ ui.prototype._animateUI = function (type, ctx, callback) {
     }, time / 20);
 };
 
-////// 绘制一个对话框 //////
 ui.prototype.drawTextBox = function (content, config) {
     config = config || {};
 
@@ -2087,7 +2004,6 @@ ui.prototype.drawTextBox = function (content, config) {
         ctx = core.getContextByName(ctx);
     }
 
-    // Step 1: 获得标题信息和位置信息
     var textAttribute = core.status.textAttribute;
     var titleInfo = this._getTitleAndIcon(content);
     var posInfo = this._getPosition(titleInfo.content);
@@ -2102,7 +2018,6 @@ ui.prototype.drawTextBox = function (content, config) {
     }
     posInfo.ctx = ctx;
 
-    // Step 2: 计算对话框的矩形位置
     var hPos = this._drawTextBox_getHorizontalPosition(
         content,
         titleInfo,
@@ -2122,7 +2037,6 @@ ui.prototype.drawTextBox = function (content, config) {
         ctx.canvas.setAttribute("_text_top", vPos.top);
     }
 
-    // Step 3: 绘制背景图
     var isWindowSkin = this.drawBackground(
         hPos.left,
         vPos.top,
@@ -2134,7 +2048,6 @@ ui.prototype.drawTextBox = function (content, config) {
         ? this._drawWindowSkin_getOpacity()
         : textAttribute.background[3];
 
-    // Step 4: 绘制标题、头像、动画
     var content_top = this._drawTextBox_drawTitleAndIcon(
         titleInfo,
         hPos,
@@ -2143,7 +2056,6 @@ ui.prototype.drawTextBox = function (content, config) {
         config.ctx,
     );
 
-    // Step 5: 绘制正文
     var config = this.drawTextContent(config.ctx || "ui", content, {
         left: hPos.content_left,
         top: content_top,
@@ -2151,14 +2063,13 @@ ui.prototype.drawTextBox = function (content, config) {
         lineHeight: vPos.lineHeight,
         time:
             config.showAll ||
-            config.async ||
-            textAttribute.time <= 0 ||
-            core.status.event.id != "action"
+                config.async ||
+                textAttribute.time <= 0 ||
+                core.status.event.id != "action"
                 ? 0
                 : textAttribute.time,
     });
 
-    // Step 6: 绘制光标
     if (main.mode == "play") {
         main.dom.next.style.display = "block";
         main.dom.next.style.borderRightColor =
@@ -2184,7 +2095,6 @@ ui.prototype._drawTextBox_drawImages = function (content, ctx) {
     ctx = ctx || "ui";
     return content.replace(/(\f|\\f)\[(.*?)]/g, function (text, sympol, str) {
         var ss = str.split(",");
-        // 绘制
         if (ss.length == 3)
             core.drawImage(ctx, ss[0], parseFloat(ss[1]), parseFloat(ss[2]));
         else if (ss.length == 5)
@@ -2230,17 +2140,15 @@ ui.prototype._drawTextBox_getHorizontalPosition = function (
     if ((posInfo.px != null && posInfo.py != null) || posInfo.pos)
         paddingLeft = 20;
     if (titleInfo.icon != null)
-        paddingLeft = 62; // 15 + 32 + 15
-    else if (titleInfo.image) paddingLeft = 90; // 10 + 70 + 10
+        paddingLeft = 62;
+    else if (titleInfo.image) paddingLeft = 90;
     var left = 7 + 3 * (core._HALF_WIDTH_ - 6),
         right = core._PX_ - left,
         width = right - left,
         validWidth = width - paddingLeft - paddingRight;
-    // 对话框效果：改为动态计算
     if ((posInfo.px != null && posInfo.py != null) || posInfo.pos) {
         var min_width = 220 - paddingLeft,
             max_width = validWidth;
-        // 无行走图或头像，则可以适当缩小min_width
         if (titleInfo.image == null) min_width = 160;
         if (titleInfo.title) {
             min_width = core.clamp(
@@ -2369,7 +2277,6 @@ ui.prototype._drawTextBox_drawTitleAndIcon = function (
         core.setFillStyle(ctx, core.arrayToRGB(textAttribute.title));
         core.setStrokeStyle(ctx, core.arrayToRGB(textAttribute.title));
 
-        // --- title也要居中或者右对齐？
         var title_width = core.calWidth(
             ctx,
             titleInfo.title,
@@ -2401,7 +2308,6 @@ ui.prototype._drawTextBox_drawTitleAndIcon = function (
         );
         core.setAlpha(ctx, 1);
         core.status.boxAnimateObjs = [];
-        // --- 勇士
         if (titleInfo.image == core.material.images.hero) {
             if (core.status.hero.animate) {
                 var direction = core.getHeroLoc("direction");
@@ -2479,7 +2385,6 @@ ui.prototype._drawTextBox_drawTitleAndIcon = function (
         core.drawBoxAnimate();
     }
     if (titleInfo.image != null && titleInfo.icon == null) {
-        // 头像图
         core.drawImage(
             ctx,
             titleInfo.image,
@@ -2507,7 +2412,6 @@ ui.prototype._createTextCanvas = function (content, lineHeight) {
     return ctx;
 };
 
-////// 绘制滚动字幕 //////
 ui.prototype.drawScrollText = function (content, time, lineHeight, callback) {
     content = core.replaceText(content || "");
     lineHeight = lineHeight || 1.4;
@@ -2527,7 +2431,6 @@ ui.prototype.drawScrollText = function (content, time, lineHeight, callback) {
 };
 
 ui.prototype._drawScrollText_animate = function (ctx, time, callback) {
-    // 开始绘制到UI上
     time /= Math.max(core.status.replay.speed, 1);
     var per_pixel = 1,
         height = ctx.canvas.height,
@@ -2550,7 +2453,6 @@ ui.prototype._drawScrollText_animate = function (ctx, time, callback) {
     core.animateFrame.asyncId[animate] = callback;
 };
 
-////// 文本图片化 //////
 ui.prototype.textImage = function (content, lineHeight) {
     content = core.replaceText(content || "");
     lineHeight = lineHeight || 1.4;
@@ -2563,7 +2465,6 @@ ui.prototype.textImage = function (content, lineHeight) {
     return ctx.canvas;
 };
 
-////// 绘制一个选项界面 //////
 ui.prototype.drawChoices = function (content, choices, width, ctx) {
     choices = core.clone(choices || []);
 
@@ -2600,7 +2501,6 @@ ui.prototype._drawChoices_getHorizontalPosition = function (
     ctx,
 ) {
     ctx = ctx || "ui";
-    // 宽度计算：考虑提示文字和选项的长度
     core.setFont(ctx, this._buildFont(17, true));
     var width = this._calTextBoxWidth(
         ctx,
@@ -2677,7 +2577,6 @@ ui.prototype._drawChoices_drawTitle = function (titleInfo, hPos, vPos, ctx) {
 
         content_top = vPos.top + 41;
         var title_offset = hPos.left + hPos.width / 2;
-        // 动画
 
         if (titleInfo.icon != null) {
             title_offset += 12;
@@ -2748,7 +2647,6 @@ ui.prototype._drawChoices_drawChoices = function (
 ) {
     var hasCtx = ctx != null;
     ctx = ctx || "ui";
-    // 选项
     core.setTextAlign(ctx, "center");
     core.setFont(ctx, this._buildFont(17, true));
     for (var i = 0; i < choices.length; i++) {
@@ -2833,7 +2731,6 @@ ui.prototype._drawChoices_drawChoices = function (
     }
 };
 
-////// 绘制一个确认/取消的警告页面 //////
 ui.prototype.drawConfirmBox = function (text, yesCallback, noCallback, ctx) {
     var hasCtx = ctx != null;
     ctx = ctx || "ui";
@@ -2842,7 +2739,6 @@ ui.prototype.drawConfirmBox = function (text, yesCallback, noCallback, ctx) {
     if (main.mode == "play") {
         core.lockControl();
 
-        // 处理自定义事件
         if (core.status.event.id != "action") {
             core.status.event.id = "confirmBox";
             core.status.event.ui = text;
@@ -2942,7 +2838,6 @@ ui.prototype._drawConfirmBox_getRect = function (contents, ctx) {
     };
 };
 
-////// 绘制等待界面 //////
 ui.prototype.drawWaiting = function (text) {
     core.lockControl();
     core.status.event.id = "waiting";
@@ -2966,7 +2861,6 @@ ui.prototype.drawWaiting = function (text) {
     );
 };
 
-////// 绘制系统设置界面 //////
 ui.prototype._drawSwitchs = function () {
     core.status.event.id = "switchs";
     var choices = ["音效设置", "显示设置", "操作设置", "返回主菜单"];
@@ -2978,10 +2872,9 @@ ui.prototype._drawSwitchs_sounds = function () {
     var choices = [
         "音乐： " + (core.musicStatus.bgmStatus ? "[ON]" : "[OFF]"),
         "音效： " + (core.musicStatus.soundStatus ? "[ON]" : "[OFF]"),
-        // 显示为 0~10 十挡
         " <     音量：" +
-            Math.round(Math.sqrt(100 * core.musicStatus.userVolume)) +
-            "     > ",
+        Math.round(Math.sqrt(100 * core.musicStatus.userVolume)) +
+        "     > ",
         "返回上一级",
     ];
     this.drawChoices(null, choices);
@@ -2997,11 +2890,11 @@ ui.prototype._drawSwitchs_display = function () {
         "临界显伤： " + (core.flags.displayCritical ? "[ON]" : "[OFF]"),
         "领域显伤： " + (core.flags.displayExtraDamage ? "[ON]" : "[OFF]"),
         "领域模式： " +
-            (core.flags.extraDamageType == 2
-                ? "[最简]"
-                : core.flags.extraDamageType == 1
-                  ? "[半透明]"
-                  : "[完整]"),
+        (core.flags.extraDamageType == 2
+            ? "[最简]"
+            : core.flags.extraDamageType == 1
+                ? "[半透明]"
+                : "[完整]"),
         "自动放缩： " + (core.getLocalStorage("autoScale") ? "[ON]" : "[OFF]"),
         "返回上一级",
     ];
@@ -3011,11 +2904,10 @@ ui.prototype._drawSwitchs_display = function () {
 ui.prototype._drawSwitchs_action = function () {
     core.status.event.id = "switchs-action";
     var choices = [
-        // 数值越大耗时越长
         " <   步时：" + core.values.moveSpeed + "   > ",
         " <   转场：" + core.values.floorChangeTime + "   > ",
         "血瓶绕路： " +
-            (core.hasFlag("__potionNoRouting__") ? "[ON]" : "[OFF]"),
+        (core.hasFlag("__potionNoRouting__") ? "[ON]" : "[OFF]"),
         "单击瞬移： " + (!core.hasFlag("__noClickMove__") ? "[ON]" : "[OFF]"),
         "左手模式： " + (core.flags.leftHandPrefer ? "[ON]" : "[OFF]"),
         "返回上一级",
@@ -3023,7 +2915,6 @@ ui.prototype._drawSwitchs_action = function () {
     this.drawChoices(null, choices);
 };
 
-////// 绘制系统菜单栏 //////
 ui.prototype._drawSettings = function () {
     core.status.event.id = "settings";
     this.drawChoices(null, [
@@ -3038,7 +2929,6 @@ ui.prototype._drawSettings = function () {
     ]);
 };
 
-////// 绘制存档笔记 //////
 ui.prototype._drawNotes = function () {
     core.status.event.id = "notes";
     core.status.hero.notes = core.status.hero.notes || [];
@@ -3055,7 +2945,6 @@ ui.prototype._drawNotes = function () {
     );
 };
 
-////// 绘制快捷商店选择栏 //////
 ui.prototype._drawQuickShop = function () {
     core.status.event.id = "selectShop";
     var shopList = core.status.shops,
@@ -3070,7 +2959,6 @@ ui.prototype._drawQuickShop = function () {
     this.drawChoices(null, choices);
 };
 
-////// 绘制存档同步界面 //////
 ui.prototype._drawSyncSave = function () {
     core.status.event.id = "syncSave";
     this.drawChoices(null, [
@@ -3083,6 +2971,7 @@ ui.prototype._drawSyncSave = function () {
         "返回主菜单",
     ]);
 };
+
 ui.prototype._drawSyncSelect = function () {
     core.status.event.id = "syncSelect";
     this.drawChoices(null, [
@@ -3091,6 +2980,7 @@ ui.prototype._drawSyncSelect = function () {
         "返回上级菜单",
     ]);
 };
+
 ui.prototype._drawLocalSaveSelect = function () {
     core.status.event.id = "localSaveSelect";
     this.drawChoices(null, [
@@ -3099,6 +2989,7 @@ ui.prototype._drawLocalSaveSelect = function () {
         "返回上级菜单",
     ]);
 };
+
 ui.prototype._drawStorageRemove = function () {
     core.status.event.id = "storageRemove";
     this.drawChoices(null, [
@@ -3107,6 +2998,7 @@ ui.prototype._drawStorageRemove = function () {
         "返回上级菜单",
     ]);
 };
+
 ui.prototype._drawReplay = function () {
     core.lockControl();
     core.status.event.id = "replay";
@@ -3134,6 +3026,7 @@ ui.prototype._drawGameInfo = function () {
         "返回主菜单",
     ]);
 };
+
 ui.prototype.drawPagination = function (page, totalPage, y) {
     if (totalPage <= 1) return;
     if (y == null) y = core._HEIGHT_ - 1;
@@ -3156,6 +3049,7 @@ ui.prototype.drawPagination = function (page, totalPage, y) {
     if (page < totalPage)
         core.fillText("ui", "下一页", core._PX_ / 2 + 80, y * 32 + 19);
 };
+
 ui.prototype._drawCursor = function () {
     var automaticRoute = core.status.automaticRoute;
     automaticRoute.cursorX = core.clamp(
@@ -3182,6 +3076,7 @@ ui.prototype._drawCursor = function () {
         width,
     );
 };
+
 ui.prototype.drawBook = function (index) {
     var floorId =
         core.floorIds[(core.status.event.ui || {}).index] ||
@@ -3227,6 +3122,7 @@ ui.prototype.drawBook = function (index) {
         this._buildFont(15, true),
     );
 };
+
 ui.prototype._drawBook_pageinfo = function () {
     var per_page = core._HALF_HEIGHT_;
     var padding_top = 12;
@@ -3237,6 +3133,7 @@ ui.prototype._drawBook_pageinfo = function () {
         per_height: per_height,
     };
 };
+
 ui.prototype._drawBook_drawBackground = function () {
     core.setAlpha("ui", 1);
     core.setFillStyle("ui", core.material.groundPattern);
@@ -3274,10 +3171,8 @@ ui.prototype._drawBook_drawOne = function (
     pageinfo,
     selected,
 ) {
-    var top = pageinfo.per_height * index + pageinfo.padding_top; // 最上面margin默认是12px
+    var top = pageinfo.per_height * index + pageinfo.padding_top;
     enemy.floorId = floorId;
-    // 横向规划：
-    // 22 + 42 = 64 是头像框
     this._drawBook_drawBox(index, enemy, top, pageinfo);
     var left = 64,
         total_width = core._PX_ - left;
@@ -3295,6 +3190,7 @@ ui.prototype._drawBook_drawOne = function (
             core.status.globalAttribute.selectColor,
         );
 };
+
 ui.prototype._drawBook_is32x32 = function (blockInfo) {
     var height = blockInfo.height - 32;
     var canvas = document.createElement("canvas");
@@ -3317,6 +3213,7 @@ ui.prototype._drawBook_is32x32 = function (blockInfo) {
     core.clearMap(ctx);
     return url == canvas.toDataURL();
 };
+
 ui.prototype._drawBook_drawBox = function (index, enemy, top, pageinfo) {
     var border_top = top + (pageinfo.per_height - 42) / 2,
         border_left = 22;
@@ -3462,12 +3359,14 @@ ui.prototype._drawBook_drawName = function (index, enemy, top, left, width) {
         }
     }
 };
+
 ui.prototype._drawBook_drawContent = function (index, enemy, top, left) {
     var width = core._PX_ - left;
     this._drawBook_drawRow1(index, enemy, top, left, width, top + 20);
     this._drawBook_drawRow2(index, enemy, top, left, width, top + 38);
     this._drawBook_drawRow3(index, enemy, top, left, width, top + 56);
 };
+
 ui.prototype._drawBook_drawRow1 = function (
     index,
     enemy,
@@ -3517,6 +3416,7 @@ ui.prototype._drawBook_drawRow1 = function (
         b13,
     );
 };
+
 ui.prototype._drawBook_drawRow2 = function (
     index,
     enemy,
@@ -3632,6 +3532,7 @@ ui.prototype._drawBook_drawDamage = function (index, enemy, offset, position) {
         this._buildFont(13, true),
     );
 };
+
 ui.prototype._drawBookDetail = function (index) {
     var info = this._drawBookDetail_getInfo(index),
         enemy = info[0];
@@ -3646,13 +3547,13 @@ ui.prototype._drawBookDetail = function (index) {
     var content_left = left + 25,
         validWidth = right - content_left - 13;
     var height = Math.max(
-            this.getTextContentHeight(content, {
-                fontSize: 16,
-                lineHeight: 24,
-                maxWidth: validWidth,
-            }) + 58,
-            80,
-        ),
+        this.getTextContentHeight(content, {
+            fontSize: 16,
+            lineHeight: 24,
+            maxWidth: validWidth,
+        }) + 58,
+        80,
+    ),
         top = (core._PY_ - height) / 2,
         bottom = top + height;
     core.setAlpha("data", 0.9);
@@ -3675,6 +3576,7 @@ ui.prototype._drawBookDetail = function (index) {
         validWidth: validWidth,
     });
 };
+
 ui.prototype._drawBookDetail_getInfo = function (index) {
     var floorId =
         core.floorIds[(core.status.event.ui || {}).index] ||
@@ -3694,6 +3596,7 @@ ui.prototype._drawBookDetail_getInfo = function (index) {
     this._drawBookDetail_getTexts(enemy, floorId, texts);
     return [enemy, texts];
 };
+
 ui.prototype._drawBookDetail_getTexts = function (enemy, floorId, texts) {
     this._drawBookDetail_origin(enemy, texts);
     this._drawBookDetail_mofang(enemy, texts);
@@ -3701,6 +3604,7 @@ ui.prototype._drawBookDetail_getTexts = function (enemy, floorId, texts) {
     this._drawBookDetail_hatred(enemy, texts);
     this._drawBookDetail_turnAndCriticals(enemy, floorId, texts);
 };
+
 ui.prototype._drawBookDetail_origin = function (enemy, texts) {
     var originEnemy = core.enemys._getCurrentEnemys_getEnemy(enemy.id);
     var content = [];
@@ -3719,6 +3623,7 @@ ui.prototype._drawBookDetail_origin = function (enemy, texts) {
         texts.push("\r[#FF6A6A]\\d原始数值：\\d\r[]" + content.join("；"));
     }
 };
+
 ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
     if (core.enemys.hasSpecial(enemy.special, 10)) {
         var hp = enemy.hp;
@@ -3726,8 +3631,8 @@ ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
         if (delta < hp && hp <= 10000 && hp > 0) {
             texts.push(
                 "\r[#FF6A6A]\\d模仿临界计算器：\\d\r[]（当前攻防差" +
-                    core.formatBigNumber(delta) +
-                    "）",
+                core.formatBigNumber(delta) +
+                "）",
             );
             var u = [];
             this._drawBookDetail_mofang_getArray(hp).forEach(function (t) {
@@ -3747,6 +3652,7 @@ ui.prototype._drawBookDetail_mofang = function (enemy, texts) {
         }
     }
 };
+
 ui.prototype._drawBookDetail_mofang_getArray = function (hp) {
     var arr = [];
     var last = 0,
@@ -3767,11 +3673,11 @@ ui.prototype._drawBookDetail_mofang_getArray = function (hp) {
     }
     return arr;
 };
+
 ui.prototype._drawBookDetail_vampire = function (enemy, floorId, texts) {
     if (core.enemys.hasSpecial(enemy.special, 11)) {
         var damage = core.getDamage(enemy.id);
         if (damage != null) {
-            // 二分HP
             var start = 1,
                 end = 100 * damage;
             var nowHp = core.status.hero.hp;
@@ -3786,13 +3692,14 @@ ui.prototype._drawBookDetail_vampire = function (enemy, floorId, texts) {
             if (core.canBattle(enemy.id)) {
                 texts.push(
                     "\r[#FF6A6A]\\d打死该怪物最低需要生命值：\\d\r[]" +
-                        core.formatBigNumber(start),
+                    core.formatBigNumber(start),
                 );
             }
             core.status.hero.hp = nowHp;
         }
     }
 };
+
 ui.prototype._drawBookDetail_hatred = function (enemy, texts) {
     if (core.enemys.hasSpecial(enemy.special, 17)) {
         texts.push(
@@ -3800,6 +3707,7 @@ ui.prototype._drawBookDetail_hatred = function (enemy, texts) {
         );
     }
 };
+
 ui.prototype._drawBookDetail_turnAndCriticals = function (
     enemy,
     floorId,
@@ -3825,6 +3733,7 @@ ui.prototype._drawBookDetail_turnAndCriticals = function (
     while (criticals[0] == "0:0") criticals.shift();
     texts.push("\r[#FF6A6A]\\d临界表：\\d\r[]" + JSON.stringify(criticals));
 };
+
 ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
     core.setTextAlign("data", "left");
     core.fillText(
@@ -3845,6 +3754,7 @@ ui.prototype._drawBookDetail_drawContent = function (enemy, content, pos) {
         lineHeight: 24,
     });
 };
+
 ui.prototype.drawFly = function (page) {
     core.status.event.data = page;
     var floorId = core.floorIds[page];
@@ -3968,10 +3878,10 @@ ui.prototype._drawCenterFly = function () {
         centerY: toY,
     });
     var offsetX = core.clamp(
-            toX - core._HALF_WIDTH_,
-            0,
-            core.bigmap.width - core._WIDTH_,
-        ),
+        toX - core._HALF_WIDTH_,
+        0,
+        core.bigmap.width - core._WIDTH_,
+    ),
         offsetY = core.clamp(
             toY - core._HALF_HEIGHT_,
             0,
@@ -4034,6 +3944,7 @@ ui.prototype._drawViewMaps = function (index, x, y) {
     core.fillRect("data", 5, 5, width, height, "rgba(0,0,0,0.4)");
     core.fillText("data", text, textX + 5, textY + 15, "rgba(255,255,255,0.6)");
 };
+
 ui.prototype._drawViewMaps_drawHint = function () {
     core.playSound("打开界面");
     core.fillRect("ui", 0, 0, core._PX_, core._PY_, "rgba(0,0,0,0.7)");
@@ -4060,7 +3971,7 @@ ui.prototype._drawViewMaps_drawHint = function () {
         perpy,
         core.status.globalAttribute.selectColor,
         4,
-    ); // up
+    );
     stroke(0, perpy, perpx, 3 * perpy);
     stroke(perpx, 4 * perpy, 3 * perpx, perpy);
     stroke(4 * perpx, perpy, perpx, 3 * perpy);
@@ -4102,9 +4013,9 @@ ui.prototype._drawViewMaps_drawHint = function () {
     core.fillText(
         "ui",
         "[X] 可查看" +
-            core.material.items["book"].name +
-            "   [G] 可使用" +
-            core.material.items["fly"].name,
+        core.material.items["book"].name +
+        "   [G] 可使用" +
+        core.material.items["fly"].name,
         core._PX_,
         core._PY_ + 32,
         null,
@@ -4112,6 +4023,7 @@ ui.prototype._drawViewMaps_drawHint = function () {
     );
     core.setTextBaseline("ui", "alphabetic");
 };
+
 ui.prototype._drawViewMaps_buildData = function (index, x, y) {
     var damage = (core.status.event.data || {}).damage;
     var all = (core.status.event.data || { all: true }).all;
@@ -4143,6 +4055,7 @@ ui.prototype._drawViewMaps_buildData = function (index, x, y) {
     };
     return core.status.event.data;
 };
+
 ui.prototype._drawToolbox = function (index) {
     var info = this._drawToolbox_getInfo(index);
     this._drawToolbox_drawBackground();
@@ -4182,6 +4095,7 @@ ui.prototype._drawToolbox = function (index) {
     );
     core.fillText("ui", "返回游戏", core._PX_ - 46, core._PY_ - 13);
 };
+
 ui.prototype.getToolboxItems = function (cls) {
     if (this.uidata.getToolboxItems) {
         return this.uidata.getToolboxItems(cls);
@@ -4192,6 +4106,7 @@ ui.prototype.getToolboxItems = function (cls) {
         })
         .sort();
 };
+
 ui.prototype._drawToolbox_getInfo = function (index) {
     if (!core.status.event.data || core.status.event.data.toolsPage == null)
         core.status.event.data = {
@@ -4233,11 +4148,13 @@ ui.prototype._drawToolbox_getInfo = function (index) {
         selectId: selectId,
     };
 };
+
 ui.prototype._drawToolbox_drawBackground = function () {
     core.clearMap("ui");
     core.setAlpha("ui", 0.85);
     core.fillRect("ui", 0, 0, core._PX_, core._PY_, "#000000");
 };
+
 ui.prototype._drawToolbox_drawLine = function (yoffset, text) {
     core.setFillStyle("ui", "#DDDDDD");
     core.canvas.ui.beginPath();
@@ -4267,7 +4184,7 @@ ui.prototype._drawToolbox_drawDescription = function (info, max_height) {
     var name = item.name || "未知道具";
     try {
         name = core.replaceText(name);
-    } catch (e) {}
+    } catch (e) { }
     core.fillText(
         "ui",
         name,
@@ -4279,7 +4196,7 @@ ui.prototype._drawToolbox_drawDescription = function (info, max_height) {
     var text = item.text || "该道具暂无描述。";
     try {
         text = core.replaceText(text);
-    } catch (e) {}
+    } catch (e) { }
 
     var height = null;
     for (var fontSize = 17; fontSize >= 9; fontSize -= 2) {
@@ -4308,6 +4225,7 @@ ui.prototype._drawToolbox_drawDescription = function (info, max_height) {
         );
     }
 };
+
 ui.prototype._drawToolbox_drawContent = function (
     info,
     line,
@@ -4389,6 +4307,7 @@ ui.prototype._drawEquipbox = function (index) {
     );
     core.fillText("ui", "返回游戏", core._PX_ - 46, core._PY_ - 13);
 };
+
 ui.prototype._drawEquipbox_getInfo = function (index) {
     if (!core.status.event.data || core.status.event.data.page == null)
         core.status.event.data = { page: 1, selectId: null };
@@ -4429,6 +4348,7 @@ ui.prototype._drawEquipbox_getInfo = function (index) {
         ownEquipment: ownEquipment,
     };
 };
+
 ui.prototype._drawEquipbox_description = function (info, max_height) {
     core.setTextAlign("ui", "left");
     if (!info.selectId) return;
@@ -4451,7 +4371,7 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
     var text = equip.text || "该装备暂无描述。";
     try {
         text = core.replaceText(text);
-    } catch (e) {}
+    } catch (e) { }
     var height = null;
     for (var fontSize = 17; fontSize >= 9; fontSize -= 2) {
         var config = {
@@ -4475,6 +4395,7 @@ ui.prototype._drawEquipbox_description = function (info, max_height) {
         equipType,
     );
 };
+
 ui.prototype._drawEquipbox_getStatusChanged = function (
     info,
     equip,
@@ -4497,6 +4418,7 @@ ui.prototype._drawEquipbox_getStatusChanged = function (
     }
     return core.compareEquipment(info.selectId, info.equipEquipment[equipType]);
 };
+
 ui.prototype._drawEquipbox_drawStatusChanged = function (
     info,
     y,
@@ -4518,7 +4440,7 @@ ui.prototype._drawEquipbox_drawStatusChanged = function (
         var newValue = Math.floor(
             ((core.getStatus(name) + (compare.value[name] || 0)) *
                 (core.getBuff(name) * 100 + (compare.percentage[name] || 0))) /
-                100,
+            100,
         );
         if (nowValue == newValue) continue;
         var text = core.getStatusLabel(name);
@@ -4535,6 +4457,7 @@ ui.prototype._drawEquipbox_drawStatusChanged = function (
         obj.drawOffset += 8;
     }
 };
+
 ui.prototype._drawEquipbox_drawStatusChanged_draw = function (
     text,
     color,
@@ -4594,6 +4517,7 @@ ui.prototype._drawEquipbox_drawEquiped = function (info, line) {
         );
     }
 };
+
 ui.prototype._drawSLPanel = function (index, refresh) {
     core.control._loadFavoriteSaves();
     if (index == null) index = 1;
@@ -4630,6 +4554,7 @@ ui.prototype._drawSLPanel = function (index, refresh) {
         });
     } else this._drawSLPanel_draw(page, max_page);
 };
+
 ui.prototype._drawSLPanel_draw = function (page, max_page) {
     this._drawSLPanel_drawBackground();
     core.ui.drawPagination(page + 1, max_page);
@@ -4655,12 +4580,14 @@ ui.prototype._drawSLPanel_draw = function (page, max_page) {
     }
     this._drawSLPanel_drawRecords();
 };
+
 ui.prototype._drawSLPanel_drawBackground = function () {
     core.clearMap("ui");
     core.setAlpha("ui", 0.85);
     core.fillRect("ui", 0, 0, core._PX_, core._PY_, "#000000"); // 可改成背景图
     core.setAlpha("ui", 1);
 };
+
 ui.prototype._drawSLPanel_loadSave = function (page, callback) {
     var ids = [0];
     for (var i = 1; i <= 5; ++i) {
@@ -4676,6 +4603,7 @@ ui.prototype._drawSLPanel_loadSave = function (page, callback) {
         callback();
     });
 };
+
 ui.prototype._drawSLPanel_drawRecord = function (
     title,
     data,
@@ -4744,12 +4672,12 @@ ui.prototype._drawSLPanel_drawRecord = function (
                 core.fillBoldText(
                     "ui",
                     data.hero.notes.length -
-                        1 +
-                        ". " +
-                        data.hero.notes[data.hero.notes.length - 2].substring(
-                            0,
-                            10,
-                        ),
+                    1 +
+                    ". " +
+                    data.hero.notes[data.hero.notes.length - 2].substring(
+                        0,
+                        10,
+                    ),
                     x - w / 2 + 2,
                     y + 15 + 12,
                     "#FFFFFF",
@@ -4759,11 +4687,11 @@ ui.prototype._drawSLPanel_drawRecord = function (
                 core.fillBoldText(
                     "ui",
                     data.hero.notes.length +
-                        ". " +
-                        data.hero.notes[data.hero.notes.length - 1].substring(
-                            0,
-                            10,
-                        ),
+                    ". " +
+                    data.hero.notes[data.hero.notes.length - 1].substring(
+                        0,
+                        10,
+                    ),
                     x - w / 2 + 2,
                     y + 15 + 24,
                 );
@@ -4772,11 +4700,11 @@ ui.prototype._drawSLPanel_drawRecord = function (
                 core.fillBoldText(
                     "ui",
                     data.hero.notes.length +
-                        ". " +
-                        data.hero.notes[data.hero.notes.length - 1].substring(
-                            0,
-                            10,
-                        ),
+                    ". " +
+                    data.hero.notes[data.hero.notes.length - 1].substring(
+                        0,
+                        10,
+                    ),
                     x - w / 2 + 2,
                     y + 15 + 12,
                     "#FFFFFF",
@@ -4825,8 +4753,8 @@ ui.prototype._drawSLPanel_drawRecords = function (n) {
         core.status.event.id == "save"
             ? "存档"
             : core.status.event.id == "load"
-              ? "读档"
-              : "回放";
+                ? "读档"
+                : "回放";
 
     for (var i = 0; i < (n || 6); i++) {
         var data = core.status.event.ui[i];
@@ -4871,6 +4799,7 @@ ui.prototype._drawSLPanel_drawRecords = function (n) {
         }
     }
 };
+
 ui.prototype._drawKeyBoard = function () {
     core.lockControl();
     core.status.event.id = "keyBoard";
@@ -4945,9 +4874,11 @@ ui.prototype._drawKeyBoard = function () {
             2,
         );
 };
+
 ui.prototype.drawStatusBar = function () {
     this.uidata.drawStatusBar();
 };
+
 ui.prototype._drawStatistics = function (floorIds) {
     core.playSound("打开界面");
     var obj = this._drawStatistics_buildObj();
@@ -4966,50 +4897,51 @@ ui.prototype._drawStatistics = function (floorIds) {
             obj.marked,
         ),
         "当前总步数：" +
-            core.status.hero.steps +
-            "，当前游戏时长：" +
-            core.formatTime(statistics.currTime) +
-            "，总游戏时长" +
-            core.formatTime(statistics.totalTime) +
-            "。\n瞬间移动次数：" +
-            statistics.moveDirectly +
-            "，共计少走" +
-            statistics.ignoreSteps +
-            "步。" +
-            "\n\n总计通过血瓶恢复生命值为" +
-            core.formatBigNumber(statistics.hp) +
-            "点。\n\n" +
-            "总计打死了" +
-            statistics.battle +
-            "个怪物，得到了" +
-            core.formatBigNumber(statistics.money) +
-            "金币，" +
-            core.formatBigNumber(statistics.exp) +
-            "点经验。\n\n" +
-            "受到的总伤害为" +
-            core.formatBigNumber(
-                statistics.battleDamage +
-                    statistics.poisonDamage +
-                    statistics.extraDamage,
-            ) +
-            "，其中战斗伤害" +
-            core.formatBigNumber(statistics.battleDamage) +
-            "点" +
-            (core.flags.statusBarItems.indexOf("enableDebuff") >= 0
-                ? "，中毒伤害" +
-                  core.formatBigNumber(statistics.poisonDamage) +
-                  "点"
-                : "") +
-            "，领域/夹击/阻击/血网伤害" +
-            core.formatBigNumber(statistics.extraDamage) +
-            "点。",
+        core.status.hero.steps +
+        "，当前游戏时长：" +
+        core.formatTime(statistics.currTime) +
+        "，总游戏时长" +
+        core.formatTime(statistics.totalTime) +
+        "。\n瞬间移动次数：" +
+        statistics.moveDirectly +
+        "，共计少走" +
+        statistics.ignoreSteps +
+        "步。" +
+        "\n\n总计通过血瓶恢复生命值为" +
+        core.formatBigNumber(statistics.hp) +
+        "点。\n\n" +
+        "总计打死了" +
+        statistics.battle +
+        "个怪物，得到了" +
+        core.formatBigNumber(statistics.money) +
+        "金币，" +
+        core.formatBigNumber(statistics.exp) +
+        "点经验。\n\n" +
+        "受到的总伤害为" +
+        core.formatBigNumber(
+            statistics.battleDamage +
+            statistics.poisonDamage +
+            statistics.extraDamage,
+        ) +
+        "，其中战斗伤害" +
+        core.formatBigNumber(statistics.battleDamage) +
+        "点" +
+        (core.flags.statusBarItems.indexOf("enableDebuff") >= 0
+            ? "，中毒伤害" +
+            core.formatBigNumber(statistics.poisonDamage) +
+            "点"
+            : "") +
+        "，领域/夹击/阻击/血网伤害" +
+        core.formatBigNumber(statistics.extraDamage) +
+        "点。",
         "\t[说明]1. 地图数据统计的效果仅模拟当前立刻获得该道具的效果。\n2. 不会计算“不可被浏览地图”的隐藏层的数据。\n" +
-            "3. 不会计算任何通过事件得到的道具（显示事件、改变图块、或直接增加道具等）。\n" +
-            "4. 在自定义道具（例如其他宝石）后，需在脚本编辑的drawStatistics中注册，不然不会进行统计。\n" +
-            "5. 道具不会统计通过插入事件或useItemEvent实现的效果。\n6. 所有统计信息仅供参考，如有错误，概不负责。",
+        "3. 不会计算任何通过事件得到的道具（显示事件、改变图块、或直接增加道具等）。\n" +
+        "4. 在自定义道具（例如其他宝石）后，需在脚本编辑的drawStatistics中注册，不然不会进行统计。\n" +
+        "5. 道具不会统计通过插入事件或useItemEvent实现的效果。\n6. 所有统计信息仅供参考，如有错误，概不负责。",
     ]);
     core.removeFlag("__replayText__");
 };
+
 ui.prototype._drawStatistics_buildObj = function () {
     var ori = this.uidata.drawStatistics();
     var ids = ori.filter(function (e) {
@@ -5054,11 +4986,13 @@ ui.prototype._drawStatistics_buildObj = function () {
         marked: core.clone(obj),
     };
 };
+
 ui.prototype._drawStatistics_add = function (floorId, obj, x1, x2, value) {
     obj.total[x1][x2] += value || 0;
     if (floorId == core.status.floorId) obj.current[x1][x2] += value || 0;
     if (core.markedFloorIds[floorId]) obj.marked[x1][x2] += value || 0;
 };
+
 ui.prototype._drawStatistics_floorId = function (floorId, obj) {
     core.extractBlocks(floorId);
     var floor = core.status.maps[floorId],
@@ -5076,6 +5010,7 @@ ui.prototype._drawStatistics_floorId = function (floorId, obj) {
         }
     });
 };
+
 ui.prototype._drawStatistics_enemy = function (floorId, id, obj) {
     var enemy = core.material.enemys[id];
     this._drawStatistics_add(floorId, obj, "monster", "money", enemy.money);
@@ -5083,6 +5018,7 @@ ui.prototype._drawStatistics_enemy = function (floorId, id, obj) {
     this._drawStatistics_add(floorId, obj, "monster", "point", enemy.point);
     this._drawStatistics_add(floorId, obj, "monster", "count", 1);
 };
+
 ui.prototype._drawStatistics_items = function (floorId, floor, id, obj) {
     var hp = 0,
         atk = 0,
@@ -5095,7 +5031,7 @@ ui.prototype._drawStatistics_items = function (floorId, floor, id, obj) {
         core.status.thisMap.ratio = core.clone(core.status.maps[floorId].ratio);
         try {
             eval(core.material.items[id].itemEffect);
-        } catch (e) {}
+        } catch (e) { }
         core.status.thisMap.ratio = ratio;
         hp = core.status.hero.hp - temp.hp;
         atk = core.status.hero.atk - temp.atk;
@@ -5127,6 +5063,7 @@ ui.prototype._drawStatistics_items = function (floorId, floor, id, obj) {
     this._drawStatistics_add(floorId, obj, "add", "def", def);
     this._drawStatistics_add(floorId, obj, "add", "mdef", mdef);
 };
+
 ui.prototype._drawStatistics_generateText = function (obj, type, data) {
     var text = type + "地图中：\n";
     text += "共有怪物" + data.monster.count + "个";
@@ -5169,9 +5106,11 @@ ui.prototype._drawStatistics_generateText = function (obj, type, data) {
         "点。";
     return text;
 };
+
 ui.prototype._drawAbout = function () {
     return this.uidata.drawAbout();
 };
+
 ui.prototype._drawHelp = function () {
     core.playSound("打开界面");
     core.clearUI();
@@ -5184,34 +5123,35 @@ ui.prototype._drawHelp = function () {
     } else {
         core.drawText([
             "\t[键盘快捷键列表]" +
-                "[CTRL] 跳过对话   [Z] 转向\n" +
-                "[X] " +
-                core.material.items["book"].name +
-                "   [G] " +
-                core.material.items["fly"].name +
-                "\n" +
-                "[A] 读取自动存档   [W] 撤销读取自动存档\n" +
-                "[S/D] 存读档页面   [SPACE] 轻按\n" +
-                "[V] 快捷商店   [ESC] 系统菜单\n" +
-                "[T] 道具页面   [Q] 装备页面\n" +
-                "[B] 数据统计   [H] 帮助页面\n" +
-                "[R] 回放录像   [E] 显示光标\n" +
-                "[N] 返回标题页面   [P] 游戏主页\n" +
-                "[O] 查看工程   [F7] 打开debug穿墙模式\n" +
-                "[PgUp/PgDn] 浏览地图\n" +
-                "[1~4] 快捷使用破炸飞和其他道具\n" +
-                "[Alt+0~9] 快捷换装",
+            "[CTRL] 跳过对话   [Z] 转向\n" +
+            "[X] " +
+            core.material.items["book"].name +
+            "   [G] " +
+            core.material.items["fly"].name +
+            "\n" +
+            "[A] 读取自动存档   [W] 撤销读取自动存档\n" +
+            "[S/D] 存读档页面   [SPACE] 轻按\n" +
+            "[V] 快捷商店   [ESC] 系统菜单\n" +
+            "[T] 道具页面   [Q] 装备页面\n" +
+            "[B] 数据统计   [H] 帮助页面\n" +
+            "[R] 回放录像   [E] 显示光标\n" +
+            "[N] 返回标题页面   [P] 游戏主页\n" +
+            "[O] 查看工程   [F7] 打开debug穿墙模式\n" +
+            "[PgUp/PgDn] 浏览地图\n" +
+            "[1~4] 快捷使用破炸飞和其他道具\n" +
+            "[Alt+0~9] 快捷换装",
             "\t[鼠标操作]" +
-                "点状态栏中图标： 进行对应的操作\n" +
-                "点任意块： 寻路并移动\n" +
-                "点任意块并拖动： 指定寻路路线\n" +
-                "双击空地： 瞬间移动\n" +
-                "单击勇士： 转向\n" +
-                "双击勇士： 轻按（仅在轻按开关打开时有效）\n" +
-                "长按任意位置：跳过剧情对话或打开虚拟键盘",
+            "点状态栏中图标： 进行对应的操作\n" +
+            "点任意块： 寻路并移动\n" +
+            "点任意块并拖动： 指定寻路路线\n" +
+            "双击空地： 瞬间移动\n" +
+            "单击勇士： 转向\n" +
+            "双击勇士： 轻按（仅在轻按开关打开时有效）\n" +
+            "长按任意位置：跳过剧情对话或打开虚拟键盘",
         ]);
     }
 };
+
 ui.prototype.createCanvas = function (name, x, y, width, height, z) {
     if (core.dymCanvas[name]) {
         this.relocateCanvas(name, x, y);
@@ -5258,6 +5198,7 @@ ui.prototype.relocateCanvas = function (name, x, y, useDelta) {
     }
     return ctx;
 };
+
 ui.prototype.rotateCanvas = function (name, angle, centerX, centerY) {
     var ctx = core.getContextByName(name);
     if (!ctx) return null;
@@ -5281,6 +5222,7 @@ ui.prototype.rotateCanvas = function (name, angle, centerX, centerY) {
     }
     canvas.setAttribute("_angle", angle);
 };
+
 ui.prototype.resizeCanvas = function (name, width, height, styleOnly) {
     var ctx = core.getContextByName(name);
     const canvas = ctx.canvas;
@@ -5299,6 +5241,7 @@ ui.prototype.resizeCanvas = function (name, width, height, styleOnly) {
     }
     return ctx;
 };
+
 ui.prototype.deleteCanvas = function (name) {
     if (name instanceof Function) {
         Object.keys(core.dymCanvas).forEach(function (one) {
@@ -5310,6 +5253,7 @@ ui.prototype.deleteCanvas = function (name) {
     core.dom.gameDraw.removeChild(core.dymCanvas[name].canvas);
     delete core.dymCanvas[name];
 };
+
 ui.prototype.deleteAllCanvas = function () {
     return this.deleteCanvas(function () {
         return true;
