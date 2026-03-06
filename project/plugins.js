@@ -5,20 +5,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		this._afterLoadResources = function () { }
 	},
 	"drawLight": function () {
-		// 绘制灯光/漆黑层效果。调用方式 core.plugin.drawLight(...)
-		// 【参数说明】
-		// name：必填，要绘制到的画布名；可以是一个系统画布，或者是个自定义画布；如果不存在则创建
-		// color：可选，只能是一个0~1之间的数，为不透明度的值。不填则默认为0.9。
-		// lights：可选，一个数组，定义了每个独立的灯光。
-		//        其中每一项是三元组 [x,y,r] x和y分别为该灯光的横纵坐标，r为该灯光的半径。
-		// lightDec：可选，0到1之间，光从多少百分比才开始衰减（在此范围内保持全亮），不设置默认为0。
-		//        比如lightDec为0.5代表，每个灯光部分内圈50%的范围全亮，50%以后才开始快速衰减。
-		// 【调用样例】
-		// core.plugin.drawLight('curtain'); // 在curtain层绘制全图不透明度0.9，等价于更改画面色调为[0,0,0,0.9]。
-		// core.plugin.drawLight('ui', 0.95, [[25,11,46]]); // 在ui层绘制全图不透明度0.95，其中在(25,11)点存在一个半径为46的灯光效果。
-		// core.plugin.drawLight('test', 0.2, [[25,11,46,0.1]]); // 创建一个test图层，不透明度0.2，其中在(25,11)点存在一个半径为46的灯光效果，灯光中心不透明度0.1。
-		// core.plugin.drawLight('test2', 0.9, [[25,11,46],[105,121,88],[301,221,106]]); // 创建test2图层，且存在三个灯光效果，分别是中心(25,11)半径46，中心(105,121)半径88，中心(301,221)半径106。
-		// core.plugin.drawLight('xxx', 0.3, [[25,11,46],[105,121,88,0.2]], 0.4); // 存在两个灯光效果，它们在内圈40%范围内保持全亮，40%后才开始衰减。
 		this.drawLight = function (name, color, lights, lightDec) {
 			var ctx = core.getContextByName(name);
 			if (ctx == null) {
@@ -31,21 +17,16 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			ctx.msImageSmoothingEnabled = false;
 			ctx.imageSmoothingEnabled = false;
 			core.clearMap(name);
-			// 绘制色调层，默认不透明度
 			if (color == null) color = 0.9;
 			ctx.fillStyle = "rgba(0,0,0," + color + ")";
 			ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 			lightDec = core.clamp(lightDec, 0, 1);
-			// 绘制每个灯光效果
 			ctx.globalCompositeOperation = 'destination-out';
 			lights.forEach(function (light) {
-				// 坐标，半径，中心不透明度
 				var x = light[0],
 					y = light[1],
 					r = light[2];
-				// 计算衰减距离
 				var decDistance = parseInt(r * lightDec);
-				// 正方形区域的直径和左上角坐标
 				var grd = ctx.createRadialGradient(x, y, decDistance, x, y, r);
 				grd.addColorStop(0, "rgba(0,0,0,1)");
 				grd.addColorStop(1, "rgba(0,0,0,0)");
@@ -55,28 +36,18 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				ctx.fill();
 			});
 			ctx.globalCompositeOperation = 'source-over';
-			// 可以在任何地方（如afterXXX或自定义脚本事件）调用函数，方法为  core.plugin.xxx();
 		}
 	},
 	"shop": function () {
-		// 【全局商店】相关的功能
-		// 
-		// 打开一个全局商店
-		// shopId：要打开的商店id；noRoute：是否不计入录像
 		this.openShop = function (shopId, noRoute) {
 			var shop = core.status.shops[shopId];
-			// Step 1: 检查能否打开此商店
 			if (!this.canOpenShop(shopId)) {
 				core.drawTip("该商店尚未开启");
 				return false;
 			}
-
-			// Step 2: （如有必要）记录打开商店的脚本事件
 			if (!noRoute) {
 				core.status.route.push("shop:" + shopId);
 			}
-
-			// Step 3: 检查道具商店 or 公共事件
 			if (shop.item) {
 				if (core.openItemShop) {
 					core.openItemShop(shopId);
@@ -91,13 +62,10 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				return;
 			}
 			_shouldProcessKeyUp = true;
-
-			// Step 4: 执行标准公共商店    
 			core.insertAction(this._convertShop(shop));
 			return true;
 		}
 
-		////// 将一个全局商店转变成可预览的公共事件 //////
 		this._convertShop = function (shop) {
 			return [
 				{ "type": "function", "function": "function() {core.addFlag('@temp@shop', 1);}" },
@@ -105,27 +73,22 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					"type": "while",
 					"condition": "true",
 					"data": [
-						// 检测能否访问该商店
 						{
 							"type": "if",
 							"condition": "core.isShopVisited('" + shop.id + "')",
 							"true": [
-								// 可以访问，直接插入执行效果
 								{ "type": "function", "function": "function() { core.plugin._convertShop_replaceChoices('" + shop.id + "', false) }" },
 							],
 							"false": [
-								// 不能访问的情况下：检测能否预览
 								{
 									"type": "if",
 									"condition": shop.disablePreview,
 									"true": [
-										// 不可预览，提示并退出
 										{ "type": "playSound", "name": "操作失败" },
 										"当前无法访问该商店！",
 										{ "type": "break" },
 									],
 									"false": [
-										// 可以预览：将商店全部内容进行替换
 										{ "type": "tip", "text": "当前处于预览模式，不可购买" },
 										{ "type": "function", "function": "function() { core.plugin._convertShop_replaceChoices('" + shop.id + "', true) }" },
 									]
@@ -157,7 +120,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			core.insertAction({ "type": "choices", "text": shop.text, "choices": choices });
 		}
 
-		/// 是否访问过某个快捷商店
 		this.isShopVisited = function (id) {
 			if (!core.hasFlag("__shops__")) core.setFlag("__shops__", {});
 			var shops = core.getFlag("__shops__");
@@ -165,14 +127,12 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			return shops[id].visited;
 		}
 
-		/// 当前应当显示的快捷商店列表
 		this.listShopIds = function () {
 			return Object.keys(core.status.shops).filter(function (id) {
 				return core.isShopVisited(id) || !core.status.shops[id].mustEnable;
 			});
 		}
 
-		/// 是否能够打开某个商店
 		this.canOpenShop = function (id) {
 			if (this.isShopVisited(id)) return true;
 			var shop = core.status.shops[id];
@@ -180,7 +140,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			return true;
 		}
 
-		/// 启用或禁用某个快捷商店
 		this.setShopVisited = function (id, visited) {
 			if (!core.hasFlag("__shops__")) core.setFlag("__shops__", {});
 			var shops = core.getFlag("__shops__");
@@ -189,10 +148,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			else delete shops[id].visited;
 		}
 
-		/// 能否使用快捷商店
 		this.canUseQuickShop = function (id) {
-			// 如果返回一个字符串，表示不能，字符串为不能使用的提示
-			// 返回null代表可以使用
 			if (core.status.thisMap.canUseQuickShop === false)
 				return '当前楼层不能使用快捷商店。';
 			return null;
@@ -200,7 +156,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 
 		var _shouldProcessKeyUp = true;
 
-		/// 允许商店X键退出
 		core.registerAction('keyUp', 'shops', function (keycode) {
 			if (!core.status.lockControl || core.status.event.id != 'action') return false;
 			if ((keycode == 13 || keycode == 32) && !_shouldProcessKeyUp) {
@@ -212,14 +167,13 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var data = core.status.event.data.current;
 			var choices = data.choices;
 			var topIndex = core.actions._getChoicesTopIndex(choices.length);
-			if (keycode == 88 || keycode == 27) { // X, ESC
+			if (keycode == 88 || keycode == 27) {
 				core.actions._clickAction(core._HALF_WIDTH_ || core.__HALF_SIZE__, topIndex + choices.length - 1);
 				return true;
 			}
 			return false;
 		}, 60);
 
-		/// 允许长按空格或回车连续执行操作
 		core.registerAction('keyDown', 'shops', function (keycode) {
 			if (!core.status.lockControl || !core.hasFlag("@temp@shop") || core.status.event.id != 'action') return false;
 			if (core.status.event.data.type != 'choices') return false;
@@ -227,7 +181,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var data = core.status.event.data.current;
 			var choices = data.choices;
 			var topIndex = core.actions._getChoicesTopIndex(choices.length);
-			if (keycode == 13 || keycode == 32) { // Space, Enter
+			if (keycode == 13 || keycode == 32) {
 				core.actions._clickAction(core._HALF_WIDTH_ || core.__HALF_SIZE__, topIndex + core.status.event.selection);
 				_shouldProcessKeyUp = false;
 				return true;
@@ -235,7 +189,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			return false;
 		}, 60);
 
-		// 允许长按屏幕连续执行操作
 		core.registerAction('longClick', 'shops', function (x, y, px, py) {
 			if (!core.status.lockControl || !core.hasFlag("@temp@shop") || core.status.event.id != 'action') return false;
 			if (core.status.event.data.type != 'choices') return false;
@@ -250,9 +203,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}, 60);
 	},
 	"removeMap": function () {
-		// 删除楼层
-		// core.removeMaps("MT1", "MT300") 删除MT1~MT300之间的全部层
-		// core.removeMaps("MT10") 只删除MT10层
 		this.removeMaps = function (fromId, toId) {
 			toId = toId || fromId;
 			var fromIndex = core.floorIds.indexOf(fromId),
@@ -282,9 +232,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 		}
 
-		// 恢复楼层
-		// core.resumeMaps("MT1", "MT300") 恢复MT1~MT300之间的全部层
-		// core.resumeMaps("MT10") 只恢复MT10层
 		this.resumeMaps = function (fromId, toId) {
 			toId = toId || fromId;
 			var fromIndex = core.floorIds.indexOf(fromId),
@@ -299,7 +246,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 		}
 
-		// 分区砍层相关
 		var inAnyPartition = function (floorId) {
 			var inPartition = false;
 			(core.floorPartitions || []).forEach(function (floor) {
@@ -313,7 +259,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			return inPartition;
 		}
 
-		// 分区砍层
 		this.autoRemoveMaps = function (floorId) {
 			if (main.mode != 'play' || !inAnyPartition(floorId)) return;
 			(core.floorPartitions || []).forEach(function (floor) {
@@ -331,10 +276,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"fiveLayers": function () {
-		// 是否启用五图层（增加背景2层和前景2层） 将__enable置为true即会启用；启用后请保存后刷新编辑器
-		// 背景层2将会覆盖背景层 被事件层覆盖 前景层2将会覆盖前景层
-		// 另外 请注意加入两个新图层 会让大地图的性能降低一些
-		// 插件作者：ad
 		var __enable = false;
 		if (!__enable) return;
 		function createCanvas(name, zIndex) {
@@ -342,7 +283,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var canvas = document.createElement('canvas');
 			canvas.id = name;
 			canvas.className = 'gameCanvas anti-aliasing';
-			// 编辑器模式下设置zIndex会导致加入的图层覆盖优先级过高
 			if (main.mode != "editor") canvas.style.zIndex = zIndex || 0;
 			document.getElementById('gameDraw').appendChild(canvas);
 			var ctx = canvas.getContext('2d');
@@ -357,13 +297,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		core.initStatus.bg2maps = {};
 		core.initStatus.fg2maps = {};
 		if (main.mode == 'editor') {
-			/*插入编辑器的图层 不做此步新增图层无法在编辑器显示*/
-			// 编辑器图层覆盖优先级 eui > efg > fg(前景层) > event2(48*32图块的事件层) > event(事件层) > bg(背景层)
-			// 背景层2(bg2) 插入事件层(event)之前(即bg与event之间)
 			document.getElementById('mapEdit').insertBefore(bg2Canvas, document.getElementById('event'));
-			// 前景层2(fg2) 插入编辑器前景(efg)之前(即fg之后)
 			document.getElementById('mapEdit').insertBefore(fg2Canvas, document.getElementById('ebm'));
-			// 原本有三个图层 从4开始添加
 			var num = 4;
 			editor.dom.bg2c = core.canvas.bg2.canvas;
 			editor.dom.bg2Ctx = core.canvas.bg2;
@@ -371,7 +306,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			editor.dom.fg2Ctx = core.canvas.fg2;
 			editor.dom.maps.push('bg2map', 'fg2map');
 			editor.dom.canvas.push('bg2', 'fg2');
-			// 创建编辑器上的按钮
 			var createCanvasBtn = function (name) {
 				var input = document.createElement('input');
 				var id = 'layerMod' + num++;
@@ -461,8 +395,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"itemShop": function () {
-		// 道具商店相关的插件
-		// 可在全塔属性-全局商店中使用「道具商店」事件块进行编辑（如果找不到可以在入口方块中找）
 		var shopId = null;
 		var type = 0;
 		var selectItem = 0;
@@ -736,30 +668,15 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 
 	},
 	"enemyLevel": function () {
-		// 此插件将提供怪物手册中的怪物境界显示
-		// 使用此插件需要先给每个怪物定义境界，方法如下：
-		// 点击怪物的【配置表格】，找到“【怪物】相关的表格配置”，然后在【名称】仿照增加境界定义：
-		/*
-		 "level": {
-			  "_leaf": true,
-			  "_type": "textarea",
-			  "_string": true,
-			  "_data": "境界"
-		 },
-		 */
-		// 然后保存刷新，可以看到怪物的属性定义中出现了【境界】。再开启本插件即可。
-
 		var __enable = false;
 		if (!__enable) return;
 
-		// 这里定义每个境界的显示颜色；可以写'red', '#RRGGBB' 或者[r,g,b,a]四元数组
 		var levelToColors = {
 			"萌新一阶": "red",
 			"萌新二阶": "#FF0000",
 			"萌新三阶": [255, 0, 0, 1],
 		};
 
-		// 复写 _drawBook_drawName
 		var originDrawBook = core.ui._drawBook_drawName;
 		core.ui._drawBook_drawName = function (index, enemy, top, left, width) {
 			if (!enemy.level) return originDrawBook.call(core.ui, index, enemy, top, left, width);
@@ -813,48 +730,33 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"multiHeros": function () {
-		// 多角色插件
-		// Step 1: 启用本插件
-		// Step 2: 定义每个新的角色各项初始数据（参见下方注释）
-		// Step 3: 在游戏中的任何地方都可以调用 `core.changeHero()` 进行切换；也可以 `core.changeHero(1)` 来切换到某个具体的角色上
-
 		var __enable = false;
 		if (!__enable) return;
-		// 在这里定义全部的新角色属性
-		// 请注意，在这里定义的内容不会多角色共用，在切换时会进行恢复。
-		// 你也可以自行新增或删除，比如不共用金币则可以加上"money"的初始化，不共用道具则可以加上"items"的初始化，
-		// 多角色共用hp的话则删除hp，等等。总之，不共用的属性都在这里进行定义就好。
+
 		var hero1 = {
-			"floorId": "MT0", // 该角色初始楼层ID；如果共用楼层可以注释此项
-			"image": "brave.png", // 角色的行走图名称；此项必填不然会报错
+			"floorId": "MT0",
+			"image": "brave.png",
 			"name": "1号角色",
 			"lv": 1,
-			"hp": 10000, // 如果HP共用可注释此项
+			"hp": 10000,
 			"atk": 1000,
 			"def": 1000,
 			"mdef": 0,
-			// "money": 0, // 如果要不共用金币则取消此项注释
-			// "exp": 0, // 如果要不共用经验则取消此项注释
-			"loc": { "x": 0, "y": 0, "direction": "up" }, // 该角色初始位置；如果共用位置可注释此项
+			"loc": { "x": 0, "y": 0, "direction": "up" },
 			"items": {
-				"tools": {}, // 如果共用消耗道具（含钥匙）则可注释此项
-				// "constants": {}, // 如果不共用永久道具（如手册）可取消注释此项
-				"equips": {}, // 如果共用在背包的装备可注释此项
+				"tools": {},
+				"equips": {},
 			},
-			"equipment": [], // 如果共用装备可注释此项；此项和上面的「共用在背包的装备」需要拥有相同状态，不然可能出现问题
+			"equipment": [],
 		};
-		// 也可以类似新增其他角色
-		// 新增的角色，各项属性共用与不共用的选择必须和上面完全相同，否则可能出现问题。
-		// var hero2 = { ...
 
-		var heroCount = 2; // 包含默认角色在内总共多少个角色，该值需手动修改。
+		var heroCount = 2;
 		this.initHeros = function () {
 			core.setFlag("hero1", core.clone(hero1));
 			if (hero1.equipment) {
 				if (!hero1.items || !hero1.items.equips) {
 					alert('多角色插件的equipment和道具中的equips必须拥有相同状态！');
 				}
-				// 存99号套装为全空
 				var saveEquips = core.getFlag("saveEquips", []);
 				saveEquips[99] = [];
 				core.setFlag("saveEquips", saveEquips);
@@ -864,17 +766,14 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				}
 			}
 		}
-		// 在游戏开始注入initHeros
+
 		var _startGame_setHard = core.events._startGame_setHard;
 		core.events._startGame_setHard = function () {
 			_startGame_setHard.call(core.events);
 			core.initHeros();
 		}
-		// 切换角色
-		// 可以使用 core.changeHero() 来切换到下一个角色
-		// 也可以 core.changeHero(1) 来切换到某个角色（默认角色为0）
 		this.changeHero = function (toHeroId) {
-			var currHeroId = core.getFlag("heroId", 0); // 获得当前角色ID
+			var currHeroId = core.getFlag("heroId", 0);
 			if (toHeroId == null) {
 				toHeroId = (currHeroId + 1) % heroCount;
 			}
@@ -894,16 +793,16 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			}
 
 			saveList.forEach(function (name) {
-				if (name == 'floorId') toSave[name] = core.status.floorId; // 楼层单独设置
+				if (name == 'floorId') toSave[name] = core.status.floorId;
 				else if (name == 'items') {
 					toSave.items = core.clone(core.status.hero.items);
 					Object.keys(toSave.items).forEach(function (one) {
 						if (!hero1.items[one]) delete toSave.items[one];
 					});
-				} else toSave[name] = core.clone(core.status.hero[name]); // 使用core.clone()来创建新对象
+				} else toSave[name] = core.clone(core.status.hero[name]);
 			});
-			core.setFlag("hero" + currHeroId, toSave); // 将当前角色信息进行保存
-			var data = core.getFlag("hero" + toHeroId); // 获得要切换的角色保存内容
+			core.setFlag("hero" + currHeroId, toSave);
+			var data = core.getFlag("hero" + toHeroId);
 			saveList.forEach(function (name) {
 				if (name == "floorId");
 				else if (name == "items") {
@@ -925,7 +824,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			var toLoc = data.loc || core.status.hero.loc;
 			core.insertAction([
 				{ "type": "setHeroIcon", "name": data.image || "hero.png" },
-				// 同层则用changePos，不同层则用changeFloor；这是为了避免共用楼层造成触发eachArrive
 				toFloorId != core.status.floorId ? {
 					"type": "changeFloor",
 					"floorId": toFloorId,
@@ -938,8 +836,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"heroFourFrames": function () {
-		// 样板的勇士/跟随者移动时只使用2、4两帧，观感较差。本插件可以将四帧全用上。
-		// 是否启用本插件
 		var __enable = true;
 		if (!__enable) return;
 		["up", "down", "left", "right"].forEach(function (one) {
@@ -971,7 +867,7 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			if (step <= 4) core.drawHero('stop', 4 * o * step);
 			else if (step <= 8) core.drawHero('leftFoot', 4 * o * step);
 			else if (step <= 12) core.drawHero('midFoot', 4 * o * (step - 8));
-			else if (step <= 16) core.drawHero('rightFoot', 4 * o * (step - 8)); // if (step == 8) {
+			else if (step <= 16) core.drawHero('rightFoot', 4 * o * (step - 8));
 			if (step == 8 || step == 16) {
 				core.setHeroLoc('x', x + o * core.utils.scan2[direction].x, true);
 				core.setHeroLoc('y', y + o * core.utils.scan2[direction].y, true);
@@ -985,45 +881,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 	},
 	"routeFixing": function () {
-		// 是否开启本插件，true 表示启用，false 表示禁用。
 		var __enable = true;
 		if (!__enable) return;
-		/*
-		 使用说明：启用本插件后，录像回放时您可以用数字键1或6分别切换到原速或24倍速，
-		 暂停播放时按数字键7（电脑按N）可以单步播放。（手机端可以点击难度单词切换出数字键）
-		 数字键2-5可以进行录像自助精修，具体描述见下（实际弹窗请求您输入时不要带有任何空格）：
-		 
-		 up down left right 勇士向某个方向「行走一步或撞击」
-		 item:ID 使用某件道具，如 item:bomb 表示使用炸弹
-		 unEquip:n 卸掉身上第(n+1)件装备（n从0开始），如 unEquip:1 默认表示卸掉盾牌
-		 equip:ID 穿上某件装备，如 equip:sword1 表示装上铁剑
-		 saveEquip:n 将身上的当前套装保存到第n套快捷套装（n从0开始）
-		 loadEquip:n 快捷换上之前保存好的第n套套装
-		 fly:ID 使用楼传飞到某一层，如 fly:MT10 表示飞到主塔10层
-		 choices:none 确认框/选择项「超时」（作者未设置超时时间则此项视为缺失）
-		 choices:n 确认框/选择项选择第(n+1)项（选择项n从0开始，确认框n为0表示「确定」，1表示「取消」）
-		 选择项n为负数时表示选择倒数第 -n 项，如 -1 表示最后一项（V2.8.2起标准全局商店的「离开」项）
-		 此项缺失的话，确认框将选择作者指定的默认项（初始光标位置），选择项将弹窗请求补选（后台录像验证中选最后一项，可以复写函数来修改）
-		 shop:ID 打开某个全局商店，如 shop:itemShop 表示打开道具商店。因此连载塔千万不要中途修改商店ID！
-		 turn 单击勇士（Z键）转身，core.turnHero() 会产生此项，因此通过事件等方式强制让勇士转向应该用 core.setHeroLoc()
-		 turn:dir 勇士转向某个方向，dir 可以为 up down left right（此项一般是读取自动存档产生的，属于样板的不良特性，请勿滥用）
-		 getNext 轻按获得身边道具，优先获得面前的（面前没有则按上下左右顺序依次获得），身边如果没有道具则此项会被跳过
-		 input:none “等待用户操作事件”中超时（作者未设置超时时间则此项会导致报错）
-		 input:xxx 可能表示“等待用户操作事件”的一个操作（如按键操作将直接记录 input:keycode ），
-		 也可能表示一个“接受用户输入数字”的输入，后者的情况下 xxx 为输入的整数。此项缺失的话前者将直接报错，后者将用0代替（后者现在支持负数了）
-		 input2:xxx 可能表示“读取全局存储（core.getGlobal）”读取到的值，也可能表示一个“接受用户输入文本”的输入，
-		 两种情况下 xxx 都为 base64 编码。此项缺失的话前者将重新现场读取，后者将用空字符串代替
-		 no 走到可穿透的楼梯上不触发楼层切换事件，通过本插件可以让勇士停在旁边没有障碍物的楼梯上哦～
-		 move:x:y 尝试瞬移到 [x,y] 点（不改变朝向），该点甚至可以和勇士相邻或者位于视野外
-		 key:n 松开键值为n的键，如 key:49 表示松开大键盘数字键1，默认会触发使用破墙镐
-		 click:n:px:py 点击自绘状态栏，n为0表示横屏1表示竖屏，[px,py] 为点击的像素坐标
-		 random:n 生成了随机数n，即 core.rand2(num) 的返回结果，n必须在 [0,num-1] 范围，num必须为正整数。此项缺失将导致现场重新随机生成数值，可能导致回放结果不一致！
-		 作者自定义的新项（一般为js对象，可以先JSON.stringify()再core.encodeBase64()得到纯英文数字的内容）需要用(半角圆括弧)括起来。
-		 
-		 当您使用数字键5将一些项追加到即将播放内容的开头时，请注意要逆序逐项追加，或者每追加一项就按下数字键7或字母键N单步播放一步。
-		 但是【input input2 random choices】是被动读取的，单步播放如果触发了相应的事件就会连续读取，这时候只能提前逐项追加好。
-		 电脑端熟练以后推荐直接在控制台操作 core.status.route 和 core.status.replay.toReplay（后者录像回放时才有），配合 core.push() 和 core.unshift() 更加灵活自由哦！
-		 */
 		core.actions.registerAction('onkeyUp', '_sys_onkeyUp_replay', function (e) {
 			if (this._checkReplaying()) {
 				if (e.keyCode == 27)
@@ -1076,25 +935,19 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}, 100);
 	},
 	"numpad": function () {
-		// 样板自带的整数输入事件为白屏弹窗且可以误输入任意非法内容但不支持负整数，观感较差。本插件可以将其美化成仿RM样式，使其支持负整数同时带有音效
-		// 另一方面，4399等第三方平台不允许使用包括 core.myprompt() 和 core.myconfirm() 在内的弹窗，因此也需要此插件来替代，不然类似生命魔杖的道具就不好实现了
-		// 关于负整数输入，V2.8.2原生支持其录像的压缩和解压，只是默认的 core.events._action_input() 函数将负数取了绝对值，可以只复写下面的 core.isReplaying() 部分来取消
 		var __enable = true;
 		if (!__enable) return;
 
-		core.events._action_input = function (data, x, y, prefix) { // 复写整数输入事件
-			if (core.isReplaying()) { // 录像回放时，处理方式不变，但增加负整数支持
+		core.events._action_input = function (data, x, y, prefix) {
+			if (core.isReplaying()) {
 				core.events.__action_getInput(core.replaceText(data.text, prefix), false, function (value) {
-					value = parseInt(value) || 0; // 去掉了取绝对值的步骤
+					value = parseInt(value) || 0;
 					core.status.route.push("input:" + value);
 					core.setFlag("input", value);
 					core.doAction();
 				});
 			} else {
-				// 正常游戏中，采用暂停录制的方式然后用事件流循环“绘制-等待-变量操作”三板斧实现（按照13*13适配的）。
-				// 您可以自行修改循环内的内容来适配15*15或其他需求，或干脆作为公共事件编辑。
 				core.insertAction([
-					// 记录当前录像长度，下面的循环结束后裁剪。达到“暂停录制”的效果
 					{ "type": "function", "function": "function(){flags['@temp@length']=core.status.route.length}" },
 					{ "type": "setValue", "name": "flag:input", "value": "0" },
 					{
@@ -1644,19 +1497,8 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 					eval(item.itemEffect);
 				} catch (error) { }
 				var diff = compareObject(before, core.status.hero);
-
-				// 暂时保留这两行即可
-				// 如果运行时报 hero is not defined 或 flags is not defined，再改成显式写全局
-				/*
-					core.status.hero = before;
-					if (typeof window !== 'undefined') {
-						window.hero = before;
-						window.flags = core.status.hero.flags;
-					}
-				 */
 				core.status.hero = hero = before;
 				flags = core.status.hero.flags;
-
 				drawItemDetail(diff, x, y);
 			});
 		};
