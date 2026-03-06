@@ -1,7 +1,9 @@
 "use strict";
+
 function control() {
     this._init();
 }
+
 control.prototype._init = function () {
     this.controldata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.control;
     this.renderFrameFuncs = [];
@@ -85,6 +87,7 @@ control.prototype._init = function () {
     this.registerResize("toolBar", this._resize_toolBar);
     this.registerResize("tools", this._resize_tools);
 };
+
 control.prototype.registerAnimationFrame = function (name, needPlaying, func) {
     this.unregisterAnimationFrame(name);
     this.renderFrameFuncs.push({
@@ -93,11 +96,13 @@ control.prototype.registerAnimationFrame = function (name, needPlaying, func) {
         func: func,
     });
 };
+
 control.prototype.unregisterAnimationFrame = function (name) {
     this.renderFrameFuncs = this.renderFrameFuncs.filter(function (x) {
         return x.name != name;
     });
 };
+
 control.prototype._setRequestAnimationFrame = function () {
     this._checkRequestAnimationFrame();
     core.animateFrame.totalTime = Math.max(
@@ -114,8 +119,8 @@ control.prototype._setRequestAnimationFrame = function () {
                     console.error(e);
                     console.error(
                         "ERROR in requestAnimationFrame[" +
-                            b.name +
-                            "]：已自动注销该项。",
+                        b.name +
+                        "]：已自动注销该项。",
                     );
                     core.unregisterAnimationFrame(b.name);
                 }
@@ -125,6 +130,7 @@ control.prototype._setRequestAnimationFrame = function () {
     };
     window.requestAnimationFrame(loop);
 };
+
 control.prototype._checkRequestAnimationFrame = function () {
     (function () {
         var lastTime = 0;
@@ -137,7 +143,7 @@ control.prototype._checkRequestAnimationFrame = function () {
             window.requestAnimationFrame =
                 window[vendors[x] + "RequestAnimationFrame"];
             window.cancelAnimationFrame =
-                window[vendors[x] + "CancelAnimationFrame"] || // Webkit中此取消方法的名字变了
+                window[vendors[x] + "CancelAnimationFrame"] ||
                 window[vendors[x] + "CancelRequestAnimationFrame"];
         }
 
@@ -159,6 +165,7 @@ control.prototype._checkRequestAnimationFrame = function () {
         }
     })();
 };
+
 control.prototype._animationFrame_totalTime = function (timestamp) {
     core.animateFrame.totalTime += timestamp - core.animateFrame.totalTimeStart;
     core.animateFrame.totalTimeStart = timestamp;
@@ -169,11 +176,13 @@ control.prototype._animationFrame_totalTime = function (timestamp) {
         core.status.hero.statistics.start = timestamp;
     }
 };
+
 control.prototype._animationFrame_autoSave = function (timestamp) {
     if (timestamp - core.saves.autosave.time <= 5000) return;
     core.control.checkAutosave();
     core.saves.autosave.time = timestamp;
 };
+
 control.prototype._animationFrame_globalAnimate = function (timestamp) {
     if (timestamp - core.animateFrame.globalTime <= core.values.animateSpeed)
         return;
@@ -261,7 +270,6 @@ control.prototype._animationFrame_animate = function (timestamp) {
 
 control.prototype._animationFrame_heroMoving = function (timestamp) {
     if (core.status.heroMoving <= 0) return;
-    // 换腿
     if (timestamp - core.animateFrame.moveTime > core.values.moveSpeed) {
         core.animateFrame.leftLeg = !core.animateFrame.leftLeg;
         core.animateFrame.moveTime = timestamp;
@@ -271,6 +279,7 @@ control.prototype._animationFrame_heroMoving = function (timestamp) {
         4 * core.status.heroMoving,
     );
 };
+
 control.prototype._animationFrame_weather = function (timestamp) {
     var weather = core.animateFrame.weather,
         type = weather.type;
@@ -293,6 +302,7 @@ control.prototype._animationFrame_weather = function (timestamp) {
         core.unregisterWeather(type);
     }
 };
+
 control.prototype._animationFrame_weather_rain = function (timestamp, level) {
     if (timestamp - core.animateFrame.weather.time < 30) return;
     var ctx = core.dymCanvas.weather,
@@ -318,6 +328,7 @@ control.prototype._animationFrame_weather_rain = function (timestamp, level) {
     ctx.fill();
     core.animateFrame.weather.time = timestamp;
 };
+
 control.prototype._animationFrame_weather_snow = function (timestamp, level) {
     if (timestamp - core.animateFrame.weather.time < 30) return;
     var ctx = core.dymCanvas.weather,
@@ -352,6 +363,7 @@ control.prototype._animationFrame_weather_snow = function (timestamp, level) {
     ctx.fill();
     core.animateFrame.weather.time = timestamp;
 };
+
 control.prototype.__animateFrame_weather_image = function (timestamp, level) {
     if (timestamp - core.animateFrame.weather.time < 30) return;
     var node = core.animateFrame.weather.nodes[0];
@@ -400,6 +412,7 @@ control.prototype.__animateFrame_weather_image = function (timestamp, level) {
     core.setAlpha("weather", 1);
     core.animateFrame.weather.time = timestamp;
 };
+
 control.prototype._animationFrame_weather_sun = function (timestamp, level) {
     if (timestamp - core.animateFrame.weather.time < 30) return;
     var node = core.animateFrame.weather.nodes[0];
@@ -410,6 +423,7 @@ control.prototype._animationFrame_weather_sun = function (timestamp, level) {
     core.setOpacity("weather", core.clamp(opacity, 0, 1));
     core.animateFrame.weather.time = timestamp;
 };
+
 control.prototype._animateFrame_tip = function (timestamp) {
     if (core.animateFrame.tip == null) return;
     var tip = core.animateFrame.tip;
@@ -435,9 +449,11 @@ control.prototype._animateFrame_tip = function (timestamp) {
         core.animateFrame.tip = null;
     }
 };
+
 control.prototype._animationFrame_parallelDo = function (timestamp) {
     core.control.controldata.parallelDo(timestamp);
 };
+
 control.prototype.showStartAnimate = function (noAnimate, callback) {
     this._showStartAnimate_resetDom();
     if (core.flags.startUsingCanvas || noAnimate)
@@ -449,6 +465,7 @@ control.prototype.showStartAnimate = function (noAnimate, callback) {
         core.control._showStartAnimate_finished(false, callback);
     });
 };
+
 control.prototype._showStartAnimate_resetDom = function () {
     core.dom.startPanel.style.opacity = 1;
     core.dom.startPanel.style.display = "block";
@@ -465,6 +482,7 @@ control.prototype._showStartAnimate_resetDom = function () {
     core.events.setVolume(1, 0);
     core.updateStatusBar();
 };
+
 control.prototype._showStartAnimate_finished = function (start, callback) {
     core.dom.startTop.style.display = "none";
     core.dom.startButtonGroup.style.display = "block";
@@ -473,12 +491,15 @@ control.prototype._showStartAnimate_finished = function (start, callback) {
     if (start) core.startGame();
     if (callback) callback();
 };
+
 control.prototype.hideStartAnimate = function (callback) {
     core.hideWithAnimate(core.dom.startPanel, 20, callback);
 };
+
 control.prototype.isPlaying = function () {
     return core.status.played;
 };
+
 control.prototype.clearStatus = function () {
     for (var i in core.timeout) {
         clearTimeout(core.timeout[i]);
@@ -493,6 +514,7 @@ control.prototype.clearStatus = function () {
     core.deleteAllCanvas();
     core.status.played = false;
 };
+
 control.prototype._initStatistics = function (totalTime) {
     if (!core.isset(core.status.hero.statistics))
         core.status.hero.statistics = {
@@ -509,6 +531,7 @@ control.prototype._initStatistics = function (totalTime) {
             ignoreSteps: 0,
         };
 };
+
 control.prototype.clearAutomaticRouteNode = function (x, y) {
     core.clearMap(
         "route",
@@ -518,6 +541,7 @@ control.prototype.clearAutomaticRouteNode = function (x, y) {
         27,
     );
 };
+
 control.prototype.stopAutomaticRoute = function () {
     if (!core.status.played) return;
     core.status.automaticRoute.autoHeroMove = false;
@@ -532,6 +556,7 @@ control.prototype.stopAutomaticRoute = function () {
     if (core.status.automaticRoute.moveStepBeforeStop.length == 0)
         core.deleteCanvas("route");
 };
+
 control.prototype.saveAndStopAutomaticRoute = function () {
     var automaticRoute = core.status.automaticRoute;
     if (automaticRoute.moveStepBeforeStop.length == 0) {
@@ -544,6 +569,7 @@ control.prototype.saveAndStopAutomaticRoute = function () {
     }
     this.stopAutomaticRoute();
 };
+
 control.prototype.continueAutomaticRoute = function () {
     var moveStep = core.status.automaticRoute.moveStepBeforeStop;
     if (
@@ -555,11 +581,13 @@ control.prototype.continueAutomaticRoute = function () {
         core.setAutoHeroMove(moveStep);
     }
 };
+
 control.prototype.clearContinueAutomaticRoute = function (callback) {
     core.deleteCanvas("route");
     core.status.automaticRoute.moveStepBeforeStop = [];
     if (callback) callback();
 };
+
 control.prototype.setAutomaticRoute = function (destX, destY, stepPostfix) {
     if (!core.status.played || core.status.lockControl) return;
     if (this._setAutomaticRoute_isMoving(destX, destY)) return;
@@ -581,6 +609,7 @@ control.prototype.setAutomaticRoute = function (destX, destY, stepPostfix) {
     this._setAutomaticRoute_setAutoSteps(moveStep);
     core.setAutoHeroMove();
 };
+
 control.prototype._setAutomaticRoute_isMoving = function (destX, destY) {
     if (core.status.automaticRoute.autoHeroMove) {
         var lastX = core.status.automaticRoute.destX,
@@ -602,6 +631,7 @@ control.prototype._setAutomaticRoute_isMoving = function (destX, destY) {
     }
     return false;
 };
+
 control.prototype._setAutomaticRoute_isTurning = function (
     destX,
     destY,
@@ -629,6 +659,7 @@ control.prototype._setAutomaticRoute_isTurning = function (
     if (core.timeout.turnHeroTimeout != null) return true;
     return false;
 };
+
 control.prototype._setAutomaticRoute_clickMoveDirectly = function (
     destX,
     destY,
@@ -644,6 +675,7 @@ control.prototype._setAutomaticRoute_clickMoveDirectly = function (
     }
     return false;
 };
+
 control.prototype._setAutomaticRoute_drawRoute = function (moveStep) {
     var sx = core.bigmap.width * 32,
         sy = core.bigmap.height * 32,
@@ -695,6 +727,7 @@ control.prototype._setAutomaticRoute_drawRoute = function (moveStep) {
         }
     }
 };
+
 control.prototype._setAutomaticRoute_setAutoSteps = function (moveStep) {
     var step = 0,
         currStep = null;
@@ -724,6 +757,7 @@ control.prototype.setAutoHeroMove = function (steps) {
     core.status.automaticRoute.destStep = steps[0].step;
     core.moveHero(steps[0].direction);
 };
+
 control.prototype.setHeroMoveInterval = function (callback) {
     if (core.status.heroMoving > 0) return;
     if (core.status.replay.speed == 24) {
@@ -748,9 +782,11 @@ control.prototype.setHeroMoveInterval = function (callback) {
         ((core.values.moveSpeed / 8) * toAdd) / core.status.replay.speed,
     );
 };
+
 control.prototype.moveOneStep = function (callback) {
     return this.controldata.moveOneStep(callback);
 };
+
 control.prototype.moveAction = function (callback) {
     if (core.status.heroMoving > 0) return;
     var noPass = core.noPass(core.nextX(), core.nextY()),
@@ -758,6 +794,7 @@ control.prototype.moveAction = function (callback) {
     if (noPass || !canMove) return this._moveAction_noPass(canMove, callback);
     this._moveAction_moving(callback);
 };
+
 control.prototype._moveAction_noPass = function (canMove, callback) {
     core.status.route.push(core.getHeroLoc("direction"));
     core.status.automaticRoute.moveStepBeforeStop = [];
@@ -770,6 +807,7 @@ control.prototype._moveAction_noPass = function (canMove, callback) {
     }
     if (callback) callback();
 };
+
 control.prototype._moveAction_moving = function (callback) {
     core.setHeroMoveInterval(function () {
         core.setHeroLoc("x", core.nextX(), true);
@@ -808,6 +846,7 @@ control.prototype._moveAction_popAutomaticRoute = function () {
         }
     }
 };
+
 control.prototype.moveHero = function (direction, callback) {
     if (core.status.heroMoving != 0) return;
     if (core.isset(direction)) core.setHeroLoc("direction", direction);
@@ -815,6 +854,7 @@ control.prototype.moveHero = function (direction, callback) {
     if (callback) return this.moveAction(callback);
     this._moveHero_moving();
 };
+
 control.prototype._moveHero_moving = function () {
     core.status.heroStop = false;
     core.status.automaticRoute.moveDirectly = false;
@@ -844,9 +884,11 @@ control.prototype._moveHero_moving = function () {
     };
     move();
 };
+
 control.prototype.isMoving = function () {
     return !core.status.heroStop || core.status.heroMoving > 0;
 };
+
 control.prototype.waitHeroToStop = function (callback) {
     var lastDirection = core.status.automaticRoute.lastDirection;
     core.stopAutomaticRoute();
@@ -867,6 +909,7 @@ control.prototype.waitHeroToStop = function (callback) {
         );
     }
 };
+
 control.prototype.turnHero = function (direction) {
     if (direction) {
         core.setHeroLoc("direction", direction);
@@ -879,9 +922,11 @@ control.prototype.turnHero = function (direction) {
     core.status.route.push("turn");
     core.checkRouteFolding();
 };
+
 control.prototype.moveDirectly = function (destX, destY, ignoreSteps) {
     return this.controldata.moveDirectly(destX, destY, ignoreSteps);
 };
+
 control.prototype.tryMoveDirectly = function (destX, destY) {
     if (this.nearHero(destX, destY)) return false;
     var canMoveArray = core.maps.generateMovableArray();
@@ -908,12 +953,13 @@ control.prototype.tryMoveDirectly = function (destX, destY) {
         if (dir && !core.inArray(canMoveArray[dx][dy], dir)) continue;
         if (canMoveDirectlyArray[i] < 0) continue;
         if (core.control.moveDirectly(dx, dy, canMoveDirectlyArray[i])) {
-            if (dir) core.moveHero(dir, function () {});
+            if (dir) core.moveHero(dir, function () { });
             return true;
         }
     }
     return false;
 };
+
 control.prototype.drawHero = function (status, offset, frame) {
     if (!core.isPlaying() || !core.status.floorId || core.status.gameOver)
         return;
@@ -942,6 +988,7 @@ control.prototype.drawHero = function (status, offset, frame) {
     }
     this._drawHero_draw(direction, x, y, status, offset, frame);
 };
+
 control.prototype._drawHero_updateViewport = function (x, y, offset) {
     core.bigmap.offsetX = core.clamp(
         (x - core._HALF_WIDTH_) * 32 + offset.x,
@@ -955,6 +1002,7 @@ control.prototype._drawHero_updateViewport = function (x, y, offset) {
     );
     core.control.updateViewport();
 };
+
 control.prototype._drawHero_draw = function (
     direction,
     x,
@@ -971,7 +1019,7 @@ control.prototype._drawHero_draw = function (
                 "hero",
                 block.img,
                 ((block.heroIcon[block.status] + (frame || 0)) % 4) *
-                    block.width,
+                block.width,
                 block.heroIcon.loc * block.height,
                 block.width,
                 block.height,
@@ -984,6 +1032,7 @@ control.prototype._drawHero_draw = function (
     );
     core.setAlpha("hero", opacity);
 };
+
 control.prototype._drawHero_getDrawObjs = function (
     direction,
     x,
@@ -1017,14 +1066,14 @@ control.prototype._drawHero_getDrawObjs = function (
                     (t.stop
                         ? 0
                         : core.utils.scan2[t.direction].x *
-                          Math.abs(offset.offset)),
+                        Math.abs(offset.offset)),
                 posy:
                     32 * t.y -
                     core.bigmap.offsetY +
                     (t.stop
                         ? 0
                         : core.utils.scan2[t.direction].y *
-                          Math.abs(offset.offset)),
+                        Math.abs(offset.offset)),
                 status: t.stop ? "stop" : status,
                 index: index++,
             });
@@ -1034,6 +1083,7 @@ control.prototype._drawHero_getDrawObjs = function (
         return a.posy == b.posy ? b.index - a.index : a.posy - b.posy;
     });
 };
+
 control.prototype.setHeroOpacity = function (
     opacity,
     moveMode,
@@ -1071,6 +1121,7 @@ control.prototype.setHeroOpacity = function (
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 control.prototype.setGameCanvasTranslate = function (canvas, x, y) {
     var c = core.dom.gameCanvas[canvas];
     x = x * core.domStyle.scale;
@@ -1106,10 +1157,11 @@ control.prototype.setGameCanvasTranslate = function (canvas, x, y) {
             "vw)";
     }
 };
+
 control.prototype.addGameCanvasTranslate = function (x, y) {
     for (var ii = 0, canvas; (canvas = core.dom.gameCanvas[ii]); ii++) {
         var id = canvas.getAttribute("id");
-        if (id == "ui" || id == "data") continue; // UI层和data层不移动
+        if (id == "ui" || id == "data") continue;
         var offsetX = x,
             offsetY = y;
         if (core.bigmap.canvas.indexOf(id) >= 0) {
@@ -1124,6 +1176,7 @@ control.prototype.addGameCanvasTranslate = function (x, y) {
         core.control.setGameCanvasTranslate(id, offsetX, offsetY);
     }
 };
+
 control.prototype.updateViewport = function () {
     if (core.bigmap.v2) {
         if (
@@ -1154,7 +1207,6 @@ control.prototype.updateViewport = function () {
         core.status.automaticRoute.offsetX - core.bigmap.offsetX,
         core.status.automaticRoute.offsetY - core.bigmap.offsetY,
     );
-    // -
     for (var one in core.dymCanvas) {
         if (one.startsWith("_bigImage_")) {
             var ox = core.dymCanvas[one].canvas.getAttribute("_ox");
@@ -1169,6 +1221,7 @@ control.prototype.updateViewport = function () {
         }
     }
 };
+
 control.prototype.setViewport = function (px, py) {
     var originOffsetX = core.bigmap.offsetX,
         originOffsetY = core.bigmap.offsetY;
@@ -1187,6 +1240,7 @@ control.prototype.setViewport = function (px, py) {
     core.canvas.hero._px = px;
     core.canvas.hero._py = py;
 };
+
 control.prototype.moveViewport = function (x, y, moveMode, time, callback) {
     time = time || 0;
     time /= Math.max(core.status.replay.speed, 1);
@@ -1221,6 +1275,7 @@ control.prototype.moveViewport = function (x, y, moveMode, time, callback) {
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = callback;
 };
+
 control.prototype.nextX = function (n) {
     if (n == null) n = 1;
     return (
@@ -1228,6 +1283,7 @@ control.prototype.nextX = function (n) {
         core.utils.scan[core.getHeroLoc("direction")].x * n
     );
 };
+
 control.prototype.nextY = function (n) {
     if (n == null) n = 1;
     return (
@@ -1235,14 +1291,16 @@ control.prototype.nextY = function (n) {
         core.utils.scan[core.getHeroLoc("direction")].y * n
     );
 };
+
 control.prototype.nearHero = function (x, y, n) {
     if (n == null) n = 1;
     return (
         Math.abs(x - core.getHeroLoc("x")) +
-            Math.abs(y - core.getHeroLoc("y")) <=
+        Math.abs(y - core.getHeroLoc("y")) <=
         n
     );
 };
+
 control.prototype.gatherFollowers = function () {
     var x = core.getHeroLoc("x"),
         y = core.getHeroLoc("y"),
@@ -1254,6 +1312,7 @@ control.prototype.gatherFollowers = function () {
         t.direction = dir;
     });
 };
+
 control.prototype.updateFollowers = function () {
     core.status.hero.followers.forEach(function (t) {
         if (!t.stop) {
@@ -1280,6 +1339,7 @@ control.prototype.updateFollowers = function () {
         nowy = t.y;
     });
 };
+
 control.prototype._moveDirectyFollowers = function (x, y) {
     var route = core.automaticRoute(x, y);
     if (route.length == 0)
@@ -1310,9 +1370,11 @@ control.prototype._moveDirectyFollowers = function (x, y) {
         nowy = t.y;
     }
 };
+
 control.prototype.updateCheckBlock = function (floorId) {
     return this.controldata.updateCheckBlock(floorId);
 };
+
 control.prototype.checkBlock = function () {
     var x = core.getHeroLoc("x"),
         y = core.getHeroLoc("y"),
@@ -1347,6 +1409,7 @@ control.prototype._checkBlock_disableQuickShop = function () {
         });
     }
 };
+
 control.prototype._checkBlock_repulse = function (repulse) {
     if (!repulse || repulse.length == 0) return;
     var actions = [];
@@ -1363,6 +1426,7 @@ control.prototype._checkBlock_repulse = function (repulse) {
     actions.push({ type: "waitAsync" });
     core.insertAction(actions);
 };
+
 control.prototype._checkBlock_ambush = function (ambush) {
     if (!ambush || ambush.length == 0) return;
     var actions = [];
@@ -1395,6 +1459,7 @@ control.prototype._checkBlock_ambush = function (ambush) {
     });
     core.insertAction(actions);
 };
+
 control.prototype.updateDamage = function (floorId, ctx) {
     floorId = floorId || core.status.floorId;
     if (!floorId || core.status.gameOver || main.mode != "play") return;
@@ -1411,6 +1476,7 @@ control.prototype.updateDamage = function (floorId, ctx) {
     this._updateDamage_extraDamage(floorId, onMap);
     this.drawDamage(ctx);
 };
+
 control.prototype._updateDamage_damage = function (floorId, onMap) {
     core.status.damage.data = [];
     if (!core.flags.displayEnemyDamage && !core.flags.displayExtraDamage)
@@ -1468,6 +1534,7 @@ control.prototype._updateDamage_damage = function (floorId, onMap) {
         }
     });
 };
+
 control.prototype._updateDamage_extraDamage = function (floorId, onMap) {
     core.status.damage.extraData = [];
     if (!core.flags.displayExtraDamage) return;
@@ -1480,9 +1547,9 @@ control.prototype._updateDamage_extraDamage = function (floorId, onMap) {
     var endX =
         onMap && core.bigmap.v2
             ? Math.min(
-                  width,
-                  core.bigmap.posX + core._WIDTH_ + core.bigmap.extend + 1,
-              )
+                width,
+                core.bigmap.posX + core._WIDTH_ + core.bigmap.extend + 1,
+            )
             : width;
     var startY =
         onMap && core.bigmap.v2
@@ -1491,9 +1558,9 @@ control.prototype._updateDamage_extraDamage = function (floorId, onMap) {
     var endY =
         onMap && core.bigmap.v2
             ? Math.min(
-                  height,
-                  core.bigmap.posY + core._HEIGHT_ + core.bigmap.extend + 1,
-              )
+                height,
+                core.bigmap.posY + core._HEIGHT_ + core.bigmap.extend + 1,
+            )
             : height;
     for (var x = startX; x < endX; x++) {
         for (var y = startY; y < endY; y++) {
@@ -1526,6 +1593,7 @@ control.prototype._updateDamage_extraDamage = function (floorId, onMap) {
         }
     }
 };
+
 control.prototype.drawDamage = function (ctx) {
     if (core.status.gameOver || !core.status.damage || main.mode != "play")
         return;
@@ -1538,15 +1606,16 @@ control.prototype.drawDamage = function (ctx) {
     if (onMap && core.bigmap.v2) {
         if (
             Math.abs(core.bigmap.posX - core.status.damage.posX) >=
-                core.bigmap.extend - 1 ||
+            core.bigmap.extend - 1 ||
             Math.abs(core.bigmap.posY - core.status.damage.posY) >=
-                core.bigmap.extend - 1
+            core.bigmap.extend - 1
         ) {
             return this.updateDamage();
         }
     }
     return this._drawDamage_draw(ctx, onMap);
 };
+
 control.prototype._drawDamage_draw = function (ctx, onMap) {
     if (!core.hasItem("book")) return;
     core.setFont(ctx, "bold 11px Arial");
@@ -1587,6 +1656,7 @@ control.prototype._drawDamage_draw = function (ctx, onMap) {
         core.setAlpha(ctx, alpha);
     });
 };
+
 control.prototype.chooseReplayFile = function () {
     core.readFile(
         function (obj) {
@@ -1613,6 +1683,7 @@ control.prototype.chooseReplayFile = function () {
         ".h5route",
     );
 };
+
 control.prototype.startReplay = function (list) {
     if (!core.isPlaying()) return;
     core.status.replay.replaying = true;
@@ -1630,16 +1701,19 @@ control.prototype.startReplay = function (list) {
     core.drawTip("开始播放");
     this.replay();
 };
+
 control.prototype.triggerReplay = function () {
     if (core.status.replay.pausing) this.resumeReplay();
     else this.pauseReplay();
 };
+
 control.prototype.pauseReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     core.status.replay.pausing = true;
     core.updateStatusBar(false, true);
     core.drawTip("暂停播放");
 };
+
 control.prototype.resumeReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (core.isMoving() || core.status.replay.animate || core.status.event.id) {
@@ -1651,6 +1725,7 @@ control.prototype.resumeReplay = function () {
     core.drawTip("恢复播放");
     core.replay();
 };
+
 control.prototype.stepReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1663,6 +1738,7 @@ control.prototype.stepReplay = function () {
     }
     core.replay(true);
 };
+
 control.prototype.speedUpReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     var speeds = [0.2, 0.5, 1, 2, 3, 6, 12, 24];
@@ -1674,6 +1750,7 @@ control.prototype.speedUpReplay = function () {
     }
     core.drawTip("x" + core.status.replay.speed + "倍");
 };
+
 control.prototype.speedDownReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     var speeds = [0.2, 0.5, 1, 2, 3, 6, 12, 24];
@@ -1685,11 +1762,13 @@ control.prototype.speedDownReplay = function () {
     }
     core.drawTip("x" + core.status.replay.speed + "倍");
 };
+
 control.prototype.setReplaySpeed = function (speed) {
     if (!core.isPlaying() || !core.isReplaying()) return;
     core.status.replay.speed = speed;
     core.drawTip("x" + core.status.replay.speed + "倍");
 };
+
 control.prototype.stopReplay = function (force) {
     if (!core.isPlaying()) return;
     if (!core.isReplaying() && !force) return;
@@ -1705,6 +1784,7 @@ control.prototype.stopReplay = function (force) {
     core.updateStatusBar(false, true);
     core.drawTip("停止播放并恢复游戏");
 };
+
 control.prototype.rewindReplay = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1740,6 +1820,7 @@ control.prototype.rewindReplay = function () {
         core.drawTip("成功回退到上一个节点");
     });
 };
+
 control.prototype._replay_SL = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1764,6 +1845,7 @@ control.prototype._replay_SL = function () {
 
     core.ui._drawSLPanel(10 * page + offset);
 };
+
 control.prototype._replay_book = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1793,6 +1875,7 @@ control.prototype._replay_book = function () {
     core.status.event.id = "book";
     core.useItem("book", true);
 };
+
 control.prototype._replay_viewMap = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1808,6 +1891,7 @@ control.prototype._replay_viewMap = function () {
     core.status.event.id = "viewMaps";
     core.ui._drawViewMaps();
 };
+
 control.prototype._replay_toolbox = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1824,6 +1908,7 @@ control.prototype._replay_toolbox = function () {
     core.status.event.id = "toolbox";
     core.ui._drawToolbox();
 };
+
 control.prototype._replay_equipbox = function () {
     if (!core.isPlaying() || !core.isReplaying()) return;
     if (!core.status.replay.pausing) {
@@ -1840,9 +1925,11 @@ control.prototype._replay_equipbox = function () {
     core.status.event.id = "equipbox";
     core.ui._drawEquipbox();
 };
+
 control.prototype.isReplaying = function () {
     return (core.status.replay || {}).replaying;
 };
+
 control.prototype.replay = function (force) {
     if (
         !core.isPlaying() ||
@@ -1860,15 +1947,18 @@ control.prototype.replay = function (force) {
     if (this._doReplayAction(action)) return;
     this._replay_error(action);
 };
+
 control.prototype.registerReplayAction = function (name, func) {
     this.unregisterReplayAction(name);
     this.replayActions.push({ name: name, func: func });
 };
+
 control.prototype.unregisterReplayAction = function (name) {
     this.replayActions = this.replayActions.filter(function (b) {
         return b.name != name;
     });
 };
+
 control.prototype._doReplayAction = function (action) {
     for (var i in this.replayActions) {
         try {
@@ -1878,14 +1968,15 @@ control.prototype._doReplayAction = function (action) {
             console.error(e);
             console.error(
                 "ERROR in replayActions[" +
-                    this.replayActions[i].name +
-                    "]：已自动注销该项。",
+                this.replayActions[i].name +
+                "]：已自动注销该项。",
             );
             core.unregisterReplayAction(this.replayActions[i].name);
         }
     }
     return false;
 };
+
 control.prototype._replay_finished = function () {
     core.status.replay.replaying = false;
     core.status.replay.failed = false;
@@ -1911,6 +2002,7 @@ control.prototype._replay_finished = function () {
         },
     );
 };
+
 control.prototype._replay_save = function () {
     core.status.replay.steps++;
     if (core.status.replay.steps % 40 == 1) {
@@ -1926,6 +2018,7 @@ control.prototype._replay_save = function () {
         });
     }
 };
+
 control.prototype._replay_error = function (action, callback) {
     core.ui.closePanel();
     core.status.replay.replaying = false;
@@ -1960,10 +2053,12 @@ control.prototype._replay_error = function (action, callback) {
         },
     );
 };
+
 control.prototype._replay_hideProgress = function () {
     if (core.dymCanvas.replay)
         core.dymCanvas.replay.canvas.style.display = "none";
 };
+
 control.prototype._replay_drawProgress = function () {
     if (!core.dymCanvas.replay) return;
     if (core.dymCanvas.replay.canvas.style.display == "none")
@@ -1983,15 +2078,18 @@ control.prototype._replay_drawProgress = function () {
     core.fillRect("replay", 0, 0, width, 40, "#000000");
     core.fillText("replay", content, 16, 27, "#FFFFFF");
 };
+
 control.prototype.__replay_getTimeout = function () {
     if (core.status.replay.speed == 24) return 0;
     return 750 / Math.max(1, core.status.replay.speed);
 };
+
 control.prototype._replayAction_move = function (action) {
     if (["up", "down", "left", "right"].indexOf(action) < 0) return false;
     core.moveHero(action, core.replay);
     return true;
 };
+
 control.prototype._replayAction_item = function (action) {
     if (action.indexOf("item:") != 0) return false;
     var itemId = action.substring(5);
@@ -2028,6 +2126,7 @@ control.prototype._replayAction_item = function (action) {
     }, core.control.__replay_getTimeout());
     return true;
 };
+
 control.prototype._replayAction_equip = function (action) {
     if (action.indexOf("equip:") != 0) return false;
     var equipId = action.substring(6);
@@ -2068,6 +2167,7 @@ control.prototype._replayAction_equip = function (action) {
     }, core.control.__replay_getTimeout());
     return true;
 };
+
 control.prototype._replayAction_unEquip = function (action) {
     if (action.indexOf("unEquip:") != 0) return false;
     var equipType = parseInt(action.substring(8));
@@ -2096,18 +2196,21 @@ control.prototype._replayAction_unEquip = function (action) {
     }, core.control.__replay_getTimeout());
     return true;
 };
+
 control.prototype._replayAction_saveEquip = function (action) {
     if (action.indexOf("saveEquip:") != 0) return false;
     core.quickSaveEquip(parseInt(action.substring(10)));
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_loadEquip = function (action) {
     if (action.indexOf("loadEquip:") != 0) return false;
     core.quickLoadEquip(parseInt(action.substring(10)));
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_fly = function (action) {
     if (action.indexOf("fly:") != 0) return false;
     var floorId = action.substring(4);
@@ -2129,6 +2232,7 @@ control.prototype._replayAction_fly = function (action) {
     }, core.control.__replay_getTimeout());
     return true;
 };
+
 control.prototype._replayAction_shop = function (action) {
     if (action.indexOf("shop:") != 0) return false;
     var shopId = action.substring(5);
@@ -2140,6 +2244,7 @@ control.prototype._replayAction_shop = function (action) {
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_turn = function (action) {
     if (action != "turn" && action.indexOf("turn:") != 0) return false;
     if (action == "turn") core.turnHero();
@@ -2147,12 +2252,14 @@ control.prototype._replayAction_turn = function (action) {
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_getNext = function (action) {
     if (action != "getNext") return false;
     core.getNextItem();
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_moveDirectly = function (action) {
     if (action.indexOf("move:") != 0) return false;
     if (
@@ -2196,12 +2303,14 @@ control.prototype._replayAction_moveDirectly = function (action) {
     }, timeout);
     return true;
 };
+
 control.prototype._replayAction_key = function (action) {
     if (action.indexOf("key:") != 0) return false;
     core.actions.keyUp(parseInt(action.substring(4)), false, true);
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_click = function (action) {
     if (action.indexOf("click:") != 0) return false;
     var p = action.split(":");
@@ -2215,6 +2324,7 @@ control.prototype._replayAction_click = function (action) {
     core.replay();
     return true;
 };
+
 control.prototype._replayAction_ignoreInput = function (action) {
     if (
         action.indexOf("input:") == 0 ||
@@ -2228,12 +2338,14 @@ control.prototype._replayAction_ignoreInput = function (action) {
     }
     return false;
 };
+
 control.prototype._replayAction_no = function (action) {
     if (action != "no") return false;
     core.status.route.push(action);
     core.replay();
     return true;
 };
+
 control.prototype.autosave = function (removeLast) {
     if (core.hasFlag("__forbidSave__")) return;
     var x = null;
@@ -2242,7 +2354,6 @@ control.prototype.autosave = function (removeLast) {
         core.status.route.push("turn:" + core.getHeroLoc("direction"));
     }
     if (core.status.event.id == "action" && !removeLast)
-        // 事件中自动存档，读档后是否回到事件触发前
         core.setFlag("__events__", core.clone(core.status.event.data));
     if (core.saves.autosave.data == null) {
         core.saves.autosave.data = [];
@@ -2269,6 +2380,7 @@ control.prototype.autosave = function (removeLast) {
         if (x) core.status.route.push(x);
     }
 };
+
 control.prototype.checkAutosave = function () {
     if (!core.animateFrame || !core.saves || !core.saves.autosave) return;
     core.setLocalStorage("totalTime", core.animateFrame.totalTime);
@@ -2279,6 +2391,7 @@ control.prototype.checkAutosave = function () {
         core.setLocalForage("autoSave", autosave.data[autosave.now - 1]);
     }
 };
+
 control.prototype.doSL = function (id, type) {
     switch (type) {
         case "save":
@@ -2332,6 +2445,7 @@ control.prototype._doSL_save = function (id) {
     core.removeFlag("__events__");
     return;
 };
+
 control.prototype._doSL_load = function (id, callback) {
     if (id == "autoSave" && core.saves.autosave.data != null) {
         core.saves.autosave.now -= 1;
@@ -2371,6 +2485,7 @@ control.prototype._doSL_load = function (id, callback) {
     }
     return;
 };
+
 control.prototype._doSL_reload = function (id, callback) {
     if (
         core.saves.autosave.data != null &&
@@ -2385,6 +2500,7 @@ control.prototype._doSL_reload = function (id, callback) {
     }
     return;
 };
+
 control.prototype._doSL_load_afterGet = function (id, data) {
     if (!data) return alert("无效的存档");
     var _replay = function () {
@@ -2415,6 +2531,7 @@ control.prototype._doSL_load_afterGet = function (id, data) {
         }
     });
 };
+
 control.prototype._doSL_replayLoad_afterGet = function (id, data) {
     if (!data) {
         core.playSound("操作失败");
@@ -2439,6 +2556,7 @@ control.prototype._doSL_replayLoad_afterGet = function (id, data) {
         core.drawTip("回退到存档节点");
     });
 };
+
 control.prototype._doSL_replayRemain_afterGet = function (id, data) {
     if (!data) {
         core.playSound("操作失败");
@@ -2477,6 +2595,7 @@ control.prototype._doSL_replayRemain_afterGet = function (id, data) {
         },
     );
 };
+
 control.prototype._doSL_replaySince_afterGet = function (id, data) {
     if (
         data.floorId != core.status.floorId ||
@@ -2490,6 +2609,7 @@ control.prototype._doSL_replaySince_afterGet = function (id, data) {
     core.drawTip("播放存档剩余录像");
     return;
 };
+
 control.prototype.syncSave = function (type) {
     core.ui.drawWaiting("正在同步，请稍候...");
     var callback = function (saves) {
@@ -2498,6 +2618,7 @@ control.prototype.syncSave = function (type) {
     if (type == "all") core.getAllSaves(callback);
     else core.getSave(core.saves.saveIndex, callback);
 };
+
 control.prototype._syncSave_http = function (type, saves) {
     if (!saves) return core.drawText("没有要同步的存档");
     var formData = new FormData();
@@ -2514,17 +2635,17 @@ control.prototype._syncSave_http = function (type, saves) {
             if (response.code < 0) {
                 core.drawText(
                     "出错啦！\n无法同步存档到服务器。\n错误原因：" +
-                        response.msg,
+                    response.msg,
                 );
             } else {
                 core.drawText(
                     (type == "all"
                         ? "所有存档"
                         : "存档" + core.saves.saveIndex) +
-                        "同步成功！\n\n您的存档编号+密码： \r[yellow]" +
-                        response.code +
-                        response.msg +
-                        "\r\n\n请牢记以上信息（如截图等），在从服务器\n同步存档时使用。\n\r[yellow]另外请注意，存档同步只会保存一个月的时间。\r",
+                    "同步成功！\n\n您的存档编号+密码： \r[yellow]" +
+                    response.code +
+                    response.msg +
+                    "\r\n\n请牢记以上信息（如截图等），在从服务器\n同步存档时使用。\n\r[yellow]另外请注意，存档同步只会保存一个月的时间。\r",
                 );
             }
         },
@@ -2533,6 +2654,7 @@ control.prototype._syncSave_http = function (type, saves) {
         },
     );
 };
+
 control.prototype.syncLoad = function () {
     core.myprompt("请输入存档编号+密码", null, function (idpassword) {
         if (!idpassword) return core.ui._drawSyncSave();
@@ -2557,6 +2679,7 @@ control.prototype.syncLoad = function () {
         }
     });
 };
+
 control.prototype._syncLoad_http = function (id, password) {
     var formData = new FormData();
     formData.append("type", "load");
@@ -2575,11 +2698,11 @@ control.prototype._syncLoad_http = function (id, password) {
                     msg = JSON.parse(
                         LZString.decompressFromBase64(response.msg),
                     );
-                } catch (e) {}
+                } catch (e) { }
                 if (!msg) {
                     try {
                         msg = JSON.parse(response.msg);
-                    } catch (e) {}
+                    } catch (e) { }
                 }
                 if (msg) {
                     core.control._syncLoad_write(msg);
@@ -2589,7 +2712,7 @@ control.prototype._syncLoad_http = function (id, password) {
             } else {
                 core.drawText(
                     "出错啦！\n无法从服务器同步存档。\n错误原因：" +
-                        response.msg,
+                    response.msg,
                 );
             }
         },
@@ -2598,6 +2721,7 @@ control.prototype._syncLoad_http = function (id, password) {
         },
     );
 };
+
 control.prototype._syncLoad_write = function (data) {
     if (data instanceof Array) {
         core.status.event.selection = 1;
@@ -2626,12 +2750,15 @@ control.prototype._syncLoad_write = function (data) {
         });
     }
 };
+
 control.prototype.saveData = function () {
     return this.controldata.saveData();
 };
+
 control.prototype.loadData = function (data, callback) {
     return this.controldata.loadData(data, callback);
 };
+
 control.prototype.getSave = function (index, callback) {
     if (index == 0) {
         if (core.saves.autosave.data != null)
@@ -2673,6 +2800,7 @@ control.prototype.getSave = function (index, callback) {
         },
     );
 };
+
 control.prototype.getSaves = function (ids, callback) {
     if (!(ids instanceof Array)) return this.getSave(ids, callback);
     var count = ids.length,
@@ -2686,14 +2814,15 @@ control.prototype.getSaves = function (ids, callback) {
         })(i);
     }
 };
+
 control.prototype.getAllSaves = function (callback) {
     var ids = Object.keys(core.saves.ids)
-            .filter(function (x) {
-                return x != 0;
-            })
-            .sort(function (a, b) {
-                return a - b;
-            }),
+        .filter(function (x) {
+            return x != 0;
+        })
+        .sort(function (a, b) {
+            return a - b;
+        }),
         saves = [];
     this.getSaves(ids, function (data) {
         for (var i = 0; i < ids.length; ++i) {
@@ -2702,6 +2831,7 @@ control.prototype.getAllSaves = function (callback) {
         callback(saves);
     });
 };
+
 control.prototype.getSaveIndexes = function (callback) {
     var indexes = {};
     core.keysLocalForage(function (err, keys) {
@@ -2715,6 +2845,7 @@ control.prototype.getSaveIndexes = function (callback) {
         callback(indexes);
     });
 };
+
 control.prototype._getSaveIndexes_getIndex = function (indexes, name) {
     var e = new RegExp(
         "^" + core.firstData.name + "_(save\\d+|autoSave)$",
@@ -2724,9 +2855,11 @@ control.prototype._getSaveIndexes_getIndex = function (indexes, name) {
         else indexes[parseInt(e[1].substring(4))] = true;
     }
 };
+
 control.prototype.hasSave = function (index) {
     return core.saves.ids[index] || false;
 };
+
 control.prototype.removeSave = function (index, callback) {
     if (index == 0 || index == "autoSave") {
         index = "autoSave";
@@ -2754,6 +2887,7 @@ control.prototype.removeSave = function (index, callback) {
         },
     );
 };
+
 control.prototype._loadFavoriteSaves = function () {
     core.saves.favorite = core.getLocalStorage("favorite", []);
     core.saves.favorite = core.saves.favorite.filter(function (i) {
@@ -2761,19 +2895,23 @@ control.prototype._loadFavoriteSaves = function () {
     });
     core.saves.favoriteName = core.getLocalStorage("favoriteName", {});
 };
+
 control.prototype._updateFavoriteSaves = function () {
     core.setLocalStorage("favorite", core.saves.favorite);
     core.setLocalStorage("favoriteName", core.saves.favoriteName);
 };
+
 control.prototype.setStatus = function (name, value) {
     if (!core.status.hero) return;
     if (name == "x" || name == "y" || name == "direction")
         this.setHeroLoc(name, value);
     else core.status.hero[name] = value;
 };
+
 control.prototype.addStatus = function (name, value) {
     this.setStatus(name, this.getStatus(name) + value);
 };
+
 control.prototype.getStatus = function (name) {
     if (!core.status.hero) return null;
     if (name == "x" || name == "y" || name == "direction")
@@ -2783,18 +2921,22 @@ control.prototype.getStatus = function (name) {
     }
     return core.status.hero[name];
 };
+
 control.prototype.getStatusOrDefault = function (status, name) {
     if (status && name in status) return Math.floor(status[name]);
     return Math.floor(this.getStatus(name));
 };
+
 control.prototype.getRealStatus = function (name) {
     return this.getRealStatusOrDefault(null, name);
 };
+
 control.prototype.getRealStatusOrDefault = function (status, name) {
     return Math.floor(
         this.getStatusOrDefault(status, name) * this.getBuff(name),
     );
 };
+
 control.prototype.getNakedStatus = function (name) {
     var value = this.getStatus(name);
     if (value == null) return value;
@@ -2811,6 +2953,7 @@ control.prototype.getNakedStatus = function (name) {
     }
     return value;
 };
+
 control.prototype.getStatusLabel = function (name) {
     if (this.controldata.getStatusLabel) {
         return this.controldata.getStatusLabel(name) || name;
@@ -2833,21 +2976,26 @@ control.prototype.getStatusLabel = function (name) {
         }[name] || name
     );
 };
+
 control.prototype.setBuff = function (name, value) {
     value = parseFloat(value.toFixed(3));
     this.setFlag("__" + name + "_buff__", value);
 };
+
 control.prototype.addBuff = function (name, value) {
     var buff = this.getBuff(name) + value;
     buff = parseFloat(buff.toFixed(3));
     this.setFlag("__" + name + "_buff__", buff);
 };
+
 control.prototype.getBuff = function (name) {
     return core.getFlag("__" + name + "_buff__", 1);
 };
+
 control.prototype.triggerDebuff = function (action, type) {
     return this.controldata.triggerDebuff(action, type);
 };
+
 control.prototype.setHeroLoc = function (name, value, noGather) {
     if (!core.status.hero) return;
     core.status.hero.loc[name] = value;
@@ -2856,6 +3004,7 @@ control.prototype.setHeroLoc = function (name, value, noGather) {
     }
     core.ui.drawStatusBar();
 };
+
 control.prototype.getHeroLoc = function (name) {
     if (!core.status.hero) return;
     if (main.mode == "editor") {
@@ -2868,11 +3017,13 @@ control.prototype.getHeroLoc = function (name) {
     if (name == null) return core.status.hero.loc;
     return core.status.hero.loc[name];
 };
+
 control.prototype.getLvName = function (lv) {
     if (!core.status.hero) return null;
     if (lv == null) lv = core.status.hero.lv;
     return ((core.firstData.levelUp || [])[lv - 1] || {}).title || lv;
 };
+
 control.prototype.getNextLvUpNeed = function () {
     if (!core.status.hero) return null;
     if (core.status.hero.lv >= core.firstData.levelUp.length) return null;
@@ -2881,27 +3032,33 @@ control.prototype.getNextLvUpNeed = function () {
         return Math.max(need - core.getStatus("exp"), 0);
     else return need;
 };
+
 control.prototype.setFlag = function (name, value) {
     if (value == null) return this.removeFlag(name);
     if (!core.status.hero) return;
     core.status.hero.flags[name] = value;
 };
+
 control.prototype.addFlag = function (name, value) {
     if (!core.status.hero) return;
     core.setFlag(name, core.getFlag(name, 0) + value);
 };
+
 control.prototype.getFlag = function (name, defaultValue) {
     if (!core.status.hero) return defaultValue;
     var value = core.status.hero.flags[name];
     return value != null ? value : defaultValue;
 };
+
 control.prototype.hasFlag = function (name) {
     return !!core.getFlag(name);
 };
+
 control.prototype.removeFlag = function (name) {
     if (!core.status.hero) return;
     delete core.status.hero.flags[name];
 };
+
 control.prototype.getSwitch = function (x, y, floorId, name, defaultValue) {
     var prefix = [
         floorId || core.status.floorId || ":f",
@@ -2910,6 +3067,7 @@ control.prototype.getSwitch = function (x, y, floorId, name, defaultValue) {
     ].join("@");
     return this.getFlag(prefix + "@" + name, defaultValue);
 };
+
 control.prototype.setSwitch = function (x, y, floorId, name, value) {
     var prefix = [
         floorId || core.status.floorId || ":f",
@@ -2918,6 +3076,7 @@ control.prototype.setSwitch = function (x, y, floorId, name, value) {
     ].join("@");
     return this.setFlag(prefix + "@" + name, value);
 };
+
 control.prototype.addSwitch = function (x, y, floorId, name, value) {
     var prefix = [
         floorId || core.status.floorId || ":f",
@@ -2926,6 +3085,7 @@ control.prototype.addSwitch = function (x, y, floorId, name, value) {
     ].join("@");
     return this.addFlag(prefix + "@" + name, value);
 };
+
 control.prototype.hasSwitch = function (x, y, floorId, name) {
     var prefix = [
         floorId || core.status.floorId || ":f",
@@ -2934,6 +3094,7 @@ control.prototype.hasSwitch = function (x, y, floorId, name) {
     ].join("@");
     return this.hasFlag(prefix + "@" + name);
 };
+
 control.prototype.removeSwitch = function (x, y, floorId, name) {
     var prefix = [
         floorId || core.status.floorId || ":f",
@@ -2942,18 +3103,22 @@ control.prototype.removeSwitch = function (x, y, floorId, name) {
     ].join("@");
     return this.removeFlag(prefix + "@" + name);
 };
+
 control.prototype.lockControl = function () {
     core.status.lockControl = true;
 };
+
 control.prototype.unlockControl = function () {
     core.status.lockControl = false;
 };
+
 control.prototype.debug = function () {
     core.setFlag("debug", true);
     core.drawText(
         "\t[调试模式开启]此模式下按住Ctrl键（或Ctrl+Shift键）可以穿墙并忽略一切事件。\n此模式下将无法上传成绩。",
     );
 };
+
 control.prototype._bindRoutePush = function () {
     core.status.route.push = function (element) {
         if (
@@ -2965,9 +3130,11 @@ control.prototype._bindRoutePush = function () {
         Array.prototype.push.call(core.status.route, element);
     };
 };
+
 control.prototype.clearRouteFolding = function () {
     core.status.routeFolding = {};
 };
+
 control.prototype.checkRouteFolding = function () {
     if (
         !core.flags.enableRouteFolding ||
@@ -3005,6 +3172,7 @@ control.prototype.checkRouteFolding = function () {
         length: core.status.route.length,
     };
 };
+
 control.prototype.getMappedName = function (name) {
     return (
         core.getFlag("__nameMap__", {})[name] ||
@@ -3012,6 +3180,7 @@ control.prototype.getMappedName = function (name) {
         name
     );
 };
+
 control.prototype.setWeather = function (type, level) {
     if (type == null || !this.weathers[type]) {
         core.deleteCanvas("weather");
@@ -3039,22 +3208,25 @@ control.prototype.setWeather = function (type, level) {
         core.unregisterWeather(type);
     }
 };
+
 control.prototype.registerWeather = function (name, initFunc, frameFunc) {
     this.unregisterWeather(name);
     this.weathers[name] = { initFunc: initFunc, frameFunc: frameFunc };
 };
+
 control.prototype.unregisterWeather = function (name) {
     delete this.weathers[name];
     if (core.animateFrame.weather.type == name) {
         this.setWeather(null);
     }
 };
+
 control.prototype._weather_rain = function (level) {
     var number =
         level *
         parseInt(
             (20 * core.bigmap.width * core.bigmap.height) /
-                (core._WIDTH_ * core._HEIGHT_),
+            (core._WIDTH_ * core._HEIGHT_),
         );
     for (var a = 0; a < number; a++) {
         core.animateFrame.weather.nodes.push({
@@ -3066,12 +3238,13 @@ control.prototype._weather_rain = function (level) {
         });
     }
 };
+
 control.prototype._weather_snow = function (level) {
     var number =
         level *
         parseInt(
             (20 * core.bigmap.width * core.bigmap.height) /
-                (core._WIDTH_ * core._HEIGHT_),
+            (core._WIDTH_ * core._HEIGHT_),
         );
     for (var a = 0; a < number; a++) {
         core.animateFrame.weather.nodes.push({
@@ -3082,6 +3255,7 @@ control.prototype._weather_snow = function (level) {
         });
     }
 };
+
 control.prototype._weather_fog = function (level) {
     if (!core.animateFrame.weather.fog) return;
     core.animateFrame.weather.nodes = [
@@ -3110,6 +3284,7 @@ control.prototype._weather_cloud = function (level) {
         },
     ];
 };
+
 control.prototype._weather_sun = function (level) {
     if (!core.animateFrame.weather.sun) return;
     core.clearMap("weather");
@@ -3128,6 +3303,7 @@ control.prototype._weather_sun = function (level) {
     core.setOpacity("weather", level / 10);
     core.animateFrame.weather.nodes = [{ opacity: level / 10, delta: 0.01 }];
 };
+
 control.prototype.setCurtain = function (color, time, moveMode, callback) {
     if (time == null) time = 750;
     if (time <= 0) time = 0;
@@ -3158,6 +3334,7 @@ control.prototype.setCurtain = function (color, time, moveMode, callback) {
         callback,
     );
 };
+
 control.prototype._setCurtain_animate = function (
     nowColor,
     color,
@@ -3202,6 +3379,7 @@ control.prototype._setCurtain_animate = function (
     core.animateFrame.lastAsyncId = animate;
     core.animateFrame.asyncId[animate] = cb;
 };
+
 control.prototype.screenFlash = function (
     color,
     time,
@@ -3228,6 +3406,7 @@ control.prototype.screenFlash = function (
         });
     });
 };
+
 control.prototype.playBgm = function (bgm, startTime) {
     bgm = core.getMappedName(bgm);
     if (main.mode != "play" || !core.material.bgms[bgm]) return;
@@ -3250,6 +3429,7 @@ control.prototype.playBgm = function (bgm, startTime) {
         core.musicStatus.playingBgm = null;
     }
 };
+
 control.prototype._playBgm_play = function (bgm, startTime) {
     if (
         core.musicStatus.playingBgm == bgm &&
@@ -3269,6 +3449,7 @@ control.prototype._playBgm_play = function (bgm, startTime) {
     core.musicStatus.lastBgm = bgm;
     core.setBgmSpeed(100);
 };
+
 control.prototype.setBgmSpeed = function (speed, usePitch) {
     var bgm = core.musicStatus.playingBgm;
     if (main.mode != "play" || !core.material.bgms[bgm]) return;
@@ -3285,6 +3466,7 @@ control.prototype.setBgmSpeed = function (speed, usePitch) {
         core.musicStatus.bgmUsePitch = usePitch;
     }
 };
+
 control.prototype.pauseBgm = function () {
     if (main.mode != "play") return;
     try {
@@ -3300,6 +3482,7 @@ control.prototype.pauseBgm = function () {
     }
     this.setMusicBtn();
 };
+
 control.prototype.resumeBgm = function (resumeTime) {
     if (main.mode != "play") return;
     try {
@@ -3307,8 +3490,8 @@ control.prototype.resumeBgm = function (resumeTime) {
         var usePitch = core.musicStatus.bgmUsePitch;
         core.playBgm(
             core.musicStatus.playingBgm ||
-                core.musicStatus.lastBgm ||
-                main.startBgm,
+            core.musicStatus.lastBgm ||
+            main.startBgm,
             resumeTime ? core.musicStatus.pauseTime : 0,
         );
         if (resumeTime) {
@@ -3320,6 +3503,7 @@ control.prototype.resumeBgm = function (resumeTime) {
     }
     this.setMusicBtn();
 };
+
 control.prototype.setMusicBtn = function () {
     if (core.musicStatus.bgmStatus)
         core.dom.musicBtn.src =
@@ -3328,6 +3512,7 @@ control.prototype.setMusicBtn = function () {
         core.dom.musicBtn.src =
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAABYlBMVEX///9iYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmL////8/PwAAABmZmZoaGihoaGioqKxsbG5ubnb29vc3Nzd3d3h4eHi4uL9/f3+/v4tLS1nZ2d0dHSUlJSenp66uroMDAz7+/spKSkoKCgUFBRpaWkVFRVvb291dXU7OzuVlZWYmJhkZGQgICAjIyOkpKQCAgK3t7cGBgbv7++pqamrq6seHh4mJiZhYWGamprp6enr6+saGhpeXl7j4+Pl5eXm5uZKSkrw8PD09PT19fW7u7vDw8PMzMwICAgwMDAyMjILCwtAQECGhoaHh4eBgYGFhYUSEhJXV1dZWVlcXFyOjo6SkpLNzc339/fPz8/Z2dna2tqTk5OlpaWxOPeTAAAAdnRSTlMAAwQFBhUWGxwkJSYyO0dISVBRUmpvj5CSk5SVoaOlpqiysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKyNuo+uwAAAWJJREFUeF5NkmV34zAQReUm7WbTuJBNunY3bvXGDjNTkZkZlpn5/9eR5FPfbzr3jGb0RkwRiMQMDm7EIgHmRxtLwMOaHHoQjwz4MUKeCM8AWMrmd7u7f/aXAMyOShHiQD1n04DtN5e5FMBFlSauIsm585dKi4CpuSYKJIv1tBDVmvOSqJgEoowFLSBHaQh10XHWiCgHWEGmAw2blPrvOK/KRJUGoLM4kCVSKrWz7HwgoiwQZyaQJ0+9PvxV23BNATAZB25IqX9b3+jTW9fcApwB6NLgUD5NY3mPXnwmFwBezff1ztzRFzTp94FXMy36HDuCa2RafdnnmZqtL818Gl9/qNnEeyrUk2aTPiKj3qMyWBVi/YSuWq5qiwxkbtX3vYWzdz/l8M0k8ERlvViiB1Ygslb7SbVtJezncj+Cx5bYaeGuonZqhZlieAp+no74/s5EAh6JcY35Cepxk4ObcT3IJPe/1lKsDpFCFQAAAABJRU5ErkJggg==";
 };
+
 control.prototype.triggerBgm = function () {
     if (main.mode != "play") return;
     core.musicStatus.bgmStatus = !core.musicStatus.bgmStatus;
@@ -3335,6 +3520,7 @@ control.prototype.triggerBgm = function () {
     else this.pauseBgm();
     core.setLocalStorage("bgmStatus", core.musicStatus.bgmStatus);
 };
+
 control.prototype.playSound = function (sound, pitch, callback) {
     sound = core.getMappedName(sound);
     if (
@@ -3371,6 +3557,7 @@ control.prototype.playSound = function (sound, pitch, callback) {
         console.error(e);
     }
 };
+
 control.prototype.stopSound = function (id) {
     if (id == null) {
         Object.keys(core.musicStatus.playingSounds).forEach(function (id) {
@@ -3388,6 +3575,7 @@ control.prototype.stopSound = function (id) {
     }
     delete core.musicStatus.playingSounds[id];
 };
+
 control.prototype.getPlayingSounds = function (name) {
     name = core.getMappedName(name);
     return Object.keys(core.musicStatus.playingSounds).filter(function (one) {
@@ -3396,9 +3584,11 @@ control.prototype.getPlayingSounds = function (name) {
         );
     });
 };
+
 control.prototype.checkBgm = function () {
     core.playBgm(core.musicStatus.playingBgm || main.startBgm);
 };
+
 control.prototype.setDisplayScale = function (delta) {
     var index = core.domStyle.availableScale.indexOf(core.domStyle.scale);
     if (index < 0) return;
@@ -3409,6 +3599,7 @@ control.prototype.setDisplayScale = function (delta) {
     core.setLocalStorage("scale", core.domStyle.scale);
     core.resize();
 };
+
 control.prototype.clearStatusBar = function () {
     Object.keys(core.statusBar).forEach(function (e) {
         if (core.statusBar[e].innerHTML != null) {
@@ -3421,6 +3612,7 @@ control.prototype.clearStatusBar = function () {
     if (!core.flags.equipboxButton)
         core.statusBar.image.fly.style.opacity = 0.3;
 };
+
 control.prototype.updateStatusBar = function (doNotCheckAutoEvents, immediate) {
     if (!core.isPlaying()) return;
     if (immediate) {
@@ -3433,6 +3625,7 @@ control.prototype.updateStatusBar = function (doNotCheckAutoEvents, immediate) {
         requestAnimationFrame(this.updateStatusBar_update);
     }
 };
+
 control.prototype.updateStatusBar_update = function () {
     core.control.updateNextFrame = false;
     if (!core.isPlaying() || core.hasFlag("__statistics__")) return;
@@ -3442,6 +3635,7 @@ control.prototype.updateStatusBar_update = function () {
     core.clearRouteFolding();
     core.control.noAutoEvents = true;
 };
+
 control.prototype._updateStatusBar_setToolboxIcon = function () {
     if (core.isReplaying()) {
         core.statusBar.image.book.src = core.status.replay.pausing
@@ -3489,7 +3683,6 @@ control.prototype.showStatusBar = function () {
     var statusItems = core.dom.status;
     core.domStyle.showStatusBar = true;
     core.removeFlag("hideStatusBar");
-    // 显示
     for (var i = 0; i < statusItems.length; ++i)
         statusItems[i].style.opacity = 1;
     this.setToolbarButton(false);
@@ -3519,6 +3712,7 @@ control.prototype.hideStatusBar = function (showToolbox) {
         core.dom.toolBar.style.display = "none";
     }
 };
+
 control.prototype.updateHeroIcon = function (name) {
     name = name || "hero.png";
     if (core.statusBar.icons.name == name) return;
@@ -3537,6 +3731,7 @@ control.prototype.updateHeroIcon = function (name) {
     core.drawImage(ctx, image, 0, 0, w, h, left, 0, width, 32);
     core.statusBar.image.name.src = canvas.toDataURL("image/png");
 };
+
 control.prototype.setToolbarButton = function (useButton) {
     if (!core.domStyle.showStatusBar) {
         if (!core.domStyle.isVertical && !core.flags.extendToolbar) {
@@ -3599,11 +3794,12 @@ control.prototype.setToolbarButton = function (useButton) {
         );
         core.statusBar.image.keyboard.style.display =
             core.statusBar.image.shop.style.display =
-                core.domStyle.isVertical || core.flags.extendToolbar
-                    ? "block"
-                    : "none";
+            core.domStyle.isVertical || core.flags.extendToolbar
+                ? "block"
+                : "none";
     }
 };
+
 control.prototype._shouldDisplayStatus = function (id) {
     if (id == null) {
         var toDraw = [],
@@ -3659,15 +3855,18 @@ control.prototype._shouldDisplayStatus = function (id) {
             return true;
     }
 };
+
 control.prototype.registerResize = function (name, func) {
     this.unregisterResize(name);
     this.resizes.push({ name: name, func: func });
 };
+
 control.prototype.unregisterResize = function (name) {
     this.resizes = this.resizes.filter(function (b) {
         return b.name != name;
     });
 };
+
 control.prototype._doResize = function (obj) {
     for (var i in this.resizes) {
         try {
@@ -3676,14 +3875,15 @@ control.prototype._doResize = function (obj) {
             console.error(e);
             console.error(
                 "ERROR in resizes[" +
-                    this.resizes[i].name +
-                    "]：已自动注销该项。",
+                this.resizes[i].name +
+                "]：已自动注销该项。",
             );
             this.unregisterResize(this.resizes[i].name);
         }
     }
     return false;
 };
+
 control.prototype.resize = function () {
     if (main.mode == "editor") return;
     var clientWidth = main.dom.body.clientWidth,
@@ -3730,8 +3930,8 @@ control.prototype.resize = function () {
         else
             alert(
                 "当前状态栏数目(" +
-                    count +
-                    ")大于15，请调整到不超过15以避免手机端出现显示问题。",
+                count +
+                ")大于15，请调整到不超过15以避免手机端出现显示问题。",
             );
     }
     var globalAttribute =
@@ -3764,6 +3964,7 @@ control.prototype.resize = function () {
     this.setToolbarButton();
     core.updateStatusBar();
 };
+
 control.prototype._resize_gameGroup = function (obj) {
     var startBackground = core.domStyle.isVertical
         ? main.styles.startVerticalBackground || main.styles.startBackground
@@ -3810,6 +4011,7 @@ control.prototype._resize_gameGroup = function (obj) {
             (obj.clientHeight - totalHeight) / 2 - 27 + "px";
     }
 };
+
 control.prototype._resize_canvas = function (obj) {
     var innerWidth = core._PX_ * core.domStyle.scale + "px",
         innerHeight = core._PY_ * core.domStyle.scale + "px";
@@ -3886,6 +4088,7 @@ control.prototype._resize_canvas = function (obj) {
     main.dom.next.style.borderBottomWidth =
         main.dom.next.style.borderRightWidth = 4 * core.domStyle.scale + "px";
 };
+
 control.prototype._resize_statusBar = function (obj) {
     var statusBar = core.dom.statusBar;
     if (core.domStyle.isVertical) {
@@ -3908,8 +4111,8 @@ control.prototype._resize_statusBar = function (obj) {
         } else {
             statusBar.style.fontSize =
                 16 *
-                    Math.min(1, (core._HEIGHT_ - 4) / obj.count) *
-                    core.domStyle.scale +
+                Math.min(1, (core._HEIGHT_ - 4) / obj.count) *
+                core.domStyle.scale +
                 "px";
         }
     }
@@ -3941,12 +4144,13 @@ control.prototype._resize_statusBar = function (obj) {
             core.dom.statusCanvasCtx,
             obj.BAR_WIDTH,
             core._PY_ +
-                (obj.extendToolbar ? obj.TOOLBAR_HEIGHT + obj.BORDER : 0),
+            (obj.extendToolbar ? obj.TOOLBAR_HEIGHT + obj.BORDER : 0),
         );
     }
     core.dom.statusCanvas.style.display =
         core.flags.statusCanvas && !obj.hideLeftStatusBar ? "block" : "none";
 };
+
 control.prototype._resize_status = function (obj) {
     var statusHeight;
     if (core.domStyle.isVertical) {
@@ -3971,8 +4175,8 @@ control.prototype._resize_status = function (obj) {
         style.height = statusHeight + "px";
         style.maxWidth =
             obj.BAR_WIDTH *
-                core.domStyle.scale *
-                (core.domStyle.isVertical ? 0.95 : 1) +
+            core.domStyle.scale *
+            (core.domStyle.isVertical ? 0.95 : 1) +
             obj.BORDER +
             "px";
         if (obj.is15x15 && !core.domStyle.isVertical)
@@ -3996,6 +4200,7 @@ control.prototype._resize_status = function (obj) {
         core.statusBar.greenKey.style.display = "none";
     }
 };
+
 control.prototype._resize_toolBar = function (obj) {
     var toolBar = core.dom.toolBar;
     if (core.domStyle.isVertical) {
@@ -4040,6 +4245,7 @@ control.prototype._resize_toolBar = function (obj) {
         toolBar.style.display = "block";
     }
 };
+
 control.prototype._resize_tools = function (obj) {
     var toolsHeight =
         32 *
