@@ -1,17 +1,12 @@
 /// <reference path="./runtime.d.ts" />
 function main() {
-    this.version = '2.10.3'; // 游戏版本号；如果更改了游戏内容建议修改此version以免造成缓存问题。
-
-    this.useCompress = false; // 是否使用压缩文件
-    // 当你即将发布你的塔时，请使用“JS代码压缩工具”将所有js代码进行压缩，然后将这里的useCompress改为true。
-    // 请注意，只有useCompress是false时才会读取floors目录下的文件，为true时会直接读取libs目录下的floors.min.js文件。
-    // 如果要进行剧本的修改请务必将其改成false。
-
-    this.bgmRemote = false; // 是否采用远程BGM
-    this.bgmRemoteRoot = 'https://h5mota.com/music/'; // 远程BGM的根目录
-    this.isCompetition = false; // 是否是比赛模式
-    this.savePages = 1000; // 存档页数，每页可存5个；默认为1000页5000个存档
-    this.criticalUseLoop = 1; // 循环临界的分界
+    this.version = '2.10.3';
+    this.useCompress = false;
+    this.bgmRemote = false;
+    this.bgmRemoteRoot = 'https://h5mota.com/music/';
+    this.isCompetition = false;
+    this.savePages = 1000;
+    this.criticalUseLoop = 1;
 
     this.dom = {
         body: document.body,
@@ -209,11 +204,13 @@ function main() {
     this.__VERSION__ = '2.10.3';
     this.__VERSION_CODE__ = 512;
 }
+
 main.prototype.init = function (mode, callback) {
     for (var i = 0; i < main.dom.gameCanvas.length; i++) {
         main.canvas[main.dom.gameCanvas[i].id] =
             main.dom.gameCanvas[i].getContext('2d');
     }
+
     main.mode = mode;
     main.loadJs('project', main.pureData, function () {
         var mainData = data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d.main;
@@ -319,6 +316,7 @@ main.prototype.init = function (mode, callback) {
         });
     });
 };
+
 main.prototype.loadJs = function (dir, loadList, callback) {
     main.setMainTipsText('正在加载核心js文件...');
     if (this.useCompress) {
@@ -338,6 +336,7 @@ main.prototype.loadJs = function (dir, loadList, callback) {
         }
     }
 };
+
 main.prototype.loadMod = function (dir, modName, callback, onerror) {
     var script = document.createElement('script');
     var name = modName;
@@ -353,6 +352,7 @@ main.prototype.loadMod = function (dir, modName, callback, onerror) {
     };
     main.dom.body.appendChild(script);
 };
+
 main.prototype.loadFloors = function (callback) {
     main.setMainTipsText('正在加载楼层文件...');
     if (this.useCompress) {
@@ -397,6 +397,7 @@ main.prototype.loadFloors = function (callback) {
         };
     main.dom.body.appendChild(script);
 };
+
 main.prototype.loadFloor = function (floorId, callback) {
     var script = document.createElement('script');
     script.src = 'project/floors/' + floorId + '.js?v=' + this.version;
@@ -405,9 +406,11 @@ main.prototype.loadFloor = function (floorId, callback) {
         callback(floorId);
     };
 };
+
 main.prototype.setMainTipsText = function (text) {
     main.dom.mainTips.innerHTML = text;
 };
+
 main.prototype.log = function (e, error) {
     if (e) {
         if (error) return console.error(e);
@@ -418,6 +421,7 @@ main.prototype.log = function (e, error) {
         }
     }
 };
+
 main.prototype.createOnChoiceAnimation = function () {
     var borderColor =
         main.dom.startButtonGroup.style.caretColor || 'rgb(255, 215, 0)';
@@ -446,6 +450,7 @@ main.prototype.createOnChoiceAnimation = function () {
         document.body.appendChild(style);
     }
 };
+
 main.prototype.selectButton = function (index) {
     var select = function (children) {
         index = (index + children.length) % children.length;
@@ -467,6 +472,7 @@ main.prototype.selectButton = function (index) {
         select(main.dom.levelChooseButtons.children);
     }
 };
+
 main.prototype.importFonts = function (fonts) {
     if (!(fonts instanceof Array) || fonts.length == 0) return;
     var style = document.createElement('style');
@@ -492,6 +498,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.body.onkeydown = function (e) {
         if (main.editorOpened) return;
         try {
@@ -505,6 +512,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.body.onkeyup = function (e) {
         if (main.editorOpened) return;
         try {
@@ -566,9 +574,11 @@ main.prototype.listen = function () {
             }
         };
     });
+
     main.dom.body.onselectstart = function () {
         return false;
     };
+
     main.dom.data.onmousedown = function (e) {
         try {
             e.stopPropagation();
@@ -579,6 +589,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.onmousemove = function (e) {
         try {
             e.stopPropagation();
@@ -589,6 +600,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.onmouseup = function (e) {
         try {
             e.stopPropagation();
@@ -599,6 +611,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.onmousewheel = function (e) {
         try {
             if (e.wheelDelta) main.core.onmousewheel(Math.sign(e.wheelDelta));
@@ -607,6 +620,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.ontouchstart = function (e) {
         try {
             e.preventDefault();
@@ -621,6 +635,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.ontouchmove = function (e) {
         try {
             e.preventDefault();
@@ -635,6 +650,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     main.dom.data.ontouchend = function (e) {
         try {
             e.preventDefault();
@@ -646,6 +662,7 @@ main.prototype.listen = function () {
             console.error(e);
         }
     };
+
     main.dom.statusCanvas.onclick = function (e) {
         try {
             e.preventDefault();
@@ -654,6 +671,7 @@ main.prototype.listen = function () {
             console.error(e);
         }
     };
+
     main.statusBar.image.book.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -662,6 +680,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.openBook(true);
     };
+
     main.statusBar.image.fly.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -676,6 +695,7 @@ main.prototype.listen = function () {
             }
         }
     };
+
     main.statusBar.image.toolbox.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -686,6 +706,7 @@ main.prototype.listen = function () {
             main.core.openToolbox(core.status.event.id != 'equipbox');
         }
     };
+
     main.statusBar.image.toolbox.ondblclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -693,6 +714,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.openEquipbox(true);
     };
+
     main.statusBar.image.keyboard.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -701,6 +723,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.openKeyBoard(true);
     };
+
     main.statusBar.image.shop.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -709,6 +732,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.openQuickShop(true);
     };
+
     main.statusBar.image.money.onclick = function (e) {
         e.stopPropagation();
 
@@ -725,6 +749,7 @@ main.prototype.listen = function () {
             core.ui._drawViewMaps();
         }
     };
+
     main.statusBar.image.save.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -733,6 +758,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.save(true);
     };
+
     main.statusBar.image.load.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -741,6 +767,7 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.load(true);
     };
+
     main.statusBar.image.settings.onclick = function (e) {
         e.stopPropagation();
         if (core.isReplaying()) {
@@ -749,9 +776,11 @@ main.prototype.listen = function () {
         }
         if (main.core.isPlaying()) main.core.openSettings(true);
     };
+
     main.dom.hard.onclick = function () {
         main.core.control.setToolbarButton(!core.domStyle.toolbarBtn);
     };
+
     main.statusBar.image.btn1.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -759,6 +788,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn2.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -766,6 +796,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn3.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -773,6 +804,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn4.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -780,6 +812,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn5.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -787,6 +820,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn6.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -794,6 +828,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn7.onclick = function (e) {
         e.stopPropagation();
         main.core.onkeyUp({
@@ -801,6 +836,7 @@ main.prototype.listen = function () {
             altKey: core.getLocalStorage('altKey')
         });
     };
+
     main.statusBar.image.btn8.onclick = function (e) {
         e.stopPropagation();
         if (core.getLocalStorage('altKey')) {
@@ -813,6 +849,7 @@ main.prototype.listen = function () {
             main.statusBar.image.btn8.style.filter = 'sepia(1) contrast(1.5)';
         }
     };
+
     main.dom.playGame.onclick = function () {
         main.dom.startButtons.style.display = 'none';
         main.core.control.checkBgm();
@@ -824,14 +861,17 @@ main.prototype.listen = function () {
             main.selectButton(0);
         }
     };
+
     main.dom.loadGame.onclick = function () {
         main.core.control.checkBgm();
         main.core.load();
     };
+
     main.dom.replayGame.onclick = function () {
         main.core.control.checkBgm();
         main.core.chooseReplayFile();
     };
+
     main.dom.musicBtn.onclick = function () {
         try {
             if (main.core) main.core.triggerBgm();
@@ -839,6 +879,7 @@ main.prototype.listen = function () {
             console.error(ee);
         }
     };
+
     window.onblur = function () {
         if (main.core && main.core.control) {
             try {
@@ -846,12 +887,14 @@ main.prototype.listen = function () {
             } catch (e) { }
         }
     };
+
     main.dom.inputYes.onclick = function () {
         main.dom.inputDiv.style.display = 'none';
         var func = core.platform.successCallback;
         core.platform.successCallback = core.platform.errorCallback = null;
         if (func) func(main.dom.inputBox.value);
     };
+
     main.dom.inputNo.onclick = function () {
         main.dom.inputDiv.style.display = 'none';
         var func = core.platform.errorCallback;
@@ -859,4 +902,5 @@ main.prototype.listen = function () {
         if (func) func(null);
     };
 };
+
 var main = new main();
