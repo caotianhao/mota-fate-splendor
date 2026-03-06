@@ -39,9 +39,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.dom.musicBtn.style.display = 'none';
 		},
 		"win": function (reason, norank, noexit) {
-			// 游戏获胜事件
-			// 请注意，成绩统计时是按照hp进行上传并排名
-			// 可以先在这里对最终分数进行计算，比如将2倍攻击和5倍黄钥匙数量加到分数上
 			// core.status.hero.hp += 2 * core.getRealStatus('atk') + 5 * core.itemCount('yellowKey');
 			if (noexit) {
 				core.status.extraEvent = core.clone(core.status.event);
@@ -77,13 +74,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			})
 		},
 		"changingFloor": function (floorId, heroLoc) {
-			// 正在切换楼层过程中执行的操作；此函数的执行时间是“屏幕完全变黑“的那一刻
-			// floorId为要切换到的楼层ID；heroLoc表示勇士切换到的位置
-
-			// ---------- 此时还没有进行切换，当前floorId还是原来的 ---------- //
-			var currentId = core.status.floorId || null; // 获得当前的floorId，可能为null
-			var fromLoad = core.hasFlag('__fromLoad__'); // 是否是读档造成的切换
-			var isFlying = core.hasFlag('__isFlying__'); // 是否是楼传造成的切换
+			var currentId = core.status.floorId || null;
+			var fromLoad = core.hasFlag('__fromLoad__');
+			var isFlying = core.hasFlag('__isFlying__');
 			if (!fromLoad && !(isFlying && currentId == floorId)) {
 				if (!core.hasFlag("__leaveLoc__")) core.setFlag("__leaveLoc__", {});
 				if (currentId != null) core.getFlag("__leaveLoc__")[currentId] = core.clone(core.status.hero.loc);
@@ -104,7 +97,6 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 				core.control.gatherFollowers();
 			}
 			core.drawMap(floorId);
-
 			if (core.status.maps[floorId].bgm) {
 				var bgm = core.status.maps[floorId].bgm;
 				if (bgm instanceof Array) bgm = bgm[Math.floor(Math.random() * bgm.length)]; // 多个bgm则随机播放一个
@@ -144,13 +136,11 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 		},
 		"flyTo": function (toId, callback) {
 			var fromId = core.status.floorId;
-
 			if (!core.status.maps[fromId].canFlyFrom || !core.status.maps[toId].canFlyTo || !core.hasVisitedFloor(toId)) {
 				core.playSound('操作失败');
 				core.drawTip("无法飞往" + core.status.maps[toId].title + "！", 'fly');
 				return false;
 			}
-
 			var stair = null,
 				loc = null;
 			if (core.flags.flyRecordPosition) {
@@ -189,14 +179,13 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 					});
 					core.push(actions, [
 						{ "type": "waitAsync" },
-						{ "type": "setBlock", "number": enemyId, "loc": [[x, y]] }, // 重新设置怪物自身
-						{ "type": "battle", "loc": [x, y] } // 重要！重新触发本次战斗
+						{ "type": "setBlock", "number": enemyId, "loc": [[x, y]] },
+						{ "type": "battle", "loc": [x, y] }
 					]);
 					core.insertAction(actions);
 					return false;
 				}
 			}
-
 			return true;
 		},
 		"afterBattle": function (enemyId, x, y) {
