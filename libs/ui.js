@@ -1467,11 +1467,9 @@ ui.prototype._drawBackground_drawColor = function (
     );
     core.setFillStyle(ctx, core.arrayToRGB(background));
     core.setLineWidth(ctx, 2);
-    // 绘制
     ctx = core.getContextByName(ctx);
     ctx.beginPath();
     ctx.moveTo(left, top);
-    // 上边缘三角
     if (position == "down" && px != null && py != null) {
         ctx.lineTo(px + xoffset, top);
         ctx.lineTo(px + 16, top - yoffset);
@@ -1479,7 +1477,6 @@ ui.prototype._drawBackground_drawColor = function (
     }
     ctx.lineTo(right, top);
     ctx.lineTo(right, bottom);
-    // 下边缘三角
     if (position == "up" && px != null && py != null) {
         ctx.lineTo(px + 32 - xoffset, bottom);
         ctx.lineTo(px + 16, bottom + yoffset);
@@ -1639,7 +1636,6 @@ ui.prototype._drawTextContent_draw = function (ctx, tempCtx, content, config) {
         if (config.index >= config.blocks.length) return false;
         var block = config.blocks[config.index++];
         if (block != null) {
-            // It works, why?
             const scale = config.isHD
                 ? devicePixelRatio * core.domStyle.scale
                 : 1;
@@ -4477,7 +4473,6 @@ ui.prototype._drawEquipbox_drawEquiped = function (info, line) {
         width = Math.floor(core._PX_ / (per_line + 0.25));
     for (var i = 0; i < info.equipLength; i++) {
         var equipId = info.equipEquipment[i] || null;
-        // var offset_text = width * (i % per_line) + 56;
         var offset_image = width * (i % per_line) + (width * 2) / 3;
         var offset_text = offset_image - (width - 32) / 2;
         var y = line + 54 * Math.floor(i / per_line) + 19;
@@ -4584,7 +4579,7 @@ ui.prototype._drawSLPanel_draw = function (page, max_page) {
 ui.prototype._drawSLPanel_drawBackground = function () {
     core.clearMap("ui");
     core.setAlpha("ui", 0.85);
-    core.fillRect("ui", 0, 0, core._PX_, core._PY_, "#000000"); // 可改成背景图
+    core.fillRect("ui", 0, 0, core._PX_, core._PY_, "#000000");
     core.setAlpha("ui", 1);
 };
 
