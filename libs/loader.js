@@ -341,6 +341,7 @@ loader.prototype.loadImagesFromZip = function (
 
 loader.prototype._loadAnimates_sync = function () {
     this._setStartLoadTipText("正在加载动画文件...");
+
     if (main.supportBunch) {
         if (core.animates.length > 0) {
             core.http(
@@ -368,6 +369,7 @@ loader.prototype._loadAnimates_sync = function () {
         }
         return;
     }
+
     core.animates.forEach(function (t) {
         core.http(
             "GET",
