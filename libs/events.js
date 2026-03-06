@@ -2254,7 +2254,7 @@ events.prototype._action_input = function (data, x, y, prefix) {
         core.replaceText(data.text, prefix),
         false,
         function (value) {
-            value = parseInt(value) || 0; // 允许负整数
+            value = parseInt(value) || 0;
             core.status.route.push("input:" + value);
             core.setFlag("input", value);
             core.doAction();
@@ -2366,7 +2366,7 @@ events.prototype._action_choices = function (data, x, y, prefix) {
         } else {
             if (main.replayChecking) {
                 if (action != "choices:none")
-                    core.status.replay.toReplay.unshift(action); // 首先归还刚才读出的下一步操作
+                    core.status.replay.toReplay.unshift(action);
                 core.events.__action_choices_replaying(data, -1);
             } else {
                 core.myprompt(
@@ -2378,7 +2378,7 @@ events.prototype._action_choices = function (data, x, y, prefix) {
                             return;
                         }
                         if (action != "choices:none")
-                            core.status.replay.toReplay.unshift(action); // 首先归还刚才读出的下一步操作
+                            core.status.replay.toReplay.unshift(action);
                         core.events.__action_choices_replaying(
                             data,
                             ((parseInt(value) || 0) + data.choices.length) %

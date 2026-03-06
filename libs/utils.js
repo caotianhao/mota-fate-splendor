@@ -890,13 +890,13 @@ utils.prototype.turnDirection = function (turn, direction) {
         switch (turn) {
             case ":left":
                 turn = 6;
-                break; // turn left
+                break;
             case ":right":
                 turn = 2;
-                break; // turn right
+                break;
             case ":back":
                 turn = 4;
-                break; // turn back
+                break;
             default:
                 turn = 0;
                 break;

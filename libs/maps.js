@@ -1120,7 +1120,6 @@ maps.prototype.drawBlock = function (block, animate, ctx) {
             x > posX + core._WIDTH_ ||
             y > posY + core._HEIGHT_ + 1
         ) {
-            // +1 for 48 height
             return;
         }
     } else {
@@ -1411,7 +1410,6 @@ maps.prototype._drawMap_drawBlockInfo = function (
             block.x > posX + core._WIDTH_ ||
             block.y > posY + core._HEIGHT_ + 1
         ) {
-            // +1 for 48 height
             return;
         }
     }
@@ -1609,7 +1607,6 @@ maps.prototype.drawEvents = function (floorId, blocks, config) {
                     block.x > posX + core._WIDTH_ ||
                     block.y > posY + core._HEIGHT_ + 1
                 ) {
-                    // +1 for 48 height
                     return false;
                 }
             }
@@ -2064,7 +2061,6 @@ maps.prototype._drawAutotile_render = function (
     ];
     var data = indexData[index];
     if (index >= 16) {
-        // 拐角直接绘制
         core.drawImage(
             canvas,
             autotile,
@@ -2078,7 +2074,6 @@ maps.prototype._drawAutotile_render = function (
             size / 2,
         );
     } else {
-        // 非拐角要根据是否已经绘制进行切分后绘制
         this._drawAutotile_renderCut(canvas, autotile, x, y, size, data, done);
     }
 };
@@ -2106,7 +2101,6 @@ maps.prototype._drawAutotile_renderCut = function (
             if (data[i][0] % 32 || data[i][1] % 32) {
                 idx = 1;
             } else {
-                // left top
                 idx = 0;
             }
             if (cut) {
@@ -2445,9 +2439,7 @@ maps.prototype._drawThumbnail_realDrawTempCanvas = function (
             height,
         );
     }
-    // 缩略图：前景
     this.drawFg(floorId, options);
-    // 缩略图：显伤
     if (options.damage && core.hasItem("book")) {
         core.updateCheckBlock(floorId);
         core.control.updateDamage(floorId, options.ctx);
@@ -2474,7 +2466,6 @@ maps.prototype._drawThumbnail_drawToTarget = function (floorId, options) {
     if (options.all) {
         var tempWidth = tempCanvas.canvas.width,
             tempHeight = tempCanvas.canvas.height;
-        // 绘制全景图
         if (tempWidth <= tempHeight) {
             var realHeight = h,
                 realWidth = (realHeight * tempWidth) / tempHeight;
@@ -2513,7 +2504,6 @@ maps.prototype._drawThumbnail_drawToTarget = function (floorId, options) {
             );
         }
     } else {
-        // 只绘制可见窗口
         var pw = core._PX_,
             ph = core._PY_,
             hw = core._HALF_WIDTH_,
@@ -2728,7 +2718,6 @@ maps.prototype.getBlockInfo = function (block) {
         } else if (core.material.items[id]) {
             name = core.material.items[id].name;
         }
-        // 非门效果则强制变成四帧动画
         if (!doorInfo && bigImage != null) animate = 4;
     }
 
@@ -2749,7 +2738,6 @@ maps.prototype.getBlockInfo = function (block) {
     };
 };
 
-////// 搜索某个图块出现的所有位置 //////
 maps.prototype.searchBlock = function (id, floorId, showDisable) {
     if (typeof id == "number") id = this.getBlockByNumber(id).event.id;
     floorId = floorId || core.status.floorId;
@@ -3533,7 +3521,6 @@ maps.prototype._moveBlock_doMove = function (
     var _run = function () {
         var cb = function () {
             core.maps._deleteDetachedBlock(canvases);
-            // 不消失
             if (moveInfo.keep) {
                 core.setBlock(blockInfo.number, moveInfo.x, moveInfo.y);
                 core.showBlock(moveInfo.x, moveInfo.y);
