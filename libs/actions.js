@@ -1257,7 +1257,6 @@ actions.prototype._clickAction = function (x, y, px, py) {
                 0;
             delete core.status.event.timeout;
             core.setFlag("timeout", timeout);
-            // 对全局商店特殊处理
             var index = y - topIndex;
             if (index == choices.length - 1 && core.hasFlag("@temp@shop")) {
                 index = -1;
@@ -1492,7 +1491,6 @@ actions.prototype._clickFly = function (x, y) {
     return;
 };
 
-////// 楼层传送器界面时，按下某个键的操作 //////
 actions.prototype._keyDownFly = function (keycode) {
     if (keycode == 37) {
         core.playSound("光标移动");
@@ -1753,7 +1751,6 @@ actions.prototype._clickQuickShop = function (x, y) {
         }
         var message = core.canUseQuickShop(shopId);
         if (message == null) {
-            // core.ui.closePanel();
             core.openShop(shopIds[y - topIndex], false);
         } else {
             core.playSound("操作失败");
@@ -1781,7 +1778,6 @@ actions.prototype._clickToolbox = function (x, y) {
     var tools = core.getToolboxItems("tools"),
         constants = core.getToolboxItems("constants");
 
-    // 装备栏
     if (x >= this.LAST - 2 && y == 0) {
         core.ui.closePanel();
         if (core.isReplaying()) core.control._replay_equipbox();
@@ -1801,7 +1797,6 @@ actions.prototype._clickToolbox = function (x, y) {
 
     var toolsPage = core.status.event.data.toolsPage;
     var constantsPage = core.status.event.data.constantsPage;
-    // 上一页
     if (x == this._HX_ - 2 || x == this._HX_ - 3) {
         if (y === core._HEIGHT_ - 1 - 5 && toolsPage > 1) {
             core.status.event.data.toolsPage--;
@@ -1841,7 +1836,6 @@ actions.prototype._clickToolbox = function (x, y) {
     if (index >= 0) this._clickToolboxIndex(index);
 };
 
-////// 选择工具栏界面中某个Index后的操作 //////
 actions.prototype._clickToolboxIndex = function (index) {
     var tools = core.getToolboxItems("tools"),
         constants = core.getToolboxItems("constants");
@@ -1869,7 +1863,6 @@ actions.prototype._clickToolboxIndex = function (index) {
     }
 };
 
-////// 工具栏界面时，按下某个键的操作 //////
 actions.prototype._keyDownToolbox = function (keycode) {
     if (core.status.event.data == null) return;
 
@@ -1893,13 +1886,11 @@ actions.prototype._keyDownToolbox = function (keycode) {
             : (constants.length + last_index) % this.LAST);
 
     if (keycode == 37) {
-        // left
         if (index == 0) {
-            // 处理向前翻页
             if (toolsPage > 1) {
                 core.status.event.data.toolsPage--;
                 index = last_index;
-            } else return; // 第一页不向前翻
+            } else return;
         } else if (index == this.LAST) {
             if (constantsPage == 1) {
                 if (toolsTotalPage == 0) return;
@@ -1914,21 +1905,18 @@ actions.prototype._keyDownToolbox = function (keycode) {
         return;
     }
     if (keycode == 38) {
-        // up
         if (index >= this.LAST && index < this.LAST + this._HX_) {
-            // 进入tools
             if (toolsTotalPage == 0) return;
             if (toolsLastIndex >= this._HX_)
                 index = Math.min(toolsLastIndex, index - this._HX_);
             else index = Math.min(toolsLastIndex, index - this.LAST);
         } else if (index < this._HX_)
-            return; // 第一行没有向上
+            return;
         else index -= this._HX_;
         this._clickToolboxIndex(index);
         return;
     }
     if (keycode == 39) {
-        // right
         if (toolsPage < toolsTotalPage && index == last_index) {
             core.status.event.data.toolsPage++;
             index = 0;
@@ -1943,14 +1931,12 @@ actions.prototype._keyDownToolbox = function (keycode) {
             core.status.event.data.constantsPage = 1;
             index = this.LAST;
         } else if (index == constantsLastIndex)
-            // 一个物品无操作
             return;
         else index++;
         this._clickToolboxIndex(index);
         return;
     }
     if (keycode == 40) {
-        // down
         var nextIndex = null;
         if (index < this._HX_) {
             if (toolsLastIndex >= this._HX_)
@@ -1972,7 +1958,6 @@ actions.prototype._keyDownToolbox = function (keycode) {
     }
 };
 
-////// 工具栏界面时，放开某个键的操作 //////
 actions.prototype._keyUpToolbox = function (keycode) {
     if (keycode == 81) {
         core.playSound("确定");
@@ -1999,7 +1984,6 @@ actions.prototype._keyUpToolbox = function (keycode) {
     }
 };
 
-////// 装备栏界面时的点击操作 //////
 actions.prototype._clickEquipbox = function (x, y, px, py) {
     if (x >= this.LAST - 2 && y == 0) {
         core.playSound("确定");
@@ -2057,7 +2041,6 @@ actions.prototype._clickEquipbox = function (x, y, px, py) {
         this._clickEquipboxIndex(this.LAST + this._HX_ + parseInt(x / 2));
 };
 
-////// 选择装备栏界面中某个Index后的操作 //////
 actions.prototype._clickEquipboxIndex = function (index) {
     if (index < this.LAST) {
         if (index >= core.status.globalAttribute.equipName.length) return;
@@ -2086,7 +2069,6 @@ actions.prototype._clickEquipboxIndex = function (index) {
     core.ui._drawEquipbox(index);
 };
 
-////// 装备栏界面时，按下某个键的操作 //////
 actions.prototype._keyDownEquipbox = function (keycode) {
     if (core.status.event.data == null) return;
 
@@ -2104,7 +2086,6 @@ actions.prototype._keyDownEquipbox = function (keycode) {
             : (ownEquipment.length + last_index) % this.LAST);
 
     if (keycode == 37) {
-        // left
         if (index == 0) return;
         if (index == this.LAST) {
             if (page > 1) {
@@ -2118,7 +2099,6 @@ actions.prototype._keyDownEquipbox = function (keycode) {
         return;
     }
     if (keycode == 38) {
-        // up
         if (index < per_line) return;
         else if (index < 2 * per_line) index -= per_line;
         else if (index < this.LAST + this._HX_) {
@@ -2131,7 +2111,6 @@ actions.prototype._keyDownEquipbox = function (keycode) {
         return;
     }
     if (keycode == 39) {
-        // right
         if (page < totalPage && index == this.LAST + last_index) {
             core.status.event.data.page++;
             core.playSound("光标移动");
@@ -2145,7 +2124,6 @@ actions.prototype._keyDownEquipbox = function (keycode) {
         return;
     }
     if (keycode == 40) {
-        // down
         if (index < per_line) {
             if (equipCapacity > per_line)
                 index = Math.min(index + per_line, equipCapacity - 1);
@@ -2167,7 +2145,6 @@ actions.prototype._keyDownEquipbox = function (keycode) {
     }
 };
 
-////// 装备栏界面时，放开某个键的操作 //////
 actions.prototype._keyUpEquipbox = function (keycode, altKey) {
     if (altKey && keycode >= 48 && keycode <= 57) {
         core.items.quickSaveEquip(keycode - 48);
@@ -2198,25 +2175,21 @@ actions.prototype._keyUpEquipbox = function (keycode, altKey) {
     }
 };
 
-////// 存读档界面时的点击操作 //////
 actions.prototype._clickSL = function (x, y) {
     var page = core.status.event.data.page,
         offset = core.status.event.data.offset;
     var index = page * 10 + offset;
 
-    // 上一页
     if ((x == this._HX_ - 2 || x == this._HX_ - 3) && y === core._HEIGHT_ - 1) {
         core.playSound("光标移动");
         core.ui._drawSLPanel(10 * (page - 1) + offset);
         return;
     }
-    // 下一页
     if ((x == this._HX_ + 2 || x == this._HX_ + 3) && y === core._HEIGHT_ - 1) {
         core.playSound("光标移动");
         core.ui._drawSLPanel(10 * (page + 1) + offset);
         return;
     }
-    // 返回
     if (x >= this.LAST - 2 && y === core._HEIGHT_ - 1) {
         core.playSound("取消");
         if (core.events.recoverEvents(core.status.event.interval)) return;
@@ -2225,13 +2198,11 @@ actions.prototype._clickSL = function (x, y) {
         if (!core.isPlaying()) core.showStartAnimate(true);
         return;
     }
-    // 删除
     if (x >= 0 && x <= 2 && y === core._HEIGHT_ - 1) {
         if (core.status.event.id == "save") {
             core.status.event.selection = !core.status.event.selection;
             core.ui._drawSLPanel(index);
         } else {
-            // 显示收藏
             core.status.event.data.mode =
                 core.status.event.data.mode == "all" ? "fav" : "all";
             if (core.status.event.data.mode == "fav")
@@ -2289,7 +2260,6 @@ actions.prototype._clickSL_favorite = function (page, offset) {
     if (offset == 0) return;
     var index = 5 * page + offset;
     if (core.status.event.data.mode == "fav") {
-        // 收藏模式下点击的下标直接对应favorite
         index = core.saves.favorite[index - 1];
         core.myprompt(
             "请输入想要显示的存档名(长度不超过5字符)",
@@ -2314,7 +2284,7 @@ actions.prototype._clickSL_favorite = function (page, offset) {
             core.saves.favorite.push(index);
             core.saves.favorite = core.saves.favorite.sort(function (a, b) {
                 return a - b;
-            }); // 保证有序
+            });
             core.drawTip("收藏成功！");
         }
         core.control._updateFavoriteSaves();
@@ -2401,7 +2371,6 @@ actions.prototype._keyUpSL = function (keycode) {
         return;
     }
     if (keycode == 69 && core.status.event.id != "save") {
-        // E 收藏切换
         this._clickSL(0, core._HEIGHT_ - 1);
         return;
     }
@@ -2419,7 +2388,6 @@ actions.prototype._keyUpSL = function (keycode) {
         }
     }
     if (keycode == 70 && core.status.event.data.mode == "all") {
-        // F
         this._clickSL_favorite(page, offset);
     }
 };
@@ -2451,7 +2419,6 @@ actions.prototype._clickSwitchs = function (x, y) {
     }
 };
 
-////// 系统设置界面时，放开某个键的操作 //////
 actions.prototype._keyUpSwitchs = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 0;
@@ -3054,7 +3021,6 @@ actions.prototype._clickSyncSave = function (x, y) {
                 core.playSound("确定");
                 return this._clickSyncSave_readFile();
             case 4:
-                // core.playSound('确定');
                 return this._clickSyncSave_replay();
             case 5:
                 core.status.event.selection = 0;
