@@ -1,4 +1,5 @@
 "use strict";
+
 function items() {
     this._init();
 }
@@ -9,6 +10,7 @@ items.prototype._init = function () {
         this.items[itemId].id = itemId;
     }
 };
+
 items.prototype.getItems = function () {
     var items = core.clone(this.items);
     var equipInfo = core.getFlag("equipInfo");
@@ -19,6 +21,7 @@ items.prototype.getItems = function () {
     }
     return items;
 };
+
 items.prototype.getItemEffect = function (itemId, itemNum) {
     var itemCls = core.material.items[itemId].cls;
     if (itemCls === "items") {
@@ -45,6 +48,7 @@ items.prototype.getItemEffect = function (itemId, itemNum) {
         core.addItem(itemId, itemNum);
     }
 };
+
 items.prototype.getItemEffectTip = function (itemId) {
     var itemCls = core.material.items[itemId].cls;
     if (itemCls === "items") {
@@ -60,6 +64,7 @@ items.prototype.getItemEffectTip = function (itemId) {
     }
     return "";
 };
+
 items.prototype.useItem = function (itemId, noRoute, callback) {
     if (!this.canUseItem(itemId)) {
         if (callback) callback();
@@ -70,6 +75,7 @@ items.prototype.useItem = function (itemId, noRoute, callback) {
     if (!noRoute) core.status.route.push("item:" + itemId);
     if (callback) callback();
 };
+
 items.prototype._useItemEffect = function (itemId) {
     var useItemEffect = core.material.items[itemId].useItemEffect;
     if (useItemEffect) {
@@ -88,6 +94,7 @@ items.prototype._useItemEffect = function (itemId) {
         }
     }
 };
+
 items.prototype._afterUseItem = function (itemId) {
     var itemCls = core.material.items[itemId].cls;
     if (itemCls == "tools") core.status.hero.items[itemCls][itemId]--;
@@ -95,6 +102,7 @@ items.prototype._afterUseItem = function (itemId) {
         delete core.status.hero.items[itemCls][itemId];
     core.updateStatusBar(false, true);
 };
+
 items.prototype.canUseItem = function (itemId) {
     if (!core.hasItem(itemId)) return false;
     var canUseItemEffect = core.material.items[itemId].canUseItemEffect;
@@ -107,15 +115,18 @@ items.prototype.canUseItem = function (itemId) {
         }
     }
 };
+
 items.prototype.itemCount = function (itemId) {
     if (!core.material.items[itemId] || !core.isPlaying()) return 0;
     var itemCls = core.material.items[itemId].cls;
     if (itemCls == "items") return 0;
     return core.status.hero.items[itemCls][itemId] || 0;
 };
+
 items.prototype.hasItem = function (itemId) {
     return this.itemCount(itemId) > 0;
 };
+
 items.prototype.hasEquip = function (itemId) {
     if (!(core.material.items[itemId] || {}).equip || !core.isPlaying())
         return null;
@@ -124,9 +135,11 @@ items.prototype.hasEquip = function (itemId) {
         if (core.status.hero.equipment[i] == itemId) return true;
     return false;
 };
+
 items.prototype.getEquip = function (equipType) {
     return core.status.hero.equipment[equipType] || null;
 };
+
 items.prototype.setItem = function (itemId, itemNum) {
     itemNum = itemNum || 0;
     var itemCls = core.material.items[itemId].cls;
@@ -137,6 +150,7 @@ items.prototype.setItem = function (itemId, itemNum) {
     }
     core.updateStatusBar();
 };
+
 items.prototype.addItem = function (itemId, itemNum) {
     if (itemNum == null) itemNum = 1;
     var itemData = core.material.items[itemId];
@@ -153,6 +167,7 @@ items.prototype.addItem = function (itemId, itemNum) {
         core.status.hero.items[itemCls][itemId] = 1;
     core.updateStatusBar();
 };
+
 items.prototype.removeItem = function (itemId, itemNum) {
     if (itemNum == null) itemNum = 1;
     if (!core.hasItem(itemId)) return false;
@@ -164,6 +179,7 @@ items.prototype.removeItem = function (itemId, itemNum) {
     core.updateStatusBar();
     return true;
 };
+
 items.prototype.getEquipTypeByName = function (name) {
     var names = core.status.globalAttribute.equipName;
     var types = [];
@@ -181,6 +197,7 @@ items.prototype.getEquipTypeById = function (equipId) {
     if (typeof type == "string") type = this.getEquipTypeByName(type);
     return type;
 };
+
 items.prototype.canEquip = function (equipId, hint) {
     var equip = core.material.items[equipId] || {};
     if (!equip.equip) {
@@ -214,6 +231,7 @@ items.prototype.canEquip = function (equipId, hint) {
     }
     return true;
 };
+
 items.prototype.loadEquip = function (equipId, callback) {
     if (!this.canEquip(equipId, true)) {
         if (callback) callback();
@@ -234,6 +252,7 @@ items.prototype.loadEquip = function (equipId, callback) {
         callback,
     );
 };
+
 items.prototype.unloadEquip = function (equipType, callback) {
     var unloadEquipId = core.status.hero.equipment[equipType];
     if (!unloadEquipId) {
@@ -242,6 +261,7 @@ items.prototype.unloadEquip = function (equipType, callback) {
     }
     this._realLoadEquip(equipType, null, unloadEquipId, callback);
 };
+
 items.prototype.compareEquipment = function (
     compareEquipId,
     beComparedEquipId,
@@ -261,12 +281,14 @@ items.prototype.compareEquipment = function (
     }
     return result;
 };
+
 items.prototype._loadEquipEffect = function (equipId, unloadEquipId) {
     var result = core.compareEquipment(equipId, unloadEquipId);
     for (var name in result.percentage)
         core.addBuff(name, result.percentage[name] / 100);
     for (var name in result.value) core.status.hero[name] += result.value[name];
 };
+
 items.prototype._realLoadEquip = function (type, loadId, unloadId, callback) {
     var loadEquip = core.material.items[loadId] || {},
         unloadEquip = core.material.items[unloadId] || {};
@@ -279,11 +301,13 @@ items.prototype._realLoadEquip = function (type, loadId, unloadId, callback) {
     else if (unloadId) core.drawTip("已卸下" + unloadEquip.name, unloadId);
     if (callback) callback();
 };
+
 items.prototype._realLoadEquip_playSound = function () {
     if (core.hasFlag("__quickLoadEquip__")) return;
     core.stopSound();
     core.playSound("穿脱装备");
 };
+
 items.prototype.quickSaveEquip = function (index) {
     var saveEquips = core.getFlag("saveEquips", []);
     saveEquips[index] = core.clone(core.status.hero.equipment);
@@ -291,6 +315,7 @@ items.prototype.quickSaveEquip = function (index) {
     core.status.route.push("saveEquip:" + index);
     core.drawTip("已保存" + index + "号套装");
 };
+
 items.prototype.quickLoadEquip = function (index) {
     var current = core.getFlag("saveEquips", [])[index];
     if (!current) {
@@ -326,6 +351,7 @@ items.prototype.quickLoadEquip = function (index) {
     this._realLoadEquip_playSound();
     core.drawTip("成功换上" + index + "号套装");
 };
+
 items.prototype.setEquip = function (
     equipId,
     valueType,
