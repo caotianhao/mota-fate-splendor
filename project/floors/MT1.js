@@ -12,7 +12,9 @@ main.floors.MT1=
     "ratio": 1,
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
-    "firstArrive": [],
+    "firstArrive": [
+        "\t[小妖精,fairy]被死掉了"
+    ],
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
