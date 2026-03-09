@@ -1,4 +1,4 @@
-var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
+var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a = 
 {
 	"yellowKey": {
 		"cls": "tools",
@@ -21,74 +21,74 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"redGem": {
 		"cls": "items",
 		"name": "红宝石",
-		"text": "攻击+${core.values.redGem}",
-		"itemEffect": "core.status.hero.atk += core.values.redGem * core.status.thisMap.ratio",
-		"itemEffectTip": "，攻击+${core.values.redGem * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.atk += core.values.redGem",
+		"text": null,
+		"itemEffect": "core.status.hero.atk += 1",
+		"itemEffectTip": "，攻击+1",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"blueGem": {
 		"cls": "items",
 		"name": "蓝宝石",
-		"text": "，防御+${core.values.blueGem}",
-		"itemEffect": "core.status.hero.def += core.values.blueGem * core.status.thisMap.ratio",
-		"itemEffectTip": "，防御+${core.values.blueGem * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.def += core.values.blueGem",
+		"text": null,
+		"itemEffect": "core.status.hero.def += 1",
+		"itemEffectTip": "，防御+1",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"greenGem": {
 		"cls": "items",
 		"name": "绿宝石",
-		"text": "，护盾+${core.values.greenGem}",
-		"itemEffect": "core.status.hero.mdef += core.values.greenGem * core.status.thisMap.ratio",
-		"itemEffectTip": "，护盾+${core.values.greenGem * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.mdef += core.values.greenGem",
+		"text": null,
+		"itemEffect": "core.status.hero.mdef += 2",
+		"itemEffectTip": "，护盾+2",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"yellowGem": {
 		"cls": "items",
 		"name": "黄宝石",
-		"text": "，生命上限+50",
-		"itemEffect": "core.status.hero.hpmax += 50 * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命上限+${50*core.status.thisMap.ratio}",
+		"text": null,
+		"itemEffect": "core.status.hero.hpmax += 50",
+		"itemEffectTip": "，生命上限+50",
 		"useItemEvent": null,
 		"canUseItemEffect": "true",
-		"useItemEffect": ""
+		"useItemEffect": null
 	},
 	"redPotion": {
 		"cls": "items",
 		"name": "红血瓶",
-		"text": "，生命+${core.values.redPotion}",
-		"itemEffect": "core.status.hero.hp += core.values.redPotion * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命+${core.values.redPotion * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.hp += core.values.redPotion",
+		"text": null,
+		"itemEffect": "core.status.hero.hp += 50",
+		"itemEffectTip": "，生命+50",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"bluePotion": {
 		"cls": "items",
 		"name": "蓝血瓶",
-		"text": "，生命+${core.values.bluePotion}",
-		"itemEffect": "core.status.hero.hp += core.values.bluePotion * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命+${core.values.bluePotion * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.hp += core.values.bluePotion",
+		"text": null,
+		"itemEffect": "core.status.hero.hp += 100",
+		"itemEffectTip": "，生命+100",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"yellowPotion": {
 		"cls": "items",
 		"name": "黄血瓶",
-		"text": "，生命+${core.values.yellowPotion}",
-		"itemEffect": "core.status.hero.hp += core.values.yellowPotion * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命+${core.values.yellowPotion * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.hp += core.values.yellowPotion",
+		"text": null,
+		"itemEffect": "core.status.hero.hp += 200",
+		"itemEffectTip": "，生命+200",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"greenPotion": {
 		"cls": "items",
 		"name": "绿血瓶",
-		"text": "，生命+${core.values.greenPotion}",
-		"itemEffect": "core.status.hero.hp += core.values.greenPotion * core.status.thisMap.ratio",
-		"itemEffectTip": "，生命+${core.values.greenPotion * core.status.thisMap.ratio}",
-		"useItemEffect": "core.status.hero.hp += core.values.greenPotion",
+		"text": null,
+		"itemEffect": "core.status.hero.hp += 500",
+		"itemEffectTip": "，生命+500",
+		"useItemEffect": null,
 		"canUseItemEffect": "true"
 	},
 	"sword0": {
