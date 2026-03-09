@@ -16,7 +16,16 @@ main.floors.MT14=
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
-    "changeFloor": {},
+    "changeFloor": {
+        "2,10": {
+            "floorId": ":before",
+            "stair": "upFloor"
+        },
+        "5,10": {
+            "floorId": ":next",
+            "stair": "downFloor"
+        }
+    },
     "beforeBattle": {},
     "afterBattle": {},
     "afterGetItem": {},
@@ -35,7 +44,7 @@ main.floors.MT14=
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
-    [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+    [  1,  0, 88,  0,  0, 87,  0,  0,  0,  0,  0,  0,  1],
     [  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
     [  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1]
 ],
