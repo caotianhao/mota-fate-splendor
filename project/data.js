@@ -1,4 +1,4 @@
-var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d = 
+var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 {
 	"main": {
 		"floorIds": [
@@ -157,38 +157,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 					85,
 					1
 				],
-				"action": [
-					{
-						"type": "setValue",
-						"name": "status:atk",
-						"value": "9999"
-					},
-					{
-						"type": "setValue",
-						"name": "status:def",
-						"value": "9999"
-					},
-					{
-						"type": "setValue",
-						"name": "status:money",
-						"value": "9999"
-					},
-					{
-						"type": "setValue",
-						"name": "status:mdef",
-						"value": "9999"
-					},
-					{
-						"type": "setValue",
-						"name": "status:hp",
-						"value": "999999"
-					},
-					{
-						"type": "setValue",
-						"name": "status:hpmax",
-						"value": "99999999"
-					}
-				]
+				"action": []
 			},
 			{
 				"title": "普通",
@@ -203,7 +172,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 				"action": []
 			},
 			{
-				"title": "困难",
+				"title": "虚之视界",
 				"name": "Hard",
 				"hard": 3,
 				"color": [
