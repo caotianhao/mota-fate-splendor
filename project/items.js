@@ -1852,9 +1852,9 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1515": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "商店抵用券",
+		"canUseItemEffect": "false"
 	},
 	"I1516": {
 		"cls": "items",
@@ -2007,9 +2007,11 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1546": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "便携式恢复药水",
+		"canUseItemEffect": "true",
+		"text": "恢复全额生命。多谢款待！",
+		"useItemEffect": "core.status.hero.hp = core.status.hero.hpmax"
 	},
 	"I1547": {
 		"cls": "items",
@@ -2147,18 +2149,24 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1574": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "简单难度福袋",
+		"canUseItemEffect": "true",
+		"text": "简单难度福袋，尽情乱撞吧！",
+		"useItemEffect": "core.addItem(\"I1546\", 1);\ncore.status.hero.items.tools.yellowKey += 2;\ncore.status.hero.items.tools.blueKey += 1;\ncore.addItem(\"I1515\", 1);\ncore.status.hero.atk += core.status.thisMap.ratio;\ncore.status.hero.def += core.status.thisMap.ratio;"
 	},
 	"I1575": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "普通难度福袋",
+		"canUseItemEffect": "true",
+		"text": "普通难度福袋，纵欲过度是不行的。",
+		"useItemEffect": "core.status.hero.items.tools.yellowKey += 1;\ncore.status.hero.items.tools.blueKey += 1;"
 	},
 	"I1576": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "虚之视界难度福袋",
+		"canUseItemEffect": "true",
+		"text": "空福袋，别白费功夫瞎拆了，里头空空如也。",
+		"useItemEffect": "core.status.hero.hp += 10"
 	}
 }
