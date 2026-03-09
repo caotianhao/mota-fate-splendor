@@ -13,11 +13,64 @@ main.floors.MT1=
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [
-        "\t[小妖精,fairy]被死掉了"
+        "\t[妖精,fairy]来，接着这个。",
+        {
+            "type": "switch",
+            "condition": "flag:hard",
+            "caseList": [
+                {
+                    "case": "1",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1574",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "2",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1575",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "3",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1576",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        "\t[勇士,hero]......一个沉甸甸的布袋。",
+        "\t[勇士,hero]妖精，这里面都装了些什么东西？",
+        "\t[妖精,fairy]各式各样对你接下来的冒险有帮助的小玩意，在你陷入绝境之际毫不犹豫地拉开吧。",
+        "\t[妖精,fairy]顺带一提，每当你初次到达一个新的区域时，我都会给你一个这样的福袋，拆开的时候一定要对我心存感激哦。"
     ],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "8,5": [
+            "提示：拾取黄宝石可以增加生命上限。",
+            "提示：拾取黄宝石可以增加生命上限。",
+            "提示：拾取黄宝石可以增加生命上限。",
+            {
+                "type": "hide",
+                "remove": true
+            }
+        ]
+    },
     "changeFloor": {
         "1,11": {
             "floorId": ":next",
@@ -28,7 +81,15 @@ main.floors.MT1=
             "stair": "upFloor"
         }
     },
-    "beforeBattle": {},
+    "beforeBattle": {
+        "9,5": [
+            "\t[妖精,fairy]你在犹豫什么？再不动手的话，这个魔物就要抢先一步攻过来了。",
+            "\t[勇士,hero]你有没有觉得，他的这个动作，像是在对我表示友好？",
+            "\t[勇士,hero]而且，跟之前刚见到你的时候一样，我从这些魔物身上感受不到任何敌意。",
+            "\t[妖精,fairy]怎么可能啊，现在的你不过只是个连防身剑盾都弄丢了的弱小人类罢了。",
+            "\t[妖精,fairy]别瞎想那么多了，赶快动手解决掉它吧。"
+        ]
+    },
     "afterBattle": {},
     "afterGetItem": {},
     "afterOpenDoor": {},
