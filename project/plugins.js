@@ -722,11 +722,11 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 				col2 = left + width * 9 / 25,
 				col3 = left + width * 17 / 25;
 			core.fillText('ui', '生命', col1, position, '#DDDDDD', f13);
-			core.fillText('ui', core.formatBigNumber(enemy.hp || 0), col1 + 30, position, /*'red' */ null, b13);
+			core.fillText('ui', core.formatBigNumber(enemy.hp || 0), col1 + 30, position, null, b13);
 			core.fillText('ui', '攻击', col2, position, null, f13);
-			core.fillText('ui', core.formatBigNumber(enemy.atk || 0), col2 + 30, position, /* '#FF0000' */ null, b13);
+			core.fillText('ui', core.formatBigNumber(enemy.atk || 0), col2 + 30, position, null, b13);
 			core.fillText('ui', '防御', col3, position, null, f13);
-			core.fillText('ui', core.formatBigNumber(enemy.def || 0), col3 + 30, position, /* [255, 0, 0, 1] */ null, b13);
+			core.fillText('ui', core.formatBigNumber(enemy.def || 0), col3 + 30, position, null, b13);
 		}
 	},
 	"multiHeros": function () {

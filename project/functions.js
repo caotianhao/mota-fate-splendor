@@ -98,7 +98,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			core.drawMap(floorId);
 			if (core.status.maps[floorId].bgm) {
 				var bgm = core.status.maps[floorId].bgm;
-				if (bgm instanceof Array) bgm = bgm[Math.floor(Math.random() * bgm.length)]; // 多个bgm则随机播放一个
+				if (bgm instanceof Array) bgm = bgm[Math.floor(Math.random() * bgm.length)];
 				if (!core.hasFlag("__bgm__")) core.playBgm(bgm);
 			} else if (fromLoad && !core.hasFlag("__bgm__")) {
 				core.pauseBgm();
@@ -234,9 +234,9 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 
 			var hint = "打败 " + core.getEnemyValue(enemy, "name", x, y);
 			if (core.flags.statusBarItems.indexOf('enableMoney') >= 0)
-				hint += '，' + core.getStatusLabel('money') + '+' + money; // hint += "，金币+" + money;
+				hint += '，' + core.getStatusLabel('money') + '+' + money;
 			if (core.flags.statusBarItems.indexOf('enableExp') >= 0)
-				hint += '，' + core.getStatusLabel('exp') + '+' + exp; // hint += "，经验+" + exp;
+				hint += '，' + core.getStatusLabel('exp') + '+' + exp;
 			core.drawTip(hint, enemy.id);
 
 			if (core.enemys.hasSpecial(special, 12)) {
@@ -337,16 +337,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 			if (todo.length > 0) core.insertAction(todo, x, y);
 		},
 		"afterPushBox": function () {
-			// 推箱子后的事件
 			if (core.searchBlock('box').length == 0) {
-				// 可以通过if语句来进行开门操作
-				/*
-				if (core.status.floorId=='xxx') { // 在某个楼层
-					core.insertAction([ // 插入一条事件
-						{"type": "openDoor", "loc": [x,y]} // 开门
-					])
-				}
-				*/
 			}
 		}
 	},
@@ -1133,7 +1124,7 @@ var functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a =
 		"getToolboxItems": function (cls) {
 			return Object.keys(core.status.hero.items[cls] || {})
 				.filter(function (id) { return !core.material.items[id].hideInToolbox; })
-				.sort( /*function (id1, id2) { return core.material.items[id1].name <= core.material.items[id2].name ? -1 : 1 }*/);
+				.sort();
 		},
 		"drawStatusBar": function () {
 			var ctx, fill = function (text, x, y, style) {
