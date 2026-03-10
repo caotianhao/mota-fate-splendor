@@ -302,6 +302,7 @@ enemys.prototype._nextCriticals_overAtk = function (enemy, x, y, floorId) {
         core.getEnemyValue(enemy, "def", x, y, floorId),
     );
 };
+
 enemys.prototype._nextCriticals_special = function (
     enemy,
     number,
@@ -463,6 +464,7 @@ enemys.prototype._nextCriticals_useTurn = function (
     if (list.length == 0) list.push([0, 0]);
     return list;
 };
+
 enemys.prototype.getDefDamage = function (enemy, k, x, y, floorId) {
     if (typeof enemy == "string") enemy = core.material.enemys[enemy];
     k = k || 1;
@@ -599,6 +601,7 @@ enemys.prototype._getCurrentEnemys_addEnemy = function (
     );
     enemys.push(e);
 };
+
 enemys.prototype._getCurrentEnemys_addEnemy_defDamage = function (
     enemy,
     x,
