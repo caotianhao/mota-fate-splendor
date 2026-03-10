@@ -12,7 +12,9 @@ main.floors.MT10=
     "ratio": 1,
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
-    "firstArrive": [],
+    "firstArrive": [
+        "\t[勇士,hero]前面的"
+    ],
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
