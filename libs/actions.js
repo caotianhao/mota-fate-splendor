@@ -491,6 +491,7 @@ actions.prototype._sys_keyUp_lockControl = function (keyCode, altKey) {
     }
     return true;
 };
+
 actions.prototype._sys_keyUp = function (keyCode, altKey) {
     if (!core.status.played) return true;
     this.actionsdata.onKeyUp(keyCode, altKey);
@@ -500,6 +501,7 @@ actions.prototype._sys_keyUp = function (keyCode, altKey) {
     core.status.heroStop = true;
     return true;
 };
+
 actions.prototype.ondown = function (loc) {
     var x = parseInt(loc.x / loc.size),
         y = parseInt(loc.y / loc.size);
@@ -507,6 +509,7 @@ actions.prototype.ondown = function (loc) {
         py = parseInt(loc.y / core.domStyle.scale);
     this.doRegisteredAction("ondown", x, y, px, py);
 };
+
 actions.prototype._sys_ondown_lockControl = function (x, y, px, py) {
     if (core.status.played && !core.status.lockControl) return false;
 
@@ -763,6 +766,7 @@ actions.prototype._sys_onmove = function (x, y, px, py) {
     }
     return true;
 };
+
 actions.prototype.onup = function (loc) {
     var x = parseInt(loc.x / loc.size),
         y = parseInt(loc.y / loc.size);
@@ -1080,6 +1084,7 @@ actions.prototype._onMoveChoices = function (x, y) {
         );
     }
 };
+
 actions.prototype._clickCenterFly = function (x, y) {
     var posX = core.status.event.data.posX,
         posY = core.status.event.data.posY;
@@ -1111,6 +1116,7 @@ actions.prototype._keyUpCenterFly = function (keycode) {
         }
     }
 };
+
 actions.prototype._clickConfirmBox = function (x, y, px, py) {
     if (
         px >= core._PX_ / 2 - 70 &&
@@ -1129,6 +1135,7 @@ actions.prototype._clickConfirmBox = function (x, y, px, py) {
     )
         core.status.event.data.no();
 };
+
 actions.prototype._keyUpConfirmBox = function (keycode) {
     if (keycode == 37 || keycode == 39) {
         core.status.event.selection = 1 - core.status.event.selection;
@@ -1311,6 +1318,7 @@ actions.prototype._keyDownAction = function (keycode) {
         return;
     }
 };
+
 actions.prototype._keyUpAction = function (keycode) {
     if (
         core.status.event.data.type == "text" &&
@@ -1401,6 +1409,7 @@ actions.prototype._clickBook = function (x, y) {
     }
     return;
 };
+
 actions.prototype._keyDownBook = function (keycode) {
     var pageinfo = core.ui._drawBook_pageinfo();
     if (keycode == 37) {
@@ -1429,6 +1438,7 @@ actions.prototype._keyDownBook = function (keycode) {
     }
     return;
 };
+
 actions.prototype._keyUpBook = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.playSound("取消");
@@ -1448,11 +1458,13 @@ actions.prototype._keyUpBook = function (keycode) {
         return;
     }
 };
+
 actions.prototype._clickBookDetail = function () {
     core.clearMap("data");
     core.playSound("取消");
     core.status.event.id = "book";
 };
+
 actions.prototype._clickFly = function (x, y) {
     if (
         (x == core._WIDTH_ - 2 || x == core._WIDTH_ - 3) &&
@@ -1529,6 +1541,7 @@ actions.prototype._getNextFlyFloor = function (delta, index) {
     }
     return ans;
 };
+
 actions.prototype._keyUpFly = function (keycode) {
     if (keycode == 71 || keycode == 27 || keycode == 88) {
         core.playSound("取消");
@@ -1538,6 +1551,7 @@ actions.prototype._keyUpFly = function (keycode) {
         this._clickFly(this._HX_ - 1, this._HY_ - 1);
     return;
 };
+
 actions.prototype._clickViewMaps = function (x, y, px, py) {
     if (core.status.event.data == null) {
         core.ui._drawViewMaps(core.floorIds.indexOf(core.status.floorId));
@@ -1647,6 +1661,7 @@ actions.prototype._clickViewMaps = function (x, y, px, py) {
         return;
     }
 };
+
 actions.prototype._keyDownViewMaps = function (keycode) {
     if (core.status.event.data == null) return;
     var floorId = core.floorIds[core.status.event.data.index],
@@ -1684,6 +1699,7 @@ actions.prototype._keyDownViewMaps = function (keycode) {
         );
     return;
 };
+
 actions.prototype._keyUpViewMaps = function (keycode) {
     if (core.status.event.data == null) {
         core.ui._drawViewMaps(core.floorIds.indexOf(core.status.floorId));
@@ -1735,6 +1751,7 @@ actions.prototype._keyUpViewMaps = function (keycode) {
     }
     return;
 };
+
 actions.prototype._clickQuickShop = function (x, y) {
     var shopIds = core.listShopIds();
     if (this._out(x)) return;
@@ -1761,6 +1778,7 @@ actions.prototype._clickQuickShop = function (x, y) {
         core.ui.closePanel();
     }
 };
+
 actions.prototype._keyUpQuickShop = function (keycode) {
     if (keycode == 27 || keycode == 75 || keycode == 88 || keycode == 86) {
         core.playSound("取消");
@@ -1774,6 +1792,7 @@ actions.prototype._keyUpQuickShop = function (keycode) {
     );
     return;
 };
+
 actions.prototype._clickToolbox = function (x, y) {
     var tools = core.getToolboxItems("tools"),
         constants = core.getToolboxItems("constants");
@@ -2256,6 +2275,7 @@ actions.prototype._clickSL = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickSL_favorite = function (page, offset) {
     if (offset == 0) return;
     var index = 5 * page + offset;
@@ -2291,6 +2311,7 @@ actions.prototype._clickSL_favorite = function (page, offset) {
         core.ui._drawSLPanel(10 * page + offset);
     }
 };
+
 actions.prototype._keyDownSL = function (keycode) {
     var page = core.status.event.data.page,
         offset = core.status.event.data.offset;
@@ -2342,6 +2363,7 @@ actions.prototype._keyDownSL = function (keycode) {
         return;
     }
 };
+
 actions.prototype._keyUpSL = function (keycode) {
     var page = core.status.event.data.page,
         offset = core.status.event.data.offset;
@@ -2391,6 +2413,7 @@ actions.prototype._keyUpSL = function (keycode) {
         this._clickSL_favorite(page, offset);
     }
 };
+
 actions.prototype._clickSwitchs = function (x, y) {
     var choices = core.status.event.ui.choices;
     var topIndex = this._getChoicesTopIndex(choices.length);
@@ -2432,6 +2455,7 @@ actions.prototype._keyUpSwitchs = function (keycode) {
         this._clickSwitchs,
     );
 };
+
 actions.prototype._clickSwitchs_sounds = function (x, y) {
     var choices = core.status.event.ui.choices;
     var topIndex = this._getChoicesTopIndex(choices.length);
@@ -2465,17 +2489,20 @@ actions.prototype._clickSwitchs_sounds = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickSwitchs_sounds_bgm = function () {
     core.triggerBgm();
     core.playSound("确定");
     core.ui._drawSwitchs_sounds();
 };
+
 actions.prototype._clickSwitchs_sounds_se = function () {
     core.musicStatus.soundStatus = !core.musicStatus.soundStatus;
     core.setLocalStorage("soundStatus", core.musicStatus.soundStatus);
     core.playSound("确定");
     core.ui._drawSwitchs_sounds();
 };
+
 actions.prototype._clickSwitchs_sounds_userVolume = function (delta) {
     var value = Math.round(Math.sqrt(100 * core.musicStatus.userVolume));
     if (value == 0 && delta < 0) return;
@@ -2493,6 +2520,7 @@ actions.prototype._clickSwitchs_sounds_userVolume = function (delta) {
     core.playSound("确定");
     core.ui._drawSwitchs_sounds();
 };
+
 actions.prototype._keyUpSwitchs_sounds = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 0;
@@ -2575,6 +2603,7 @@ actions.prototype._clickSwitchs_display = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickSwitchs_display_setSize = function (delta) {
     core.setDisplayScale(delta);
     var currentRatio = Math.max(
@@ -2586,41 +2615,48 @@ actions.prototype._clickSwitchs_display_setSize = function (delta) {
     }
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_enableHDCanvas = function () {
     core.flags.enableHDCanvas = !core.flags.enableHDCanvas;
     core.setLocalStorage("enableHDCanvas", core.flags.enableHDCanvas);
     core.drawTip("开关高清UI，需刷新页面方可生效");
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_enableEnemyPoint = function () {
     core.flags.enableEnemyPoint = !core.flags.enableEnemyPoint;
     core.setLocalStorage("enableEnemyPoint", core.flags.enableEnemyPoint);
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_enemyDamage = function () {
     core.flags.displayEnemyDamage = !core.flags.displayEnemyDamage;
     core.updateDamage();
     core.setLocalStorage("enemyDamage", core.flags.displayEnemyDamage);
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_critical = function () {
     core.flags.displayCritical = !core.flags.displayCritical;
     core.updateDamage();
     core.setLocalStorage("critical", core.flags.displayCritical);
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_extraDamage = function () {
     core.flags.displayExtraDamage = !core.flags.displayExtraDamage;
     core.updateDamage();
     core.setLocalStorage("extraDamage", core.flags.displayExtraDamage);
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._clickSwitchs_display_extraDamageType = function () {
     core.flags.extraDamageType = (core.flags.extraDamageType + 1) % 3;
     core.updateDamage();
     core.setLocalStorage("extraDamageType", core.flags.extraDamageType);
     core.ui._drawSwitchs_display();
 };
+
 actions.prototype._keyUpSwitchs_display = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 1;
@@ -2647,6 +2683,7 @@ actions.prototype._keyUpSwitchs_display = function (keycode) {
         this._clickSwitchs_display,
     );
 };
+
 actions.prototype._clickSwitchs_action = function (x, y) {
     var choices = core.status.event.ui.choices;
     var topIndex = this._getChoicesTopIndex(choices.length);
@@ -2698,11 +2735,13 @@ actions.prototype._clickSwitchs_action = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickSwitchs_action_moveSpeed = function (delta) {
     core.values.moveSpeed = core.clamp(core.values.moveSpeed + delta, 50, 200);
     core.setLocalStorage("moveSpeed", core.values.moveSpeed);
     core.ui._drawSwitchs_action();
 };
+
 actions.prototype._clickSwitchs_action_floorChangeTime = function (delta) {
     core.values.floorChangeTime = core.clamp(
         core.values.floorChangeTime + delta,
@@ -2712,17 +2751,20 @@ actions.prototype._clickSwitchs_action_floorChangeTime = function (delta) {
     core.setLocalStorage("floorChangeTime", core.values.floorChangeTime);
     core.ui._drawSwitchs_action();
 };
+
 actions.prototype._clickSwitchs_action_potionNoRouting = function () {
     if (core.hasFlag("__potionNoRouting__"))
         core.removeFlag("__potionNoRouting__");
     else core.setFlag("__potionNoRouting__", true);
     core.ui._drawSwitchs_action();
 };
+
 actions.prototype._clickSwitchs_action_clickMove = function () {
     if (core.hasFlag("__noClickMove__")) core.removeFlag("__noClickMove__");
     else core.setFlag("__noClickMove__", true);
     core.ui._drawSwitchs_action();
 };
+
 actions.prototype._clickSwitchs_action_leftHandPrefer = function () {
     core.flags.leftHandPrefer = !core.flags.leftHandPrefer;
     core.setLocalStorage("leftHandPrefer", core.flags.leftHandPrefer);
@@ -2733,6 +2775,7 @@ actions.prototype._clickSwitchs_action_leftHandPrefer = function () {
     }
     core.ui._drawSwitchs_action();
 };
+
 actions.prototype._keyUpSwitchs_action = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 2;
@@ -2765,6 +2808,7 @@ actions.prototype._keyUpSwitchs_action = function (keycode) {
         this._clickSwitchs_action,
     );
 };
+
 actions.prototype._clickSettings = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -2810,6 +2854,7 @@ actions.prototype._clickSettings = function (x, y) {
     }
     return;
 };
+
 actions.prototype._keyUpSettings = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.playSound("取消");
@@ -2822,6 +2867,7 @@ actions.prototype._keyUpSettings = function (keycode) {
         this._clickSettings,
     );
 };
+
 actions.prototype._clickNotes = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -2853,6 +2899,7 @@ actions.prototype._clickNotes = function (x, y) {
         }
     }
 };
+
 actions.prototype.__clickNotes_replaceText = function (data) {
     data = (data || "")
         .replace(/[\${}]/g, "_")
@@ -2863,6 +2910,7 @@ actions.prototype.__clickNotes_replaceText = function (data) {
     if (data.length > 45) data = data.substring(0, 43) + "...";
     return data;
 };
+
 actions.prototype._clickNotes_new = function () {
     core.status.hero.notes = core.status.hero.notes || [];
     core.myprompt("请输入一段笔记，不超过45字", null, function (data) {
@@ -2875,6 +2923,7 @@ actions.prototype._clickNotes_new = function () {
         }
     });
 };
+
 actions.prototype._clickNotes_show = function () {
     core.playSound("确定");
     core.status.hero.notes = core.status.hero.notes || [];
@@ -2897,6 +2946,7 @@ actions.prototype._clickNotes_show = function () {
         );
     core.drawText(result);
 };
+
 actions.prototype._clickNotes_edit = function () {
     core.status.hero.notes = core.status.hero.notes || [];
     if (core.status.hero.notes.length == 0) {
@@ -2935,6 +2985,7 @@ actions.prototype._clickNotes_edit = function () {
         );
     }
 };
+
 actions.prototype._clickNotes_delete = function () {
     core.status.hero.notes = core.status.hero.notes || [];
     if (core.status.hero.notes.length == 0) {
@@ -2982,6 +3033,7 @@ actions.prototype._clickNotes_delete = function () {
         );
     }
 };
+
 actions.prototype._keyUpNotes = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 3;
@@ -2995,6 +3047,7 @@ actions.prototype._keyUpNotes = function (keycode) {
         this._clickNotes,
     );
 };
+
 actions.prototype._clickSyncSave = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3036,6 +3089,7 @@ actions.prototype._clickSyncSave = function (x, y) {
     }
     return;
 };
+
 actions.prototype._clickSyncSave_readFile = function () {
     core.readFile(
         function (obj) {
@@ -3050,9 +3104,11 @@ actions.prototype._clickSyncSave_readFile = function () {
         ".h5save",
     );
 };
+
 actions.prototype._clickSyncSave_replay = function () {
     core.ui._drawReplay();
 };
+
 actions.prototype._keyUpSyncSave = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 4;
@@ -3066,6 +3122,7 @@ actions.prototype._keyUpSyncSave = function (keycode) {
         this._clickSyncSave,
     );
 };
+
 actions.prototype._clickSyncSelect = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3095,6 +3152,7 @@ actions.prototype._clickSyncSelect = function (x, y) {
         }
     }
 };
+
 actions.prototype._keyUpSyncSelect = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 0;
@@ -3108,6 +3166,7 @@ actions.prototype._keyUpSyncSelect = function (keycode) {
         this._clickSyncSelect,
     );
 };
+
 actions.prototype._clickLocalSaveSelect = function (x, y) {
     if (this._out(x)) return;
     var choices = core.status.event.ui.choices;
@@ -3140,6 +3199,7 @@ actions.prototype._clickLocalSaveSelect = function (x, y) {
         core.ui._drawSyncSave();
     }
 };
+
 actions.prototype._keyUpLocalSaveSelect = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 2;
@@ -3223,6 +3283,7 @@ actions.prototype._clickStorageRemove_current = function () {
         },
     );
 };
+
 actions.prototype._keyUpStorageRemove = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.status.event.selection = 5;
@@ -3269,6 +3330,7 @@ actions.prototype._clickReplay = function (x, y) {
         }
     }
 };
+
 actions.prototype._clickReplay_fromBeginning = function () {
     core.ui.closePanel();
     core.startGame(
@@ -3277,6 +3339,7 @@ actions.prototype._clickReplay_fromBeginning = function () {
         core.cloneArray(core.status.route),
     );
 };
+
 actions.prototype._clickReplay_fromLoad = function () {
     core.status.event.id = "replayLoad";
     core.status.event.selection = null;
@@ -3286,6 +3349,7 @@ actions.prototype._clickReplay_fromLoad = function () {
         offset = saveIndex - 5 * page;
     core.ui._drawSLPanel(10 * page + offset);
 };
+
 actions.prototype._clickReplay_replayRemain = function () {
     core.closePanel();
     core.drawText(
@@ -3326,6 +3390,7 @@ actions.prototype._clickReplay_replaySince = function () {
         },
     );
 };
+
 actions.prototype._clickReplay_download = function () {
     core.download(
         core.firstData.name + "_" + core.formatDate2() + ".h5route",
@@ -3339,6 +3404,7 @@ actions.prototype._clickReplay_download = function () {
         ),
     );
 };
+
 actions.prototype._keyUpReplay = function (keycode) {
     if (keycode == 27 || keycode == 88) {
         core.playSound("取消");
