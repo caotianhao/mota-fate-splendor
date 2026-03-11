@@ -9,7 +9,7 @@ main.floors.MT26 =
     "canFlyFrom": true,
     "canUseQuickShop": true,
     "images": [],
-    "ratio": 1,
+    "ratio": 2,
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [],

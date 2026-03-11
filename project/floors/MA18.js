@@ -10,7 +10,7 @@ main.floors.MA18=
     "canUseQuickShop": true,
     "cannotViewMap": false,
     "images": [],
-    "ratio": 1,
+    "ratio": 2,
     "defaultGround": "ground",
     "firstArrive": [],
     "eachArrive": [],
