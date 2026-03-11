@@ -121,18 +121,19 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"sword2": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "银剑",
-		"text": "一把很普通的银剑",
+		"text": "剑身掺入了秘银以提升强度，似乎是王国某位强者列装给亲卫队成员的武器",
 		"equip": {
 			"type": 0,
 			"animate": "sword",
 			"value": {
-				"atk": 20
-			}
+				"atk": 8
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.atk += 20",
-		"itemEffectTip": "，攻击+20"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"sword3": {
 		"cls": "items",
@@ -206,12 +207,11 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"shield2": {
 		"cls": "equips",
 		"name": "银盾",
-		"text": "盾面掺入了秘银以提升强度，华丽的外形说明了它比起盾牌更像是礼仪用具。",
+		"text": "盾面掺入了秘银以提升强度，华丽的外形说明了它比起盾牌更像是礼仪用具",
 		"equip": {
 			"type": 1,
-			"animate": "sword",
 			"value": {
-				"def": 5
+				"def": 8
 			},
 			"percentage": {}
 		},
