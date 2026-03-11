@@ -13,6 +13,50 @@ main.floors.MT21=
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [
+        {
+            "type": "switch",
+            "condition": "flag:hard",
+            "caseList": [
+                {
+                    "case": "1",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1574",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "2",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1575",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "3",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1576",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "sleep",
+            "time": 500,
+            "noSkip": true
+        },
         "\t[勇士,hero]......",
         "\t[妖精,fairy]怎么了？突然愣在原地不动。快点快点，赶紧继续往前走啊。",
         "\t[勇士,hero]这一路上，我弄不懂的谜团越来越多。比起舍弃理智盲目前进，我更想好好思考一下我现在的处境。",

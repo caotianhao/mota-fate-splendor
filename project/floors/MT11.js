@@ -14,8 +14,48 @@ main.floors.MT11=
     "bgm": "bgm.mp3",
     "firstArrive": [
         {
+            "type": "switch",
+            "condition": "flag:hard",
+            "caseList": [
+                {
+                    "case": "1",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1574",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "2",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1575",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "case": "3",
+                    "action": [
+                        {
+                            "type": "setValue",
+                            "name": "item:I1576",
+                            "operator": "+=",
+                            "value": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "type": "sleep",
-            "time": 300
+            "time": 500,
+            "noSkip": true
         },
         "\t[勇士,hero]（这个区域的魔物明显比之前区域的强出一个档次。）",
         "\t[妖精,fairy]首先，欢迎来到第二区域。你是极少数可以突破到这里来的勇者，真是能干啊。",
