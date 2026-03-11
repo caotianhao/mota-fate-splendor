@@ -651,57 +651,25 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		],
 		"shops": [
 			{
-				"id": "shop1",
-				"text": "\t[贪婪之神,moneyShop]勇敢的武士啊, 给我${20+2*flag:shop1}金币就可以：",
-				"textInList": "1F金币商店",
-				"mustEnable": false,
-				"disablePreview": false,
+				"id": "shop4",
+				"text": "\t[贪婪神龛,moneyShop]掷入${10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20}枚金币，可以购买：",
+				"textInList": "4F金币商店",
+				"mustEnable": true,
+				"disablePreview": true,
 				"choices": [
 					{
-						"text": "生命+800",
-						"need": "status:money>=20+2*flag:shop1",
+						"text": "攻击+1",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
 						"action": [
-							{
-								"type": "comment",
-								"text": "新版商店中需要手动扣减金币和增加访问次数"
-							},
 							{
 								"type": "setValue",
 								"name": "status:money",
 								"operator": "-=",
-								"value": "20+2*flag:shop1"
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
 							},
 							{
 								"type": "setValue",
-								"name": "flag:shop1",
-								"operator": "+=",
-								"value": "1"
-							},
-							{
-								"type": "setValue",
-								"name": "status:hp",
-								"operator": "+=",
-								"value": "800"
-							}
-						]
-					},
-					{
-						"text": "攻击+4",
-						"need": "status:money>=20+2*flag:shop1",
-						"action": [
-							{
-								"type": "comment",
-								"text": "新版商店中需要手动扣减金币和增加访问次数"
-							},
-							{
-								"type": "setValue",
-								"name": "status:money",
-								"operator": "-=",
-								"value": "20+2*flag:shop1"
-							},
-							{
-								"type": "setValue",
-								"name": "flag:shop1",
+								"name": "flag:SHOP_GLOBAL_VALUE",
 								"operator": "+=",
 								"value": "1"
 							},
@@ -709,64 +677,92 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 								"type": "setValue",
 								"name": "status:atk",
 								"operator": "+=",
-								"value": "4"
+								"value": "1"
 							}
 						]
-					}
-				]
-			},
-			{
-				"id": "shop2",
-				"text": "\t[贪婪之神,expShop]勇敢的武士啊, 给我一定经验就可以：",
-				"textInList": "1F经验商店",
-				"mustEnable": false,
-				"disablePreview": true,
-				"choices": [
+					},
 					{
-						"text": "等级+1（100经验）",
-						"need": "status:exp>=100",
+						"text": "防御+1",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
 						"action": [
 							{
 								"type": "setValue",
-								"name": "status:exp",
+								"name": "status:money",
 								"operator": "-=",
-								"value": "100"
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
 							},
 							{
 								"type": "setValue",
-								"name": "status:lv",
+								"name": "flag:SHOP_GLOBAL_VALUE",
 								"operator": "+=",
 								"value": "1"
 							},
 							{
 								"type": "setValue",
-								"name": "status:hp",
+								"name": "status:def",
 								"operator": "+=",
-								"value": "1000"
+								"value": "1"
 							}
 						]
 					}
 				]
 			},
 			{
-				"id": "itemShop",
-				"item": true,
-				"textInList": "道具商店",
-				"mustEnable": false,
+				"id": "shop14",
+				"text": "\t[贪婪神龛,moneyShop]掷入${10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20}枚金币，可以购买：",
+				"textInList": "14F金币商店",
+				"mustEnable": true,
+				"disablePreview": true,
 				"choices": [
 					{
-						"id": "yellowKey",
-						"number": 10,
-						"money": "10",
-						"sell": "5"
+						"text": "黄钥匙*2",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:yellowKey",
+								"operator": "+=",
+								"value": "2"
+							}
+						]
+					},
+					{
+						"text": "蓝钥匙*1",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:blueKey",
+								"operator": "+=",
+								"value": "1"
+							}
+						]
 					}
 				]
-			},
-			{
-				"id": "keyShop",
-				"textInList": "回收钥匙商店",
-				"mustEnable": false,
-				"commonEvent": "回收钥匙商店"
 			}
 		],
 		"levelUp": [

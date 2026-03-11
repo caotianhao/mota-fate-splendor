@@ -15,7 +15,42 @@ main.floors.MT14=
     "firstArrive": [],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "6,9": [
+            {
+                "type": "if",
+                "condition": "(flag:Shop14===0)",
+                "true": [
+                    "\t[妖精,fairy]\b[up,null]竟然是少见的，出售钥匙的贪婪神龛，不知道该说你运气是好是坏。",
+                    "\t[妖精,fairy]\b[up,null]这个区域的石头人拥有坚固属性，是非常难缠的魔物，要想以较低的消耗解决掉这类魔物的话，就必须要拼命提升攻防属性了。",
+                    "\t[妖精,fairy]\b[up,null]不过别灰心，比起属性值，充足的钥匙才是让你能在魔塔里一方通行的重要因素。",
+                    "\t[妖精,fairy]\b[up,null]好好权衡属性与钥匙之间的优劣，合理分配你为数不多的金币吧。",
+                    {
+                        "type": "setValue",
+                        "name": "flag:Shop14",
+                        "value": "1"
+                    },
+                    {
+                        "type": "if",
+                        "condition": "(flag:Shop4+flag:Shop14===1)",
+                        "true": [
+                            {
+                                "type": "setValue",
+                                "name": "flag:SHOP_GLOBAL_VALUE",
+                                "value": "1"
+                            }
+                        ]
+                    }
+                ],
+                "false": []
+            },
+            {
+                "type": "openShop",
+                "id": "shop14",
+                "open": true
+            }
+        ]
+    },
     "changeFloor": {
         "1,11": {
             "floorId": ":before",

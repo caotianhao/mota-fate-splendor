@@ -15,7 +15,46 @@ main.floors.MT4=
     "firstArrive": [],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "2,1": [
+            {
+                "type": "if",
+                "condition": "(flag:Shop4===0)",
+                "true": [
+                    "\t[勇士,hero]一座奇怪的神像，隐隐有诡异的红光在眼睛跟嘴的位置闪烁着。",
+                    "\t[勇士,hero]等等，这座神像的下端，似乎有个形状整齐的孔洞。",
+                    "\t[妖精,fairy]观察的很仔细嘛，你来猜猜看这座神像的用途是什么？",
+                    "\t[勇士,hero]这个矩形孔洞刚好比那堆从怪物的尸体里搜刮出的金币大一小圈，这东西的作用......嗯......自动贩卖机？",
+                    "\t[妖精,fairy]跟以前那些见到神像二话不说就开砸的野蛮勇者比起来，你的悟性可以说是很好了。",
+                    "\t[妖精,fairy]没错，这种神像是贪婪之神的神龛，直接联结着贪婪之神的神识，只要往里头供奉足够多的金币，就能得到神的祝福。",
+                    "\t[勇士,hero]神的祝福是什么？先说好，我可不信任何神，能形容的通俗笼统一些吗？",
+                    "\t[妖精,fairy]你试试不就知道了？来，往里头塞几个金币实践一下。",
+                    {
+                        "type": "setValue",
+                        "name": "flag:Shop4",
+                        "value": "1"
+                    },
+                    {
+                        "type": "if",
+                        "condition": "(flag:Shop4+flag:Shop14===1)",
+                        "true": [
+                            {
+                                "type": "setValue",
+                                "name": "flag:SHOP_GLOBAL_VALUE",
+                                "value": "1"
+                            }
+                        ]
+                    }
+                ],
+                "false": []
+            },
+            {
+                "type": "openShop",
+                "id": "shop4",
+                "open": true
+            }
+        ]
+    },
     "changeFloor": {
         "1,6": {
             "floorId": ":before",
