@@ -1235,9 +1235,10 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 		}
 		function reloadCss(data) {
 			const all = Array.from(document.getElementsByTagName('link'));
+			const base = window.location.origin;
 			all.forEach(v => {
 				if (v.rel !== 'stylesheet') return;
-				if (v.href === `http://127.0.0.1:3000/${data}`) {
+				if (v.href === `${base}/${data}`) {
 					v.remove();
 					const link = document.createElement('link');
 					link.rel = 'stylesheet';
