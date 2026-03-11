@@ -583,23 +583,31 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1261": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶红血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 150",
+		"itemEffectTip": "，生命+150"
 	},
 	"I1262": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶蓝血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 300",
+		"itemEffectTip": "，生命+300"
 	},
 	"I1263": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶黄血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 600",
+		"itemEffectTip": "，生命+600"
 	},
 	"I1264": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶绿血瓶",
+		"canUseItemEffect": "true",
+		"itemEffectTip": "，生命+1000",
+		"itemEffect": "core.status.hero.hp += 1000"
 	},
 	"I1265": {
 		"cls": "items",
@@ -623,8 +631,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1269": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶红宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.atk += 2",
+		"itemEffectTip": "，攻击+2"
 	},
 	"I1270": {
 		"cls": "items",
@@ -658,8 +668,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1276": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶蓝宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.def += 2",
+		"itemEffectTip": "，防御+2"
 	},
 	"I1277": {
 		"cls": "items",
@@ -693,8 +705,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1283": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶绿宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.mdef += 5",
+		"itemEffectTip": "，护盾+5"
 	},
 	"I1284": {
 		"cls": "items",
@@ -728,8 +742,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1290": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "二阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 100",
+		"itemEffectTip": "，生命上限+100"
 	},
 	"I1291": {
 		"cls": "items",
