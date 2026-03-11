@@ -13,7 +13,7 @@ main.floors.MT1=
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [
-        "\t[妖精,fairy]来，接着这个。",
+        "\t[妖精,fairy]\b[down,null]来，接着这个。",
         {
             "type": "switch",
             "condition": "flag:hard",
@@ -53,10 +53,10 @@ main.floors.MT1=
                 }
             ]
         },
-        "\t[勇士,hero]......一个沉甸甸的布袋。",
-        "\t[勇士,hero]妖精，这里面都装了些什么东西？",
-        "\t[妖精,fairy]各式各样对你接下来的冒险有帮助的小玩意，在你陷入绝境之际毫不犹豫地拉开吧。",
-        "\t[妖精,fairy]顺带一提，每当你初次到达一个新的区域时，我都会给你一个这样的福袋，拆开的时候一定要对我心存感激哦。"
+        "\t[勇士,hero]\b[down,null]......一个沉甸甸的布袋。",
+        "\t[勇士,hero]\b[down,null]妖精，这里面都装了些什么东西？",
+        "\t[妖精,fairy]\b[down,null]各式各样对你接下来的冒险有帮助的小玩意，在你陷入绝境之际毫不犹豫地拉开吧。",
+        "\t[妖精,fairy]\b[down,null]顺带一提，每当你初次到达一个新的区域时，我都会给你一个这样的福袋，拆开的时候一定要对我心存感激哦。"
     ],
     "eachArrive": [],
     "parallelDo": "",
