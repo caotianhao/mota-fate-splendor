@@ -1854,7 +1854,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"I1515": {
 		"cls": "tools",
 		"name": "商店抵用券",
-		"canUseItemEffect": "false"
+		"canUseItemEffect": "false",
+		"text": "持有此券可以在任意神龛处免费购物一次"
 	},
 	"I1516": {
 		"cls": "items",
