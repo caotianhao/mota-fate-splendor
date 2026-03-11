@@ -74,9 +74,6 @@ main.floors.MT10=
                 "time": 600
             },
             {
-                "type": "stopSound"
-            },
-            {
                 "type": "sleep",
                 "time": 250,
                 "noSkip": true
