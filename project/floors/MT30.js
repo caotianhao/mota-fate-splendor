@@ -89,6 +89,72 @@ main.floors.MT30=
                     "floorId": "MT16"
                 },
                 {
+                    "type": "setBlock",
+                    "number": "A1578",
+                    "loc": [
+                        [
+                            9,
+                            1
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
+                    "type": "setBlock",
+                    "number": "A1579",
+                    "loc": [
+                        [
+                            9,
+                            3
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
+                    "type": "setBlock",
+                    "number": "A1580",
+                    "loc": [
+                        [
+                            11,
+                            1
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
+                    "type": "setBlock",
+                    "number": "A1581",
+                    "loc": [
+                        [
+                            11,
+                            3
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
+                    "type": "setBlock",
+                    "number": "A1582",
+                    "loc": [
+                        [
+                            8,
+                            1
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
+                    "type": "setBlock",
+                    "number": "A1583",
+                    "loc": [
+                        [
+                            8,
+                            3
+                        ]
+                    ],
+                    "floorId": "MT16"
+                },
+                {
                     "type": "setValue",
                     "name": "flag:show16green",
                     "value": "1"
