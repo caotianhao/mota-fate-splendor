@@ -1470,5 +1470,11 @@ var maps_90f36752_8815_4be8_b32b_d7fad1d0542e =
 	"1574": {"cls":"items","id":"I1574"},
 	"1575": {"cls":"items","id":"I1575"},
 	"1576": {"cls":"items","id":"I1576"},
-	"1577": {"cls":"npcs","id":"N1577"}
+	"1577": {"cls":"npcs","id":"N1577"},
+	"1578": {"cls":"animates","id":"A1578"},
+	"1579": {"cls":"animates","id":"A1579"},
+	"1580": {"cls":"animates","id":"A1580"},
+	"1581": {"cls":"animates","id":"A1581"},
+	"1582": {"cls":"animates","id":"A1582"},
+	"1583": {"cls":"animates","id":"A1583"}
 }

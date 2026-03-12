@@ -94,7 +94,13 @@ var icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1 =
 		"rightPortal": 25,
 		"upPortal": 26,
 		"ice": 27,
-		"magentaWall": 28
+		"magentaWall": 28,
+		"A1578": 29,
+		"A1579": 30,
+		"A1580": 31,
+		"A1581": 32,
+		"A1582": 33,
+		"A1583": 34
 	},
 	"npcs": {
 		"man": 0,
