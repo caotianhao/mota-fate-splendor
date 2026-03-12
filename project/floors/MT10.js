@@ -64,6 +64,9 @@ main.floors.MT10=
             },
             "\t[勇士,hero]头好痛，好奇怪的感觉。",
             {
+                "type": "hideStatusBar"
+            },
+            {
                 "type": "changeFloor",
                 "floorId": "EX10",
                 "loc": [
@@ -297,6 +300,9 @@ main.floors.MT10=
                 ],
                 "direction": "down",
                 "time": 600
+            },
+            {
+                "type": "showStatusBar"
             },
             {
                 "type": "setCurtain",

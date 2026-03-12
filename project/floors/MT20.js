@@ -56,6 +56,9 @@ main.floors.MT20=
             },
             "\t[勇士,hero]头又痛了起来，糟糕，又来了。",
             {
+                "type": "hideStatusBar"
+            },
+            {
                 "type": "changeFloor",
                 "floorId": "EX20",
                 "loc": [
@@ -266,6 +269,9 @@ main.floors.MT20=
                 ],
                 "direction": "down",
                 "time": 500
+            },
+            {
+                "type": "showStatusBar"
             },
             {
                 "type": "setCurtain",
