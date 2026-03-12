@@ -31,7 +31,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"evilHero": {"name":"迷失勇者","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"demonPriest": {"name":"魔神法师","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"goldHornSlime": {"name":"金角怪","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
-	"silverSlime": {"name":"银色史莱姆","hp":2000,"atk":450,"def":600,"money":0,"exp":0,"point":0,"special":[2,28]},
+	"silverSlime": {"name":"银色史莱姆","hp":2000,"atk":450,"def":600,"money":0,"exp":0,"point":0,"special":[2,28],"afterBattle":[{"type":"setBlock","number":"I1515"}]},
 	"whiteHornSlime": {"name":"尖角怪","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"redSwordsman": {"name":"剑王","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"poisonZombie": {"name":"绿兽人","hp":100,"atk":120,"def":0,"money":13,"exp":0,"point":0,"special":[12]},
