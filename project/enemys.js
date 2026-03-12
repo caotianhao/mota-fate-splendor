@@ -28,7 +28,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"poisonBat": {"name":"紫蝙蝠","hp":100,"atk":120,"def":0,"money":14,"exp":0,"point":0,"special":13},
 	"skeletonPriest": {"name":"骷髅法师","hp":100,"atk":100,"def":0,"money":0,"exp":0,"point":0,"special":18,"value":20},
 	"skeletonKing": {"name":"骷髅王","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
-	"evilHero": {"name":"迷失勇者","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
+	"evilHero": {"name":"陈","hp":750,"atk":155,"def":160,"money":20,"exp":0,"point":0,"special":0},
 	"demonPriest": {"name":"魔神法师","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"goldHornSlime": {"name":"金角怪","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":0},
 	"silverSlime": {"name":"银色史莱姆","hp":2000,"atk":450,"def":600,"money":0,"exp":0,"point":0,"special":[2,28],"afterBattle":[{"type":"setBlock","number":"I1515"}]},

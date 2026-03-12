@@ -13,7 +13,21 @@ main.floors.MT16=
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [],
-    "eachArrive": [],
+    "eachArrive": [
+        {
+            "type": "if",
+            "condition": "(flag:show16green===1)",
+            "true": [
+                {
+                    "type": "setValue",
+                    "name": "flag:show16green",
+                    "value": "2"
+                },
+                "\t[勇士,hero]（空气中弥漫着一股刺鼻的血腥味。）",
+                "\t[勇士,hero]（糟糕，看来我来晚一步，杰克莫非已经遭遇不测了？）"
+            ]
+        }
+    ],
     "parallelDo": "",
     "events": {
         "11,2": [
@@ -93,7 +107,12 @@ main.floors.MT16=
     },
     "beforeBattle": {},
     "afterBattle": {},
-    "afterGetItem": {},
+    "afterGetItem": {
+        "10,2": [
+            "\t[勇士,hero]（一把沾满人血的绿钥匙，掉落在这种地方，多半是杰克身上的东西了。）",
+            "\t[勇士,hero]（目前有绿门的地方......只有0层左侧有一扇，这是杰克故意留给我的线索吗？）"
+        ]
+    },
     "afterOpenDoor": {},
     "autoEvent": {},
     "cannotMove": {},
