@@ -151,18 +151,19 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"sword4": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "圣剑",
-		"text": "一把很普通的圣剑",
+		"text": "一整块绿宝石运用无法理解的技术雕琢而成，剑上寄宿着不可思议的魔力",
 		"equip": {
 			"type": 0,
 			"animate": "sword",
 			"value": {
-				"atk": 80
-			}
+				"atk": 25
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.atk += 80",
-		"itemEffectTip": "，攻击+80"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"sword5": {
 		"cls": "items",
