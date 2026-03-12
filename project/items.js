@@ -136,7 +136,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"sword3": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "骑士剑",
 		"text": "一把很普通的骑士剑",
 		"equip": {
@@ -146,8 +146,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 				"atk": 40
 			}
 		},
-		"itemEffect": "core.status.hero.atk += 40",
-		"itemEffectTip": "，攻击+40"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"sword4": {
 		"cls": "items",
