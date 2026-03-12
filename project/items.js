@@ -138,13 +138,14 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"sword3": {
 		"cls": "equips",
 		"name": "骑士剑",
-		"text": "一把很普通的骑士剑",
+		"text": "久经沙场的上级士兵的佩剑",
 		"equip": {
 			"type": 0,
 			"animate": "sword",
 			"value": {
-				"atk": 40
-			}
+				"atk": 15
+			},
+			"percentage": {}
 		},
 		"itemEffect": null,
 		"itemEffectTip": null
@@ -219,17 +220,18 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"shield3": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "骑士盾",
-		"text": "一个很普通的骑士盾",
+		"text": "久经沙场的上级士兵的护盾",
 		"equip": {
 			"type": 1,
 			"value": {
-				"def": 40
-			}
+				"def": 15
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.def += 40",
-		"itemEffectTip": "，防御+40"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"shield4": {
 		"cls": "items",

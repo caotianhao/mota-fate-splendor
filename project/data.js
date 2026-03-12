@@ -647,7 +647,12 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 				"type": "sleep",
 				"time": 800
 			},
-			"这次，就换我来拯救你吧。"
+			"这次，就换我来拯救你吧。",
+			{
+				"type": "setValue",
+				"name": "flag:SHOP_GLOBAL_VALUE",
+				"value": "1"
+			}
 		],
 		"shops": [
 			{
@@ -832,6 +837,159 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 								"type": "setValue",
 								"name": "item:I1515",
 								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:blueKey",
+								"operator": "+=",
+								"value": "1"
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": "shop24",
+				"text": "\t[贪婪神龛,moneyShop]掷入${10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20}枚金币或使用商店抵用券，可以购买：",
+				"textInList": "24F金币商店",
+				"mustEnable": true,
+				"disablePreview": true,
+				"choices": [
+					{
+						"text": "攻击+3",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"condition": "item:I1515===0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:atk",
+								"operator": "+=",
+								"value": "3"
+							}
+						]
+					},
+					{
+						"text": "防御+3",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"condition": "item:I1515===0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:def",
+								"operator": "+=",
+								"value": "3"
+							}
+						]
+					},
+					{
+						"text": "黄蓝钥匙各一把",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"condition": "item:I1515===0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:yellowKey",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:blueKey",
+								"operator": "+=",
+								"value": "1"
+							}
+						]
+					},
+					{
+						"text": "攻击+3（用券）",
+						"need": "item:I1515!=0",
+						"condition": "item:I1515!=0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1515",
+								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:atk",
+								"operator": "+=",
+								"value": "3"
+							}
+						]
+					},
+					{
+						"text": "防御+3（用券）",
+						"need": "item:I1515!=0",
+						"condition": "item:I1515!=0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1515",
+								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:def",
+								"operator": "+=",
+								"value": "3"
+							}
+						]
+					},
+					{
+						"text": "黄蓝钥匙各一把（用券）",
+						"need": "item:I1515!=0",
+						"condition": "item:I1515!=0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1515",
+								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "item:yellowKey",
+								"operator": "+=",
 								"value": "1"
 							},
 							{

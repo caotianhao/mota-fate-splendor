@@ -15,7 +15,28 @@ main.floors.MT24=
     "firstArrive": [],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "6,9": [
+            {
+                "type": "if",
+                "condition": "(flag:Shop24===0)",
+                "true": [
+                    {
+                        "type": "setValue",
+                        "name": "flag:Shop24",
+                        "value": "1"
+                    },
+                    "全局商店已开启，按V可开启快捷商店。"
+                ],
+                "false": []
+            },
+            {
+                "type": "openShop",
+                "id": "shop24",
+                "open": true
+            }
+        ]
+    },
     "changeFloor": {
         "11,11": {
             "floorId": ":before",

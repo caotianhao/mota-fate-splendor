@@ -34,18 +34,7 @@ main.floors.MT4=
                         "name": "flag:Shop4",
                         "value": "1"
                     },
-                    {
-                        "type": "if",
-                        "condition": "(flag:Shop4+flag:Shop14===1)",
-                        "true": [
-                            "全局商店已开启，按V可开启快捷商店。",
-                            {
-                                "type": "setValue",
-                                "name": "flag:SHOP_GLOBAL_VALUE",
-                                "value": "1"
-                            }
-                        ]
-                    }
+                    "全局商店已开启，按V可开启快捷商店。"
                 ],
                 "false": []
             },
