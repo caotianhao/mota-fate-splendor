@@ -12,7 +12,41 @@ main.floors.MA9=
     "images": [],
     "ratio": 2,
     "defaultGround": "ground",
-    "firstArrive": [],
+    "firstArrive": [
+        "\t[勇士,hero]\b[down,null]？！",
+        {
+            "type": "playSound",
+            "name": "MaleScream.mp3",
+            "sync": true
+        },
+        "\t[勇士,hero]\b[down,null]这个惨叫声......是杰克吗？",
+        {
+            "type": "playSound",
+            "name": "GirlLaugh.ogg",
+            "sync": true
+        },
+        "\t[小女孩的声音]\b[down,null]嘻嘻，你以为我不知道你在打什么小算盘吗？",
+        "\t[小女孩的声音]\b[down,null]在这座魔塔里，我虽然称不上全知全能，但窥探你这个低等意识体的精神世界还不是轻轻松松？",
+        "\t[小女孩的声音]\b[down,null]利用他帮你找回镐头，好让你自己破开零层的墙壁逃出魔塔，哼哼，想的倒是挺美嘛。",
+        {
+            "type": "playSound",
+            "name": "MaleScream.mp3",
+            "sync": true
+        },
+        "\t[小女孩的声音]\b[down,null]不错的眼神，嘻嘻......放心吧，为了让这个计划继续进行下去，我是不会杀你的。",
+        {
+            "type": "playSound",
+            "name": "GirlLaugh.ogg",
+            "sync": true
+        },
+        "\t[小女孩的声音]\b[down,null]但是啊，让你生不如死的点子，我脑子里可是存着一大堆呢。",
+        {
+            "type": "playSound",
+            "name": "MaleScream.mp3",
+            "sync": true
+        },
+        "\t[勇士,hero]\b[down,null]杰克现在的处境一定很不妙。必须得快点攻进那里才行......"
+    ],
     "eachArrive": [],
     "parallelDo": "",
     "events": {},
