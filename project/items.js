@@ -328,7 +328,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"greenKey": {
 		"cls": "tools",
 		"name": "绿钥匙",
-		"text": "可以打开一扇绿门"
+		"text": "可以打开一扇绿门",
+		"hideInToolbox": true
 	},
 	"steelKey": {
 		"cls": "tools",
@@ -2032,7 +2033,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"cls": "tools",
 		"name": "便携式恢复药水",
 		"canUseItemEffect": "true",
-		"text": "恢复全额生命。多谢款待！",
+		"text": "恢复全额生命，多谢款待！",
 		"useItemEffect": "core.status.hero.hp = core.status.hero.hpmax"
 	},
 	"I1547": {
