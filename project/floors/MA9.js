@@ -49,7 +49,16 @@ main.floors.MA9=
     ],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "2,3": [
+            "\t[勇士,hero]（昏暗的小房间内，浑身是血的杰克抬头望着天花板，似乎并没有察觉到我的到来，小小的妖精则是缩在角落里轻轻抽泣着。）",
+            "\t[勇士,hero]呼......妖精，杰克，幸亏你们还活着。",
+            {
+                "type": "hide",
+                "remove": true
+            }
+        ]
+    },
     "changeFloor": {
         "6,11": {
             "floorId": ":next",
@@ -63,7 +72,141 @@ main.floors.MA9=
     "beforeBattle": {},
     "afterBattle": {},
     "afterGetItem": {},
-    "afterOpenDoor": {},
+    "afterOpenDoor": {
+        "2,4": [
+            {
+                "type": "setBgFgBlock",
+                "name": "fg",
+                "number": "X10054",
+                "loc": [
+                    [
+                        2,
+                        0
+                    ]
+                ]
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        1,
+                        1
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "setBlock",
+                "number": "fairy",
+                "loc": [
+                    [
+                        2,
+                        1
+                    ]
+                ]
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        3,
+                        1
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        4,
+                        1
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        1,
+                        2
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        2,
+                        2
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        3,
+                        2
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "setBlock",
+                "number": "thief",
+                "loc": [
+                    [
+                        4,
+                        2
+                    ]
+                ]
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        1,
+                        3
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "setBlock",
+                "number": "ground",
+                "loc": [
+                    [
+                        2,
+                        3
+                    ]
+                ]
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        3,
+                        3
+                    ]
+                ],
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        4,
+                        3
+                    ]
+                ],
+                "remove": true
+            }
+        ]
+    },
     "autoEvent": {},
     "cannotMove": {},
     "cannotMoveIn": {},
@@ -73,7 +216,7 @@ main.floors.MA9=
     [10024,10025,10025,10025,10025,10026,  0, 82,  0,897,1269,1283,  2],
     [10024,10025,10025,10025,10025,10026,525,  2,772,  2,  2, 81,  2],
     [10032,10033, 82,10033,10033,10034,1269, 81,  0,  2,1283,1262,  2],
-    [  2,1262,  0, 81,  0,  2,1264,  2,  0,219, 21,1262,  2],
+    [  2,1262,  0, 81, 22,  2,1264,  2,  0,219, 21,1262,  2],
     [  2,  2,897,  2,  2,  2,  2, 22,525,  2, 82,  2,  2],
     [  2,1269,  0, 81,1290,897,1269,  2,  0,  0,836,1269,  2],
     [  2,1276,  0,  2,1515,  2, 21,1264,  2, 81,  2,  2,  2],
