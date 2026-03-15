@@ -1,5 +1,4 @@
 .vscode
-
 .DS_Store
 MTBuilder.app
 
@@ -53,14 +52,26 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-
+.github
 node_modules
-
+_codelab
 _saves
 dist
 _ui
-
+_docs
+docs
+extensions
 compress.js
-_server/config.json
+server.js
+_server
 *.zip
-.cursor
+
+*.exe
+*.url
+editor*.html
+*.dll
+*.py
+tsconfig.json
+
+runtime*
+LICENSE*
