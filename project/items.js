@@ -235,17 +235,19 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"shield4": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "圣盾",
-		"text": "一个很普通的圣盾",
+		"text": "由一整块绿宝石运用无法理解的技术雕琢而成。盾上寄宿着不可思议的魔力",
 		"equip": {
 			"type": 1,
 			"value": {
-				"def": 80
-			}
+				"def": 25,
+				"mdef": 25
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.def += 80",
-		"itemEffectTip": "，防御+80"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"shield5": {
 		"cls": "items",
