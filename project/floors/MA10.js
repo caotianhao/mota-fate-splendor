@@ -129,6 +129,76 @@ main.floors.MA10=
                         "value": "null"
                     },
                     {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_5_10s",
+                        "operator": "+=",
+                        "value": "1"
+                    }
+                ]
+            },
+            "1": null
+        },
+        "7,10": {
+            "0": {
+                "condition": "flag:door_MA10_7_10==4",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_7_10",
+                        "value": "null"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_5_10s",
+                        "operator": "+=",
+                        "value": "1"
+                    }
+                ]
+            },
+            "1": null
+        },
+        "5,10": {
+            "0": {
+                "condition": "flag:door_MA10_5_10==4",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_5_10",
+                        "value": "null"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_5_10s",
+                        "operator": "+=",
+                        "value": "1"
+                    }
+                ]
+            },
+            "1": null
+        },
+        "0,0": {
+            "0": {
+                "condition": "flag:door_MA10_5_10s===3",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
                         "type": "vibrate",
                         "direction": "horizontal",
                         "time": 800,
@@ -261,15 +331,10 @@ main.floors.MA10=
                         "noSkip": true
                     },
                     {
-                        "type": "move",
+                        "type": "changePos",
                         "loc": [
                             6,
-                            6
-                        ],
-                        "time": 300,
-                        "keep": true,
-                        "steps": [
-                            "up:1"
+                            5
                         ]
                     },
                     {
@@ -288,15 +353,10 @@ main.floors.MA10=
                     "\t[勇士,hero]\b[up,null]你叫鬼帝是吧？我会让你后悔小瞧我的。",
                     "\t[勇士,hero]\b[up,null]听着，我会让你们这些所有跟我作对的人后悔招惹我的！",
                     {
-                        "type": "move",
+                        "type": "changePos",
                         "loc": [
                             6,
-                            5
-                        ],
-                        "time": 300,
-                        "keep": true,
-                        "steps": [
-                            "down:1"
+                            6
                         ]
                     },
                     {
@@ -404,6 +464,9 @@ main.floors.MA10=
                     },
                     "不能输，我必须要赢。",
                     "我不是任何人的棋子，我是属于我自己的棋子，棋盘上最后一颗面对万马千军却仍不肯放弃的小小卒兵。",
+                    "不论面对再强大，再蛮不讲理的敌人，我也绝不能退缩。",
+                    "为了得到足以对抗贤者的力量。",
+                    "前进，或者死。",
                     {
                         "type": "changeFloor",
                         "floorId": "EXA104",
@@ -414,9 +477,6 @@ main.floors.MA10=
                         "direction": "up",
                         "time": 10
                     },
-                    "不论面对再强大，再蛮不讲理的敌人，我也绝不能退缩。",
-                    "为了得到足以对抗贤者的力量。",
-                    "前进，或者死。",
                     {
                         "type": "setCurtain",
                         "time": 500
@@ -459,17 +519,12 @@ main.floors.MA10=
                         ]
                     },
                     {
-                        "type": "jump",
-                        "from": [
-                            6,
-                            6
-                        ],
-                        "to": [
+                        "type": "jumpHero",
+                        "loc": [
                             7,
                             5
                         ],
-                        "time": 200,
-                        "keep": true
+                        "time": 200
                     },
                     {
                         "type": "animate",
@@ -480,17 +535,12 @@ main.floors.MA10=
                         ]
                     },
                     {
-                        "type": "jump",
-                        "from": [
-                            7,
-                            5
-                        ],
-                        "to": [
+                        "type": "jumpHero",
+                        "loc": [
                             7,
                             4
                         ],
-                        "time": 200,
-                        "keep": true
+                        "time": 200
                     },
                     {
                         "type": "animate",
@@ -501,17 +551,12 @@ main.floors.MA10=
                         ]
                     },
                     {
-                        "type": "jump",
-                        "from": [
-                            7,
-                            4
-                        ],
-                        "to": [
+                        "type": "jumpHero",
+                        "loc": [
                             5,
                             5
                         ],
-                        "time": 200,
-                        "keep": true
+                        "time": 200
                     },
                     {
                         "type": "animate",
@@ -522,17 +567,12 @@ main.floors.MA10=
                         ]
                     },
                     {
-                        "type": "jump",
-                        "from": [
-                            5,
-                            5
-                        ],
-                        "to": [
+                        "type": "jumpHero",
+                        "loc": [
                             6,
                             4
                         ],
-                        "time": 200,
-                        "keep": true
+                        "time": 200
                     },
                     {
                         "type": "animate",
@@ -608,46 +648,6 @@ main.floors.MA10=
                 ]
             },
             "1": null
-        },
-        "7,10": {
-            "0": {
-                "condition": "flag:door_MA10_7_10==4",
-                "currentFloor": true,
-                "priority": 0,
-                "delayExecute": false,
-                "multiExecute": false,
-                "data": [
-                    {
-                        "type": "openDoor"
-                    },
-                    {
-                        "type": "setValue",
-                        "name": "flag:door_MA10_7_10",
-                        "operator": "=",
-                        "value": "null"
-                    }
-                ]
-            }
-        },
-        "5,10": {
-            "0": {
-                "condition": "flag:door_MA10_5_10==4",
-                "currentFloor": true,
-                "priority": 0,
-                "delayExecute": false,
-                "multiExecute": false,
-                "data": [
-                    {
-                        "type": "openDoor"
-                    },
-                    {
-                        "type": "setValue",
-                        "name": "flag:door_MA10_5_10",
-                        "operator": "=",
-                        "value": "null"
-                    }
-                ]
-            }
         }
     },
     "cannotMove": {},
