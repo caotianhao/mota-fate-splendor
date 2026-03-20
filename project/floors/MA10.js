@@ -27,10 +27,152 @@ main.floors.MA10=
         }
     },
     "beforeBattle": {},
-    "afterBattle": {},
+    "afterBattle": {
+        "5,6": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_6_9",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_7_10",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_5_10",
+                "operator": "+=",
+                "value": "1"
+            }
+        ],
+        "7,6": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_6_9",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_7_10",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_5_10",
+                "operator": "+=",
+                "value": "1"
+            }
+        ],
+        "7,8": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_6_9",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_7_10",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_5_10",
+                "operator": "+=",
+                "value": "1"
+            }
+        ],
+        "5,8": [
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_6_9",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_7_10",
+                "operator": "+=",
+                "value": "1"
+            },
+            {
+                "type": "setValue",
+                "name": "flag:door_MA10_5_10",
+                "operator": "+=",
+                "value": "1"
+            }
+        ]
+    },
     "afterGetItem": {},
     "afterOpenDoor": {},
-    "autoEvent": {},
+    "autoEvent": {
+        "6,9": {
+            "0": {
+                "condition": "flag:door_MA10_6_9==4",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_6_9",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        },
+        "7,10": {
+            "0": {
+                "condition": "flag:door_MA10_7_10==4",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_7_10",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        },
+        "5,10": {
+            "0": {
+                "condition": "flag:door_MA10_5_10==4",
+                "currentFloor": true,
+                "priority": 0,
+                "delayExecute": false,
+                "multiExecute": false,
+                "data": [
+                    {
+                        "type": "openDoor"
+                    },
+                    {
+                        "type": "setValue",
+                        "name": "flag:door_MA10_5_10",
+                        "operator": "=",
+                        "value": "null"
+                    }
+                ]
+            }
+        }
+    },
     "cannotMove": {},
     "cannotMoveIn": {},
     "map": [
