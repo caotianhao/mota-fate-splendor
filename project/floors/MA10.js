@@ -135,13 +135,119 @@ main.floors.MA10=
                         "speed": 10,
                         "power": 10
                     },
-                    "\t[勇士,hero]头好痛，好奇怪的感觉。",
+                    "\t[勇士,hero]......",
+                    "\t[勇士,hero]......（已经渐渐习惯这种感觉了。）",
                     {
                         "type": "hideStatusBar"
                     },
                     {
                         "type": "changeFloor",
-                        "floorId": "EX10",
+                        "floorId": "EXA101",
+                        "loc": [
+                            6,
+                            7
+                        ],
+                        "direction": "down",
+                        "time": 600
+                    },
+                    {
+                        "type": "sleep",
+                        "time": 250,
+                        "noSkip": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            5,
+                            7
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            5,
+                            9
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            7,
+                            7
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            7,
+                            9
+                        ]
+                    },
+                    {
+                        "type": "hide",
+                        "loc": [
+                            [
+                                5,
+                                7
+                            ]
+                        ],
+                        "remove": true
+                    },
+                    {
+                        "type": "hide",
+                        "loc": [
+                            [
+                                5,
+                                9
+                            ]
+                        ],
+                        "remove": true
+                    },
+                    {
+                        "type": "hide",
+                        "loc": [
+                            [
+                                7,
+                                7
+                            ]
+                        ],
+                        "remove": true
+                    },
+                    {
+                        "type": "hide",
+                        "loc": [
+                            [
+                                7,
+                                9
+                            ]
+                        ],
+                        "remove": true
+                    },
+                    "\t[骷髅将军,skeletonKnight]\b[up,null]居然能从骷髅的海洋里杀出一条血路，虽然长着一副黑铁级勇士的大众脸，但你果然不是什么简单的角色。",
+                    "\t[骷髅将军,skeletonKnight]\b[up,null]我非常赏识你的潜能，不如这样吧，我们放下剑好好谈一谈，你如果肯加入我的麾下，我可以直接将你提拔为近卫军。",
+                    "\t[勇士,hero]\b[up,null]区区一具骨头架子，怎么这么啰嗦，要打就打，哪来那么多话。",
+                    "\t[骷髅将军,skeletonKnight]\b[up,null]哦?这么多年来，你可是唯一一个敢用这种口气跟我说话的人类！",
+                    "\t[骷髅将军,skeletonKnight]\b[up,null]哼！既然你不肯乖乖就范，那么我就先把你身上的皮肉一块一块割下来，再用咒术把你变成最低级的骷髅士兵！",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            8
+                        ]
+                    },
+                    {
+                        "type": "sleep",
+                        "time": 250,
+                        "noSkip": true
+                    },
+                    {
+                        "type": "changeFloor",
+                        "floorId": "EXA102",
                         "loc": [
                             6,
                             6
@@ -155,40 +261,47 @@ main.floors.MA10=
                         "noSkip": true
                     },
                     {
-                        "type": "changePos",
-                        "loc": [
-                            6,
-                            5
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            5
-                        ]
-                    },
-                    "\t[勇士,hero]\b[down,null]开什么玩笑啊，明明是最低等级的龙，力量居然比黑铁顶尖的人类强出那么多。",
-                    "\t[勇士,hero]\b[down,null]生来就站在我们只能仰望的起点，真是让人嫉妒的种族啊！",
-                    {
-                        "type": "changePos",
+                        "type": "move",
                         "loc": [
                             6,
                             6
+                        ],
+                        "time": 300,
+                        "keep": true,
+                        "steps": [
+                            "up:1"
                         ]
                     },
                     {
                         "type": "animate",
-                        "name": "sword",
+                        "name": "jianji",
                         "loc": [
                             6,
-                            7
+                            5
+                        ]
+                    },
+                    "\t[鬼帝,skeletonKing]\b[up,null]硬抗下我一击平砍却没有倒下的黑铁级勇士，莫非......你跟我一样，也是稀有勇者体质的拥有者吗？",
+                    "\t[勇士,hero]\b[up,null]（明明只是一招看上去平凡无常的普通攻击而已，其中蕴含的力道却是让我握剑的手臂骨折多处。）",
+                    "\t[勇士,hero]\b[up,null]（这家伙......实力远远强于这座塔里的其他魔物，他对我表现出来的力量，也不过只是冰山一角而已，他要是出全力，恐怕我......）",
+                    "\t[勇士,hero]\b[up,null]......切，你会后悔放水的。",
+                    "\t[鬼帝,skeletonKing]\b[up,null]嗯？杀气......这个人类身上的斗志突然涨了好几倍，你刚才说什么？",
+                    "\t[勇士,hero]\b[up,null]你叫鬼帝是吧？我会让你后悔小瞧我的。",
+                    "\t[勇士,hero]\b[up,null]听着，我会让你们这些所有跟我作对的人后悔招惹我的！",
+                    {
+                        "type": "move",
+                        "loc": [
+                            6,
+                            5
+                        ],
+                        "time": 300,
+                        "keep": true,
+                        "steps": [
+                            "down:1"
                         ]
                     },
                     {
                         "type": "animate",
-                        "name": "sword",
+                        "name": "jianji",
                         "loc": [
                             6,
                             7
@@ -200,139 +313,83 @@ main.floors.MA10=
                         "noSkip": true
                     },
                     {
-                        "type": "animate",
-                        "name": "zone",
+                        "type": "changeFloor",
+                        "floorId": "EXA103",
                         "loc": [
                             6,
-                            6
-                        ]
+                            9
+                        ],
+                        "direction": "down",
+                        "time": 600
                     },
-                    "\t[勇士,hero]\b[down,null]唔啊！！！糟糕，大意了，硬生生吃了一记龙吼，唔！",
-                    "\t[勇士,hero]\b[down,null]耳孔在不停地往外冒血，听觉已经被剥夺了，但是这痛觉却无时无刻不在提醒我紧绷精神。",
-                    "\t[勇士,hero]\b[down,null]它看上去有点疲惫，看来龙吼的释放需要消耗这家伙相当的精力，机会！",
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    "\t[勇士,hero]\b[down,null]（虽然听不见声音，不过这条龙现在一定在声嘶力竭地大喊大叫吧。）",
-                    "\t[勇士,hero]\b[down,null]（它看样子是被眼前弱小的人类逼急了，祭出作为杀手锏的粗壮尾巴，用力抽打着我的身体。）",
-                    "\t[勇士,hero]\b[down,null]（唔！！这家伙，在拼命挣扎！）",
-                    "\t[勇士,hero]\b[down,null]（动作太快了，根本没有机会回避。剑好像卡在这家伙的鳞片里了，没办法抽出来，力气也所剩无几。）",
-                    "\t[勇士,hero]\b[down,null]（已经没有退路了，再让它反抗下去的话，先一步倒下的一方必然是身为人类的我。必须要让这把剑砍的更深才行！）",
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            6
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            6
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "sword",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    "\t[勇士,hero]\b[down,null]（剑锋几乎砍到了这条龙的脊骨，不过剑身却被鳞片给磨断了。）",
-                    "\t[勇士,hero]\b[down,null]（它看上去活不了多久，我赢了！虽然代价是身负几乎连移动身体都办不到的重伤。）",
-                    "\t[勇士,hero]\b[down,null]（希望在部队那边的医疗兵发现我之前，不会再有其他龙族经过这里。）",
                     {
                         "type": "sleep",
-                        "time": 500,
+                        "time": 250,
                         "noSkip": true
                     },
-                    "\t[勇士,hero]\b[down,null]......！！",
-                    "\t[勇士,hero]\b[down,null]（它身体上的伤口正在以肉眼可见的速度复原。）",
-                    "\t[勇士,hero]\b[down,null]糟糕！贤者大人在攻打龙窟之前就有嘱咐过我们，龙族的恢复力十分惊人。",
-                    "\t[勇士,hero]\b[down,null]如果不彻底摧毁它们右心房的精核，就算造成再严重的伤害，也会迅速恢复如初。该死，我怎么会忘记这么重要的事情！",
-                    "\t[勇士,hero]\b[down,null]（那条龙圆睁着一双猩红的兽眼，恶狠狠地瞪着我这边，我从中窥见了最为原始的杀意。）",
-                    "\t[勇士,hero]\b[down,null]（看样子它很快就要恢复成战斗之前的状态了，必须得抢在它复原之前摧毁精核，不然的话我毫无疑问会被瞬间撕成碎片。）",
-                    "\t[勇士,hero]\b[down,null]（可是，我现在连起身的力气都没有，剑也在刚才的缠斗中报废了，手无寸铁。已经，没救了吗？）",
                     {
                         "type": "animate",
-                        "name": "hand",
+                        "name": "jianji",
                         "loc": [
                             6,
-                            6
+                            9
                         ]
                     },
                     {
                         "type": "animate",
-                        "name": "hand",
+                        "name": "jianji",
                         "loc": [
                             6,
-                            7
+                            10
+                        ]
+                    },
+                    "\t[魔神武者,devilWarrior]\b[up,null]痛快！吾镇守第三区域多年，从没遇到过能与吾战得势均力敌难分难解的人类！",
+                    "\t[魔神武者,devilWarrior]\b[up,null]勇士！可以告诉吾汝之真名吗？吾要将汝之首级放在收藏品中最显眼的位置！",
+                    "\t[勇士,hero]\b[up,null]（说什么势均力敌，其实这家伙心里很清楚我与他之间的实力差距到底有多大。）",
+                    "\t[勇士,hero]\b[up,null]（这些武者魔物都是天生的完美战士，随手挥出的一记劈斩都能与最老练的人类武士毕生修炼的奥义相媲美。）",
+                    "\t[勇士,hero]\b[up,null]（这个世界，任何时候都是不平等的。）",
+                    "\t[勇士,hero]\b[up,null]抱歉，这场决斗我必须要赢。",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            10
+                        ]
+                    },
+                    "\t[魔神武者,devilWarrior]\b[up,null]不错，汝这次的斩击无论是力道还是角度都有了极大的进步，可是......远远不够。",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            9
+                        ]
+                    },
+                    "\t[魔神武者,devilWarrior]\b[up,null]这回汝居然完全放弃闪避，以肉身与吾之刀锋正面对抗，虽然这样做的确能把更多的精力放在进攻上......",
+                    "\t[魔神武者,devilWarrior]\b[up,null]但是，汝再怎么说也只是个脆弱的人类，这种以伤换伤的打法，怎么都谈不上明智啊。",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            10
+                        ]
+                    },
+                    "\t[魔神武者,devilWarrior]\b[up,null]是错觉吗？......生命值流失得越来越迅速，汝脸上的表情也越来越痛苦，为什么汝的每次斩击都比上一次更精准，更迅猛？",
+                    "\t[魔神武者,devilWarrior]\b[up,null]难道说，汝一直在模仿吾之动作吗？",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            10
                         ]
                     },
                     {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            7
-                        ]
-                    },
-                    {
-                        "type": "animate",
-                        "name": "hand",
-                        "loc": [
-                            6,
-                            7
-                        ]
+                        "type": "sleep",
+                        "time": 250,
+                        "noSkip": true
                     },
                     {
                         "type": "setCurtain",
@@ -345,31 +402,194 @@ main.floors.MA10=
                         "time": 500,
                         "keep": true
                     },
-                    "没有退路，我就如象棋盘上的那一颗颗卒子，我生来就没有任何退路，只能前进。",
-                    "它似乎没有料到。浑身是血的几乎已经是一具尸体的弱小人类，竟然会大吼着扑向自己。",
-                    "我用拳头，肘部，膝盖......用尽一切有可能伤害到这家伙的手段，拼命的，不知多少次的击打着这条龙身上最薄弱的鳞甲。",
-                    "直到我的双手变得血肉模糊，直到我痛到感受不到疼痛，直到眼前的视野变成一片虚幻的红色。",
-                    "终于，龙号称坚不可摧的鳞甲上裂开了一道细纹。",
-                    "已经能隐约看见那颗埋藏在鳞甲下的精核了，可是我手脚的关节在刚才那番不要命的攻击下，似乎已经扭断，再也无法发力了。",
-                    "要在这里放弃吗？",
-                    "在龙窟这个战场上，我只是一个最不起眼的，被他们断定为“在任何战略活动中都能作为可以随意牺牲的消耗品”的黑铁级士兵。",
-                    "没人会在意我的死活。",
-                    "除了我自己！！！！！",
-                    "我要活下去！我一定要活下去给你们看！！",
-                    "失去了剑，我还有拳头！失去了拳头，我还有牙齿！失去了牙齿，我还有不服输的灵魂！！",
-                    "知道吗？兽性从来都不是你们这些畜生的专属武器！！",
-                    "面对着双眼发红犹如失心疯，压在自己身上用牙齿疯狂撕咬的，所谓弱小的人类。这条龙终于露出了恐惧的神色，它终于放下了高位生命体的自尊与骄傲，也扑到我身上拼命撕咬起来。",
-                    "一人，一龙，操弄着相同的武器，怀揣着同样想要活下去的强烈执念。",
-                    "不知过了多久，也许是几分钟几小时，在战役结束后我才从医疗兵口中得知，我与那条龙的缠斗持续了整整三天。",
-                    "在那漫长的三天里，我如同一台高效率高精度的机械，每时每刻都在用牙齿拼命撕咬它的身体。",
-                    "似乎在第二天的时候，它的精核就已经被我咬成碎渣给吞进了肚里，可那时的我除了扭曲的求生欲望以外，脑子里已经不剩下任何东西了。",
-                    "我赢了，我活下来了。",
+                    "不能输，我必须要赢。",
+                    "我不是任何人的棋子，我是属于我自己的棋子，棋盘上最后一颗面对万马千军却仍不肯放弃的小小卒兵。",
                     {
                         "type": "changeFloor",
-                        "floorId": "MT10",
+                        "floorId": "EXA104",
                         "loc": [
                             6,
-                            8
+                            6
+                        ],
+                        "direction": "up",
+                        "time": 10
+                    },
+                    "不论面对再强大，再蛮不讲理的敌人，我也绝不能退缩。",
+                    "为了得到足以对抗贤者的力量。",
+                    "前进，或者死。",
+                    {
+                        "type": "setCurtain",
+                        "time": 500
+                    },
+                    {
+                        "type": "sleep",
+                        "time": 250,
+                        "noSkip": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "yongchang",
+                        "loc": [
+                            4,
+                            3
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "yongchang",
+                        "loc": [
+                            4,
+                            6
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "yongchang",
+                        "loc": [
+                            8,
+                            6
+                        ]
+                    },
+                    {
+                        "type": "animate",
+                        "name": "yongchang",
+                        "loc": [
+                            8,
+                            3
+                        ]
+                    },
+                    {
+                        "type": "jump",
+                        "from": [
+                            6,
+                            6
+                        ],
+                        "to": [
+                            7,
+                            5
+                        ],
+                        "time": 200,
+                        "keep": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "thunder",
+                        "loc": [
+                            6,
+                            6
+                        ]
+                    },
+                    {
+                        "type": "jump",
+                        "from": [
+                            7,
+                            5
+                        ],
+                        "to": [
+                            7,
+                            4
+                        ],
+                        "time": 200,
+                        "keep": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "thunder",
+                        "loc": [
+                            7,
+                            5
+                        ]
+                    },
+                    {
+                        "type": "jump",
+                        "from": [
+                            7,
+                            4
+                        ],
+                        "to": [
+                            5,
+                            5
+                        ],
+                        "time": 200,
+                        "keep": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "thunder",
+                        "loc": [
+                            7,
+                            4
+                        ]
+                    },
+                    {
+                        "type": "jump",
+                        "from": [
+                            5,
+                            5
+                        ],
+                        "to": [
+                            6,
+                            4
+                        ],
+                        "time": 200,
+                        "keep": true
+                    },
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            3
+                        ]
+                    },
+                    "\t[黑暗大法师,magicMaster]\b[down,null]没想到你居然真的杀到这里来了，打败骷髅将军跟魔神武者倒是意料之中，不过你竟然能从鬼帝手下活着走出来......",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]呵呵，看来他也看出你具备稀有勇者体质了，那家伙虽然冥顽不化，倒也算个爱才之人。",
+                    {
+                        "type": "animate",
+                        "name": "jianji",
+                        "loc": [
+                            6,
+                            3
+                        ]
+                    },
+                    {
+                        "type": "sleep",
+                        "time": 1000,
+                        "noSkip": true
+                    },
+                    "\t[黑暗大法师,magicMaster]\b[down,null]zeno先生，为什么我们不能放下武器，好好坐下来面对面谈一谈呢？",
+                    "\t[勇士,hero]\b[down,null]为什么你会知道我的名字？",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]永不服输的黑铁级勇士zeno，你的大名在我们西洋国可谓是人尽皆知，我怎么可能会不知道？",
+                    "\t[勇士,hero]\b[down,null]你究竟是什么人？",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]zeno先生，要想在短时间内获得足以匹敌贤者的力量，只有一个选择，那就是突破魔塔最顶层，获得存放于此地的无上圣水。",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]老实说，一开始我对你黑铁级的实力并未抱有任何期待，我故意给你指了一条死路，算是对你太过高看自己能力的责罚。",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]没想到你居然凭借着连我们魔物都难以想象的意志力，一路杀到了最后一个区域，甚至是站到了我面前。",
+                    "\t[勇士,hero]\b[down,null]你伪装成西洋国智者的目的是什么？你到底用这些花言巧语迷惑了多少勇士？",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]目的？我没有别的目的，不瞒你说，我正在为这座魔塔寻找下一任继承者。也就是......下一任魔王。",
+                    "\t[黑暗大法师,magicMaster]\b[down,null]总而言之，你已经完美通过了我们的考验，欢迎加入魔物势力，zeno先生，不对，现在我应该叫你——",
+                    {
+                        "type": "sleep",
+                        "time": 250,
+                        "noSkip": true
+                    },
+                    {
+                        "type": "setCurtain",
+                        "color": [
+                            0,
+                            0,
+                            0,
+                            1
+                        ],
+                        "time": 500,
+                        "keep": true
+                    },
+                    "魔王zeno。",
+                    {
+                        "type": "changeFloor",
+                        "floorId": "MA10",
+                        "loc": [
+                            6,
+                            7
                         ],
                         "direction": "down",
                         "time": 600
@@ -381,16 +601,10 @@ main.floors.MA10=
                         "type": "setCurtain",
                         "time": 500
                     },
-                    "\t[妖精,fairy]\b[up,null]谢天谢地，你终于醒过来了。",
-                    "\t[勇士,hero]\b[up,null]我刚才怎么了？",
-                    "\t[妖精,fairy]\b[up,null]跟在0层的时候一样，毫无征兆的昏过去了。你是不是有什么特殊的疾病？低血糖之类的？",
-                    "\t[勇士,hero]\b[up,null]我不知道，我连自己叫什么都不知道。",
-                    "\t[妖精,fairy]\b[up,null]是吗，那说不定是战斗中被这怪物砸中头了。顺带一提，你昏倒的这段时间里，表情一直都很狰狞哦。",
-                    "\t[妖精,fairy]\b[up,null]就好像是在跟什么难缠的家伙拼死战斗似的。你梦到了什么东西？我有点好奇。",
-                    "\t[勇士,hero]\b[up,null]抱歉，我完全没有印象了。",
-                    "\t[妖精,fairy]\b[up,null]那算了......真没意思。以后不要随随便便昏倒哦，魔塔里的食尸系魔物可不少，要不是我刚才一直陪在你身边你就早没了。",
-                    "\t[勇士,hero]\b[up,null]这种事情好像不是我自己可以控制的吧？",
-                    "\t[妖精,fairy]\b[up,null]这我可管不着！嘛嘛！总之别在这种话题上纠缠太久了，赶紧前往下一个区域吧。"
+                    "\t[勇士,hero]......",
+                    "\t[勇士,hero]不知不觉又昏过去了......",
+                    "\t[勇士,hero]zeno......是谁的名字？",
+                    "\t[勇士,hero]还是别想这么多乱七八糟的东西了，杰克和妖精还没有脱离危险，我得抓紧时间找到行凶者才行。"
                 ]
             },
             "1": null
