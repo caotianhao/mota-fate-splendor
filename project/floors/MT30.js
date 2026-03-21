@@ -185,6 +185,10 @@ main.floors.MT30=
                         ]
                     ],
                     "time": 800
+                },
+                {
+                    "type": "hide",
+                    "remove": true
                 }
             ]
         },
