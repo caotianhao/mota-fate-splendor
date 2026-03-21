@@ -1077,9 +1077,18 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1354": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "equips",
+		"name": "赤金剑",
+		"canUseItemEffect": null,
+		"text": "女式的短剑，一般而言属于皇室女性成员的礼仪佩剑",
+		"equip": {
+			"type": 0,
+			"animate": "sword",
+			"value": {
+				"atk": 40
+			},
+			"percentage": {}
+		}
 	},
 	"I1355": {
 		"cls": "items",
