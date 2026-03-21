@@ -130,7 +130,7 @@ main.floors.MA20=
             },
             {
                 "type": "setHeroOpacity",
-                "opacity": 1
+                "opacity": 0
             },
             {
                 "type": "changeFloor",
@@ -193,6 +193,11 @@ main.floors.MA20=
                 "keep": true
             },
             {
+                "type": "sleep",
+                "time": 125,
+                "noSkip": true
+            },
+            {
                 "type": "setBlock",
                 "number": "I1377",
                 "loc": [
@@ -228,6 +233,10 @@ main.floors.MA20=
                 ],
                 "direction": "left",
                 "time": 600
+            },
+            {
+                "type": "setHeroOpacity",
+                "opacity": 1
             },
             {
                 "type": "showStatusBar"
