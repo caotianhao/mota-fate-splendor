@@ -4926,7 +4926,7 @@ ui.prototype._drawStatistics = function (floorIds) {
             core.formatBigNumber(statistics.poisonDamage) +
             "点"
             : "") +
-        "，领域/夹击/阻击/血网伤害" +
+        "，领域/裁决/阻击/血网伤害" +
         core.formatBigNumber(statistics.extraDamage) +
         "点。",
         "\t[说明]1. 地图数据统计的效果仅模拟当前立刻获得该道具的效果。\n2. 不会计算“不可被浏览地图”的隐藏层的数据。\n" +
