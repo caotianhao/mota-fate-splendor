@@ -166,7 +166,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"sword5": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "神圣剑",
 		"text": "一把很普通的神圣剑",
 		"equip": {
@@ -176,8 +176,8 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 				"atk": 160
 			}
 		},
-		"itemEffect": "core.status.hero.atk += 100",
-		"itemEffectTip": "，攻击+100"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"shield0": {
 		"cls": "items",
