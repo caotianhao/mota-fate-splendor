@@ -405,7 +405,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"E663": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"E664": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"E665": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
-	"E666": {"name":"灼热史莱姆","hp":850,"atk":280,"def":60,"money":8,"exp":0,"point":0,"special":[1]},
+	"E666": {"name":"新敌人","hp":850,"atk":280,"def":60,"money":8,"exp":0,"point":0,"special":[1]},
 	"E667": {"name":"新敌人","hp":1100,"atk":210,"def":80,"money":8,"exp":0,"point":0,"special":[8]},
 	"E668": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"E669": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
