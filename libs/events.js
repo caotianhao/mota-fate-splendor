@@ -1,16 +1,20 @@
 "use strict";
+
 function events() {
     this._init();
 }
+
 events.prototype._init = function () {
     this.eventdata = functions_d6ad677b_427a_4623_b50f_a445a3b0ef8a.events;
     this.commonEvent = events_c12a15a8_c380_4b28_8144_256cba95f760.commonEvent;
     this.systemEvents = {};
     this.actions = {};
 };
+
 events.prototype.resetGame = function (hero, hard, floorId, maps, values) {
     this.eventdata.resetGame(hero, hard, floorId, maps, values);
 };
+
 events.prototype.startGame = function (hard, seed, route, callback) {
     main.dom.levelChooseButtons.style.display = "none";
     main.dom.startButtonGroup.style.display = "none";
@@ -25,6 +29,7 @@ events.prototype.startGame = function (hard, seed, route, callback) {
         });
     }
 };
+
 events.prototype._startGame_start = function (hard, seed, route, callback) {
     core.resetGame(
         core.firstData.hero,
@@ -614,6 +619,7 @@ events.prototype.getItem = function (id, num, x, y, isGentleClick, callback) {
     core.drawTip(text, id);
     if (!core.hasFlag("__itemHint__")) core.setFlag("__itemHint__", []);
     var itemHint = core.getFlag("__itemHint__");
+    this.afterGetItem(id, x, y, isGentleClick);
     if (
         core.flags.itemFirstText &&
         itemHint.indexOf(id) < 0 &&
@@ -645,12 +651,13 @@ events.prototype.getItem = function (id, num, x, y, isGentleClick, callback) {
         }
         itemHint.push(id);
     }
-    this.afterGetItem(id, x, y, isGentleClick);
     if (callback) callback();
 };
+
 events.prototype.afterGetItem = function (id, x, y, isGentleClick) {
     this.eventdata.afterGetItem(id, x, y, isGentleClick);
 };
+
 events.prototype.getNextItem = function (noRoute) {
     if (core.isMoving() || !core.flags.enableGentleClick) return false;
     if (this._canGetNextItem()) return this._getNextItem(null, noRoute);
