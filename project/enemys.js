@@ -1026,6 +1026,6 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"E1614": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"E1615": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
 	"E1616": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
-	"E1617": {"name":"新敌人","hp":0,"atk":0,"def":0,"money":0,"exp":0,"point":0,"special":[]},
+	"E1617": {"name":"灼热史莱姆","hp":850,"atk":280,"def":60,"money":8,"exp":0,"point":0,"special":[1]},
 	"E1618": {"name":"凶绝史莱姆","hp":1666,"atk":666,"def":0,"money":15,"exp":0,"point":0,"special":[1]}
 }
