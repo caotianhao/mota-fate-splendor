@@ -16,7 +16,7 @@ var enemys_fcae963b_31c9_42b4_b48c_bb48d09f3f80 =
 	"bluePriest": {"name":"初级法师","hp":240,"atk":11,"def":3,"money":1,"exp":0,"point":0,"special":[2]},
 	"redPriest": {"name":"中级法师","hp":370,"atk":22,"def":32,"money":2,"exp":0,"point":0,"special":[2]},
 	"brownWizard": {"name":"初级巫师","hp":950,"atk":80,"def":160,"money":8,"exp":0,"point":0,"special":[2,15],"value":null,"range":1,"zone":100,"zoneSquare":true,"haloSquare":false},
-	"redWizard": {"name":"高级巫师","hp":1600,"atk":120,"def":270,"money":15,"exp":0,"point":0,"special":[2,15],"value":200,"zoneSquare":true,"range":1},
+	"redWizard": {"name":"高级巫师","hp":1600,"atk":120,"def":270,"money":15,"exp":0,"point":0,"special":[2,15],"value":null,"zoneSquare":true,"range":1,"zone":200},
 	"swordsman": {"name":"双持剑士","hp":700,"atk":140,"def":75,"money":6,"exp":0,"point":0,"special":[4]},
 	"soldier": {"name":"铁铠卫兵","hp":1450,"atk":125,"def":115,"money":6,"exp":0,"point":0,"special":0},
 	"yellowKnight": {"name":"黄骑士","hp":900,"atk":85,"def":60,"money":6,"exp":0,"point":0,"special":0},
