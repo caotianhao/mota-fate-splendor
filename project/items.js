@@ -168,13 +168,14 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"sword5": {
 		"cls": "equips",
 		"name": "神圣剑",
-		"text": "一把很普通的神圣剑",
+		"text": "与魔塔共同诞生的神剑，尽管力量随着时间消逝了一部分，但仍然锋利无比",
 		"equip": {
 			"type": 0,
 			"animate": "sword",
 			"value": {
-				"atk": 160
-			}
+				"atk": 65
+			},
+			"percentage": {}
 		},
 		"itemEffect": null,
 		"itemEffectTip": null
@@ -250,18 +251,19 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"itemEffectTip": null
 	},
 	"shield5": {
-		"cls": "items",
+		"cls": "equips",
 		"name": "神圣盾",
-		"text": "一个很普通的神圣盾",
+		"text": "与魔塔共同诞生的神盾，尽管力量随着时间消逝了一部分，但仍然坚固无比",
 		"equip": {
 			"type": 1,
 			"value": {
-				"def": 100,
-				"mdef": 100
-			}
+				"mdef": 100,
+				"def": 60
+			},
+			"percentage": {}
 		},
-		"itemEffect": "core.status.hero.def += 100;core.status.hero.mdef += 100",
-		"itemEffectTip": "，防御+100，护盾+100"
+		"itemEffect": null,
+		"itemEffectTip": null
 	},
 	"superPotion": {
 		"cls": "items",

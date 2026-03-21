@@ -115,7 +115,7 @@ var maps_90f36752_8815_4be8_b32b_d7fad1d0542e =
 	"165": {"cls":"terrains","id":"light","trigger":"null","canPass":true,"script":"(function () {\n\tcore.setBlock(core.getNumberById('darkLight'), core.getHeroLoc('x'), core.getHeroLoc('y'));\n})();"},
 	"166": {"cls":"terrains","id":"darkLight"},
 	"167": {"cls":"terrains","id":"ski","trigger":"ski","canPass":true},
-	"168": {"cls":"terrains","id":"flower","canPass":true},
+	"168": {"cls":"terrains","id":"flower","canPass":true,"event":[{"type":"openDoor","loc":[6,2],"floorId":"MT33"},"某个地方似乎传出了机关镶合的脆响。",{"type":"hide","loc":[[11,1]],"floorId":"MT36","remove":true,"time":500}]},
 	"169": {"cls":"terrains","id":"box","trigger":"pushBox"},
 	"170": {"cls":"terrains","id":"boxed","trigger":"pushBox"},
 	"201": {"cls":"enemys","id":"greenSlime"},
