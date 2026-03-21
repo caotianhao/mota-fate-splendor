@@ -1509,5 +1509,7 @@ var maps_90f36752_8815_4be8_b32b_d7fad1d0542e =
 	"1613": {"cls":"enemys","id":"E1613"},
 	"1614": {"cls":"enemys","id":"E1614"},
 	"1615": {"cls":"enemys","id":"E1615"},
-	"1616": {"cls":"enemys","id":"E1616"}
+	"1616": {"cls":"enemys","id":"E1616"},
+	"1617": {"cls":"enemys","id":"E1617"},
+	"1618": {"cls":"enemys","id":"E1618"}
 }
