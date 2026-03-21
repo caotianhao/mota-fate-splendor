@@ -1091,9 +1091,18 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		}
 	},
 	"I1355": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "equips",
+		"name": "宝石盾",
+		"canUseItemEffect": null,
+		"text": "盾面使用了大块的红宝石，在保证防御力的同时，也体现了皇家的奢华",
+		"equip": {
+			"type": 1,
+			"value": {
+				"mdef": 40,
+				"def": 35
+			},
+			"percentage": {}
+		}
 	},
 	"I1356": {
 		"cls": "items",
