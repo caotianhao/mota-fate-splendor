@@ -80,7 +80,8 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 			"EXA102",
 			"EXA103",
 			"EXA104",
-			"EXA201"
+			"EXA201",
+			"EXA202"
 		],
 		"floorPartitions": [],
 		"images": [
@@ -95,7 +96,8 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 		],
 		"tilesets": [
 			"magictower.png",
-			"Map-Cave01.png"
+			"Map-Cave01.png",
+			"010-CastleTown02.png"
 		],
 		"animates": [
 			"hand",

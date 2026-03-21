@@ -248,7 +248,17 @@ main.floors.MA20=
     },
     "afterGetItem": {
         "2,8": [
-            "\t[勇士,hero]这就是杰克所说的精魂宝石吧。"
+            "\t[勇士,hero]这就是杰克所说的精魂宝石吧。",
+            "\t[勇士,hero]不知道为什么，这颗宝石表面游离的灵魂能量让我想起了一个人。",
+            {
+                "type": "vibrate",
+                "direction": "horizontal",
+                "time": 800,
+                "speed": 10,
+                "power": 10
+            },
+            "\t[勇士,hero]......（头好痛。）",
+            "\t[勇士,hero]......（记忆......犹如潮水般的记忆涌了进来。）"
         ]
     },
     "afterOpenDoor": {},
