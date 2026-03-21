@@ -445,6 +445,17 @@ main.floors.EXA9=
             "\t[妖精,fairy]好啦好啦，那家伙可是杰克大盗，不管什么密室都锁不住他的，比起担心他的安危，我们还是快点前往下个区域追凶吧。",
             "\t[勇士,hero]行，我们出发吧，一定要让那个万恶的凶手付出代价。",
             {
+                "type": "hide",
+                "loc": [
+                    [
+                        10,
+                        1
+                    ]
+                ],
+                "floorId": "MT30",
+                "remove": true
+            },
+            {
                 "type": "follow",
                 "name": "yaojing.png"
             }
