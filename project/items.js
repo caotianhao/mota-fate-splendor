@@ -547,9 +547,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I340": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "木钥匙",
+		"canUseItemEffect": null,
+		"text": "一把不知是用来开什么门的钥匙"
 	},
 	"I341": {
 		"cls": "constants",
@@ -1218,9 +1219,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1377": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "精魂宝石",
+		"canUseItemEffect": null,
+		"text": "形状奇特的宝石，储存着不知是谁的灵魂能量"
 	},
 	"I1378": {
 		"cls": "items",

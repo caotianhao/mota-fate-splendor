@@ -246,7 +246,11 @@ main.floors.MA20=
             "\t[勇士,hero]大概是错觉吧。"
         ]
     },
-    "afterGetItem": {},
+    "afterGetItem": {
+        "2,8": [
+            "\t[勇士,hero]这就是杰克所说的精魂宝石吧。"
+        ]
+    },
     "afterOpenDoor": {},
     "autoEvent": {
         "5,3": {
