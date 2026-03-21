@@ -644,8 +644,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1270": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶红宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.atk += 3",
+		"itemEffectTip": "，攻击+3"
 	},
 	"I1271": {
 		"cls": "items",
@@ -681,8 +683,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1277": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶蓝宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.def += 3",
+		"itemEffectTip": "，防御+3"
 	},
 	"I1278": {
 		"cls": "items",
@@ -718,8 +722,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1284": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶绿宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.mdef += 10",
+		"itemEffectTip": "，护盾+10"
 	},
 	"I1285": {
 		"cls": "items",
@@ -755,8 +761,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1291": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 150",
+		"itemEffectTip": "，生命上限+150"
 	},
 	"I1292": {
 		"cls": "items",
@@ -1130,23 +1138,31 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1366": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶红血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 250",
+		"itemEffectTip": "，生命+250"
 	},
 	"I1367": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶蓝血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 450",
+		"itemEffectTip": "，生命+450"
 	},
 	"I1368": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶绿血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 1500",
+		"itemEffectTip": "，生命+1500"
 	},
 	"I1369": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "三阶黄血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 750",
+		"itemEffectTip": "，生命+750"
 	},
 	"I1370": {
 		"cls": "items",
