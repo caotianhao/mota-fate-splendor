@@ -288,10 +288,81 @@ main.floors.MA9=
                                     "name": "yaojing.png"
                                 },
                                 {
+                                    "type": "moveHero",
+                                    "time": 500,
+                                    "steps": [
+                                        "up:3"
+                                    ]
+                                },
+                                {
+                                    "type": "setValue",
+                                    "name": "item:I340",
+                                    "operator": "-=",
+                                    "value": "1"
+                                },
+                                {
+                                    "type": "changeFloor",
+                                    "floorId": "EXA9",
+                                    "loc": [
+                                        9,
+                                        11
+                                    ],
+                                    "direction": "up",
+                                    "time": 500
+                                },
+                                {
+                                    "type": "moveHero",
+                                    "time": 500,
+                                    "steps": [
+                                        "up:1"
+                                    ]
+                                },
+                                "\t[勇士,hero]（走进暗房，一股刺鼻的腥味便扑面而来，这股味道跟下水道里腐败的死鱼内脏同级，常人根本就无法忍受。）",
+                                "\t[勇士,hero]（这个小房间里陈列着各式各样的刑具，这些冰冷锐器上沾染的鲜血，表明曾有众多的受害者在暗房里遭受常人无法想象的虐待。）",
+                                "\t[妖精,fairy]......好像没有其他人在的样子。",
+                                "\t[勇士,hero]（妖精四处张望着，似乎是第一次来到这个地方。）",
+                                "\t[勇士,hero]妖精，你不是说你从小在魔塔里长大，对每层的构造都了如指掌吗？",
+                                "\t[妖精,fairy]啧......我以前从没听说过魔塔里还有这么可怕的地方，更不用说来过了。",
+                                "\t[妖精,fairy]先别管这个了，我们可不是来闲逛的。",
+                                "\t[勇士,hero]看来行凶者已经离开这里了。",
+                                "\t[勇士,hero]木窗外头那边有你跟杰克看守着，她应该是用其他路线逃出这里的......先在这间暗房里搜查一下吧。",
+                                {
                                     "type": "setValue",
                                     "name": "flag:N9F",
-                                    "operator": "+=",
-                                    "value": "1"
+                                    "value": "null"
+                                },
+                                {
+                                    "type": "hide",
+                                    "loc": [
+                                        [
+                                            4,
+                                            2
+                                        ]
+                                    ],
+                                    "floorId": "MA9",
+                                    "remove": true
+                                },
+                                {
+                                    "type": "hide",
+                                    "loc": [
+                                        [
+                                            3,
+                                            1
+                                        ]
+                                    ],
+                                    "floorId": "MA9",
+                                    "remove": true
+                                },
+                                {
+                                    "type": "hide",
+                                    "loc": [
+                                        [
+                                            2,
+                                            3
+                                        ]
+                                    ],
+                                    "floorId": "MA9",
+                                    "remove": true
                                 }
                             ]
                         },
