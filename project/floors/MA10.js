@@ -265,6 +265,7 @@ main.floors.MA10=
                                 7
                             ]
                         ],
+                        "floorId": "EXA101",
                         "remove": true
                     },
                     {
@@ -275,6 +276,7 @@ main.floors.MA10=
                                 9
                             ]
                         ],
+                        "floorId": "EXA101",
                         "remove": true
                     },
                     {
@@ -285,6 +287,7 @@ main.floors.MA10=
                                 7
                             ]
                         ],
+                        "floorId": "EXA101",
                         "remove": true
                     },
                     {
@@ -295,6 +298,7 @@ main.floors.MA10=
                                 9
                             ]
                         ],
+                        "floorId": "EXA101",
                         "remove": true
                     },
                     "\t[骷髅将军,skeletonKnight]\b[up,null]居然能从骷髅的海洋里杀出一条血路，虽然长着一副黑铁级勇士的大众脸，但你果然不是什么简单的角色。",
