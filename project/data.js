@@ -1178,6 +1178,115 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 						]
 					}
 				]
+			},
+			{
+				"id": "shop-14",
+				"text": "\t[贪婪神龛,moneyShop]掷入${10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20}枚金币或使用商店抵用券，可以购买：",
+				"textInList": "-14F金币商店",
+				"mustEnable": true,
+				"disablePreview": true,
+				"choices": [
+					{
+						"text": "攻击+4，防御+4",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"condition": "item:I1515===0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:atk",
+								"operator": "+=",
+								"value": "4"
+							},
+							{
+								"type": "setValue",
+								"name": "status:def",
+								"operator": "+=",
+								"value": "4"
+							}
+						]
+					},
+					{
+						"text": "恢复60%生命",
+						"need": "status:money>=10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20",
+						"condition": "item:I1515===0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "status:money",
+								"operator": "-=",
+								"value": "10*flag:SHOP_GLOBAL_VALUE*flag:SHOP_GLOBAL_VALUE-10*flag:SHOP_GLOBAL_VALUE+20"
+							},
+							{
+								"type": "setValue",
+								"name": "flag:SHOP_GLOBAL_VALUE",
+								"operator": "+=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:hp",
+								"operator": "+=",
+								"value": "status:hpmax*0.6"
+							}
+						]
+					},
+					{
+						"text": "攻击+4，防御+4（用券）",
+						"need": "item:I1515!=0",
+						"condition": "item:I1515!=0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1515",
+								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:atk",
+								"operator": "+=",
+								"value": "4"
+							},
+							{
+								"type": "setValue",
+								"name": "status:def",
+								"operator": "+=",
+								"value": "4"
+							}
+						]
+					},
+					{
+						"text": "恢复60%生命（用券）",
+						"need": "item:I1515!=0",
+						"condition": "item:I1515!=0",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1515",
+								"operator": "-=",
+								"value": "1"
+							},
+							{
+								"type": "setValue",
+								"name": "status:hp",
+								"operator": "+=",
+								"value": "status:hpmax*0.6"
+							}
+						]
+					}
+				]
 			}
 		],
 		"levelUp": [
