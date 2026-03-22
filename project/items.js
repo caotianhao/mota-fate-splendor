@@ -2120,9 +2120,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1556": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "tools",
+		"name": "神圣强化石",
+		"canUseItemEffect": "true",
+		"text": "能让[神圣]系列装备显出原本形态的神奇结晶"
 	},
 	"I1557": {
 		"cls": "items",
