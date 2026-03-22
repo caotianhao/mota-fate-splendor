@@ -252,7 +252,7 @@ var data_a1e2fb4a_e986_4524_b0da_9b7ba7c0874d =
 	"firstData": {
 		"title": "宿命的华音",
 		"name": "fate2",
-		"version": "Ver 2.10.3",
+		"version": "Ver 1.0",
 		"floorId": "MT0",
 		"hero": {
 			"image": "brave_black.png",

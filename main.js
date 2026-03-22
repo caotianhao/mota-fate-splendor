@@ -1,6 +1,6 @@
 /// <reference path="./runtime.d.ts" />
 function main() {
-    this.version = '2.10.3';
+    this.version = '1.0';
     this.useCompress = false;
     this.bgmRemote = false;
     this.bgmRemoteRoot = 'https://h5mota.com/music/';
@@ -201,7 +201,7 @@ function main() {
     };
     this.floors = {};
     this.canvas = {};
-    this.__VERSION__ = '2.10.3';
+    this.__VERSION__ = '1.0';
     this.__VERSION_CODE__ = 512;
 }
 
