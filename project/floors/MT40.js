@@ -449,6 +449,21 @@ main.floors.MT40=
                 "type": "hideStatusBar"
             },
             {
+                "type": "setCurtain",
+                "color": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "time": 500,
+                "keep": true
+            },
+            {
+                "type": "setHeroIcon",
+                "name": "brave.png"
+            },
+            {
                 "type": "changeFloor",
                 "floorId": "EX402",
                 "loc": [
@@ -459,8 +474,8 @@ main.floors.MT40=
                 "time": 600
             },
             {
-                "type": "setHeroIcon",
-                "name": "brave.png"
+                "type": "setCurtain",
+                "time": 500
             },
             {
                 "type": "animate",
@@ -530,10 +545,58 @@ main.floors.MT40=
                     10,
                     4
                 ],
-                "time": 100,
+                "time": 40,
                 "steps": [
                     "down:8"
                 ]
+            },
+            {
+                "type": "setCurtain",
+                "color": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "time": 500,
+                "keep": true
+            },
+            {
+                "type": "setHeroIcon",
+                "name": "brave_black.png"
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        6,
+                        2
+                    ]
+                ],
+                "floorId": "MT40",
+                "remove": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        6,
+                        6
+                    ]
+                ],
+                "floorId": "MT40",
+                "remove": true
+            },
+            {
+                "type": "setBlock",
+                "number": "fairy",
+                "loc": [
+                    [
+                        6,
+                        3
+                    ]
+                ],
+                "floorId": "MT40"
             },
             {
                 "type": "changeFloor",
@@ -546,22 +609,11 @@ main.floors.MT40=
                 "time": 600
             },
             {
-                "type": "setHeroIcon",
-                "name": "brave_black.png"
+                "type": "setCurtain",
+                "time": 500
             },
             {
                 "type": "showStatusBar"
-            },
-            {
-                "type": "setBlock",
-                "number": "fairy",
-                "loc": [
-                    [
-                        6,
-                        3
-                    ]
-                ],
-                "floorId": "MT40"
             },
             "\t[妖精,fairy]\b[down,null]好了，下一个就是你了。",
             "\t[妖精,fairy]\b[down,null]乖乖被我封印记忆，然后堕入下一次轮回吧！",
