@@ -733,6 +733,17 @@ main.floors.MT50=
             {
                 "type": "waitAsync"
             },
+            {
+                "type": "setBlockOpacity",
+                "loc": [
+                    [
+                        6,
+                        6
+                    ]
+                ],
+                "opacity": 1,
+                "time": 1
+            },
             "\t[贤者,N1577]\b[up,null]zeno，你又一次让我失望了，虽然你的确是到达了顶层，但你没能完全吸收掉那些曾经被你杀死的魔物灵魂。",
             "\t[贤者,N1577]\b[up,null]也就是说，现在的你是zeno而不是魔王，不完整的你，没有任何利用价值。",
             "\t[勇士,hero]\b[up,null]......我早该意识到的，每个区域的守关boss都是我在人生转折点上击败并吸收灵魂能量的强敌。",
@@ -910,6 +921,13 @@ main.floors.MT50=
             },
             {
                 "type": "waitAsync"
+            },
+            {
+                "type": "openDoor",
+                "loc": [
+                    6,
+                    4
+                ]
             },
             {
                 "type": "hide",
