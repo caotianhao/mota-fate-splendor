@@ -22,8 +22,12 @@ main.floors.MT39=
             "stair": "upFloor"
         },
         "6,1": {
-            "floorId": ":next",
-            "stair": "downFloor"
+            "floorId": "MT40",
+            "loc": [
+                6,
+                1
+            ],
+            "direction": "down"
         }
     },
     "beforeBattle": {},
