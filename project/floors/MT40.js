@@ -290,6 +290,20 @@ main.floors.MT40=
             "\t[魔女,princess]\b[down,null]......ze......no......zeno......",
             "\t[魔女,princess]\b[down,null]......我......好想你......",
             {
+                "type": "unfollow",
+                "name": "yaojing.png"
+            },
+            {
+                "type": "setBlock",
+                "number": "fairy",
+                "loc": [
+                    [
+                        6,
+                        3
+                    ]
+                ]
+            },
+            {
                 "type": "sleep",
                 "time": 1000,
                 "noSkip": true
@@ -425,7 +439,134 @@ main.floors.MT40=
             "\t[勇士,hero]\b[down,null]......死？",
             "\t[勇士,hero]\b[down,null]（魔女在我面前化为了一滩血水，别说是尸体，她连痕迹都不剩。）",
             "\t[勇士,hero]\b[down,null]不要......",
-            "\t[勇士,hero]\b[down,null]我再也不想看到心爱的人死在自己面前了。"
+            "\t[勇士,hero]\b[down,null]我再也不想看到心爱的人死在自己面前了。",
+            {
+                "type": "sleep",
+                "time": 500,
+                "noSkip": true
+            },
+            {
+                "type": "hideStatusBar"
+            },
+            {
+                "type": "changeFloor",
+                "floorId": "EX402",
+                "loc": [
+                    6,
+                    6
+                ],
+                "direction": "up",
+                "time": 600
+            },
+            {
+                "type": "setHeroIcon",
+                "name": "brave.png"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    5
+                ]
+            },
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    6,
+                    5
+                ]
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    5
+                ]
+            },
+            "\t[魔王,redKing]\b[down,null]终于结束了。",
+            "\t[魔王,redKing]\b[down,null]这具充溢着罪恶的身躯终于化为了尘土。",
+            "\t[魔王,redKing]\b[down,null]这明明是最完美的结局，为什么你们都在流泪？",
+            "\t[勇者,hero]\b[down,null]......",
+            "\t[魔王,redKing]\b[down,null]快带这丫头回到她的故乡吧......这些天她真是差点把我折腾死。",
+            "\t[魔王,redKing]\b[down,null]不过......跟她一起度过的这些日子，倒也是我这不怎么光彩的一生中最快乐的时光。",
+            "\t[魔王,redKing]\b[down,null]就这样结束吧......再见了。",
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        6,
+                        5
+                    ]
+                ],
+                "floorId": "EX402",
+                "remove": true,
+                "time": 500
+            },
+            "\t[公主,princess]\b[down,null]不要！不要消失啊！",
+            "\t[公主,princess]\b[down,null]求求你......不要丢下我一个人！",
+            "\t[公主,princess]\b[down,null]为什么......为什么啊啊啊啊！",
+            "\t[勇者,hero]\b[down,null]......",
+            "\t[勇者,hero]\b[down,null].....公主大人，跟我回去吧。",
+            "\t[勇者,hero]\b[down,null]大家都很担心你。",
+            "\t[公主,princess]\b[down,null]......",
+            {
+                "type": "move",
+                "loc": [
+                    6,
+                    4
+                ],
+                "time": 500,
+                "keep": true,
+                "steps": [
+                    "right:4"
+                ]
+            },
+            {
+                "type": "move",
+                "loc": [
+                    10,
+                    4
+                ],
+                "time": 100,
+                "steps": [
+                    "down:8"
+                ]
+            },
+            {
+                "type": "changeFloor",
+                "floorId": "MT40",
+                "loc": [
+                    6,
+                    4
+                ],
+                "direction": "up",
+                "time": 600
+            },
+            {
+                "type": "setHeroIcon",
+                "name": "brave_black.png"
+            },
+            {
+                "type": "showStatusBar"
+            },
+            {
+                "type": "setBlock",
+                "number": "fairy",
+                "loc": [
+                    [
+                        6,
+                        3
+                    ]
+                ],
+                "floorId": "MT40"
+            },
+            "\t[妖精,fairy]\b[down,null]好了，下一个就是你了。",
+            "\t[妖精,fairy]\b[down,null]乖乖被我封印记忆，然后堕入下一次轮回吧！",
+            "\t[勇士,hero]\b[down,null]......",
+            "\t[勇士,hero]\b[down,null]......我的名字叫zeno，我是翘勇善战的黑铁勇士，也是罪大恶极的最强魔王。"
         ]
     },
     "afterGetItem": {},
