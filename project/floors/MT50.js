@@ -9,7 +9,7 @@ main.floors.MT50=
     "canFlyFrom": true,
     "canUseQuickShop": true,
     "images": [],
-    "ratio": 2,
+    "ratio": 3,
     "defaultGround": "ground",
     "bgm": "bgm.mp3",
     "firstArrive": [],
