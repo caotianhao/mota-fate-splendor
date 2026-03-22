@@ -396,7 +396,36 @@ main.floors.MT40=
             },
             {
                 "type": "waitAsync"
-            }
+            },
+            "\t[勇士,hero]\b[down,null]（魔女愤怒地嚎叫着，她冲上前去撞开了妖精，打断了她即将完成的施法，展开双手挡在我面前的她，让我的眼眶感觉有些发酸。）",
+            "\t[魔女,princess]\b[down,null]......ze......no......不要伤害他......！！",
+            "\t[勇士,hero]\b[down,null]你，是她没错吧？",
+            "\t[妖精,fairy]\b[down,null]可恶......不愧是公主执念产生意识体之一，你还真是顽强啊......不过......",
+            "\t[妖精,fairy]\b[down,null]反正这次轮回也已经基本以失败告终了，不管是谁杀掉你都无所谓了。",
+            "\t[妖精,fairy]\b[down,null]所以，来尝尝这个吧！",
+            {
+                "type": "animate",
+                "name": "zone",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            "\t[魔女,princess]\b[down,null]......ze......no......",
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        6,
+                        3
+                    ]
+                ],
+                "remove": true
+            },
+            "\t[勇士,hero]\b[down,null]......死？",
+            "\t[勇士,hero]\b[down,null]（魔女在我面前化为了一滩血水，别说是尸体，她连痕迹都不剩。）",
+            "\t[勇士,hero]\b[down,null]不要......",
+            "\t[勇士,hero]\b[down,null]我再也不想看到心爱的人死在自己面前了。"
         ]
     },
     "afterGetItem": {},
