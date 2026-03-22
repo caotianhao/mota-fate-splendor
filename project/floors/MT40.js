@@ -673,6 +673,22 @@ main.floors.MT40=
                 "time": 800
             },
             "\t[老人,man]\b[down,null]趁现在！勇士，砍下她的脑袋！",
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
             "\t[妖精,fairy]\b[down,null]......你......竟敢......我不会......放过你们的......等着瞧吧......",
             {
                 "type": "hide",
