@@ -15,12 +15,35 @@ main.floors.MT49=
     "firstArrive": [],
     "eachArrive": [],
     "parallelDo": "",
-    "events": {},
+    "events": {
+        "6,11": [
+            {
+                "type": "choices",
+                "text": "再往前踏一步就无法回头了",
+                "choices": [
+                    {
+                        "text": "前进",
+                        "action": [
+                            {
+                                "type": "changeFloor",
+                                "floorId": "MT50",
+                                "loc": [
+                                    6,
+                                    11
+                                ],
+                                "direction": "up"
+                            }
+                        ]
+                    },
+                    {
+                        "text": "让我再准备一下",
+                        "action": []
+                    }
+                ]
+            }
+        ]
+    },
     "changeFloor": {
-        "6,11": {
-            "floorId": ":next",
-            "stair": "downFloor"
-        },
         "11,11": {
             "floorId": ":before",
             "stair": "upFloor"
