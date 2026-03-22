@@ -2367,14 +2367,14 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"name": "简单难度福袋",
 		"canUseItemEffect": "true",
 		"text": "内含商店抵用券*1，黄钥匙*2，蓝钥匙*1，便携式恢复药水*1，红宝石*1，蓝宝石*1",
-		"useItemEffect": "core.addItem(\"I1546\", 1);\ncore.status.hero.items.tools.yellowKey += 2;\ncore.status.hero.items.tools.blueKey += 1;\ncore.addItem(\"I1515\", 1);\ncore.status.hero.atk += core.status.thisMap.ratio;\ncore.status.hero.def += core.status.thisMap.ratio;"
+		"useItemEffect": "core.addItem(\"I1546\", 1);\ncore.addItem(\"yellowKey\", 2);\ncore.addItem(\"blueKey\", 1);\ncore.addItem(\"I1515\", 1);\ncore.status.hero.atk += core.status.thisMap.ratio;\ncore.status.hero.def += core.status.thisMap.ratio;"
 	},
 	"I1575": {
 		"cls": "tools",
 		"name": "普通难度福袋",
 		"canUseItemEffect": "true",
 		"text": "内含黄钥匙*1，蓝钥匙*1",
-		"useItemEffect": "core.status.hero.items.tools.yellowKey += 1;\ncore.status.hero.items.tools.blueKey += 1;"
+		"useItemEffect": "core.addItem(\"yellowKey\", 1);\ncore.addItem(\"blueKey\", 1);"
 	},
 	"I1576": {
 		"cls": "tools",
