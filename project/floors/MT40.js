@@ -205,7 +205,200 @@ main.floors.MT40=
         }
     },
     "beforeBattle": {},
-    "afterBattle": {},
+    "afterBattle": {
+        "6,5": [
+            {
+                "type": "setBlock",
+                "number": "princess",
+                "loc": [
+                    [
+                        6,
+                        5
+                    ]
+                ],
+                "floorId": "MT40"
+            },
+            "\t[勇士,hero]\b[down,null]（......她轻声哭泣着，似乎没有注意到站在她面前的我。）",
+            "\t[勇士,hero]\b[down,null]......这个哭声让我想起了一个人。",
+            "\t[妖精,fairy]\b[down,null]不好！这是魔女蛊惑人心的哭声！勇士，快捂住耳朵，千万不要直视她的眼睛！",
+            "\t[勇士,hero]\b[down,null]魔女吗......你究竟是谁？",
+            "\t[勇士,hero]\b[down,null]（......她抬头看了我一眼，含泪的双眼猛然睁大，一张写满痛苦的丑脸变得更加扭曲可怖。）",
+            "\t[勇士,hero]\b[down,null]（看到她这副痛苦而悲伤的样子，我的心脏居然感受到了一瞬间的刺痛。）",
+            "\t[勇士,hero]\b[down,null]（一股不知从何而来的勇气驱使着我向前走去，朝她伸出了左手。）",
+            "\t[勇士,hero]\b[down,null]......能告诉我，你的名字吗？",
+            "\t[妖精,fairy]\b[down,null]喂！你疯了吗？离她这么近会被袭击的！",
+            "\t[勇士,hero]\b[down,null]（面对我的反常举动，魔女的表情变得更加痛苦，泪水犹如决堤。）",
+            "\t[勇士,hero]\b[down,null]......",
+            "\t[勇士,hero]\b[down,null]（在我的手指触碰到她的那一刻，魔女突然躁动起来，她尖叫着起身扑向我。）",
+            "\t[勇士,hero]\b[down,null]......",
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    6,
+                    4
+                ]
+            },
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    6,
+                    4
+                ]
+            },
+            "\t[勇士,hero]\b[down,null]......",
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    6,
+                    4
+                ]
+            },
+            "\t[妖精,fairy]\b[down,null]你在发什么神经啊！你明明完全有机会躲开的！为什么要傻傻站在原地硬挨她的攻击！",
+            "\t[勇士,hero]\b[down,null]我不想跟她战斗。",
+            "\t[妖精,fairy]\b[down,null]哈啊？喂喂，不打败她的话就不能打开下个区域的通道了啊！你在想什么？",
+            "\t[勇士,hero]\b[down,null]我知道，但我......真的不忍心对她下手。",
+            {
+                "type": "animate",
+                "name": "zone",
+                "loc": [
+                    6,
+                    4
+                ]
+            },
+            {
+                "type": "setBlock",
+                "number": "pickaxe",
+                "loc": [
+                    [
+                        6,
+                        6
+                    ]
+                ],
+                "floorId": "MT40"
+            },
+            "\t[勇士,hero]\b[down,null]（在魔女拼命用身体撞击着我的时候，一个奇怪的东西从她裙中掉了下来，仔细一看......）",
+            "\t[勇士,hero]\b[down,null]（是一把被折成两截的破墙镐。）",
+            "\t[妖精,fairy]\b[down,null]是杰克的破墙镐......",
+            "\t[妖精,fairy]\b[down,null]体型跟我差不多大小的女孩......拥有足以制服一个成年人类男性的怪力......以及，似乎对你非常了解......不会错了，她就是对我跟杰克施虐的凶手。",
+            "\t[妖精,fairy]\b[down,null]这样一来所有的事情就都能说通了，她想方设法阻止你上楼，就是为了不让你来到这个区域打败自己。",
+            "\t[妖精,fairy]\b[down,null]刚才她对你使用的那些幻术也是为了谋害你的性命......她甚至在刚才对你大打出手！勇士！你还在犹豫什么？你还有什么好犹豫的？！",
+            "\t[勇士,hero]\b[down,null]（魔女似乎听懂了妖精的话，她停止对我的殴打，拼命摇着头。）",
+            "\t[妖精,fairy]\b[down,null]勇士，快点动手啊！快点！",
+            "\t[魔女,princess]\b[down,null]......ze......no......zeno......",
+            "\t[魔女,princess]\b[down,null]......我......好想你......",
+            {
+                "type": "sleep",
+                "time": 1000,
+                "noSkip": true
+            },
+            "\t[勇士,hero]\b[down,null]......",
+            "\t[勇士,hero]\b[down,null]............",
+            "\t[勇士,hero]\b[down,null]..................",
+            {
+                "type": "changePos",
+                "loc": [
+                    6,
+                    4
+                ],
+                "direction": "up"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            "\t[妖精,fairy]\b[down,null]诶？",
+            "\t[妖精,fairy]\b[down,null]喂！你砍错人了诶！痛痛痛......你是不是被这该死的魔女给蛊惑了神智，变得敌我不分了啊？",
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            "\t[妖精,fairy]\b[down,null]骗人的吧？这样砍下去的话，我会死的......",
+            "\t[妖精,fairy]\b[down,null]这一路上，我一直陪伴着你，分担你的喜悦与悲伤，替你排忧解难。",
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            "\t[妖精,fairy]\b[down,null]......快点......冷静下来，回想起你跟我的那些点点滴滴......不要......被这个魔女给欺骗了......",
+            "\t[勇士,hero]\b[down,null]不，我现在比任何时候都要冷静，清醒，多亏了你刚才那番拙劣的表演，让我看清了真相。",
+            "\t[妖精,fairy]\b[down,null]哈啊？你在说什么啊？你脑子坏掉了吗？看来还得让我再对你用一次精神治疗才行。",
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            "\t[勇士,hero]\b[down,null]（妖精的翅膀被连根斩裂，失去了平衡的她摔在地上，抬眼用难以形容的恶毒眼神死盯着我。）",
+            "\t[妖精,fairy]\b[down,null]为什么......为什么要对我出手？我做错了什么？",
+            "\t[勇士,hero]\b[down,null]在三区趁我昏倒，拿走了镐头并下楼劫持杰克，将他关进地下层的暗房里不断折磨。",
+            "\t[勇士,hero]\b[down,null]为了打消我对你的疑惑，你甚至故意弄伤了自己的翅膀，试图让自己站在跟杰克相同的受害者立场上......真亏你下的去手啊。",
+            "\t[勇士,hero]\b[down,null]把镐头被盗一事故意嫁祸给这个无辜的魔女也是......我猜你不停催促我上楼的目的，就是想让我亲手杀了她吧？",
+            "\t[妖精,fairy]\b[down,null]你是从什么时候开始怀疑我的？",
+            "\t[勇士,hero]\b[down,null]从吸收掉那颗精魂宝石里储存的记忆流以后，我就不再是任你摆布的棋子了。",
+            "\t[妖精,fairy]\b[down,null]呵呵......那颗我无法干涉跟观测的精魂宝石，果然有古怪吗？",
+            "\t[勇士,hero]\b[down,null]妖精，你到底是什么人？不惜将我们所有人愚弄于鼓掌之中......你究竟有什么目的？",
+            "\t[妖精,fairy]\b[down,null]呵呵呵呵......没想到，居然被你从这个无限的轮回中找到了突破口，不过很可惜。",
+            "\t[妖精,fairy]\b[down,null]到此为止了，我将会在这里杀掉你，然后再狠狠地加固一次你的记忆锁。",
+            "\t[妖精,fairy]\b[down,null]这样一来，这座塔里的魔物跟机关便会重置。",
+            "\t[妖精,fairy]\b[down,null]而我将会跟再次失去所有记忆的你重新在0层相遇，共同踏上向塔顶进发的冒险之路。",
+            "\t[勇士,hero]\b[down,null]让我失忆的人果然也是你吗？等等，重置是什么意思？无限轮回又是什么意思？",
+            "\t[妖精,fairy]\b[down,null]嘻嘻......带着这些你永世无法解开的疑问，前往下一次......也就是794次轮回吧！",
+            "\t[妖精,fairy]\b[down,null]为了达成那位大人的计划！让我们共同努力吧！魔王zeno！",
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    6,
+                    3
+                ]
+            },
+            {
+                "type": "move",
+                "loc": [
+                    6,
+                    3
+                ],
+                "time": 500,
+                "keep": true,
+                "async": true,
+                "steps": [
+                    "up:1"
+                ]
+            },
+            {
+                "type": "move",
+                "loc": [
+                    6,
+                    5
+                ],
+                "time": 500,
+                "keep": true,
+                "async": true,
+                "steps": [
+                    "up:2"
+                ]
+            },
+            {
+                "type": "waitAsync"
+            }
+        ]
+    },
     "afterGetItem": {},
     "afterOpenDoor": {},
     "autoEvent": {},
