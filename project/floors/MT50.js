@@ -246,7 +246,7 @@ main.floors.MT50=
             },
             {
                 "type": "setBlock",
-                "number": "N1577",
+                "number": "N1634",
                 "loc": [
                     [
                         4,
@@ -275,6 +275,379 @@ main.floors.MT50=
             },
             {
                 "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    4,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    5,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "zone",
+                "loc": [
+                    4,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "zone",
+                "loc": [
+                    5,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "screenFlash",
+                "color": [
+                    255,
+                    255,
+                    255,
+                    1
+                ],
+                "time": 500,
+                "times": 1,
+                "async": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        4,
+                        8
+                    ]
+                ],
+                "remove": true,
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "setBlock",
+                "number": "N1633",
+                "loc": [
+                    [
+                        6,
+                        5
+                    ]
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "jumpHero",
+                "dxy": [
+                    0,
+                    -3
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "changePos",
+                "loc": [
+                    5,
+                    5
+                ],
+                "direction": "right"
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    5,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "sword",
+                "loc": [
+                    6,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    5,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    5,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    5
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "screenFlash",
+                "color": [
+                    255,
+                    255,
+                    255,
+                    1
+                ],
+                "time": 500,
+                "times": 1,
+                "async": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        6,
+                        5
+                    ]
+                ],
+                "remove": true,
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "setBlock",
+                "number": "N1635",
+                "loc": [
+                    [
+                        7,
+                        8
+                    ]
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "jumpHero",
+                "dxy": [
+                    2,
+                    2
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "changePos",
+                "loc": [
+                    7,
+                    7
+                ],
+                "direction": "down"
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    7,
+                    7
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "hand",
+                "loc": [
+                    7,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "yongchang",
+                "loc": [
+                    7,
+                    7
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "yongchang",
+                "loc": [
+                    7,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    7,
+                    7
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    7,
+                    8
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "screenFlash",
+                "color": [
+                    255,
+                    255,
+                    255,
+                    1
+                ],
+                "time": 500,
+                "times": 1,
+                "async": true
+            },
+            {
+                "type": "hide",
+                "loc": [
+                    [
+                        7,
+                        8
+                    ]
+                ],
+                "remove": true,
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "setBlock",
+                "number": "N1632",
+                "loc": [
+                    [
+                        6,
+                        6
+                    ]
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "jumpHero",
+                "dxy": [
+                    -1,
+                    0
+                ],
+                "time": 1,
+                "async": true
+            },
+            {
+                "type": "changePos",
+                "loc": [
+                    6,
+                    7
+                ],
+                "direction": "up"
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    6
+                ],
+                "async": true
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    7
+                ],
+                "async": true
+            },
+            {
+                "type": "waitAsync"
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    6
+                ]
+            },
+            {
+                "type": "animate",
+                "name": "jianji",
+                "loc": [
+                    6,
+                    6
+                ]
             }
         ]
     },
