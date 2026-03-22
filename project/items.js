@@ -1302,13 +1302,22 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true"
 	},
 	"I1393": {
-		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"cls": "equips",
+		"name": "真·神圣剑",
+		"canUseItemEffect": null,
+		"text": "解放出真正力量的神剑，随手的一击都带着毁天灭地的气势",
+		"equip": {
+			"type": 0,
+			"animate": "sword",
+			"value": {
+				"atk": 100
+			},
+			"percentage": {}
+		}
 	},
 	"I1394": {
-		"cls": "items",
-		"name": "新物品",
+		"cls": "equips",
+		"name": "真·神圣盾",
 		"canUseItemEffect": "true"
 	},
 	"I1395": {
@@ -2123,7 +2132,92 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"cls": "tools",
 		"name": "神圣强化石",
 		"canUseItemEffect": "true",
-		"text": "能让[神圣]系列装备显出原本形态的神奇结晶"
+		"text": "能让[神圣]系列装备显出原本形态的神奇宝石",
+		"useItemEvent": [
+			{
+				"type": "function",
+				"function": "function(){\ncore.addItem('I1556', 1);\n}"
+			},
+			{
+				"type": "choices",
+				"text": "\t[I1556]这颗奇怪的宝石，似乎可以镶嵌在神圣剑或者神圣盾上",
+				"choices": [
+					{
+						"text": "强化神圣剑",
+						"action": [
+							{
+								"type": "if",
+								"condition": "core.hasEquip('sword5')",
+								"true": [
+									{
+										"type": "unloadEquip",
+										"pos": 0
+									},
+									{
+										"type": "setValue",
+										"name": "item:sword5",
+										"value": "0"
+									},
+									{
+										"type": "setValue",
+										"name": "item:I1393",
+										"value": "1"
+									},
+									{
+										"type": "setValue",
+										"name": "item:I1556",
+										"operator": "-=",
+										"value": "1"
+									}
+								],
+								"false": [
+									{
+										"type": "if",
+										"condition": "(item:sword5===1)",
+										"true": [
+											{
+												"type": "setValue",
+												"name": "item:sword5",
+												"value": "0"
+											},
+											{
+												"type": "setValue",
+												"name": "item:I1393",
+												"value": "1"
+											},
+											{
+												"type": "setValue",
+												"name": "item:I1556",
+												"operator": "-=",
+												"value": "1"
+											}
+										],
+										"false": [
+											"你还没有神圣剑！"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"text": "强化神圣盾",
+						"action": [
+							{
+								"type": "setValue",
+								"name": "item:I1556",
+								"operator": "-=",
+								"value": "1"
+							}
+						]
+					},
+					{
+						"text": "让我再考虑一下",
+						"action": []
+					}
+				]
+			}
+		]
 	},
 	"I1557": {
 		"cls": "items",
