@@ -771,8 +771,10 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	},
 	"I1292": {
 		"cls": "items",
-		"name": "新物品",
-		"canUseItemEffect": "true"
+		"name": "四阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 300",
+		"itemEffectTip": "，生命上限+300"
 	},
 	"I1293": {
 		"cls": "items",
