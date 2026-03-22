@@ -1320,7 +1320,16 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 	"I1394": {
 		"cls": "equips",
 		"name": "真·神圣盾",
-		"canUseItemEffect": "true"
+		"canUseItemEffect": "true",
+		"text": "解放出真正力量的神盾，最纯净的神圣魔力保护着持有者不受伤害",
+		"equip": {
+			"type": 1,
+			"value": {
+				"mdef": 200,
+				"def": 100
+			},
+			"percentage": {}
+		}
 	},
 	"I1395": {
 		"cls": "items",
@@ -2206,10 +2215,57 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 						"text": "强化神圣盾",
 						"action": [
 							{
-								"type": "setValue",
-								"name": "item:I1556",
-								"operator": "-=",
-								"value": "1"
+								"type": "if",
+								"condition": "core.hasEquip('shield5')",
+								"true": [
+									{
+										"type": "unloadEquip",
+										"pos": 1
+									},
+									{
+										"type": "setValue",
+										"name": "item:shield5",
+										"value": "0"
+									},
+									{
+										"type": "setValue",
+										"name": "item:I1394",
+										"value": "1"
+									},
+									{
+										"type": "setValue",
+										"name": "item:I1556",
+										"operator": "-=",
+										"value": "1"
+									}
+								],
+								"false": [
+									{
+										"type": "if",
+										"condition": "(item:shield5===1)",
+										"true": [
+											{
+												"type": "setValue",
+												"name": "item:shield5",
+												"value": "0"
+											},
+											{
+												"type": "setValue",
+												"name": "item:I1394",
+												"value": "1"
+											},
+											{
+												"type": "setValue",
+												"name": "item:I1556",
+												"operator": "-=",
+												"value": "1"
+											}
+										],
+										"false": [
+											"你还没有神圣盾！"
+										]
+									}
+								]
 							}
 						]
 					},
