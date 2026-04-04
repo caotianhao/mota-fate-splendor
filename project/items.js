@@ -560,97 +560,6 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			}
 		]
 	},
-	"I1261": {
-		"cls": "items",
-		"name": "二阶红血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 150",
-		"itemEffectTip": "，生命+150"
-	},
-	"I1262": {
-		"cls": "items",
-		"name": "二阶蓝血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 300",
-		"itemEffectTip": "，生命+300"
-	},
-	"I1263": {
-		"cls": "items",
-		"name": "二阶黄血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 600",
-		"itemEffectTip": "，生命+600"
-	},
-	"I1264": {
-		"cls": "items",
-		"name": "二阶绿血瓶",
-		"canUseItemEffect": "true",
-		"itemEffectTip": "，生命+1000",
-		"itemEffect": "core.status.hero.hp += 1000"
-	},
-	"I1269": {
-		"cls": "items",
-		"name": "二阶红宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.atk += 2",
-		"itemEffectTip": "，攻击+2"
-	},
-	"I1270": {
-		"cls": "items",
-		"name": "三阶红宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.atk += 3",
-		"itemEffectTip": "，攻击+3"
-	},
-	"I1276": {
-		"cls": "items",
-		"name": "二阶蓝宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.def += 2",
-		"itemEffectTip": "，防御+2"
-	},
-	"I1277": {
-		"cls": "items",
-		"name": "三阶蓝宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.def += 3",
-		"itemEffectTip": "，防御+3"
-	},
-	"I1283": {
-		"cls": "items",
-		"name": "二阶绿宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.mdef += 5",
-		"itemEffectTip": "，护盾+5"
-	},
-	"I1284": {
-		"cls": "items",
-		"name": "三阶绿宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.mdef += 10",
-		"itemEffectTip": "，护盾+10"
-	},
-	"I1290": {
-		"cls": "items",
-		"name": "二阶黄宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hpmax += 100",
-		"itemEffectTip": "，生命上限+100"
-	},
-	"I1291": {
-		"cls": "items",
-		"name": "三阶黄宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hpmax += 150",
-		"itemEffectTip": "，生命上限+150"
-	},
-	"I1292": {
-		"cls": "items",
-		"name": "四阶黄宝石",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hpmax += 300",
-		"itemEffectTip": "，生命上限+300"
-	},
 	"I1354": {
 		"cls": "equips",
 		"name": "赤金剑",
@@ -678,34 +587,6 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			},
 			"percentage": {}
 		}
-	},
-	"I1366": {
-		"cls": "items",
-		"name": "三阶红血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 250",
-		"itemEffectTip": "，生命+250"
-	},
-	"I1367": {
-		"cls": "items",
-		"name": "三阶蓝血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 450",
-		"itemEffectTip": "，生命+450"
-	},
-	"I1368": {
-		"cls": "items",
-		"name": "三阶绿血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 1500",
-		"itemEffectTip": "，生命+1500"
-	},
-	"I1369": {
-		"cls": "items",
-		"name": "三阶黄血瓶",
-		"canUseItemEffect": "true",
-		"itemEffect": "core.status.hero.hp += 750",
-		"itemEffectTip": "，生命+750"
 	},
 	"I1377": {
 		"cls": "tools",
@@ -917,5 +798,124 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true",
 		"text": "空福袋，别白费功夫瞎拆了，里头空空如也。",
 		"useItemEffect": "core.status.hero.hp += 10"
+	},
+	"r2Gem": {
+		"cls": "items",
+		"name": "二阶红宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.atk += 2",
+		"itemEffectTip": "，攻击+2"
+	},
+	"r3Gem": {
+		"cls": "items",
+		"name": "三阶红宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.atk += 3",
+		"itemEffectTip": "，攻击+3"
+	},
+	"b2Gem": {
+		"cls": "items",
+		"name": "二阶蓝宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.def += 2",
+		"itemEffectTip": "，防御+2"
+	},
+	"b3Gem": {
+		"cls": "items",
+		"name": "三阶蓝宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.def += 3",
+		"itemEffectTip": "，防御+3"
+	},
+	"g2Gem": {
+		"cls": "items",
+		"name": "二阶绿宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.mdef += 5",
+		"itemEffectTip": "，护盾+5"
+	},
+	"g3Gem": {
+		"cls": "items",
+		"name": "三阶绿宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.mdef += 10",
+		"itemEffectTip": "，护盾+10"
+	},
+	"y2Gem": {
+		"cls": "items",
+		"name": "二阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 100",
+		"itemEffectTip": "，生命上限+100"
+	},
+	"y3Gem": {
+		"cls": "items",
+		"name": "三阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 150",
+		"itemEffectTip": "，生命上限+150"
+	},
+	"y4Gem": {
+		"cls": "items",
+		"name": "四阶黄宝石",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hpmax += 300",
+		"itemEffectTip": "，生命上限+300"
+	},
+	"r2Potion": {
+		"cls": "items",
+		"name": "二阶红血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 150",
+		"itemEffectTip": "，生命+150"
+	},
+	"b2Potion": {
+		"cls": "items",
+		"name": "二阶蓝血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 300",
+		"itemEffectTip": "，生命+300"
+	},
+	"y2Potion": {
+		"cls": "items",
+		"name": "二阶黄血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 600",
+		"itemEffectTip": "，生命+600"
+	},
+	"g2Potion": {
+		"cls": "items",
+		"name": "二阶绿血瓶",
+		"canUseItemEffect": "true",
+		"itemEffectTip": "，生命+1000",
+		"itemEffect": "core.status.hero.hp += 1000"
+	},
+	"r3Potion": {
+		"cls": "items",
+		"name": "三阶红血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 250",
+		"itemEffectTip": "，生命+250"
+	},
+	"b3Potion": {
+		"cls": "items",
+		"name": "三阶蓝血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 450",
+		"itemEffectTip": "，生命+450"
+	},
+	"g3Potion": {
+		"cls": "items",
+		"name": "三阶绿血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 1500",
+		"itemEffectTip": "，生命+1500"
+	},
+	"y3Potion": {
+		"cls": "items",
+		"name": "三阶黄血瓶",
+		"canUseItemEffect": "true",
+		"itemEffect": "core.status.hero.hp += 750",
+		"itemEffectTip": "，生命+750"
 	}
 }
