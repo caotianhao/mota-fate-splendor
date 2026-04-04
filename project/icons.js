@@ -338,14 +338,12 @@ var icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1 =
 		"I338": 33,
 		"I340": 34,
 		"I341": 35,
-		"I1354": 71,
-		"I1355": 72,
 		"I1377": 77,
 		"I1393": 78,
 		"I1394": 79,
 		"I1478": 80,
 		"I1515": 81,
-		"I1546": 82,
+		"cvPotion": 82,
 		"I1556": 83,
 		"I1574": 84,
 		"I1575": 85,
@@ -366,7 +364,9 @@ var icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1 =
 		"r3Potion": 73,
 		"b3Potion": 74,
 		"g3Potion": 75,
-		"y3Potion": 76
+		"y3Potion": 76,
+		"sword6": 71,
+		"shield6": 72
 	},
 	"autotile": {
 		"autotile": 0,

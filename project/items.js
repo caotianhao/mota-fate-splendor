@@ -560,34 +560,6 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			}
 		]
 	},
-	"I1354": {
-		"cls": "equips",
-		"name": "赤金剑",
-		"canUseItemEffect": null,
-		"text": "女式的短剑，一般而言属于皇室女性成员的礼仪佩剑",
-		"equip": {
-			"type": 0,
-			"animate": "sword",
-			"value": {
-				"atk": 40
-			},
-			"percentage": {}
-		}
-	},
-	"I1355": {
-		"cls": "equips",
-		"name": "宝石盾",
-		"canUseItemEffect": null,
-		"text": "盾面使用了大块的红宝石，在保证防御力的同时，也体现了皇家的奢华",
-		"equip": {
-			"type": 1,
-			"value": {
-				"mdef": 40,
-				"def": 35
-			},
-			"percentage": {}
-		}
-	},
 	"I1377": {
 		"cls": "tools",
 		"name": "精魂宝石",
@@ -633,7 +605,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "false",
 		"text": "持有此券可以在任意神龛处免费购物一次"
 	},
-	"I1546": {
+	"cvPotion": {
 		"cls": "tools",
 		"name": "便携式恢复药水",
 		"canUseItemEffect": "true",
@@ -783,7 +755,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"name": "简单难度福袋",
 		"canUseItemEffect": "true",
 		"text": "内含商店抵用券*1，黄钥匙*2，蓝钥匙*1，便携式恢复药水*1，红宝石*1，蓝宝石*1",
-		"useItemEffect": "core.addItem(\"I1546\", 1);\ncore.addItem(\"yellowKey\", 2);\ncore.addItem(\"blueKey\", 1);\ncore.addItem(\"I1515\", 1);\ncore.status.hero.atk += core.status.thisMap.ratio;\ncore.status.hero.def += core.status.thisMap.ratio;"
+		"useItemEffect": "core.addItem(\"cvPotion\", 1);\ncore.addItem(\"yellowKey\", 2);\ncore.addItem(\"blueKey\", 1);\ncore.addItem(\"I1515\", 1);\ncore.status.hero.atk += core.status.thisMap.ratio;\ncore.status.hero.def += core.status.thisMap.ratio;"
 	},
 	"I1575": {
 		"cls": "tools",
@@ -917,5 +889,33 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": "true",
 		"itemEffect": "core.status.hero.hp += 750",
 		"itemEffectTip": "，生命+750"
+	},
+	"sword6": {
+		"cls": "equips",
+		"name": "赤金剑",
+		"canUseItemEffect": null,
+		"text": "女式的短剑，一般而言属于皇室女性成员的礼仪佩剑",
+		"equip": {
+			"type": 0,
+			"animate": "sword",
+			"value": {
+				"atk": 40
+			},
+			"percentage": {}
+		}
+	},
+	"shield6": {
+		"cls": "equips",
+		"name": "宝石盾",
+		"canUseItemEffect": null,
+		"text": "盾面使用了大块的红宝石，在保证防御力的同时，也体现了皇家的奢华",
+		"equip": {
+			"type": 1,
+			"value": {
+				"mdef": 40,
+				"def": 35
+			},
+			"percentage": {}
+		}
 	}
 }
