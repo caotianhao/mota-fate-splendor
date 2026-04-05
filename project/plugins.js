@@ -1440,34 +1440,6 @@ var plugins_bb40132b_638b_4a9f_b028_d3fe47acc8d1 =
 			core.getItemDetail(floorId);
 			this.drawDamage(ctx);
 		};
-		control.prototype._drawDamage_draw = function (ctx, onMap) {
-			if (!core.hasItem('book')) return;
-			core.setFont(ctx, "bold 11px Arial");
-			core.setTextAlign(ctx, 'left');
-			core.status.damage.data.forEach(function (one) {
-				var px = one.px,
-					py = one.py;
-				if (onMap && core.bigmap.v2) {
-					px -= core.bigmap.posX * 32;
-					py -= core.bigmap.posY * 32;
-					if (px < -32 * 2 || px > core._PX_ + 32 || py < -32 || py > core._PY_ + 32)
-						return;
-				}
-				core.fillBoldText(ctx, one.text, px, py, one.color);
-			});
-			core.setTextAlign(ctx, 'center');
-			core.status.damage.extraData.forEach(function (one) {
-				var px = one.px,
-					py = one.py;
-				if (onMap && core.bigmap.v2) {
-					px -= core.bigmap.posX * 32;
-					py -= core.bigmap.posY * 32;
-					if (px < -32 || px > core._PX_ + 32 || py < -32 || py > core._PY_ + 32)
-						return;
-				}
-				core.fillBoldText(ctx, one.text, px, py, one.color);
-			});
-		};
 		this.getItemDetail = function (floorId) {
 			if (core.getFlag("itemDetail") === false) return;
 			floorId = floorId || core.status.thisMap.floorId;
