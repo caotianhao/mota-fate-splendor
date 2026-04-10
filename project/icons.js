@@ -339,8 +339,6 @@ var icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1 =
 		"I340": 34,
 		"I341": 35,
 		"I1377": 77,
-		"I1393": 78,
-		"I1394": 79,
 		"I1478": 80,
 		"I1515": 81,
 		"cvPotion": 82,
@@ -366,7 +364,9 @@ var icons_4665ee12_3a1f_44a4_bea3_0fccba634dc1 =
 		"g3Potion": 75,
 		"y3Potion": 76,
 		"sword6": 71,
-		"shield6": 72
+		"shield6": 72,
+		"sword7": 78,
+		"shield7": 79
 	},
 	"autotile": {
 		"autotile": 0,

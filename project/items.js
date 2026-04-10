@@ -1,4 +1,4 @@
-var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a = 
+var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 {
 	"yellowKey": {
 		"cls": "tools",
@@ -566,34 +566,6 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 		"canUseItemEffect": null,
 		"text": "形状奇特的宝石，储存着不知是谁的灵魂能量"
 	},
-	"I1393": {
-		"cls": "equips",
-		"name": "真·神圣剑",
-		"canUseItemEffect": null,
-		"text": "解放出真正力量的神剑，随手的一击都带着毁天灭地的气势",
-		"equip": {
-			"type": 0,
-			"animate": "sword",
-			"value": {
-				"atk": 100
-			},
-			"percentage": {}
-		}
-	},
-	"I1394": {
-		"cls": "equips",
-		"name": "真·神圣盾",
-		"canUseItemEffect": "true",
-		"text": "解放出真正力量的神盾，最纯净的神圣魔力保护着持有者不受伤害",
-		"equip": {
-			"type": 1,
-			"value": {
-				"mdef": 200,
-				"def": 100
-			},
-			"percentage": {}
-		}
-	},
 	"I1478": {
 		"cls": "items",
 		"name": "新物品",
@@ -702,7 +674,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 									},
 									{
 										"type": "setValue",
-										"name": "item:I1394",
+										"name": "item:shield7",
 										"value": "1"
 									},
 									{
@@ -724,7 +696,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 											},
 											{
 												"type": "setValue",
-												"name": "item:I1394",
+												"name": "item:shield7",
 												"value": "1"
 											},
 											{
@@ -914,6 +886,34 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 			"value": {
 				"mdef": 40,
 				"def": 35
+			},
+			"percentage": {}
+		}
+	},
+	"sword7": {
+		"cls": "equips",
+		"name": "真·神圣剑",
+		"canUseItemEffect": null,
+		"text": "解放出真正力量的神剑，随手的一击都带着毁天灭地的气势",
+		"equip": {
+			"type": 0,
+			"animate": "sword",
+			"value": {
+				"atk": 100
+			},
+			"percentage": {}
+		}
+	},
+	"shield7": {
+		"cls": "equips",
+		"name": "真·神圣盾",
+		"canUseItemEffect": "true",
+		"text": "解放出真正力量的神盾，最纯净的神圣魔力保护着持有者不受伤害",
+		"equip": {
+			"type": 1,
+			"value": {
+				"mdef": 200,
+				"def": 100
 			},
 			"percentage": {}
 		}
