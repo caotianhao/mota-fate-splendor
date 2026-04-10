@@ -616,7 +616,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 									},
 									{
 										"type": "setValue",
-										"name": "item:I1393",
+										"name": "item:sword7",
 										"value": "1"
 									},
 									{
@@ -638,7 +638,7 @@ var items_296f5d02_12fd_4166_a7c1_b5e830c9ee3a =
 											},
 											{
 												"type": "setValue",
-												"name": "item:I1393",
+												"name": "item:sword7",
 												"value": "1"
 											},
 											{
